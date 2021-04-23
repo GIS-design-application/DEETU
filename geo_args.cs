@@ -1,4 +1,14 @@
-﻿using System;
+﻿/*****************************************
+ * @file: geo_args
+ * @author:zwy
+ * @date:2021-04-23
+ * @说明: geo_args类中含有geo模块中需要用到的枚举类、工具方法或其他工具类
+ *        geo_err:枚举数据导入或存储的结果状态（现在未使用）
+ *        geo_type:标识图形类型的枚举类
+ *        point_to_polygon: 点与多边形关系的枚举类
+ *        geo_mbr:最小外包矩形类
+ * ****************************************/
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -37,10 +47,10 @@ namespace DEETU
 
 
         //最小外包矩形类
-        public class OGRMBR
+        public class geo_mbr
         {
-            public OGRMBR() { }
-            public OGRMBR(double x_min, double x_max, double y_min, double y_max)
+            public geo_mbr() { }
+            public geo_mbr(double x_min, double x_max, double y_min, double y_max)
             {
                 x_min_ = x_min;
                 x_max_ = x_max;
