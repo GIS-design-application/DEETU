@@ -13,7 +13,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace DEETU
+namespace DEETU.geometry
 {
     public class GeoArgs
     {
@@ -57,7 +57,10 @@ namespace DEETU
                 y_min_ = y_min;
                 y_max_ = y_max;
             }
-            double x_min_, x_max_, y_min_, y_max_;
+            public double x_min_ { get; set; }
+            public double x_max_ { get; set; }
+            public double y_min_ { get; set; }
+            public double y_max_ { get; set; }
         };
     }
 }
