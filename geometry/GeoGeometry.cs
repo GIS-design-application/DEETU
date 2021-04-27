@@ -15,10 +15,10 @@ using System.Text;
 
 
 
-namespace DEETU.geometry
+namespace DEETU
 {
 
-    abstract public class GeoGeometry
+    class GeoGeometry
     {
         //基本方法
         public abstract bool IsEmpty();
