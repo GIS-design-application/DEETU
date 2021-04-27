@@ -18,7 +18,7 @@ using System.Text;
 namespace DEETU
 {
 
-    abstract class GeoGeometry
+    abstract public class GeoGeometry
     {
         //基本方法
         public abstract bool IsEmpty();
