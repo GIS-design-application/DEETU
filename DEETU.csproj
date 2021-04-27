@@ -46,6 +46,9 @@
   <ItemGroup>
     <Compile Include="geometry\GeoArgs.cs" />
     <Compile Include="geometry\GeoGeometry.cs" />
+    <Compile Include="geometry\GeoLinearRing.cs" />
+    <Compile Include="geometry\GeoPolygon.cs" />
+    <Compile Include="geometry\GeoSurface.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
