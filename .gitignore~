@@ -31,7 +31,6 @@
 *.out
 *.app
 
-# obj folder, .vs folder, bin folder
+# obj folder, .vs folder
 obj
 .vs
-bin
