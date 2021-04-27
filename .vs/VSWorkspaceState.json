@@ -1,7 +1,8 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\geometry"
   ],
-  "SelectedNode": "\\DEETU.sln",
+  "SelectedNode": "\\geometry\\GeoGeometry.cs",
   "PreviewInSolutionExplorer": false
 }
