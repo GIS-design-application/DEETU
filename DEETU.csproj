@@ -44,6 +44,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="core\GeoFeature.cs" />
+    <Compile Include="core\GeoField.cs" />
     <Compile Include="geometry\GeoArgs.cs" />
     <Compile Include="geometry\GeoGeometry.cs" />
     <Compile Include="geometry\GeoPoint.cs" />
@@ -77,5 +79,6 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
