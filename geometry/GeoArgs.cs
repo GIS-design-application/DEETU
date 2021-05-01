@@ -57,6 +57,13 @@ namespace DEETU
                 y_min_ = y_min;
                 y_max_ = y_max;
             }
+            public GeoMbr(GeoMbr mbr)
+            {
+                x_max_ = mbr.x_max_;
+                x_min_ = mbr.x_min_;
+                y_max_ = mbr.y_max_;
+                y_min_ = mbr.y_min_;
+            }
             double x_min_, x_max_, y_min_, y_max_;
         };
     }
