@@ -20,10 +20,14 @@ namespace DEETU.geometry
 
     abstract public class GeoGeometry
     {
+        public GeoArgs.GeoMbr mbr { get; }
         //基本方法
         public abstract bool IsEmpty();
         public abstract GeoGeometry clone();
-        public abstract void GetMBR(ref GeoArgs.GeoMbr mbr) ;
+
+        // deprecated
+        // public abstract void GetMBR(ref GeoArgs.GeoMbr mbr) ;
+
         public abstract bool Equals(ref GeoGeometry other) ;
         public abstract GeoArgs.GeoType GetGeometryType()  ;
 
