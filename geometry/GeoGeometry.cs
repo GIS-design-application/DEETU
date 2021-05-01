@@ -23,7 +23,7 @@ namespace DEETU.geometry
         //基本方法
         public abstract bool IsEmpty();
         public abstract GeoGeometry Clone();
-        public abstract void GetMBR(ref GeoArgs.GeoMbr mbr) ;
+        public abstract GeoArgs.GeoMbr GetMBR() ;
         public abstract bool Equals(ref GeoGeometry other) ;
         public abstract GeoArgs.GeoType GetGeometryType()  ;
 
