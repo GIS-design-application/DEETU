@@ -62,8 +62,7 @@ namespace DEETU.geometry
         {
             if (other != null)
             {
-                GeoArgs.GeoMbr mbr = new GeoArgs.GeoMbr();
-                other.GetMBR(ref mbr);
+                GeoArgs.GeoMbr mbr = other.GetMBR();
                 if (MBR.Contains(mbr))
                 {
                     switch (other.GetGeometryType())
@@ -89,8 +88,7 @@ namespace DEETU.geometry
             bool flag = false;
             if (other != null)
             {
-                GeoArgs.GeoMbr mbr = new GeoArgs.GeoMbr();
-                other.GetMBR(ref mbr);
+                GeoArgs.GeoMbr mbr = other.GetMBR();
                 if (MBR.Intersects(mbr))
                 {
                     switch (other.GetGeometryType())
@@ -141,9 +139,9 @@ namespace DEETU.geometry
             return GeoArgs.GeoType.OGRPolygon;
         }
 
-        public override void GetMBR(ref GeoArgs.GeoMbr mbr)
+        public override GeoArgs.GeoMbr GetMBR()
         {
-            mbr = MBR;
+            return MBR;
         }
 
         public override bool IsEmpty()
