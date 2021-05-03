@@ -60,6 +60,7 @@ namespace DEETU.geometry
 
         public override bool Contains(ref GeoGeometry other)
         {
+            bool flag = false;
             if (other != null)
             {
                 GeoArgs.GeoMbr mbr = other.GetMBR();
@@ -68,8 +69,23 @@ namespace DEETU.geometry
                     switch (other.GetGeometryType())
                     {
                         case GeoArgs.GeoType.OGRPoint:
-                            break;
                         case GeoArgs.GeoType.OGRPolygon:
+                            for(int i = 0; i < Rings.Count; ++i)
+                            {
+                                if (i == 0)
+                                {
+                                    if (Rings[0].Contains(other))
+                                        flag = true;
+                                }
+                                else
+                                {
+                                    if (Rings[i].Contains(other))
+                                    {
+                                        flag = false;
+                                        break; 
+                                    }
+                                }
+                            }
                             break;
                         case GeoArgs.GeoType.OGRLineString:
                             break;
@@ -80,7 +96,7 @@ namespace DEETU.geometry
                     }
                 }
             }
-            return false;
+            return flag;
         }
 
         public override bool Intersects(ref GeoGeometry other)
@@ -94,6 +110,8 @@ namespace DEETU.geometry
                     switch (other.GetGeometryType())
                     {
                         case GeoArgs.GeoType.OGRPolygon:
+                            other = (GeoPolygon)other;
+
                             break;
                         case GeoArgs.GeoType.OGRLineString:
                             break;
