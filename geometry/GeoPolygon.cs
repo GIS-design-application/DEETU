@@ -12,10 +12,10 @@ namespace DEETU.geometry
             get { return Rings; } 
             protected set {Rings = new List<GeoLinearRing>(value); } 
         }
-        public GeoArgs.GeoMbr MBR 
+        public GeoArgs.GeoMbr Mbr 
         {
-            get { return MBR; } 
-            protected set { MBR = new GeoArgs.GeoMbr(value); } 
+            get { return Mbr; } 
+            protected set { Mbr = new GeoArgs.GeoMbr(value); } 
         }
         private double Perimeter { get; set; }
         private double Area { get; set; }
@@ -24,7 +24,7 @@ namespace DEETU.geometry
         public GeoPolygon()
         {
             Area = Perimeter = 0;
-            MBR = new GeoArgs.GeoMbr();
+            Mbr = new GeoArgs.GeoMbr();
             Rings = new List<GeoLinearRing>();
         }
         public GeoPolygon(List<GeoLinearRing> rings)
@@ -32,7 +32,7 @@ namespace DEETU.geometry
             Rings = new List<GeoLinearRing>(rings);
             if (rings.Count != 0)
             {
-                MBR = new GeoArgs.GeoMbr(rings[0].GetMbr());
+                Mbr = new GeoArgs.GeoMbr(rings[0].GetMbr());
                 Perimeter = Area = 0;
                 Area = rings[0].GetArea();
                 for (int i = 0; i < rings.Count; ++i)
@@ -42,7 +42,7 @@ namespace DEETU.geometry
                     Perimeter += rings[i].GetPerimeter();
                 }
             }
-            else MBR = new GeoArgs.GeoMbr();
+            else Mbr = new GeoArgs.GeoMbr();
 
         }
         public GeoPolygon(GeoPolygon p)
@@ -50,12 +50,12 @@ namespace DEETU.geometry
             Rings = new List<GeoLinearRing>(p.Rings);
             Perimeter = p.Perimeter;
             Area = p.Area;
-            MBR = new GeoArgs.GeoMbr(p.MBR);
+            Mbr = new GeoArgs.GeoMbr(p.Mbr);
         }
 
-        public override GeoGeometry Clone()
+        public override GeoGeometry clone()
         {
-            return new GeoPolygon(this);
+            return (GeoGeometry)new GeoPolygon(this);
         }
 
         public override bool Contains(ref GeoGeometry other)
@@ -63,8 +63,8 @@ namespace DEETU.geometry
             bool flag = false;
             if (other != null)
             {
-                GeoArgs.GeoMbr mbr = other.GetMBR();
-                if (MBR.Contains(mbr))
+                GeoArgs.GeoMbr Mbr = other.GetMbr();
+                if (Mbr.Contains(Mbr))
                 {
                     switch (other.GetGeometryType())
                     {
@@ -104,8 +104,8 @@ namespace DEETU.geometry
             bool flag = false;
             if (other != null)
             {
-                GeoArgs.GeoMbr mbr = other.GetMBR();
-                if (MBR.Intersects(mbr))
+                GeoArgs.GeoMbr Mbr = other.GetMbr();
+                if (Mbr.Intersects(Mbr))
                 {
                     switch (other.GetGeometryType())
                     {
@@ -157,9 +157,9 @@ namespace DEETU.geometry
             return GeoArgs.GeoType.OGRPolygon;
         }
 
-        public override GeoArgs.GeoMbr GetMBR()
+        public override GeoArgs.GeoMbr GetMbr()
         {
-            return MBR;
+            return Mbr;
         }
 
         public override bool IsEmpty()
