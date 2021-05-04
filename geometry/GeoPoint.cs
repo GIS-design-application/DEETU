@@ -66,11 +66,6 @@ namespace DEETU.geometry
             GeoPoint new_point=new GeoPoint(this);
             return new_point;
         }
-        public override GeoArgs.GeoMbr GetMBR()
-        {
-            GeoArgs.GeoMbr mbr = new GeoArgs.GeoMbr(x_, x_, y_, y_);
-            return mbr;
-        }
         public override bool Equals(ref GeoGeometry other)
         {
             if(other.GetGeometryType()== GeoArgs.GeoType.OGRPoint)
