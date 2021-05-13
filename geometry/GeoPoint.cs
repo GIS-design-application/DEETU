@@ -15,9 +15,9 @@ using System.Text;
 
 namespace DEETU.geometry
 {
-    public class GeoPoint:GeoGeometry
+    public class GeoPoint : GeoGeometry
     {
-        private double x_,y_;
+        private double x_, y_;
         //构造函数
         public GeoPoint()
         {
@@ -37,20 +37,21 @@ namespace DEETU.geometry
         //属性
         public double x
         {
-            get{return x_;}
+            get { return x_; }
         }
-        public double y{
-            get{return y_;}
+        public double y
+        {
+            get { return y_; }
         }
         //基本方法
-        public void SetPos(double x,double y)
+        public void SetPos(double x, double y)
         {
             x_ = x;
             y_ = y;
         }
         public void SetX(double x)
         {
-            x_= x;
+            x_ = x;
         }
         public void SetY(double y)
         {
@@ -58,12 +59,12 @@ namespace DEETU.geometry
         }
         public override bool IsEmpty()
         {
-            if(x_==-1&&y_==-1) return true;
+            if (x_ == -1 && y_ == -1) return true;
             return false;
         }
         public override GeoGeometry clone()
         {
-            GeoPoint new_point=new GeoPoint(this);
+            GeoPoint new_point = new GeoPoint(this);
             return new_point;
         }
         //public override GeoArgs.GeoMbr GetMBR()
@@ -73,16 +74,16 @@ namespace DEETU.geometry
         //}
         public override bool Equals(ref GeoGeometry other)
         {
-            if(other.GetGeometryType()== GeoArgs.GeoType.OGRPoint)
+            if (other.GetGeometryType() == GeoArgs.GeoType.OGRPoint)
             {
-                GeoPoint other_point=other as GeoPoint;
-                if(other_point.x==x_&&other_point.y_==y) return true;
+                GeoPoint other_point = other as GeoPoint;
+                if (other_point.x == x_ && other_point.y_ == y) return true;
             }
             return false;
         }
         public override GeoArgs.GeoType GetGeometryType()
-        {return GeoArgs.GeoType.OGRPoint;}
-        
+        { return GeoArgs.GeoType.OGRPoint; }
+
         //TODO
         //空间关系查询
         public override bool Intersects(ref GeoGeometry other)

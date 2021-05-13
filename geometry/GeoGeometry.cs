@@ -29,7 +29,7 @@ namespace DEETU.geometry
 
         // deprecated
         // public abstract void GetMBR(ref GeoArgs.GeoMbr mbr) ;
-
+        public abstract GeoArgs.GeoMbr GetMbr();
         public abstract bool Equals(ref GeoGeometry other) ;
         public abstract GeoArgs.GeoType GetGeometryType()  ;
 
