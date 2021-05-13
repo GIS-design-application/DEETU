@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="core\GeoFeature.cs" />
+    <Compile Include="core\GeoFeatures.cs" />
     <Compile Include="core\GeoField.cs" />
     <Compile Include="geometry\GeoArgs.cs" />
     <Compile Include="geometry\GeoGeometry.cs" />
