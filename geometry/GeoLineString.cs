@@ -21,16 +21,7 @@ namespace DEETU.geometry
     public class GeoLineString:GeoCurve
     {
         //节点集合
-        private List<GeoPoint> vertexes = new List<GeoPoint>();
-
-        //TODO：属性不能使vertexes只读，需要修改方法
-        public List<GeoPoint> Vertexes
-        {
-            get
-            {
-                return vertexes;
-            }
-        }
+        public List<GeoPoint> vertice = new List<GeoPoint>();
 
         //如果闭合，默认首尾存储两次
         public override bool IsClosed()
