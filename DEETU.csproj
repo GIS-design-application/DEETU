@@ -47,27 +47,31 @@
     <Compile Include="core\GeoFeature.cs" />
     <Compile Include="core\GeoFeatures.cs" />
     <Compile Include="core\GeoField.cs" />
-    <Compile Include="geometry\GeoArgs.cs" />
-    <Compile Include="geometry\GeoCurve.cs" />
-    <Compile Include="geometry\GeoGeometry.cs" />
-    <Compile Include="geometry\GeoLinearRing.cs" />
-    <Compile Include="geometry\GeoLineString.cs" />
-    <Compile Include="geometry\GeoCollection.cs" />
-    <Compile Include="geometry\GeoGeometry.cs" />
-    <Compile Include="geometry\GeoLinearRing.cs" />
-    <Compile Include="geometry\GeoPoint.cs" />
-    <Compile Include="geometry\GeoPolygon.cs" />
-    <Compile Include="geometry\GeoSurface.cs" />
+    <Compile Include="GeoEnum.cs" />
+    <Compile Include="Geometry\GeoGeometry.cs" />
+    <Compile Include="Geometry\GeoMultiPolygon.cs" />
+    <Compile Include="Geometry\GeoMultiPolyline.cs" />
+    <Compile Include="Geometry\GeoParts.cs" />
+    <Compile Include="Geometry\GeoPoint.cs" />
+    <Compile Include="Geometry\GeoPoints.cs" />
+    <Compile Include="Geometry\GeoRectangle.cs" />
+    <Compile Include="Geometry\GeoShape.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="obj\Debug\.NETFramework,Version=v4.0.AssemblyAttributes.cs" />
-    <Compile Include="obj\Release\.NETFramework,Version=v4.0.AssemblyAttributes.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Renderer\GeoClassBreaksRenderer.cs" />
+    <Compile Include="Renderer\GeoRenderer.cs" />
+    <Compile Include="Renderer\GeoSimpleFillSymbol.cs" />
+    <Compile Include="Renderer\GeoSimpleLineSymbol.cs" />
+    <Compile Include="Renderer\GeoSimpleMarkerSymbol.cs" />
+    <Compile Include="Renderer\GeoSimpleRenderer.cs" />
+    <Compile Include="Renderer\GeoSymbol.cs" />
+    <Compile Include="Renderer\GeoUniqueValueRenderer.cs" />
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
