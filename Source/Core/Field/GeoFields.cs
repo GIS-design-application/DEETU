@@ -111,12 +111,12 @@ namespace DEETU.Core
         /// 删除指定索引号的字段
         /// </summary>
         /// <param name="index"></param>
-        public void ReGeoveAt(int index)
+        public void RemoveAt(int index)
         {
             GeoField sField = _Fields[index];
             _Fields.RemoveAt(index);
-            if (FieldReGeoved != null)
-                FieldReGeoved(this, index, sField);
+            if (FieldRemoved != null)
+                FieldRemoved(this, index, sField);
         }
 
 
@@ -130,11 +130,11 @@ namespace DEETU.Core
         /// </summary>
         internal event FieldAppendedHandle FieldAppended;
 
-        internal delegate void FieldReGeovedHandle(object sender, int fieldIndex, GeoField fieldReGeoved);
+        internal delegate void FieldRemovedHandle(object sender, int fieldIndex, GeoField fieldRemoved);
         /// <summary>
         /// 有字段删除
         /// </summary>
-        internal event FieldReGeovedHandle FieldReGeoved;
+        internal event FieldRemovedHandle FieldRemoved;
 
         #endregion
     }

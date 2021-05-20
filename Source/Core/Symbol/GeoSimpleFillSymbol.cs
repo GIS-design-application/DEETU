@@ -4,8 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Drawing;
 using System.Security.Cryptography;
+using DEETU.Tool;
 
-namespace DEETU.Renderer
+namespace DEETU.Core
 {
     public class GeoSimpleFillSymbol : GeoSymbol
     {

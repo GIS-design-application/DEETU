@@ -1,6 +1,7 @@
 ﻿using DEETU;
 using DEETU.Geometry;
-using DEETU.Renderer;
+using DEETU.Core;
+using DEETU.Tool;
 using System;
 using System.Collections.Generic;
 using System.Linq;

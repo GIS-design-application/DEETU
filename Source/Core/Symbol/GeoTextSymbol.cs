@@ -1,4 +1,4 @@
-﻿namespace DEETU.Renderer
+﻿namespace DEETU.Core
 {
     internal class GeoTextSymbol
     {

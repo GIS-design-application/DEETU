@@ -1,9 +1,10 @@
-﻿using System;
+﻿using DEETU.Tool;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace DEETU.Renderer
+namespace DEETU.Core
 {
     public abstract class GeoRenderer
     {

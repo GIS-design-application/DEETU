@@ -44,11 +44,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GeoFeature.cs" />
-    <Compile Include="GeoFeatures.cs" />
+    <Compile Include="Source\Core\Feature\GeoFeature.cs" />
+    <Compile Include="Source\Core\Feature\GeoFeatures.cs" />
     <Compile Include="Source\Core\Field\GeoField.cs" />
     <Compile Include="Source\Core\Field\GeoFields.cs" />
-    <Compile Include="Source\Core\GeoAttributes.cs" />
+    <Compile Include="Source\Core\Attribute\GeoAttributes.cs" />
     <Compile Include="Source\Core\Geometry\GeoGeometry.cs" />
     <Compile Include="Source\Core\Geometry\GeoMultiPolygon.cs" />
     <Compile Include="Source\Core\Geometry\GeoMultiPolyline.cs" />
@@ -65,7 +65,7 @@
     </Compile>
     <Compile Include="obj\Debug\.NETFramework,Version=v4.0.AssemblyAttributes.cs" />
     <Compile Include="Source\Core\Renderer\GeoLabelRenderer.cs" />
-    <Compile Include="Source\Layer\GeoLayers.cs" />
+    <Compile Include="Source\Map\Layer\GeoLayers.cs" />
     <Compile Include="Source\Map\GeoMapControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -74,7 +74,7 @@
     </Compile>
     <Compile Include="Source\Map\GeoMapDrawingReference.cs" />
     <Compile Include="Source\Map\GeoMapDrawingTools.cs" />
-    <Compile Include="Source\Layer\GeoMapLayer.cs" />
+    <Compile Include="Source\Map\Layer\GeoMapLayer.cs" />
     <Compile Include="Source\Map\GeoMapTools.cs" />
     <Compile Include="Source\Core\Symbol\GeoTextSymbol.cs" />
     <Compile Include="Program.cs" />
@@ -134,6 +134,7 @@
     <Folder Include=".vs\DEETU\v16\" />
     <Folder Include="bin\Release\" />
     <Folder Include="obj\Debug\TempPE\" />
+    <Folder Include="Source\Map\Projection\" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
