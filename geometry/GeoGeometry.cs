@@ -7,6 +7,5 @@ namespace DEETU.Geometry
 {
     public abstract class GeoGeometry : GeoShape
     {
-
     }
 }
