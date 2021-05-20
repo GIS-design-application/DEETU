@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Collections;
 using System.Linq;
 using System.Text;
-using DEETU.geometry;
+using DEETU.Geometry;
 
 namespace DEETU.core
 {
@@ -140,7 +140,7 @@ namespace DEETU.core
         {
             GeoFeature cloned = new GeoFeature();
             cloned.id_ = id_ + 1; // ?id上应该怎么设置
-            cloned.geometry_ = geometry_.clone();
+            cloned.geometry_ = geometry_.Clone() as GeoGeometry;
             cloned.attributes_ = (ArrayList)attributes_.Clone();
             foreach (GeoField f in fields_)
             {
