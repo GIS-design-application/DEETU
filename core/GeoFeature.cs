@@ -13,7 +13,7 @@ using System.Linq;
 using System.Text;
 using DEETU.Geometry;
 
-namespace DEETU.core
+namespace DEETU.Core
 {
     public class GeoFeature
     {
