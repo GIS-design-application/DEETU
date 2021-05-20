@@ -44,53 +44,56 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Core\GeoFeature.cs" />
-    <Compile Include="Core\GeoFeatures.cs" />
-    <Compile Include="Core\GeoField.cs" />
-    <Compile Include="Core\GeoFields.cs" />
-    <Compile Include="GeoEnum.cs" />
-    <Compile Include="Geometry\GeoGeometry.cs" />
-    <Compile Include="Geometry\GeoMultiPolygon.cs" />
-    <Compile Include="Geometry\GeoMultiPolyline.cs" />
-    <Compile Include="Geometry\GeoParts.cs" />
-    <Compile Include="Geometry\GeoPoint.cs" />
-    <Compile Include="Geometry\GeoPoints.cs" />
-    <Compile Include="Geometry\GeoRectangle.cs" />
-    <Compile Include="Geometry\GeoShape.cs" />
+    <Compile Include="GeoFeature.cs" />
+    <Compile Include="GeoFeatures.cs" />
+    <Compile Include="Source\Core\Field\GeoField.cs" />
+    <Compile Include="Source\Core\Field\GeoFields.cs" />
+    <Compile Include="Source\Core\GeoAttributes.cs" />
+    <Compile Include="Source\Core\Geometry\GeoGeometry.cs" />
+    <Compile Include="Source\Core\Geometry\GeoMultiPolygon.cs" />
+    <Compile Include="Source\Core\Geometry\GeoMultiPolyline.cs" />
+    <Compile Include="Source\Core\Geometry\GeoParts.cs" />
+    <Compile Include="Source\Core\Geometry\GeoPoint.cs" />
+    <Compile Include="Source\Core\Geometry\GeoPoints.cs" />
+    <Compile Include="Source\Core\Geometry\GeoRectangle.cs" />
+    <Compile Include="Source\Core\Geometry\GeoShape.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Renderer\GeoLabelRenderer.cs" />
-    <Compile Include="Map\GeoLayers.cs" />
-    <Compile Include="Map\GeoMapControl.cs">
+    <Compile Include="obj\Debug\.NETFramework,Version=v4.0.AssemblyAttributes.cs" />
+    <Compile Include="Source\Core\Renderer\GeoLabelRenderer.cs" />
+    <Compile Include="Source\Layer\GeoLayers.cs" />
+    <Compile Include="Source\Map\GeoMapControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Map\GeoMapControl.Designer.cs">
+    <Compile Include="Source\Map\GeoMapControl.Designer.cs">
       <DependentUpon>GeoMapControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Map\GeoMapDrawingReference.cs" />
-    <Compile Include="Map\GeoMapDrawingTools.cs" />
-    <Compile Include="Map\GeoMapLayer.cs" />
-    <Compile Include="Map\GeoMapTools.cs" />
-    <Compile Include="Renderer\GeoTextSymbol.cs" />
+    <Compile Include="Source\Map\GeoMapDrawingReference.cs" />
+    <Compile Include="Source\Map\GeoMapDrawingTools.cs" />
+    <Compile Include="Source\Layer\GeoMapLayer.cs" />
+    <Compile Include="Source\Map\GeoMapTools.cs" />
+    <Compile Include="Source\Core\Symbol\GeoTextSymbol.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Renderer\GeoClassBreaksRenderer.cs" />
-    <Compile Include="Renderer\GeoRenderer.cs" />
-    <Compile Include="Renderer\GeoSimpleFillSymbol.cs" />
-    <Compile Include="Renderer\GeoSimpleLineSymbol.cs" />
-    <Compile Include="Renderer\GeoSimpleMarkerSymbol.cs" />
-    <Compile Include="Renderer\GeoSimpleRenderer.cs" />
-    <Compile Include="Renderer\GeoSymbol.cs" />
-    <Compile Include="Renderer\GeoUniqueValueRenderer.cs" />
-    <Compile Include="Tool\GeoEnum.cs" />
-    <Compile Include="Tool\GeoUserDrawingTool.cs" />
+    <Compile Include="Source\Core\Renderer\GeoClassBreaksRenderer.cs" />
+    <Compile Include="Source\Core\Renderer\GeoRenderer.cs" />
+    <Compile Include="Source\Core\Symbol\GeoSimpleFillSymbol.cs" />
+    <Compile Include="Source\Core\Symbol\GeoSimpleLineSymbol.cs" />
+    <Compile Include="Source\Core\Symbol\GeoSimpleMarkerSymbol.cs" />
+    <Compile Include="Source\Core\Renderer\GeoSimpleRenderer.cs" />
+    <Compile Include="Source\Core\Symbol\GeoSymbol.cs" />
+    <Compile Include="Source\Core\Renderer\GeoUniqueValueRenderer.cs" />
+    <Compile Include="Source\Tool\GeoEnum.cs" />
+    <Compile Include="Source\Tool\GeoUserDrawingTool.cs" />
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="obj\Debug\DEETU.MainForm.resources" />
+    <EmbeddedResource Include="obj\Debug\DEETU.Properties.Resources.resources" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -104,6 +107,11 @@
     <None Include=".vs\slnx.sqlite" />
     <None Include=".vs\VSWorkspaceState.json" />
     <None Include="LICENSE" />
+    <None Include="obj\Debug\DEETU.csproj.CoreCompileInputs.cache" />
+    <None Include="obj\Debug\DEETU.csproj.GenerateResource.cache" />
+    <None Include="obj\Debug\DEETU.csprojAssemblyReference.cache" />
+    <None Include="obj\Debug\DesignTimeResolveAssemblyReferences.cache" />
+    <None Include="obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -118,10 +126,14 @@
   <ItemGroup>
     <Content Include="bin\Debug\DEETU.exe" />
     <Content Include="bin\Debug\DEETU.pdb" />
+    <Content Include="obj\Debug\DEETU.csproj.FileListAbsolute.txt" />
+    <Content Include="obj\Debug\DEETU.exe" />
+    <Content Include="obj\Debug\DEETU.pdb" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include=".vs\DEETU\v16\" />
     <Folder Include="bin\Release\" />
+    <Folder Include="obj\Debug\TempPE\" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

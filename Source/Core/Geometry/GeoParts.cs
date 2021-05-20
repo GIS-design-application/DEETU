@@ -87,7 +87,7 @@ namespace DEETU.Geometry
         /// <param name="index">指定位置</param>
         public void ReGeoveAt(int index)
         {
-            _Parts.ReGeoveAt(index);
+            _Parts.RemoveAt(index);
         }
         /// <summary>
         /// 将所有元素复制到一个数组中，并返回
