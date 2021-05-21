@@ -1,9 +1,11 @@
+# DIY
 .DS_Store
 *.log
 ._*
+.vs
+
 # Prerequisites
 *.d
-.vs
 
 # Compiled Object files
 *.slo

@@ -6,7 +6,6 @@ using System.Drawing;
 using DEETU.Geometry;
 using DEETU.Core;
 using DEETU.Tool;
-using DEETU.Core;
 
 namespace DEETU.Map
 {
@@ -650,7 +649,7 @@ namespace DEETU.Map
             }
             else if (_Renderer.RendererType == GeoRendererTypeConstant.UniqueValue)
             {
-                GeoUniqueValueRenderer sRenderer = (moUniqueValueRenderer)_Renderer;
+                GeoUniqueValueRenderer sRenderer = (GeoUniqueValueRenderer)_Renderer;
                 string sFieldName = sRenderer.Field;
                 Int32 sFieldIndex = _AttributeFields.FindField(sFieldName);
                 if (sFieldIndex >= 0)
@@ -669,7 +668,7 @@ namespace DEETU.Map
             }
             else if (_Renderer.RendererType == GeoRendererTypeConstant.ClassBreaks)
             {
-                GeoClassBreaksRenderer sRenderer = (moClassBreaksRenderer)_Renderer;
+                GeoClassBreaksRenderer sRenderer = (GeoClassBreaksRenderer)_Renderer;
                 string sFieldName = sRenderer.Field;
                 Int32 sFieldIndex = _AttributeFields.FindField(sFieldName);
                 GeoValueTypeConstant sValueType = _AttributeFields.GetItem(sFieldIndex).ValueType;
