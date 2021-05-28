@@ -16,7 +16,7 @@ namespace DEETU.Geometry
         {
 
         }
-        public GeoRectangle(double minX, double minY, double maxX, double maxY)
+        public GeoRectangle(double minX, double maxX, double minY, double maxY)
         {
             _MaxX = maxX;
             _MaxY = maxY;
@@ -59,7 +59,7 @@ namespace DEETU.Geometry
         /// </summary>
         public double MaxY
         {
-            get { return _MaxX; }
+            get { return _MaxY; }
         }
         /// <summary>
         /// 获取宽度

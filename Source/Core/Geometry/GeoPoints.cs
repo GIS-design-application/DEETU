@@ -57,7 +57,7 @@ namespace DEETU.Geometry
         /// </summary>
         public double MaxY
         {
-            get { return _MaxX; }
+            get { return _MaxY; }
         }
         public int Count
         {
@@ -141,7 +141,7 @@ namespace DEETU.Geometry
         /// <returns></returns>
         public GeoRectangle GetEnvelope()
         {
-            return new GeoRectangle(_MinX, _MinY, _MaxX, _MaxY);
+            return new GeoRectangle(_MinX, _MaxX, _MinY, _MaxY);
         }
         /// <summary>
         /// 重新计算坐标范围

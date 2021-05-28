@@ -263,7 +263,7 @@ namespace DEETU.Map
             SetFeatureSymbols();
             //（2）判断是否位于绘制范围内，如果是，则绘制
             int sFeatureCount = _Features.Count;
-            for(int i = 0; i < sFeatureCount - 1;++i)
+            for(int i = 0; i < sFeatureCount;++i)
             {
                 GeoFeature sFeature = _Features.GetItem(i);
                 if(IsFeatureInExtent(sFeature, extent) == true)
@@ -287,7 +287,7 @@ namespace DEETU.Map
         {
             for (int i = 0; i < _SelectedFeatures.Count - 1; ++i)
             {
-                GeoFeature sFeature = _Features.GetItem(i);
+                GeoFeature sFeature = _SelectedFeatures.GetItem(i);
                 if (IsFeatureInExtent(sFeature, extent) == true)
                     GeoMapDrawingTools.DrawGeometry(g, extent, mapScale, dpm, mpu, sFeature.Geometry, symbol);
             }
