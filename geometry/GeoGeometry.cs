@@ -15,7 +15,7 @@ using System.Text;
 
 
 
-namespace DEETU
+namespace DEETU.geometry
 {
 
     abstract public class GeoGeometry
