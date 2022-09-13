@@ -44,8 +44,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="geo_args.cs" />
-    <Compile Include="geo_geometry.cs" />
+    <Compile Include="GeoArgs.cs" />
+    <Compile Include="GeoGeometry.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
