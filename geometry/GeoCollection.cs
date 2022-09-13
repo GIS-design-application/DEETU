@@ -5,13 +5,13 @@ using System.Text;
 
 namespace DEETU.geometry
 {
-    public class geo_collection
+    public class GeoCollection
     {
         // Properties
-        private List<geo_geometry> _item_list { get; }
+        private List<GeoGeometry> _item_list { get; }
 
         // Methods
-        public geo_collection(List<geo_geometry> item_list)
+        public GeoCollection(List<GeoGeometry> item_list)
         {
             _item_list = item_list;
         }
