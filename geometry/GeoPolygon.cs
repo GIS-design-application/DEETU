@@ -82,7 +82,7 @@ namespace DEETU.geometry
                                     if (Rings[i].Contains(other))
                                     {
                                         flag = false;
-                                        break; 
+                            break;
                                     }
                                 }
                             }
