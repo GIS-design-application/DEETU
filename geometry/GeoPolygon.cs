@@ -7,10 +7,20 @@ namespace DEETU.geometry
 {
     class GeoPolygon : GeoSurface
     {
-        private List<GeoLinearRing> Rings { get { return Rings; } set {Rings = new List<GeoLinearRing>(value); } }
-        private GeoArgs.GeoMbr MBR { get { return MBR; } set { MBR = new GeoArgs.GeoMbr(value); } }
+        public List<GeoLinearRing> Rings 
+        {
+            get { return Rings; } 
+            protected set {Rings = new List<GeoLinearRing>(value); } 
+        }
+        public GeoArgs.GeoMbr MBR 
+        {
+            get { return MBR; } 
+            protected set { MBR = new GeoArgs.GeoMbr(value); } 
+        }
         private double Perimeter { get; set; }
         private double Area { get; set; }
+        
+
         public GeoPolygon()
         {
             Area = Perimeter = 0;
@@ -76,6 +86,7 @@ namespace DEETU.geometry
 
         public override bool Intersects(ref GeoGeometry other)
         {
+            bool flag = false;
             if (other != null)
             {
                 GeoArgs.GeoMbr mbr = new GeoArgs.GeoMbr();
@@ -95,7 +106,7 @@ namespace DEETU.geometry
                     }
                 }
             }
-            return false;
+            return flag;
         }
 
         public override bool Equals(ref GeoGeometry other)
