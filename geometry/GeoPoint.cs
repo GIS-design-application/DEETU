@@ -15,7 +15,7 @@ using System.Text;
 
 namespace DEETU.geometry
 {
-    class GeoPoint:GeoGeometry
+    public class GeoPoint:GeoGeometry
     {
         private double x_,y_;
         //构造函数
@@ -35,12 +35,12 @@ namespace DEETU.geometry
             this.y_ = other.y;
         }
         //属性
-        public int x
+        public double x
         {
-            get{return x;}
+            get{return x_;}
         }
-        public int y{
-            get{return y;}
+        public double y{
+            get{return y_;}
         }
         //基本方法
         public void SetPos(double x,double y)
@@ -66,11 +66,11 @@ namespace DEETU.geometry
             GeoPoint new_point=new GeoPoint(this);
             return new_point;
         }
-        public override GeoArgs.GeoMbr GetMBR()
-        {
-            GeoArgs.GeoMbr mbr = new GeoArgs.GeoMbr(x_, x_, y_, y_);
-            return mbr;
-        }
+        //public override GeoArgs.GeoMbr GetMBR()
+        //{
+        //    GeoArgs.GeoMbr mbr = new GeoArgs.GeoMbr(x_, x_, y_, y_);
+        //    return mbr;
+        //}
         public override bool Equals(ref GeoGeometry other)
         {
             if(other.GetGeometryType()== GeoArgs.GeoType.OGRPoint)
