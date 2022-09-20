@@ -29,7 +29,7 @@ namespace DEETU.geometry
         }
         public GeoPolygon(List<GeoLinearRing> rings)
         {
-            Rings = new List<GeoLinearRing>(rings);
+            Rings = new List<GeoLinearRing>();
             if (rings.Count != 0)
             {
                 Mbr = new GeoArgs.GeoMbr(rings[0].GetMbr());
@@ -37,6 +37,7 @@ namespace DEETU.geometry
                 Area = rings[0].GetArea();
                 for (int i = 0; i < rings.Count; ++i)
                 {
+                    Rings.Add(new GeoLinearRing(rings[i]));
                     if (i == 0) Area += rings[0].GetArea();
                     else Area -= rings[i].GetArea();
                     Perimeter += rings[i].GetPerimeter();
@@ -47,7 +48,9 @@ namespace DEETU.geometry
         }
         public GeoPolygon(GeoPolygon p)
         {
-            Rings = new List<GeoLinearRing>(p.Rings);
+            Rings = new List<GeoLinearRing>();
+            for (int i = 0; i < p.Rings.Count; ++i)
+                Rings.Add(new GeoLinearRing(p.Rings[i]));
             Perimeter = p.Perimeter;
             Area = p.Area;
             Mbr = new GeoArgs.GeoMbr(p.Mbr);
