@@ -45,8 +45,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="geometry\GeoArgs.cs" />
+    <Compile Include="geometry\GeoCollection.cs" />
     <Compile Include="geometry\GeoGeometry.cs" />
     <Compile Include="geometry\GeoLinearRing.cs" />
+    <Compile Include="geometry\GeoPoint.cs" />
     <Compile Include="geometry\GeoPolygon.cs" />
     <Compile Include="geometry\GeoSurface.cs" />
     <Compile Include="MainForm.cs">
@@ -55,6 +57,8 @@
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="obj\Debug\.NETFramework,Version=v4.0.AssemblyAttributes.cs" />
+    <Compile Include="obj\Release\.NETFramework,Version=v4.0.AssemblyAttributes.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="MainForm.resx">
@@ -69,6 +73,10 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include=".gitignore" />
+    <None Include=".vs\slnx.sqlite" />
+    <None Include=".vs\VSWorkspaceState.json" />
+    <None Include="LICENSE" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -78,6 +86,15 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="README.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="bin\Debug\DEETU.exe" />
+    <Content Include="bin\Debug\DEETU.pdb" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include=".vs\DEETU\v16\" />
+    <Folder Include="bin\Release\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
