@@ -5,11 +5,29 @@ using System.Text;
 
 namespace DEETU.core
 {
-    class GeoField
+    public class GeoField
     {
-        // Constructors
+        #region Constructors
+        public GeoField(string name="", Type type= null, int length=0, int precision=0)
+        {
+            this.name_ = name;
+            this.type_ = type;
+            this.length_ = length;
+            this.precision_ = precision;
+        }
+        public GeoField(GeoField other)
+        {
+            GeoField cloned = other.Clone();
+            this.name_ = other.name_;
+            this.type_ = other.type_;
+            this.length_ = other.length_;
+            this.precision_ = other.precision_;
+            this.is_data_time_ = other.is_data_time_;
+            this.is_numeric_ = other.is_numeric_;
+        }
+        #endregion
 
-        // Properties
+        #region Properties
         private string name_;
         private int length_, precision_;
         private bool is_data_time_, is_numeric_;
@@ -48,8 +66,9 @@ namespace DEETU.core
         {
             get { return this.type_; }
         }
+        #endregion
 
-        //Public Member Functions
+        #region Public Member Functions
         public void SetName(string name)
         {
             this.name_ = name;
@@ -69,7 +88,6 @@ namespace DEETU.core
         {
             this.is_data_time_ = is_data_time;
         }
-
         public void SetIsNumeric(bool is_numeric)
         {
             this.is_numeric_ = is_numeric;
@@ -78,6 +96,14 @@ namespace DEETU.core
         {
             this.type_ = type;
         }
+        public GeoField Clone()
+        {        
+            GeoField cloned = new GeoField(name_, type_.GetType(), length_, precision_);
+            cloned.is_data_time_ = is_data_time_;
+            cloned.is_numeric_ = is_numeric_;
+            return cloned;
+        }
+        #endregion
 
     }
 }

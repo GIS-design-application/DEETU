@@ -8,57 +8,58 @@
  * ****************************************/
 using System;
 using System.Collections.Generic;
+using System.Collections;
 using System.Linq;
 using System.Text;
-using System.Data;
 using DEETU.geometry;
 
 namespace DEETU.core
 {
-    class GeoFeature
+    public class GeoFeature
     {
-        // Constructor
+        #region Constructor
         public GeoFeature()
         {
             this.id_ = -1;
             this.fields_ = new List<GeoField>();
-            this.attributes_ = new DataTable();
+            this.attributes_ = new ArrayList();
             this.geometry_ = null;
         }
         public GeoFeature(Int64 id)
         {
             this.id_ = id;
             this.fields_ = new List<GeoField>();
-            this.attributes_ = new DataTable();
+            this.attributes_ = new ArrayList();
             this.geometry_ = null;
         }
         public GeoFeature(List<GeoField> fields, Int64 id)
         {
             this.id_ = id;
             this.fields_ = new List<GeoField>(fields);//deepcopy，避免引用类型引起的bug
-            this.attributes_ = new DataTable();
+            this.attributes_ = new ArrayList();
             this.geometry_ = null;
         }
         public GeoFeature(GeoFeature other)
         {
-            this.id_ = other.Id;
-            this.fields_ = new List<GeoField>(other.Fields);
-            this.attributes_ = other.Attributes;
-            this.geometry_ = other.Geometry;
+            GeoFeature cloned = other.Clone();
+            this.id_ = cloned.Id;
+            this.fields_ = cloned.Fields;
+            this.attributes_ = cloned.Attributes;
+            this.geometry_ = cloned.Geometry;
+            
         }
+        #endregion
 
-        // Properties
+        #region Properties
         // Privates
-        private DataTable attributes_;
-        //! TODO: 这里有一个bug：
-        // 每一个feature 分开写的话可能就没有办法在feature内进行查找
-        // 或许可以考虑另外写一个Query类
+        private ArrayList attributes_;
+        // 这里单独在写出来attributes是为了提高速度和方便feature的加入
         private List<GeoField> fields_;
-        private Int64 id_;
+        private Int64 id_; 
         private GeoGeometry geometry_;
 
         // Publics
-        public DataTable Attributes
+        public ArrayList Attributes
         {
             get{return attributes_;}
         }        
@@ -73,11 +74,12 @@ namespace DEETU.core
         public GeoGeometry Geometry
         {
             get{return geometry_;}
-        }        
+        }
+        #endregion
 
-        // Public Member Functions            
+        #region Public Member Functions            
         // Sets
-        public void SetAttributes(DataTable attributes)
+        public void SetAttributes(ArrayList attributes)
         {
             this.attributes_ = attributes;
         }        
@@ -100,22 +102,31 @@ namespace DEETU.core
         }        
 
         public object Attribute(string name)
-        // * 这里好像只能装箱了，尚不知道调用时拆箱的方法。
         {
-
+            int field_idx = fields_.FindIndex(f => f.Name.Equals(name));
+            return Attribute(field_idx);
         }
         public object Attribute(int field_idx)
-        // * 这里好像只能装箱了，尚不知道调用时拆箱的方法。
+        // * 这里好像只能装箱了，尚不知道调用时是否需要拆箱。
         {
-
+            GeoField field = fields_[field_idx];
+            return attributes_[field_idx];
         }
+
+        public void AddAttribute(GeoField field)
+        {
+            fields_.Add(field);
+            attributes_.Add(null);
+        }
+
         public void DeleteAttribute(string name)
         {
-
+            int field_idx = fields_.FindIndex(f => f.Name.Equals(name));
+            DeleteAttribute(field_idx);
         }
         public void DeleteAttribute(int field_idx)
         {
-
+            fields_.RemoveAt(field_idx);
         }
         public bool HasGeometry()
         {
@@ -125,5 +136,18 @@ namespace DEETU.core
         {
             this.geometry_ = null;
         }
+        public GeoFeature Clone()
+        {
+            GeoFeature cloned = new GeoFeature();
+            cloned.id_ = id_ + 1; // ?id上应该怎么设置
+            cloned.geometry_ = geometry_.clone();
+            cloned.attributes_ = (ArrayList)attributes_.Clone();
+            foreach (GeoField f in fields_)
+            {
+                cloned.fields_.Add(f.Clone());
+            }
+            return cloned;
+        }
+        #endregion
     }
 }
