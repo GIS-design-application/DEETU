@@ -15,10 +15,10 @@ namespace DEETU.geometry
         public GeoArgs.GeoMbr Mbr 
         {
             get { return Mbr; } 
-            protected set { Mbr = new GeoArgs.GeoMbr(value); } 
+            protected set { Mbr = new GeoArgs.GeoMbr(value.x_min_, value.x_max_, value.y_min_, value.y_max_); } 
         }
-        private double Perimeter { get; set; }
-        private double Area { get; set; }
+        public double Perimeter { get; set; }
+        public double Area { get; set; }
         
 
         public GeoPolygon()
@@ -32,7 +32,8 @@ namespace DEETU.geometry
             Rings = new List<GeoLinearRing>();
             if (rings.Count != 0)
             {
-                Mbr = new GeoArgs.GeoMbr(rings[0].GetMbr());
+                GeoArgs.GeoMbr sMbr = Rings[0].GetMbr();
+                Mbr = new GeoArgs.GeoMbr(sMbr.x_min_, sMbr.x_max_, sMbr.y_min_, sMbr.y_max_);
                 Perimeter = Area = 0;
                 Area = rings[0].GetArea();
                 for (int i = 0; i < rings.Count; ++i)
@@ -53,7 +54,8 @@ namespace DEETU.geometry
                 Rings.Add(new GeoLinearRing(p.Rings[i]));
             Perimeter = p.Perimeter;
             Area = p.Area;
-            Mbr = new GeoArgs.GeoMbr(p.Mbr);
+            GeoArgs.GeoMbr sMbr = Rings[0].GetMbr();
+            Mbr = new GeoArgs.GeoMbr(sMbr.x_min_, sMbr.x_max_, sMbr.y_min_, sMbr.y_max_);
         }
 
         public override GeoGeometry clone()
@@ -66,36 +68,24 @@ namespace DEETU.geometry
             bool flag = false;
             if (other != null)
             {
-                GeoArgs.GeoMbr Mbr = other.GetMbr();
-                if (Mbr.Contains(Mbr))
+                GeoArgs.GeoMbr sMbr = other.GetMbr();
+                if (sMbr.y_max_ <= Mbr.y_max_ && sMbr.y_min_ >= Mbr.y_min_ && sMbr.x_min_ >= Mbr.x_min_ && sMbr.x_max_<= Mbr.x_max_)
                 {
-                    switch (other.GetGeometryType())
+                    for(int i = 0; i < Rings.Count; ++i)
                     {
-                        case GeoArgs.GeoType.OGRPoint:
-                        case GeoArgs.GeoType.OGRPolygon:
-                            for(int i = 0; i < Rings.Count; ++i)
+                        if (i == 0)
+                        {
+                            if (Rings[0].Contains(other))
+                                flag = true;
+                        }
+                        else
+                        {
+                            if (Rings[i].Contains(other))
                             {
-                                if (i == 0)
-                                {
-                                    if (Rings[0].Contains(other))
-                                        flag = true;
-                                }
-                                else
-                                {
-                                    if (Rings[i].Contains(other))
-                                    {
-                                        flag = false;
-                                        break; 
-                                    }
-                                }
+                                flag = false;
+                                break; 
                             }
-                            break;
-                        case GeoArgs.GeoType.OGRLineString:
-                            break;
-                        case GeoArgs.GeoType.OGRMultiPoint:
-                            break;
-                        default:
-                            break;
+                        }
                     }
                 }
             }
@@ -107,14 +97,12 @@ namespace DEETU.geometry
             bool flag = false;
             if (other != null)
             {
-                GeoArgs.GeoMbr Mbr = other.GetMbr();
-                if (Mbr.Intersects(Mbr))
+                GeoArgs.GeoMbr sMbr = other.GetMbr();
+                if (AreBoxesCross(Mbr,sMbr))
                 {
                     switch (other.GetGeometryType())
                     {
                         case GeoArgs.GeoType.OGRPolygon:
-                            other = (GeoPolygon)other;
-
                             break;
                         case GeoArgs.GeoType.OGRLineString:
                             break;
