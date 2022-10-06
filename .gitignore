@@ -19,9 +19,9 @@
 *.dylib
 *.dll
 
-# Fortran module files
-*.mod
-*.smod
+# Fortran Geodule files
+*.Geod
+*.sGeod
 
 # Compiled Static libraries
 *.lai
