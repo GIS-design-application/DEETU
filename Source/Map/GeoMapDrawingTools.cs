@@ -5,7 +5,7 @@ using System.Text;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using DEETU.Geometry;
-using DEETU.Renderer;
+using DEETU.Core;
 
 namespace DEETU.Map
 {

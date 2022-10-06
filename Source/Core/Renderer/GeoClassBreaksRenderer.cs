@@ -5,7 +5,7 @@ using System.Text;
 using System.Drawing;
 using DEETU.Tool;
 
-namespace DEETU.Renderer
+namespace DEETU.Core
 {
     public class GeoClassBreaksRenderer : GeoRenderer
     {

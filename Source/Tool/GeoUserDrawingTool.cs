@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Drawing;
 using DEETU.Geometry;
-using DEETU.Renderer;
+using DEETU.Core;
 using DEETU.Map;
 
 namespace DEETU.Tool
