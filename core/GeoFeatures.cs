@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Collections;
 using System.Linq;
 using System.Text;
-using DEETU.geometry;
+using DEETU.Geometry;
 using System.Data;
 
 namespace DEETU.core

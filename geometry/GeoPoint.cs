@@ -1,98 +1,63 @@
-﻿/*****************************************
- * @file: GeoPoint 
- * @author:zwy
- * @date:2021-04-27
- * @说明：Point 类，用属性x,y读取点位置，不可set.
- *       用SetPos，SetX,SetY方法设置坐标
- * 
- * 
- * ****************************************/
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 using System.Text;
 
-namespace DEETU.geometry
+namespace DEETU.Geometry
 {
+    /// <summary>
+    /// 点
+    /// </summary>
     public class GeoPoint : GeoGeometry
     {
-        private double x_, y_;
-        //构造函数
-        public GeoPoint()
-        {
-            x_ = -1;
-            y_ = -1;
-        }
-        public GeoPoint(int x, int y)
-        {
-            this.x_ = x;
-            this.y_ = y;
-        }
-        public GeoPoint(GeoPoint other)
-        {
-            this.x_ = other.x;
-            this.y_ = other.y;
-        }
-        //属性
-        public double x
-        {
-            get { return x_; }
-        }
-        public double y
-        {
-            get { return y_; }
-        }
-        //基本方法
-        public void SetPos(double x, double y)
-        {
-            x_ = x;
-            y_ = y;
-        }
-        public void SetX(double x)
-        {
-            x_ = x;
-        }
-        public void SetY(double y)
-        {
-            y_ = y;
-        }
-        public override bool IsEmpty()
-        {
-            if (x_ == -1 && y_ == -1) return true;
-            return false;
-        }
-        public override GeoGeometry clone()
-        {
-            GeoPoint new_point = new GeoPoint(this);
-            return new_point;
-        }
-        //public override GeoArgs.GeoMbr GetMBR()
-        //{
-        //    GeoArgs.GeoMbr mbr = new GeoArgs.GeoMbr(x_, x_, y_, y_);
-        //    return mbr;
-        //}
-        public override bool Equals(ref GeoGeometry other)
-        {
-            if (other.GetGeometryType() == GeoArgs.GeoType.OGRPoint)
-            {
-                GeoPoint other_point = other as GeoPoint;
-                if (other_point.x == x_ && other_point.y_ == y) return true;
-            }
-            return false;
-        }
-        public override GeoArgs.GeoType GetGeometryType()
-        { return GeoArgs.GeoType.OGRPoint; }
+        #region 字段
+        private double _X;
+        private double _Y;
+        #endregion
 
-        //TODO
-        //空间关系查询
-        public override bool Intersects(ref GeoGeometry other)
+        #region 构造函数
+        public GeoPoint(double x, double y)
         {
-            return false;
+            this._X = x;
+            this._Y = y;
         }
-        public override bool Contains(ref GeoGeometry other)
+        public GeoPoint(GeoPoint p)
         {
-            return false;
+            _X = p.X;
+            _Y = p.Y;
         }
+        public GeoPoint() { }
+        #endregion
+
+        #region 属性
+        /// <summary>
+        /// 获取或设置X坐标
+        /// </summary>
+        public double X
+        {
+            get { return _X; }
+            set { _X = value; }
+        }
+
+        /// <summary>
+        /// 获取或设置Y坐标
+        /// </summary>
+        public double Y
+        {
+            get { return _Y; }
+            set { _Y = value; }
+        }
+        #endregion
+
+        #region 方法
+        /// <summary>
+        /// 复制
+        /// </summary>
+        /// <returns></returns>
+        override public object Clone()
+        {
+            return new GeoPoint(this);
+        }
+        #endregion
     }
 }
