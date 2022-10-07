@@ -54,6 +54,14 @@ namespace DEETU.Core
             get { return _DefaultSymbol; }
             set { _DefaultSymbol = value; }
         }
+        /// <summary>
+        /// 获取或设置字段
+        /// </summary>
+        public string Field
+        {
+            get { return _Field; }
+            set { _Field = value; }
+        }
 
         // 其他属性不再编写，自行扩充
 
@@ -172,6 +180,5 @@ namespace DEETU.Core
 
 
         #endregion
-
     }
 }
