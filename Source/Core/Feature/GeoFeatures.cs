@@ -23,6 +23,8 @@ namespace DEETU.Core
     {
         #region 字段
         private List<GeoFeature> _Features;
+        private GeoFields _Fields;
+        private DataTable _Database;// TODO:后面的所有操作都需要做同步！
         #endregion
 
         #region 构造函数
@@ -30,6 +32,18 @@ namespace DEETU.Core
         public GeoFeatures()
         {
             _Features = new List<GeoFeature>();
+            _Database = new DataTable();
+        }
+
+        public GeoFeatures(GeoFields fields)
+        {
+            _Features = new List<GeoFeature>();
+            _Fields = fields;
+            _Database = new DataTable();
+            for (int i = 0; i < _Fields.Count; i++)
+            {
+                _Database.Columns.Add(_Fields.GetItem(i).Name);
+            }
         }
 
         #endregion
@@ -41,6 +55,11 @@ namespace DEETU.Core
         public int Count
         {
             get { return _Features.Count; }
+        }
+
+        public GeoFields Fields
+        {
+            get { return _Fields; }
         }
 
         #endregion
@@ -139,6 +158,18 @@ namespace DEETU.Core
         public void Clear()
         {
             _Features.Clear();
+        }
+
+        public GeoFeature[] SelectByQuery(string queryString)
+        {
+            DataRow[] dataRows = _Database.Select(queryString);
+            GeoFeature[] result = new GeoFeature[dataRows.Length] ;
+            for (int i = 0; i < dataRows.Length; i++)
+            {
+                int index = (int)dataRows[i]["id"];
+                result[i] = GetItem(i);
+            }
+            return result;
         }
 
         #endregion
