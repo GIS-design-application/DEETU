@@ -22,7 +22,7 @@ namespace DEETU.Map
         private Color _FlashColor = Color.Green; // 闪烁要素的颜色
 
         // 运行时属性变量
-        private GeoLayers _Layers; // 图层集合
+        private GeoLayers _Layers = new GeoLayers(); // 图层集合
 
         // 模块级变量（优点是更适合描述一个软件的整体结构）
         private GeoMapDrawingReference mMapDrawingReference; // 地图屏幕坐标转换对象
@@ -50,8 +50,9 @@ namespace DEETU.Map
         {
             InitializeComponent();
             CreateMapDrawingReference();// 新建地图-屏幕坐标转换对象
-            ResizeBufferMap(); // 调整缓冲位图尺寸
             InitializeSymbols(); // 初始化符号
+            ResizeBufferMap(); // 调整缓冲位图尺寸
+
             mFlashControler.NeedDrawFlashShapes += MFlashControler_NeedDrawFlashShapes;
             mFlashControler.NeedClearFlashShapes += MFlashControler_NeedClearFlashShapes;
 
@@ -70,11 +71,12 @@ namespace DEETU.Map
             get { return _Layers; }
             set { _Layers = value; }
         }
-        
+
 
         /// <summary>
         /// 获取比例尺倒数
         /// </summary>
+        [Browsable(false)]
         public double MapScale
         {
             get
@@ -87,6 +89,7 @@ namespace DEETU.Map
         /// <summary>
         /// 获取控件左上点的X坐标
         /// </summary>
+        [Browsable(false)]
         public double MapOffsetX
         {
             get { return mMapDrawingReference.OffsetX; }
@@ -95,6 +98,7 @@ namespace DEETU.Map
         /// <summary>
         /// 获取控件左上点的Y坐标（地图坐标）
         /// </summary>
+        [Browsable(false)]
         public double MapOffsetY
         {
             get { return mMapDrawingReference.OffsetY; }
@@ -428,7 +432,7 @@ namespace DEETU.Map
         private void ResizeBufferMap()
         {
             Rectangle sClientRectangle = this.ClientRectangle;
-            if (sClientRectangle.IsEmpty == false)
+            if (sClientRectangle.Width > 0 && sClientRectangle.Height > 0 )
             {
                 if (sClientRectangle.Width != mBufferMap1.Width || sClientRectangle.Height != mBufferMap1.Height)
                 {
