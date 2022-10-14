@@ -31,6 +31,7 @@
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.tssCoordinate = new System.Windows.Forms.ToolStripStatusLabel();
             this.tssMapScale = new System.Windows.Forms.ToolStripStatusLabel();
+            this.geoMap = new DEETU.Map.GeoMapControl();
             this.btnLoadLayerFile = new System.Windows.Forms.Button();
             this.btnFullExtent = new System.Windows.Forms.Button();
             this.btnZoomIn = new System.Windows.Forms.Button();
@@ -49,7 +50,6 @@
             this.btnEndEdit = new System.Windows.Forms.Button();
             this.btnEndSketch = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.geoMap = new DEETU.Map.GeoMapControl();
             this.statusStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -197,7 +197,7 @@
             this.btnShowLabela.TabIndex = 10;
             this.btnShowLabela.Text = "显示注记";
             this.btnShowLabela.UseVisualStyleBackColor = true;
-            this.btnShowLabela.Click += new System.EventHandler(this.btnShowLabela_Click);
+            this.btnShowLabela.Click += new System.EventHandler(this.btnShowLabel_Click);
             // 
             // btnMovePolygon
             // 
@@ -290,7 +290,7 @@
             this.geoMap.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.geoMap.Dock = System.Windows.Forms.DockStyle.Fill;
             this.geoMap.FlashColor = System.Drawing.Color.Green;
-            this.geoMap.Layers = null;
+            //this.geoMap.Layers = null;
             this.geoMap.Location = new System.Drawing.Point(0, 0);
             this.geoMap.Name = "geoMap";
             this.geoMap.SelectionColor = System.Drawing.Color.Cyan;
