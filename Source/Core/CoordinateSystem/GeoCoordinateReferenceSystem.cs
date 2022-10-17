@@ -1,9 +1,10 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using DEETU.Core;
-
+using System.Diagnostics;
 
 namespace DEETU.Source.Core.CoordinateSystem
 {
@@ -13,8 +14,8 @@ namespace DEETU.Source.Core.CoordinateSystem
     public class GeoCoordinateReferenceSystem
     {
 
-        CrsName? _GeographicCrs;//可空枚举
-        CrsName? _ProjectedCrs;
+        GeographicCrs? _GeographicCrs;//可空枚举
+        ProjectedCrs? _ProjectedCrs;
         Dictionary<string, string> _Parameters;
         string _Unit;//单位
 
@@ -46,18 +47,29 @@ namespace DEETU.Source.Core.CoordinateSystem
                 else return CrsType.Projected;
             }
         }
+        public GeographicCrs? GeographicCrs
+        {
+            get { return _GeographicCrs; }
+        }
+        public ProjectedCrs? ProjectedCrs
+        {
+            get { return _ProjectedCrs; }
+        }
         #endregion
 
         #region 方法
-        public void SetParameters(string key, string value)
+        public void SetParameters(Dictionary<string, string> parameters)
         {
-            if(_Parameters.ContainsKey(key))
+            foreach (string key in parameters.Keys)
             {
-                _Parameters[key] = value;
+                if (_Parameters.ContainsKey(key) == false)
+                { 
+                    throw new Exception("parameter is not existing,please check crs name");
+                }
             }
-            else
+            foreach (string key in parameters.Keys)
             {
-                throw new Exception("parameter is not existing,please check crs name");
+                _Parameters[key] = parameters[key];
             }
         }
         /// <summary>
@@ -65,16 +77,39 @@ namespace DEETU.Source.Core.CoordinateSystem
         /// 使用前提示用户确认
         /// </summary>
         /// <param name="newCrs"></param>
-        public void ChangeCrs(CrsName? newProjectedCrs=null,CrsName? newGeographicCrs=null)
+        //TODO:对于投影坐标系的参数应该由两部分构成
+        public void ChangeCrs(GeographicCrs? newGeographicCrs=null, ProjectedCrs? newProjectedCrs = null)
         {
-            if(newGeographicCrs == CrsName.WebMercator)
+            if (newGeographicCrs == _GeographicCrs && newProjectedCrs == _ProjectedCrs)
+                return;
+            if(newGeographicCrs==null)
+                throw new Exception("Geographic Crs cannot be null");
+            if (newGeographicCrs == GeographicCrs.Beijing1954&&
+                newProjectedCrs==ProjectedCrs.WebMercator)
             {
-                _GeographicCrs = CrsName.WGS84;
-                _ProjectedCrs = CrsName.WebMercator;
+                throw new Exception("WebMercator can't be paired with Beijing1954");
             }
-            else if(newCrs==CrsName.Beijing1954||newCrs==CrsName.WGS84)
-            {
+            //更改参数
 
+            switch(newGeographicCrs)
+            {
+                case GeographicCrs.Beijing1954:
+                    if (newProjectedCrs == null)
+                        _Parameters = new Dictionary<string, string>(GeoCoordinateFactory.DefaultBeijing1954Param);
+                    else
+                        _Parameters = new Dictionary<string, string>(GeoCoordinateFactory.DefaultLambert2SPParam);
+                    break;
+                case GeographicCrs.WGS84:
+                    if (newProjectedCrs == null)
+                        _Parameters = new Dictionary<string, string>(GeoCoordinateFactory.DefaultWGS84Param);
+                    else if (newProjectedCrs == ProjectedCrs.WebMercator)
+                        _Parameters = new Dictionary<string, string>(GeoCoordinateFactory.DefaultWebMercatorParam);
+                    else
+                        _Parameters = new Dictionary<string, string>(GeoCoordinateFactory.DefaultLambert2SPParam);
+                    break;
+                default:
+                    Debug.Assert(false);
+                    break;
             }
         }
         #endregion

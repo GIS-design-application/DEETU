@@ -44,6 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Source\Core\CoordinateSystem\CoordinateTransform.cs" />
     <Compile Include="Source\Core\CoordinateSystem\GeoCoordinateFactory.cs" />
     <Compile Include="Source\Core\CoordinateSystem\GeoCoordinateReferenceSystem.cs" />
     <Compile Include="Source\Core\Feature\GeoFeature.cs" />

@@ -11,10 +11,13 @@ namespace DEETU.Source.Core.CoordinateSystem
     /// 投影类型枚举
     /// 共支持4种坐标系统，2种地理坐标系，2种投影坐标系
     /// </summary>
-    public enum CrsName
+    public enum GeographicCrs
     {
         WGS84,
         Beijing1954,
+    }
+    public enum ProjectedCrs
+    {
         WebMercator,
         Lambert2SP
     }
@@ -30,33 +33,51 @@ namespace DEETU.Source.Core.CoordinateSystem
     public class GeoCoordinateFactory
     {
         //存储四种坐标系的默认参数
-        static Dictionary<string,string> _WGS84Param;
-        static Dictionary<string, string> _Beijing1954Param;
-        static Dictionary<string, string> _WebMercatorParam;
-        static Dictionary<string, string> _Lambert2SPParam;
+        public static readonly Dictionary<string,string> DefaultWGS84Param ;
+        public static readonly Dictionary<string, string> DefaultBeijing1954Param;
+        public static readonly Dictionary<string, string> DefaultWebMercatorParam;
+        public static readonly Dictionary<string, string> DefaultLambert2SPParam;
 
 
-        public void LambertToGeographic(GeoPoints points)
+        public static void LambertToGeographic(
+            GeoPoints points,
+            Dictionary<string,string> lambertParam,
+            Dictionary<string,string> geographicParam)
         {
 
         }
-        public void GeographicToLambert(GeoPoints points)
+        public static void GeographicToLambert(
+            GeoPoints points,
+            Dictionary<string, string> geographicParam,
+            Dictionary<string, string> lambertParam)
         {
 
         }
-        public void WebMercatorToWGS84(GeoPoints points)
+        public static void WebMercatorToWGS84(
+            GeoPoints points,
+            Dictionary<string, string> webMercatorParam,
+            Dictionary<string, string> WGS84Param)
         {
 
         }
-        public void WGS84ToWebMercator(GeoPoints points)
+        public static void WGS84ToWebMercator(
+            GeoPoints points,
+            Dictionary<string, string> WGS84Param,
+            Dictionary<string, string> webMercatorParam)
         {
 
         }
-        public void WGS84ToBeijing1954(GeoPoints points)
+        public static void WGS84ToBeijing1954(
+            GeoPoints points,
+            Dictionary<string, string> Beijing1954Param,
+            Dictionary<string, string> WGS84Param)
         {
 
         }
-        public void Beijing1954ToWGS84(GeoPoints points)
+        public static void Beijing1954ToWGS84(
+            GeoPoints points,
+            Dictionary<string, string> WGS84Param,
+            Dictionary<string, string> Beijing1954Param)
         {
 
         }
