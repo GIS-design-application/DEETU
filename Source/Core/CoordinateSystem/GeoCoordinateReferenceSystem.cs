@@ -14,8 +14,8 @@ namespace DEETU.Source.Core.CoordinateSystem
     public class GeoCoordinateReferenceSystem
     {
 
-        GeographicCrs? _GeographicCrs;//可空枚举
-        ProjectedCrs? _ProjectedCrs;
+        GeographicCrsType? _GeographicCrs;//可空枚举
+        ProjectedCrsType? _ProjectedCrs;
         Dictionary<string, string> _Parameters;
         string _Unit;//单位
 
@@ -47,11 +47,11 @@ namespace DEETU.Source.Core.CoordinateSystem
                 else return CrsType.Projected;
             }
         }
-        public GeographicCrs? GeographicCrs
+        public GeographicCrsType? GeographicCrs
         {
             get { return _GeographicCrs; }
         }
-        public ProjectedCrs? ProjectedCrs
+        public ProjectedCrsType? ProjectedCrs
         {
             get { return _ProjectedCrs; }
         }
@@ -78,14 +78,14 @@ namespace DEETU.Source.Core.CoordinateSystem
         /// </summary>
         /// <param name="newCrs"></param>
         //TODO:对于投影坐标系的参数应该由两部分构成
-        public void ChangeCrs(GeographicCrs? newGeographicCrs=null, ProjectedCrs? newProjectedCrs = null)
+        public void ChangeCrs(GeographicCrsType? newGeographicCrs=null, ProjectedCrsType? newProjectedCrs = null)
         {
             if (newGeographicCrs == _GeographicCrs && newProjectedCrs == _ProjectedCrs)
                 return;
             if(newGeographicCrs==null)
                 throw new Exception("Geographic Crs cannot be null");
-            if (newGeographicCrs == GeographicCrs.Beijing1954&&
-                newProjectedCrs==ProjectedCrs.WebMercator)
+            if (newGeographicCrs == GeographicCrsType.Beijing1954 &&
+                newProjectedCrs== ProjectedCrsType.WebMercator)
             {
                 throw new Exception("WebMercator can't be paired with Beijing1954");
             }
@@ -93,16 +93,16 @@ namespace DEETU.Source.Core.CoordinateSystem
 
             switch(newGeographicCrs)
             {
-                case GeographicCrs.Beijing1954:
+                case GeographicCrsType.Beijing1954:
                     if (newProjectedCrs == null)
                         _Parameters = new Dictionary<string, string>(GeoCoordinateFactory.DefaultBeijing1954Param);
                     else
                         _Parameters = new Dictionary<string, string>(GeoCoordinateFactory.DefaultLambert2SPParam);
                     break;
-                case GeographicCrs.WGS84:
+                case GeographicCrsType.WGS84:
                     if (newProjectedCrs == null)
                         _Parameters = new Dictionary<string, string>(GeoCoordinateFactory.DefaultWGS84Param);
-                    else if (newProjectedCrs == ProjectedCrs.WebMercator)
+                    else if (newProjectedCrs == ProjectedCrsType.WebMercator)
                         _Parameters = new Dictionary<string, string>(GeoCoordinateFactory.DefaultWebMercatorParam);
                     else
                         _Parameters = new Dictionary<string, string>(GeoCoordinateFactory.DefaultLambert2SPParam);

@@ -37,7 +37,7 @@ namespace DEETU.Source.Core.CoordinateSystem
         {
             if (_SrcCrs.Type == CrsType.Projected)
             {
-                if (_SrcCrs.ProjectedCrs == ProjectedCrs.Lambert2SP)
+                if (_SrcCrs.ProjectedCrs == ProjectedCrsType.Lambert2SP)
                 {
                     foreach (GeoMapLayer layer in _Layers)
                         for (int i = 0; i < layer.Features.Count; i++)
@@ -58,7 +58,7 @@ namespace DEETU.Source.Core.CoordinateSystem
             }
             if(_SrcCrs.GeographicCrs!=_DstCrs.GeographicCrs)
             {
-                if(_DstCrs.GeographicCrs==GeographicCrs.Beijing1954)
+                if(_DstCrs.GeographicCrs== GeographicCrsType.Beijing1954)
                 {
                     foreach (GeoMapLayer layer in _Layers)
                         for (int i = 0; i < layer.Features.Count; i++)
@@ -79,7 +79,7 @@ namespace DEETU.Source.Core.CoordinateSystem
             }
             if(_DstCrs.Type== CrsType.Projected)
             {
-                if (_DstCrs.ProjectedCrs == ProjectedCrs.Lambert2SP)
+                if (_DstCrs.ProjectedCrs == ProjectedCrsType.Lambert2SP)
                 {
                     foreach (GeoMapLayer layer in _Layers)
                         for (int i = 0; i < layer.Features.Count; i++)

@@ -11,12 +11,12 @@ namespace DEETU.Source.Core.CoordinateSystem
     /// 投影类型枚举
     /// 共支持4种坐标系统，2种地理坐标系，2种投影坐标系
     /// </summary>
-    public enum GeographicCrs
+    public enum GeographicCrsType
     {
         WGS84,
         Beijing1954,
     }
-    public enum ProjectedCrs
+    public enum ProjectedCrsType
     {
         WebMercator,
         Lambert2SP
