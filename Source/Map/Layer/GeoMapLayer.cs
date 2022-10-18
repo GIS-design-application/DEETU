@@ -285,7 +285,7 @@ namespace DEETU.Map
         /// <param name="symbol">要用户自己指定符号</param>
         internal void DrawSelectedFeatures(Graphics g, GeoRectangle extent, double mapScale, double dpm, double mpu, GeoSymbol symbol)
         {
-            for (int i = 0; i < _SelectedFeatures.Count - 1; ++i)
+            for (int i = 0; i < _SelectedFeatures.Count; i++)
             {
                 GeoFeature sFeature = _SelectedFeatures.GetItem(i);
                 if (IsFeatureInExtent(sFeature, extent) == true)

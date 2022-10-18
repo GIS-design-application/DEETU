@@ -244,34 +244,90 @@ namespace DEETU
             geoMap.RedrawMap();
         }
 
+        // 移动多边形
         private void btnMovePolygon_Click(object sender, EventArgs e)
         {
-
+            mMapOpStyle = 6;
         }
 
+        // 描绘多边形
         private void btnSketchPolygon_Click(object sender, EventArgs e)
         {
-
+            mMapOpStyle = 7;
         }
 
+        // 结束part
         private void btnEndPart_Click(object sender, EventArgs e)
         {
-
+            // 判断是否可以结束:三个点以上
+            if (mSketchingShape.Last().Count < 3)
+            {
+                return;
+            }
+            // 往list中增加一个多点对象
+            GeoPoints sPoints = new GeoPoints();
+            mSketchingShape.Add(sPoints);
+            geoMap.RedrawTrackingShapes();
         }
 
         private void btnEndSketch_Click(object sender, EventArgs e)
         {
+            // 结束描绘多边形
+            // 检验是否可以结束
+            if (mSketchingShape.Last().Count >=1 && mSketchingShape.Last() .Count < 3)
+            {
+                return;
+            }
+            if (mSketchingShape.Last().Count == 0)
+            {
+                mSketchingShape.Remove(mSketchingShape.Last());
+            }
+            // 如果去掉没修改完的, 删掉空的, 用户至少还输入了一个多边形, 那么就加入多边形图层.
+            if (mSketchingShape.Count > 0)
+            {
+                GeoMapLayer sLayer = GetPolygonLayer();
+               if (sLayer != null)
+                { // 定义一个复合多边形
+                    GeoMultiPolygon sMultipolygon = new GeoMultiPolygon();
+                    sMultipolygon.Parts.AddRange(mSketchingShape.ToArray());
+                    sMultipolygon.UpdateExtent(); // 记得只要多边形被修改就需要更新多边形的范围
+                    // 生成要素并加入图层
+                    GeoFeature sFeature = sLayer.GetNewFeature();
 
+                    // 将几何图形加入到feature之中, feature加入到图层
+                    sFeature.Geometry = sMultipolygon;
+                    sLayer.Features.Add(sFeature);
+                    sLayer.UpdateExtent(); // 记得图层修改之后也需要更新多边形的范围
+                }
+            }
+
+            // 初始化描绘图形
+            InitializeSketchingShape();
+            geoMap.RedrawMap();
         }
 
         private void btnEditPolygon_Click(object sender, EventArgs e)
         {
+            GeoMapLayer slayer = GetPolygonLayer();
+            if (slayer ==null )
+            {
+                return;
+            }
+            // 是否具有一个选择要素(不能没有, 不能有多个)
+            if (slayer.SelectedFeatures.Count != 1)
+                return;
+            GeoMultiPolygon sOriMultiPolygon = slayer.SelectedFeatures.GetItem(0).Geometry as GeoMultiPolygon;
+            GeoMultiPolygon sDesMultiPolygon = sOriMultiPolygon.Clone() as GeoMultiPolygon;
+            mEditingGeometry = sDesMultiPolygon;
 
+
+            mMapOpStyle = 8;
+            geoMap.RedrawTrackingShapes();
         }
 
         private void btnEndEdit_Click(object sender, EventArgs e)
         {
-
+            // 结束编辑
         }
         #endregion
 
@@ -301,7 +357,7 @@ namespace DEETU
             }
             else if (mMapOpStyle == 6)
             {
-
+                OnMoveShape_MouseDown(e);
             }
             else if (mMapOpStyle == 7)
             {
@@ -311,6 +367,36 @@ namespace DEETU
             {
 
             }
+        }
+
+        private void OnMoveShape_MouseDown(MouseEventArgs e)
+        {
+            if (e.Button != MouseButtons.Left)
+                return;
+            // 查找一个多边形图层
+            GeoMapLayer sLayer = GetPolygonLayer();
+            if (sLayer == null)
+            {
+                return;
+            }
+
+            // 判断是否有选中的要素
+            int sSelFeatureCount = sLayer.SelectedFeatures.Count;
+            if (sSelFeatureCount == 0)
+                return;
+            mMovingGeometries.Clear();
+            for(int i = 0; i < sSelFeatureCount; i++)
+            {
+                GeoMultiPolygon sOriPolygon = (GeoMultiPolygon)sLayer.SelectedFeatures
+                                                                    .GetItem(i).Geometry;
+                GeoMultiPolygon sDesPolygon = (GeoMultiPolygon) sOriPolygon.Clone();
+                mMovingGeometries.Add(sDesPolygon);
+
+            }
+
+            mStartMouseLocation = e.Location;
+            mIsMovingShapes = true;
+
         }
 
         private void OnIdentify_MouseDown(MouseEventArgs e)
@@ -376,16 +462,65 @@ namespace DEETU
             }
             else if (mMapOpStyle == 6)
             {
-
+                OnMoveShape_MouseMove(e);
             }
             else if (mMapOpStyle == 7)
             {
-
+                OnSketch_MouseMove(e);
             }
             else if (mMapOpStyle == 8) // 编辑多边形
             {
 
             }
+        }
+
+        private void OnSketch_MouseMove(MouseEventArgs e)
+        {
+            GeoPoint sCurPoint = geoMap.ToMapPoint(e.Location.X, e.Location.Y);
+            GeoPoints sLastPart = mSketchingShape.Last();
+            int sPointCount = sLastPart.Count;
+            if (sPointCount == 0)
+                return;
+            else if (sPointCount == 1)
+            {
+                // 只有一个顶点, 那么只绘制一个橡皮筋
+                geoMap.Refresh();
+                GeoPoint sFirstPoint = sLastPart.GetItem(0);
+                GeoUserDrawingTool sDrawingTool = geoMap.GetDrawingTool();
+                sDrawingTool.DrawLine(sFirstPoint, sCurPoint, mElasticSymbol);
+
+            }
+            else
+
+            {
+                // 具有多个顶点, 绘制两条橡皮筋
+                geoMap.Refresh();
+                GeoPoint sFirstPoint = sLastPart.GetItem(0);
+                GeoPoint sLastPoint = sLastPart.GetItem(sPointCount - 1);
+                GeoUserDrawingTool sDrawingTool = geoMap.GetDrawingTool();
+                sDrawingTool.DrawLine(sFirstPoint, sCurPoint, mElasticSymbol);
+                sDrawingTool.DrawLine(sLastPoint, sCurPoint, mElasticSymbol);
+
+            }
+        }
+
+        private void OnMoveShape_MouseMove(MouseEventArgs e)
+        {
+            if (mIsMovingShapes== false)
+            {
+                return;
+            }
+            // 修改移动图形的坐标
+            double sDeltaX = geoMap.ToMapDistance(e.Location.X - mStartMouseLocation.X);
+            double sDeltaY = geoMap.ToMapDistance(mStartMouseLocation.Y - e.Location.Y);
+            ModifyMovingGeometries(sDeltaX, sDeltaY);
+
+            geoMap.Refresh();
+            // 绘制移动图形
+            DrawMovingShapes();
+
+            // 重新设置鼠标移动开始位置
+            mStartMouseLocation = e.Location;
         }
 
         private void OnIdentify_MouseMove(MouseEventArgs e)
@@ -453,7 +588,7 @@ namespace DEETU
             }
             else if (mMapOpStyle == 6)
             {
-
+                OnMoveShape_MouseUp(e);
             }
             else if (mMapOpStyle == 7)
             {
@@ -465,6 +600,21 @@ namespace DEETU
             }
         }
 
+
+        private void OnMoveShape_MouseUp(MouseEventArgs e)
+        {
+            if (mIsMovingShapes == false)
+                return;
+            mIsMovingShapes = false;
+            // 做相应的修改数据操作, 不再编写
+            // 就是将正在移动的图形用clone的替换
+            
+
+            // 重新绘制地图
+            geoMap.RedrawMap();
+
+            mMovingGeometries.Clear();
+        }
         private void OnIdentify_MouseUp(MouseEventArgs e)
         {
             if (mIsInIdentify == false)
@@ -535,6 +685,25 @@ namespace DEETU
 
         private void geoMap_MouseClick(object sender, MouseEventArgs e)
         {
+            if (mMapOpStyle == 7)
+            {
+                OnSketch_MouseClick(e);
+            }
+        }
+
+        private void OnSketch_MouseClick(MouseEventArgs e)
+        {
+            // 将屏幕坐标转化为地图坐标并加入描绘图形
+            GeoPoint sPoint = geoMap.ToMapPoint(e.Location.X, e.Location.Y);
+
+            // 在描绘多边形的最后一项加一个点
+
+            mSketchingShape.Last().Add(sPoint);
+
+            geoMap.RedrawTrackingShapes();
+            // 实现持久图形的绘制
+
+            
 
         }
         private void geoMap_MouseWheel(object sender, MouseEventArgs e)
@@ -557,9 +726,11 @@ namespace DEETU
 
         }
 
-        private void geoMap_AfterTrackingLayerDraw(object sender, Tool.GeoUserDrawingTool drawTool)
+        // 持久绘制图形(用于绘制描绘多边形的图形)
+        private void geoMap_AfterTrackingLayerDraw(object sender, GeoUserDrawingTool drawTool)
         {
-
+            DrawSketchingShapes(drawTool);
+            DrawEditingShapes(drawTool);
         }
         #endregion
 
