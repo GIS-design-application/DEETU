@@ -36,6 +36,7 @@ namespace DEETU
                                      // 6: 移动, 7: 描绘, 8: 编辑
         private PointF mStartMouseLocation; // 拉框时的起点
         private bool mIsInZoomIn = false; // 是否在放大
+        private bool mIsInZoomOut = false; // 是否在缩小
         private bool mIsInPan = false; // 是否在漫游 
         private bool mIsInIdentify = false; // 是否在查询
         private bool mIsInSelect = false;
@@ -44,11 +45,7 @@ namespace DEETU
         private List<GeoGeometry> mMovingGeometries = new List<GeoGeometry>(); // 正在移动的图形集合
         private GeoGeometry mEditingGeometry; // 正在编辑的图形
         private GeoPoint mEditingPoint, mEditingLeftPoint, mEditingRightPoint; // 正在编辑的图形中被鼠标碰到的点
-        
         private List<GeoPoints> mSketchingShape; // 正在描绘的图形, 用一个多点集合存储
-
-
-
 
 
         #endregion
@@ -340,7 +337,7 @@ namespace DEETU
             }
             else if (mMapOpStyle == 2)
             {
-
+                OnZoomOut_MouseDown(e);
             }
             else if (mMapOpStyle == 3)
             {
@@ -493,7 +490,15 @@ namespace DEETU
             {
                 mStartMouseLocation = e.Location;
                 mIsInZoomIn = true;
+            }
+        }
 
+        private void OnZoomOut_MouseDown(MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                mStartMouseLocation = e.Location;
+                mIsInZoomOut = true;
             }
         }
 
@@ -507,7 +512,7 @@ namespace DEETU
             }
             else if (mMapOpStyle == 2)
             {
-
+                OnZoomOut_MouseMove(e);
             }
             else if (mMapOpStyle == 3)
             {
@@ -625,7 +630,16 @@ namespace DEETU
 
         private void OnPan_MouseMove(MouseEventArgs e)
         {
+            if (mIsInPan == false)
+            {
+                return;
+            }
+            geoMap.Refresh();
+            GeoPoint point1 = geoMap.ToMapPoint(e.Location.X, e.Location.Y);
+            GeoPoint point2 = geoMap.ToMapPoint(mStartMouseLocation.X, mStartMouseLocation.Y);
 
+            GeoUserDrawingTool drawingTool = geoMap.GetDrawingTool();
+            drawingTool.DrawLine(point1, point2, mElasticSymbol);
         }
 
         private void OnZoomIn_MouseMove(MouseEventArgs e)
@@ -641,6 +655,18 @@ namespace DEETU
 
         }
 
+        private void OnZoomOut_MouseMove(MouseEventArgs e)
+        {
+            if (mIsInZoomOut == false)
+            {
+                return;
+            }
+            geoMap.Refresh();
+            GeoRectangle sRect = GetMapRectByTwoPoints(mStartMouseLocation, e.Location);
+            GeoUserDrawingTool sDrawingTool = geoMap.GetDrawingTool();
+            sDrawingTool.DrawRectangle(sRect, mZoomBoxSymbol);
+        }
+
         private void geoMap_MouseUp(object sender, MouseEventArgs e)
         {
             if (mMapOpStyle == 1)
@@ -649,7 +675,7 @@ namespace DEETU
             }
             else if (mMapOpStyle == 2)
             {
-
+                OnZoomOut_MouseUp(e);
             }
             else if (mMapOpStyle == 3)
             {
@@ -785,6 +811,16 @@ namespace DEETU
                 GeoRectangle sBox = GetMapRectByTwoPoints(mStartMouseLocation, e.Location);
                 geoMap.ZoomToExtent(sBox);
             }
+        }
+
+        private void OnZoomOut_MouseUp(MouseEventArgs e)
+        {
+            if (mIsInZoomOut == false)
+                return;
+            mIsInZoomOut = false;
+
+            GeoPoint sPoint = geoMap.ToMapPoint(mStartMouseLocation.X, mStartMouseLocation.Y);
+            geoMap.ZoomByCenter(sPoint, 1 / mZoomRatioFixed);
         }
 
         private void geoMap_MouseClick(object sender, MouseEventArgs e)
