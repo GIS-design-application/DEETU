@@ -57,10 +57,17 @@
     <Compile Include="Source\Core\Geometry\GeoPoints.cs" />
     <Compile Include="Source\Core\Geometry\GeoRectangle.cs" />
     <Compile Include="Source\Core\Geometry\GeoShape.cs" />
+    <Compile Include="Source\Testing\MultiFormApplictionStart.cs" />
     <Compile Include="Source\IO\GeoDatabase.cs" />
     <Compile Include="Source\IO\GeoDataIOTools.cs" />
     <Compile Include="Source\IO\GeoDataTable.cs" />
     <Compile Include="Source\Map\GeoShapeFlashControler.cs" />
+    <Compile Include="Source\Testing\DebugForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Source\Testing\DebugForm.Designer.cs">
+      <DependentUpon>DebugForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Source\Window\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -94,6 +101,9 @@
     <Compile Include="Source\Tool\GeoUserDrawingTool.cs" />
     <EmbeddedResource Include="Source\Map\GeoMapControl.resx">
       <DependentUpon>GeoMapControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Source\Testing\DebugForm.resx">
+      <DependentUpon>DebugForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Source\Window\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>

@@ -9,6 +9,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+using DEETU.Testing;
 
 namespace DEETU
 {
@@ -1008,6 +1009,21 @@ namespace DEETU
             }
         }
 
+        private void MainForm_KeyDown(object sender, KeyEventArgs e)
+        {
+#if DEBUG
+
+            logging = e.KeyValue.ToString() + " key down";
+#endif
+        }
+
+        private void MainForm_KeyUp(object sender, KeyEventArgs e)
+        {
+#if DEBUG
+            logging = e.KeyValue.ToString() + " key up";
+#endif
+        }
+
         //绘制正在描绘的图形
         private void DrawSketchingShapes(GeoUserDrawingTool drawingTool)
         {
@@ -1055,5 +1071,26 @@ namespace DEETU
 
 
         #endregion
+        
+#if DEBUG
+        private string logging
+        {
+            get
+            {
+                return _logging.Text;
+            }
+            set
+            {
+                _logging.AppendText("\r\n" + System.DateTime.Now.ToString("HH:mm:ss") + "  " + value);
+                _logging.ScrollToCaret();
+            }
+        }
+        private TextBox _logging = null;
+        public void SetDebugForm(DebugForm form)
+        {
+            _logging = form.logging;
+
+        }
+#endif
     }
 }
