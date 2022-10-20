@@ -16,7 +16,7 @@ namespace DEETU.Map
         private GeoGeometryTypeConstant _ShapeType = GeoGeometryTypeConstant.Point; // 要素几何类型
         private string _Name = "Untitled"; // 图层名称
         private bool _Visible = true; // 图层是否可见
-        private bool _Selectable = true; // 是否可以执行选择操作
+        private bool _Selectable = true; // 是否可以执行选择操作 //TODO:这里需要注意, 在增加图层管理之后, 这个变量决定了图层是否可以被选择
         private string _Description = ""; // 描述
         private bool _IsDirty = false; // 是否被修改过
         private GeoFields _AttributeFields = new GeoFields(); // 字段集合

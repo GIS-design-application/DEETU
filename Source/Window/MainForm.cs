@@ -44,6 +44,7 @@ namespace DEETU
         private bool mIsInSelect = false;
         private bool mIsMovingShapes = false; // 是否正在移动图形
         private List<GeoGeometry> mMovingGeometries = new List<GeoGeometry>(); // 正在移动的图形集合
+        private List<int> mMovingGeometriesIndex = new List<int>();
         private GeoGeometry mEditingGeometry; // 正在编辑的图形
         private List<GeoPoints> mSketchingShape; // 正在描绘的图形, 用一个多点集合存储
         
@@ -58,9 +59,6 @@ namespace DEETU
         {
             InitializeComponent();
             geoMap.MouseWheel += geoMap_MouseWheel;
-
-
-           
         }
 
 
@@ -606,7 +604,14 @@ namespace DEETU
             if (mIsMovingShapes == false)
                 return;
             mIsMovingShapes = false;
+            GeoMapLayer selectLayer = geoMap.Layers.getSelectableLayer();
             // 做相应的修改数据操作, 不再编写
+            for (int i = 0; i < mMovingGeometries.Count; i++)
+            {
+                GeoGeometry geometry = mMovingGeometries[i];
+                GeoFeature feature = geoMap.Layers.getSelectableLayer().SelectedFeatures.GetItem(i);
+                feature.Replace(geometry);
+            }
             // 就是将正在移动的图形用clone的替换
             
 
