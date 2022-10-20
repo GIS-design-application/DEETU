@@ -1,17 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.IO;
-using System.Windows.Forms;
-using DEETU.Core;
+﻿using DEETU.Core;
 using DEETU.Geometry;
+using DEETU.IO;
 using DEETU.Map;
 using DEETU.Tool;
-using DEETU.IO;
+using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
+using System.Linq;
+using System.Windows.Forms;
 
 namespace DEETU
 {
@@ -43,17 +40,19 @@ namespace DEETU
         private bool mIsInIdentify = false; // 是否在查询
         private bool mIsInSelect = false;
         private bool mIsMovingShapes = false; // 是否正在移动图形
+        private bool mIsEditingShapes = false; // 是否正在编辑图形
         private List<GeoGeometry> mMovingGeometries = new List<GeoGeometry>(); // 正在移动的图形集合
-        private List<int> mMovingGeometriesIndex = new List<int>();
         private GeoGeometry mEditingGeometry; // 正在编辑的图形
-        private List<GeoPoints> mSketchingShape; // 正在描绘的图形, 用一个多点集合存储
+        private GeoPoint mEditingPoint, mEditingLeftPoint, mEditingRightPoint; // 正在编辑的图形中被鼠标碰到的点
         
+        private List<GeoPoints> mSketchingShape; // 正在描绘的图形, 用一个多点集合存储
+
 
 
 
 
         #endregion
-        
+
 
         public MainForm()
         {
@@ -80,7 +79,7 @@ namespace DEETU
             // 获取文件名
             OpenFileDialog sDialog = new OpenFileDialog();
             string sFileName = "";
-            if(sDialog.ShowDialog() == DialogResult.OK)
+            if (sDialog.ShowDialog() == DialogResult.OK)
             {
                 sFileName = sDialog.FileName;
                 sDialog.Dispose();
@@ -100,7 +99,7 @@ namespace DEETU
                 if (geoMap.Layers.Count == 1)
                 {
                     geoMap.FullExtent();
-                } 
+                }
                 else
                 {
                     geoMap.RedrawMap();
@@ -108,7 +107,7 @@ namespace DEETU
                 sStream.Dispose();
                 sr.Dispose();
             }
-            catch(Exception error)
+            catch (Exception error)
             {
                 MessageBox.Show(error.ToString());
             }
@@ -171,7 +170,7 @@ namespace DEETU
             sRenderer.Field = "名称";
             List<string> sValues = new List<string>();
             int sFeatureCount = sLayer.Features.Count;
-            for (int i= 0;i < sFeatureCount; i++)
+            for (int i = 0; i < sFeatureCount; i++)
             {
                 string svalue = (string)sLayer.Features.GetItem(i).Attributes.GetItem(0); // 这里使用0 假定第一个就是字符串的名称
                 sValues.Add(svalue);
@@ -180,7 +179,7 @@ namespace DEETU
             sValues = sValues.Distinct().ToList();
             // 生成符号
             int sValueCount = sValues.Count;
-            for (int i =0; i < sValueCount; i++)
+            for (int i = 0; i < sValueCount; i++)
             {
                 GeoSimpleFillSymbol sSymbol = new GeoSimpleFillSymbol();
                 sRenderer.AddUniqueValue(sValues[i], sSymbol);
@@ -204,7 +203,7 @@ namespace DEETU
             List<double> sValues = new List<double>();
             int sFeatureCount = sLayer.Features.Count;
             int sFieldIndex = sLayer.AttributeFields.FindField(sRenderer.Field);
-            for (int i = 0; i <sFeatureCount; i++)
+            for (int i = 0; i < sFeatureCount; i++)
             {
                 double sValue = (float)sLayer.Features.GetItem(i).Attributes.GetItem(sFieldIndex);
                 sValues.Add(sValue);
@@ -272,7 +271,7 @@ namespace DEETU
         {
             // 结束描绘多边形
             // 检验是否可以结束
-            if (mSketchingShape.Last().Count >=1 && mSketchingShape.Last() .Count < 3)
+            if (mSketchingShape.Last().Count >= 1 && mSketchingShape.Last().Count < 3)
             {
                 return;
             }
@@ -284,7 +283,7 @@ namespace DEETU
             if (mSketchingShape.Count > 0)
             {
                 GeoMapLayer sLayer = GetPolygonLayer();
-               if (sLayer != null)
+                if (sLayer != null)
                 { // 定义一个复合多边形
                     GeoMultiPolygon sMultipolygon = new GeoMultiPolygon();
                     sMultipolygon.Parts.AddRange(mSketchingShape.ToArray());
@@ -307,7 +306,7 @@ namespace DEETU
         private void btnEditPolygon_Click(object sender, EventArgs e)
         {
             GeoMapLayer slayer = GetPolygonLayer();
-            if (slayer ==null )
+            if (slayer == null)
             {
                 return;
             }
@@ -318,17 +317,15 @@ namespace DEETU
             GeoMultiPolygon sDesMultiPolygon = sOriMultiPolygon.Clone() as GeoMultiPolygon;
             mEditingGeometry = sDesMultiPolygon;
 
-
             mMapOpStyle = 8;
             geoMap.RedrawTrackingShapes();
         }
 
         private void btnEndEdit_Click(object sender, EventArgs e)
         {
-            // 结束编辑
+            // 结束编辑, 将图形写入吧应该
         }
         #endregion
-
 
         #region 地图控件事件处理
         private void geoMap_MouseDown(object sender, MouseEventArgs e)
@@ -339,7 +336,7 @@ namespace DEETU
             }
             else if (mMapOpStyle == 2)
             {
-                
+
             }
             else if (mMapOpStyle == 3)
             {
@@ -363,8 +360,70 @@ namespace DEETU
             }
             else if (mMapOpStyle == 8)
             {
-
+                OnEditShape_MouseDown(e);
             }
+        }
+
+        private void OnEditShape_MouseDown(MouseEventArgs e)
+        {
+            if (e.Button != MouseButtons.Left)
+            {
+                return;
+            }
+
+            GeoMultiPolygon editingPolygon = mEditingGeometry as GeoMultiPolygon; // 目前只考虑选择一个多边形
+
+            // 找到鼠标点击后对应的点
+            GeoPoint mousePoint = geoMap.ToMapPoint(e.Location.X, e.Location.Y);
+            double tolerance = geoMap.ToMapDistance(mSelectingTolerance);
+
+            // 如果鼠标的点并不在多边形附近, 直接放弃
+            if (!editingPolygon.GetEnvelope().IsInside(mousePoint, tolerance))
+            {
+                return;
+            }
+
+            // 遍历所有点集
+            for (int i = 0; i < editingPolygon.Parts.Count; i++)
+            {
+                // 对每一个点集判断是否包含鼠标的范围
+                GeoPoints points = editingPolygon.Parts.GetItem(i);
+                if (!points.GetEnvelope().IsInside(mousePoint, tolerance))
+                {
+                    continue;
+                }
+                else
+                {
+                    // 遍历每一个点
+                    for (int j = 0; j < points.Count; j++)
+                    {
+                        if (GeoMapTools.IsPointOnPoint(points.GetItem(j), mousePoint, tolerance))
+                        {
+                            mEditingPoint = points.GetItem(j);
+                            if (j == 0)
+                            {
+                                mEditingLeftPoint = points.GetItem(points.Count - 1);
+                                mEditingRightPoint = points.GetItem(j + 1);
+                            }
+                            else if (j == points.Count - 1)
+                            {
+                                mEditingLeftPoint = points.GetItem(j - 1);
+                                mEditingRightPoint = points.GetItem(0);
+                            }
+                            else
+                            {
+                                mEditingLeftPoint = points.GetItem(j - 1);
+                                mEditingRightPoint = points.GetItem(j + 1);
+                            }
+                            mIsEditingShapes = true;
+                            return;
+                        }
+                    }
+                }
+            }
+
+            // 没有找到好奇怪, 应该是多边形在附近但是和点离得也不近, 有点蠢
+            return;
         }
 
         private void OnMoveShape_MouseDown(MouseEventArgs e)
@@ -383,11 +442,11 @@ namespace DEETU
             if (sSelFeatureCount == 0)
                 return;
             mMovingGeometries.Clear();
-            for(int i = 0; i < sSelFeatureCount; i++)
+            for (int i = 0; i < sSelFeatureCount; i++)
             {
                 GeoMultiPolygon sOriPolygon = (GeoMultiPolygon)sLayer.SelectedFeatures
                                                                     .GetItem(i).Geometry;
-                GeoMultiPolygon sDesPolygon = (GeoMultiPolygon) sOriPolygon.Clone();
+                GeoMultiPolygon sDesPolygon = (GeoMultiPolygon)sOriPolygon.Clone();
                 mMovingGeometries.Add(sDesPolygon);
 
             }
@@ -399,7 +458,7 @@ namespace DEETU
 
         private void OnIdentify_MouseDown(MouseEventArgs e)
         {
-            if (e.Button == MouseButtons.Left )
+            if (e.Button == MouseButtons.Left)
             {
                 mStartMouseLocation = e.Location;
                 mIsInIdentify = true;
@@ -415,7 +474,6 @@ namespace DEETU
             }
         }
 
-
         private void OnPan_MouseDown(MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
@@ -424,6 +482,7 @@ namespace DEETU
                 mIsInPan = true;
             }
         }
+
         private void OnZoomIn_MouseDown(MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
@@ -468,8 +527,24 @@ namespace DEETU
             }
             else if (mMapOpStyle == 8) // 编辑多边形
             {
-
+                OnEditShape_MouseMove(e);
             }
+        }
+
+        // 移动一个点, 两边的点都需要移动一下
+        private void OnEditShape_MouseMove(MouseEventArgs e)
+        {
+            if (mIsEditingShapes == false)
+            {
+                return;
+            }
+            // 获得此时鼠标位置
+            GeoPoint sCurPoint = geoMap.ToMapPoint(e.Location.X, e.Location.Y);
+
+            geoMap.Refresh();
+            GeoUserDrawingTool sDrawingTool = geoMap.GetDrawingTool();
+            sDrawingTool.DrawLine(sCurPoint, mEditingLeftPoint, mElasticSymbol);
+            sDrawingTool.DrawLine(sCurPoint, mEditingRightPoint, mElasticSymbol);
         }
 
         private void OnSketch_MouseMove(MouseEventArgs e)
@@ -504,7 +579,7 @@ namespace DEETU
 
         private void OnMoveShape_MouseMove(MouseEventArgs e)
         {
-            if (mIsMovingShapes== false)
+            if (mIsMovingShapes == false)
             {
                 return;
             }
@@ -594,10 +669,29 @@ namespace DEETU
             }
             else if (mMapOpStyle == 8)
             {
-
+                OnEditShape_MouseUp(e);
             }
         }
 
+        private void OnEditShape_MouseUp(MouseEventArgs e)
+        {
+            if (mIsEditingShapes == false)
+            {
+                return;
+            }
+            mIsEditingShapes = false;
+            // 保存目前鼠标指向的点
+            GeoPoint sCurPoint = geoMap.ToMapPoint(e.Location.X, e.Location.Y);
+
+            // 用现在的点替换编辑的点
+            mEditingPoint.X = sCurPoint.X;
+            mEditingPoint.Y = sCurPoint.Y;
+
+
+            // 重绘地图
+            geoMap.RedrawMap();
+            
+        }
 
         private void OnMoveShape_MouseUp(MouseEventArgs e)
         {
@@ -613,13 +707,14 @@ namespace DEETU
                 feature.Replace(geometry);
             }
             // 就是将正在移动的图形用clone的替换
-            
+
 
             // 重新绘制地图
             geoMap.RedrawMap();
 
             mMovingGeometries.Clear();
         }
+
         private void OnIdentify_MouseUp(MouseEventArgs e)
         {
             if (mIsInIdentify == false)
@@ -631,7 +726,6 @@ namespace DEETU
             if (geoMap.Layers.Count == 0)
             {
                 return;
-
             }
             else
             {
@@ -642,7 +736,7 @@ namespace DEETU
                 if (sSelFeatureCount > 0)
                 {
                     GeoGeometry[] sGeometryies = new GeoGeometry[sSelFeatureCount];
-                    for (int i =0; i < sSelFeatureCount; i++)
+                    for (int i = 0; i < sSelFeatureCount; i++)
                     {
                         sGeometryies[i] = sFeatures.GetItem(i).Geometry;
                     }
@@ -650,6 +744,7 @@ namespace DEETU
                 }
             }
         }
+
         private void OnSelect_MouseUp(MouseEventArgs e)
         {
             if (mIsInSelect == false)
@@ -707,10 +802,8 @@ namespace DEETU
 
             geoMap.RedrawTrackingShapes();
             // 实现持久图形的绘制
-
-            
-
         }
+
         private void geoMap_MouseWheel(object sender, MouseEventArgs e)
         {
             double sX = geoMap.ClientRectangle.Width / 2;
