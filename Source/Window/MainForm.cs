@@ -323,7 +323,11 @@ namespace DEETU
 
         private void btnEndEdit_Click(object sender, EventArgs e)
         {
-            // 结束编辑, 将图形写入吧应该
+            // 将mEditingGeometry中的多边形放回slayer中
+            GeoMapLayer slayer = GetPolygonLayer();
+            slayer.SelectedFeatures.GetItem(0).Geometry = mEditingGeometry;
+            geoMap.RedrawMap();
+            mEditingGeometry = null;
         }
         #endregion
 
