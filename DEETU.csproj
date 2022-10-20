@@ -67,6 +67,9 @@
     <Compile Include="Source\Core\Geometry\GeoPoints.cs" />
     <Compile Include="Source\Core\Geometry\GeoRectangle.cs" />
     <Compile Include="Source\Core\Geometry\GeoShape.cs" />
+    <Compile Include="Source\IO\GeoDatabase.cs" />
+    <Compile Include="Source\IO\GeoDataIOTools.cs" />
+    <Compile Include="Source\IO\GeoDataTable.cs" />
     <Compile Include="Source\Map\GeoShapeFlashControler.cs" />
     <Compile Include="Source\Window\MainPage.cs">
       <SubType>Form</SubType>
