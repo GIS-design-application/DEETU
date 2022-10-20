@@ -28,6 +28,7 @@ namespace DEETU
         private GeoSimpleFillSymbol mMovingPolygonSymbol; // 移动多边形的符号
         private GeoSimpleFillSymbol mEditingPolygonSymbol; // 编辑多边形的符号
         private GeoSimpleMarkerSymbol mEditingVertexSymbol; // 编辑手柄符号
+        private GeoSimpleMarkerSymbol mEditingVertexHoverSymbol; // 编辑手柄符号:hover
         private GeoSimpleLineSymbol mElasticSymbol; // 橡皮筋符号
 
 
@@ -323,8 +324,14 @@ namespace DEETU
             // 将mEditingGeometry中的多边形放回slayer中
             GeoMapLayer slayer = GetPolygonLayer();
             slayer.SelectedFeatures.GetItem(0).Geometry = mEditingGeometry;
-            geoMap.RedrawMap();
+            
+            // 取消编辑多边形
             mEditingGeometry = null;
+
+            mMapOpStyle = -1;
+
+            // 重绘
+            geoMap.RedrawMap();
         }
         #endregion
 
@@ -417,6 +424,7 @@ namespace DEETU
                                 mEditingRightPoint = points.GetItem(j + 1);
                             }
                             mIsEditingShapes = true;
+                            geoMap.RedrawTrackingShapes();
                             return;
                         }
                     }
@@ -549,6 +557,8 @@ namespace DEETU
             }
             // 获得此时鼠标位置
             GeoPoint sCurPoint = geoMap.ToMapPoint(e.Location.X, e.Location.Y);
+
+       
 
             geoMap.Refresh();
             GeoUserDrawingTool sDrawingTool = geoMap.GetDrawingTool();
@@ -717,6 +727,8 @@ namespace DEETU
             mEditingPoint.X = sCurPoint.X;
             mEditingPoint.Y = sCurPoint.Y;
 
+
+            (mEditingGeometry as GeoMultiPolygon).UpdateExtent();
 
             // 重绘地图
             geoMap.RedrawMap();
@@ -895,6 +907,10 @@ namespace DEETU
             mEditingVertexSymbol.Color = Color.DarkGreen;
             mEditingVertexSymbol.Style = GeoSimpleMarkerSymbolStyleConstant.SolidSquare;
             mEditingVertexSymbol.Size = 2;
+            mEditingVertexHoverSymbol = new GeoSimpleMarkerSymbol();
+            mEditingVertexHoverSymbol.Color = Color.Red;
+            mEditingVertexHoverSymbol.Style = GeoSimpleMarkerSymbolStyleConstant.SolidSquare;
+            mEditingVertexHoverSymbol.Size = 2;
             mElasticSymbol = new GeoSimpleLineSymbol();
             mElasticSymbol.Color = Color.DarkGreen;
             mElasticSymbol.Size = 0.52;
@@ -1034,6 +1050,8 @@ namespace DEETU
                 }
             }
         }
+
+
 
 
         #endregion
