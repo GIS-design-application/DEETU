@@ -7,16 +7,14 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using Sunny.UI;
-using DEETU.Source.Window;
 
-namespace DEETU
+namespace DEETU.Source.Window
 {
-    public partial class MainForm : UIMainFrame
+    public partial class MainPage : UIPage
     {
-        public MainForm()
+        public MainPage()
         {
             InitializeComponent();
-            AddPage(new MainPage());
         }
     }
 }
