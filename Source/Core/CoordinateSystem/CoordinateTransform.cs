@@ -5,6 +5,7 @@ using System.Text;
 using DEETU.Core;
 using DEETU.Geometry;
 using DEETU.Map;
+using DEETU.Tool;
 
 namespace DEETU.Source.Core.CoordinateSystem
 {
@@ -33,8 +34,34 @@ namespace DEETU.Source.Core.CoordinateSystem
         #endregion
 
         #region 方法
+
+        public List<GeoPoints> GetGeometryFromFeature(GeoFeature feature)
+        {
+            List < GeoPoints > points= new List<GeoPoints>();
+            if (feature.ShapeType==GeoGeometryTypeConstant.Point)
+            {
+                List<GeoPoint> tmp_points = new List<GeoPoint>();
+                tmp_points.Add((feature.Geometry) as GeoPoint);
+                points.Add(new GeoPoints(tmp_points));
+            }
+            else if(feature.ShapeType == GeoGeometryTypeConstant.MultiPolyline)
+            {
+                points.AddRange((feature.Geometry as GeoMultiPolyline).Parts.Parts);
+
+            }
+            else if (feature.ShapeType == GeoGeometryTypeConstant.MultiPolygon)
+            {
+                points.AddRange((feature.Geometry as GeoMultiPolygon).Parts.Parts);
+            }
+            return points;
+        }
+
+        /// <summary>
+        /// 坐标系转化函数
+        /// </summary>
         public void Transform()
         {
+            if (_SrcCrs == _DstCrs) return;
             if (_SrcCrs.Type == CrsType.Projected)
             {
                 if (_SrcCrs.ProjectedCrs == ProjectedCrsType.Lambert2SP)
@@ -42,8 +69,11 @@ namespace DEETU.Source.Core.CoordinateSystem
                     foreach (GeoMapLayer layer in _Layers)
                         for (int i = 0; i < layer.Features.Count; i++)
                         {
-                            GeoGeometry geometry = layer.Features.GetItem(i).Geometry;
-                            GeoCoordinateFactory.LambertToGeographic();
+                            GeoCoordinateFactory.LambertToGeographic(
+                                GetGeometryFromFeature(layer.Features.GetItem(i)),
+                                _SrcCrs.ProjectedParameters,
+                                _SrcCrs.GeographicParameters
+                                );
                         }
                 }
                 else
@@ -51,8 +81,11 @@ namespace DEETU.Source.Core.CoordinateSystem
                     foreach (GeoMapLayer layer in _Layers)
                         for (int i = 0; i < layer.Features.Count; i++)
                         {
-                            GeoGeometry geometry = layer.Features.GetItem(i).Geometry;
-                            GeoCoordinateFactory.LambertToGeographic();
+                            GeoCoordinateFactory.WebMercatorToWGS84(
+                                GetGeometryFromFeature(layer.Features.GetItem(i)),
+                                _SrcCrs.ProjectedParameters,
+                                _SrcCrs.GeographicParameters
+                                );
                         }
                 }
             }
@@ -63,8 +96,12 @@ namespace DEETU.Source.Core.CoordinateSystem
                     foreach (GeoMapLayer layer in _Layers)
                         for (int i = 0; i < layer.Features.Count; i++)
                         {
-                            GeoGeometry geometry = layer.Features.GetItem(i).Geometry;
-                            GeoCoordinateFactory.WGS84ToBeijing1954();
+
+                            GeoCoordinateFactory.WGS84ToBeijing1954(
+                                GetGeometryFromFeature(layer.Features.GetItem(i)),
+                                _SrcCrs.GeographicParameters,
+                                _DstCrs.GeographicParameters
+                                );
                         }
                 }
                 else
@@ -72,8 +109,12 @@ namespace DEETU.Source.Core.CoordinateSystem
                     foreach (GeoMapLayer layer in _Layers)
                         for (int i = 0; i < layer.Features.Count; i++)
                         {
-                            GeoGeometry geometry = layer.Features.GetItem(i).Geometry;
-                            GeoCoordinateFactory.Beijing1954ToWGS84();
+
+                            GeoCoordinateFactory.Beijing1954ToWGS84(
+                                GetGeometryFromFeature(layer.Features.GetItem(i)),
+                                _SrcCrs.GeographicParameters,
+                                _DstCrs.GeographicParameters
+                                );
                         }
                 }
             }
@@ -84,8 +125,11 @@ namespace DEETU.Source.Core.CoordinateSystem
                     foreach (GeoMapLayer layer in _Layers)
                         for (int i = 0; i < layer.Features.Count; i++)
                         {
-                            GeoGeometry geometry = layer.Features.GetItem(i).Geometry;
-                            GeoCoordinateFactory.GeographicToLambert();
+                            GeoCoordinateFactory.GeographicToLambert(
+                                GetGeometryFromFeature(layer.Features.GetItem(i)),
+                                _DstCrs.GeographicParameters,
+                                _DstCrs.ProjectedParameters
+                                );
                         }
                 }
                 else
@@ -93,12 +137,20 @@ namespace DEETU.Source.Core.CoordinateSystem
                     foreach (GeoMapLayer layer in _Layers)
                         for (int i = 0; i < layer.Features.Count; i++)
                         {
-                            GeoGeometry geometry = layer.Features.GetItem(i).Geometry;
-                            GeoCoordinateFactory.WGS84ToWebMercator();
+
+                            GeoCoordinateFactory.WGS84ToWebMercator(
+                                GetGeometryFromFeature(layer.Features.GetItem(i)),
+                                _DstCrs.GeographicParameters,
+                                _DstCrs.ProjectedParameters
+                                );
                         }
                 }
             }
             //更改图层坐标系
+            foreach (GeoMapLayer layer in _Layers)
+            {
+                layer.Crs = _DstCrs;
+            }
         }
         #endregion
     }

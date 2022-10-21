@@ -33,49 +33,78 @@ namespace DEETU.Source.Core.CoordinateSystem
     public class GeoCoordinateFactory
     {
         //存储四种坐标系的默认参数
-        public static readonly Dictionary<string,string> DefaultWGS84Param ;
-        public static readonly Dictionary<string, string> DefaultBeijing1954Param;
-        public static readonly Dictionary<string, string> DefaultWebMercatorParam;
-        public static readonly Dictionary<string, string> DefaultLambert2SPParam;
+        private static Dictionary<string,string> _DefaultWGS84Param;
+        private static Dictionary<string, string> _DefaultBeijing1954Param;
+        private static Dictionary<string, string> _DefaultWebMercatorParam;
+        private static Dictionary<string, string> _DefaultLambert2SPParam;
+
+        static GeoCoordinateFactory()
+        {
+            _DefaultWGS84Param = new Dictionary<string, string>();
+            _DefaultBeijing1954Param = new Dictionary<string, string>();
+            _DefaultWebMercatorParam = new Dictionary<string, string>();
+            _DefaultLambert2SPParam = new Dictionary<string, string>();
+
+        }
+
+        #region 属性
+        public static Dictionary<string, string> DefaultWGS84Param
+        {
+            get { return _DefaultWGS84Param; }
+        }
+        public static Dictionary<string, string> DefaultBeijing1954Param
+        {
+            get { return _DefaultBeijing1954Param; }
+        }
+        public static Dictionary<string, string> DefaultWebMercatorParam
+        {
+            get { return _DefaultWebMercatorParam; }
+        }
+        public static Dictionary<string, string> DefaultLambert2SPParam
+        {
+            get { return _DefaultLambert2SPParam; }
+        }
+        #endregion
+        
 
 
         public static void LambertToGeographic(
-            GeoPoints points,
+            List<GeoPoints> points,
             Dictionary<string,string> lambertParam,
             Dictionary<string,string> geographicParam)
         {
 
         }
         public static void GeographicToLambert(
-            GeoPoints points,
+            List<GeoPoints> points,
             Dictionary<string, string> geographicParam,
             Dictionary<string, string> lambertParam)
         {
 
         }
         public static void WebMercatorToWGS84(
-            GeoPoints points,
+            List<GeoPoints> points,
             Dictionary<string, string> webMercatorParam,
             Dictionary<string, string> WGS84Param)
         {
 
         }
         public static void WGS84ToWebMercator(
-            GeoPoints points,
+            List<GeoPoints> points,
             Dictionary<string, string> WGS84Param,
             Dictionary<string, string> webMercatorParam)
         {
 
         }
-        public static void WGS84ToBeijing1954(
-            GeoPoints points,
+        public static void Beijing1954ToWGS84(
+            List<GeoPoints> points,
             Dictionary<string, string> Beijing1954Param,
             Dictionary<string, string> WGS84Param)
         {
 
         }
-        public static void Beijing1954ToWGS84(
-            GeoPoints points,
+        public static void WGS84ToBeijing1954(
+            List<GeoPoints> points,
             Dictionary<string, string> WGS84Param,
             Dictionary<string, string> Beijing1954Param)
         {

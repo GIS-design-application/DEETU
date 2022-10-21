@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using DEETU.Core;
 using System.Diagnostics;
+using System.CodeDom;
 
 namespace DEETU.Source.Core.CoordinateSystem
 {
@@ -16,7 +17,8 @@ namespace DEETU.Source.Core.CoordinateSystem
 
         GeographicCrsType? _GeographicCrs;//可空枚举
         ProjectedCrsType? _ProjectedCrs;
-        Dictionary<string, string> _Parameters;
+        Dictionary<string, string> _GeographicParameters;
+        Dictionary<string, string> _ProjectedParameters;
         string _Unit;//单位
 
         GeoCoordinateReferenceSystem()
@@ -24,8 +26,25 @@ namespace DEETU.Source.Core.CoordinateSystem
             _GeographicCrs = null;
             _ProjectedCrs = null;
             _Unit = null;
-            _Parameters = new Dictionary<string, string>();
+            _GeographicParameters = new Dictionary<string, string>();
+            _ProjectedParameters = new Dictionary<string, string>();
         }
+
+        #region 运算符重载
+        public static bool operator == (GeoCoordinateReferenceSystem crs1,GeoCoordinateReferenceSystem crs2)
+        {
+            if (crs1.GeographicCrs == crs2.GeographicCrs && crs1.ProjectedCrs == crs2.ProjectedCrs)
+                return true;
+            return false;
+        }
+        public static bool operator !=(GeoCoordinateReferenceSystem crs1, GeoCoordinateReferenceSystem crs2)
+        {
+            if (crs1.GeographicCrs == crs2.GeographicCrs && crs1.ProjectedCrs == crs2.ProjectedCrs)
+                return false;
+            return true;
+        }
+        #endregion
+
 
         #region 属性
         public bool IsEmpty
@@ -55,21 +74,56 @@ namespace DEETU.Source.Core.CoordinateSystem
         {
             get { return _ProjectedCrs; }
         }
+        public String Unit
+        {
+            get { return _Unit; }
+        }
+        
+        public Dictionary<string, string> GeographicParameters
+        {
+            get { return _GeographicParameters; }
+        }
+        public Dictionary<string, string> ProjectedParameters
+        {
+            get { return _ProjectedParameters; }
+        }
         #endregion
 
         #region 方法
-        public void SetParameters(Dictionary<string, string> parameters)
+        /// <summary>
+        /// 设置自定义参数
+        /// </summary>
+        /// <param name="isGeographic">是否是地理坐标系参数</param>
+        /// <param name="parameters">参数列表</param>
+        public void SetParameters(bool isGeographic=true,Dictionary<string, string> parameters=null)
         {
-            foreach (string key in parameters.Keys)
+            if (isGeographic)
             {
-                if (_Parameters.ContainsKey(key) == false)
-                { 
-                    throw new Exception("parameter is not existing,please check crs name");
+                foreach (string key in parameters.Keys)
+                {
+                    if (_GeographicParameters.ContainsKey(key) == false)
+                    {
+                        throw new Exception("parameter is not existing,please check crs name");
+                    }
+                }
+                foreach (string key in parameters.Keys)
+                {
+                    _GeographicParameters[key] = parameters[key];
                 }
             }
-            foreach (string key in parameters.Keys)
+            else
             {
-                _Parameters[key] = parameters[key];
+                foreach (string key in parameters.Keys)
+                {
+                    if (_GeographicParameters.ContainsKey(key) == false)
+                    {
+                        throw new Exception("parameter is not existing,please check crs name");
+                    }
+                }
+                foreach (string key in parameters.Keys)
+                {
+                    _GeographicParameters[key] = parameters[key];
+                }
             }
         }
         /// <summary>
@@ -94,18 +148,18 @@ namespace DEETU.Source.Core.CoordinateSystem
             switch(newGeographicCrs)
             {
                 case GeographicCrsType.Beijing1954:
-                    if (newProjectedCrs == null)
-                        _Parameters = new Dictionary<string, string>(GeoCoordinateFactory.DefaultBeijing1954Param);
-                    else
-                        _Parameters = new Dictionary<string, string>(GeoCoordinateFactory.DefaultLambert2SPParam);
+                    _GeographicParameters = new Dictionary<string, string>(GeoCoordinateFactory.DefaultBeijing1954Param);
+                    if (newProjectedCrs != null)
+                        _ProjectedParameters = new Dictionary<string, string>(GeoCoordinateFactory.DefaultLambert2SPParam);
+                    else _ProjectedParameters = null;
                     break;
                 case GeographicCrsType.WGS84:
-                    if (newProjectedCrs == null)
-                        _Parameters = new Dictionary<string, string>(GeoCoordinateFactory.DefaultWGS84Param);
-                    else if (newProjectedCrs == ProjectedCrsType.WebMercator)
-                        _Parameters = new Dictionary<string, string>(GeoCoordinateFactory.DefaultWebMercatorParam);
-                    else
-                        _Parameters = new Dictionary<string, string>(GeoCoordinateFactory.DefaultLambert2SPParam);
+                    _GeographicParameters = new Dictionary<string, string>(GeoCoordinateFactory.DefaultWGS84Param);
+                    if (newProjectedCrs == ProjectedCrsType.WebMercator)
+                        _ProjectedParameters = new Dictionary<string, string>(GeoCoordinateFactory.DefaultWebMercatorParam);
+                    else if (newProjectedCrs == ProjectedCrsType.Lambert2SP)
+                        _ProjectedParameters = new Dictionary<string, string>(GeoCoordinateFactory.DefaultLambert2SPParam);
+                    else _ProjectedParameters = null;
                     break;
                 default:
                     Debug.Assert(false);
