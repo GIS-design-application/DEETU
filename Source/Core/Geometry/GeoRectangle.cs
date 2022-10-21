@@ -79,9 +79,9 @@ namespace DEETU.Geometry
         /// <summary>
         /// 指示是否为空矩形
         /// </summary>
-        public bool IsEmpty 
+        public bool IsEmpty
         {
-            get 
+            get
             {
                 bool flag = false;
                 if (_MaxX <= _MinX)
@@ -91,10 +91,19 @@ namespace DEETU.Geometry
                 return flag;
             }
         }
+
         #endregion
-        
+
         #region 方法
 
+        /// <summary>
+        /// 点是否在多边形内部, 注意这里包含有tolerance, 为选择服务
+        /// </summary>
+        public bool IsInside(GeoPoint other, double tolerance)
+        {
+            return other.X + tolerance > _MinX && other.X - tolerance < _MaxX
+            && other.Y + tolerance > _MinY && other.Y - tolerance < _MaxY;
+        }
         #endregion
     }
 }

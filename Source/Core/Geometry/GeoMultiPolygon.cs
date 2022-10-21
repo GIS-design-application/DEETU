@@ -28,7 +28,7 @@ namespace DEETU.Geometry
             _Parts = parts;
         }
         #endregion
-        
+
         #region 属性
         /// <summary>
         /// 获取或设置部分的集合
@@ -72,7 +72,7 @@ namespace DEETU.Geometry
 
         #region 方法
         /// <summary>
-        /// 获取外包矩性
+        /// 获取外包矩形
         /// </summary>
         /// <returns></returns>
         public GeoRectangle GetEnvelope()
