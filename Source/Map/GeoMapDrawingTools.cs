@@ -375,7 +375,7 @@ namespace DEETU.Map
 
         //绘制简单点符号
         // drawingArea is a square
-        private static void DrawSimpleMarker(Graphics g, Rectangle drawingArea, double dpm, GeoSimpleMarkerSymbol symbol)
+        internal static void DrawSimpleMarker(Graphics g, Rectangle drawingArea, double dpm, GeoSimpleMarkerSymbol symbol)
         {
             if (symbol.Style == GeoSimpleMarkerSymbolStyleConstant.Circle)
             {
