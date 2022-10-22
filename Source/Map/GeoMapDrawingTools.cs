@@ -374,10 +374,15 @@ namespace DEETU.Map
         }
 
         //绘制简单点符号
+        // drawingArea is a square
         private static void DrawSimpleMarker(Graphics g, Rectangle drawingArea, double dpm, GeoSimpleMarkerSymbol symbol)
         {
             if (symbol.Style == GeoSimpleMarkerSymbolStyleConstant.Circle)
-            { throw new NotImplementedException(); }
+            {
+                Pen sPen = new Pen(symbol.Color);
+                g.DrawEllipse(sPen, drawingArea);
+                sPen.Dispose();
+            }
             else if (symbol.Style == GeoSimpleMarkerSymbolStyleConstant.SolidCircle)
             {
                 SolidBrush sBrush = new SolidBrush(symbol.Color);
@@ -385,11 +390,33 @@ namespace DEETU.Map
                 sBrush.Dispose();
             }
             else if (symbol.Style == GeoSimpleMarkerSymbolStyleConstant.Triangle)
-            { throw new NotImplementedException(); }
+            {
+                List<PointF> points = new List<PointF>();
+                points.Add(new PointF(drawingArea.X, drawingArea.Y));
+                points.Add(new PointF(drawingArea.X + drawingArea.Width, drawingArea.Y));
+                points.Add(new PointF(drawingArea.X + drawingArea.Width / 2, drawingArea.Y - drawingArea.Height));
+
+                Pen sPen = new Pen(symbol.Color);
+                g.DrawPolygon(sPen, points.ToArray());
+                sPen.Dispose();
+            }
             else if (symbol.Style == GeoSimpleMarkerSymbolStyleConstant.SolidTriangle)
-            { throw new NotImplementedException(); }
+            {
+                List<PointF> points = new List<PointF>();
+                points.Add(new PointF(drawingArea.X, drawingArea.Y));
+                points.Add(new PointF(drawingArea.X + drawingArea.Width, drawingArea.Y));
+                points.Add(new PointF(drawingArea.X + drawingArea.Width / 2, drawingArea.Y - drawingArea.Height));
+
+                SolidBrush sBrush = new SolidBrush(symbol.Color);
+                g.FillPolygon(sBrush, points.ToArray());
+                sBrush.Dispose();
+            }
             else if (symbol.Style == GeoSimpleMarkerSymbolStyleConstant.Square)
-            { throw new NotImplementedException(); }
+            {
+                Pen sPen = new Pen(symbol.Color);
+                g.DrawRectangle(sPen, drawingArea);
+                sPen.Dispose();
+            }
             else if (symbol.Style == GeoSimpleMarkerSymbolStyleConstant.SolidSquare)
             {
                 SolidBrush sBrush = new SolidBrush(symbol.Color);
@@ -397,9 +424,22 @@ namespace DEETU.Map
                 sBrush.Dispose();
             }
             else if (symbol.Style == GeoSimpleMarkerSymbolStyleConstant.CircleDot)
-            { throw new NotImplementedException(); }
+            {
+                Pen sPen = new Pen(symbol.Color);
+                g.DrawEllipse(sPen, drawingArea);
+                SolidBrush sBrush = new SolidBrush(symbol.Color);
+                Rectangle sRect = new Rectangle((int)(drawingArea.X + 0.25 * drawingArea.Width + 1), (int)(drawingArea.Y + 0.25 * drawingArea.Height + 1), drawingArea.Width / 2, drawingArea.Height / 2);
+                g.FillEllipse(sBrush, sRect);
+                sPen.Dispose();
+            }
             else if (symbol.Style == GeoSimpleMarkerSymbolStyleConstant.CircleCircle)
-            { throw new NotImplementedException(); }
+            {
+                Pen sPen = new Pen(symbol.Color);
+                g.DrawEllipse(sPen, drawingArea);
+                Rectangle sRect = new Rectangle((int)(drawingArea.X + 0.25 * drawingArea.Width + 1), (int)(drawingArea.Y + 0.25 * drawingArea.Height + 1), drawingArea.Width / 2, drawingArea.Height / 2);
+                g.DrawEllipse(sPen, sRect);
+                sPen.Dispose();
+            }
         }
 
         #endregion

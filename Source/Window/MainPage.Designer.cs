@@ -138,7 +138,6 @@
             this.tssCoordinate = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStrip2 = new System.Windows.Forms.ToolStrip();
-            this.geoMap = new Map.GeoMapControl();
             this.切换编辑模式ToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.取消当前编辑ToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.保存当前编辑ToolStripButton = new System.Windows.Forms.ToolStripButton();
@@ -148,6 +147,7 @@
             this.粘贴要素ToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.撤销ToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.重做ToolStripButton = new System.Windows.Forms.ToolStripButton();
+            this.geoMap = new Map.GeoMapControl();
             this.projectContextMenuStrip.SuspendLayout();
             this.favoriteContextMenuStrip1.SuspendLayout();
             this.layerContextMenuStrip.SuspendLayout();
@@ -669,7 +669,7 @@
             this.toolStrip1.Location = new System.Drawing.Point(4, 29);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.toolStrip1.Size = new System.Drawing.Size(480, 29);
+            this.toolStrip1.Size = new System.Drawing.Size(526, 29);
             this.toolStrip1.TabIndex = 49;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -884,7 +884,7 @@
             // 
             this.splitContainer2.Panel2.Controls.Add(this.uiPanel2);
             this.splitContainer2.Size = new System.Drawing.Size(276, 500);
-            this.splitContainer2.SplitterDistance = 223;
+            this.splitContainer2.SplitterDistance = 217;
             this.splitContainer2.TabIndex = 0;
             // 
             // uiPanel1
@@ -898,7 +898,7 @@
             this.uiPanel1.MinimumSize = new System.Drawing.Size(1, 1);
             this.uiPanel1.Name = "uiPanel1";
             this.uiPanel1.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(139)))), ((int)(((byte)(144)))), ((int)(((byte)(151)))));
-            this.uiPanel1.Size = new System.Drawing.Size(276, 223);
+            this.uiPanel1.Size = new System.Drawing.Size(276, 217);
             this.uiPanel1.Style = Sunny.UI.UIStyle.Office2010Silver;
             this.uiPanel1.TabIndex = 0;
             this.uiPanel1.Text = "uiPanel1";
@@ -928,7 +928,7 @@
             treeNode3});
             this.uiTreeView2.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(139)))), ((int)(((byte)(144)))), ((int)(((byte)(151)))));
             this.uiTreeView2.SelectedNode = null;
-            this.uiTreeView2.Size = new System.Drawing.Size(276, 223);
+            this.uiTreeView2.Size = new System.Drawing.Size(276, 217);
             this.uiTreeView2.Style = Sunny.UI.UIStyle.Office2010Silver;
             this.uiTreeView2.TabIndex = 0;
             this.uiTreeView2.Text = "uiTreeView2";
@@ -945,7 +945,7 @@
             this.uiPanel2.MinimumSize = new System.Drawing.Size(1, 1);
             this.uiPanel2.Name = "uiPanel2";
             this.uiPanel2.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(139)))), ((int)(((byte)(144)))), ((int)(((byte)(151)))));
-            this.uiPanel2.Size = new System.Drawing.Size(276, 273);
+            this.uiPanel2.Size = new System.Drawing.Size(276, 279);
             this.uiPanel2.Style = Sunny.UI.UIStyle.Office2010Silver;
             this.uiPanel2.TabIndex = 0;
             this.uiPanel2.Text = "uiPanel2";
@@ -985,7 +985,7 @@
             this.uiTreeView1.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(139)))), ((int)(((byte)(144)))), ((int)(((byte)(151)))));
             this.uiTreeView1.SelectedNode = null;
             this.uiTreeView1.ShowNodeToolTips = true;
-            this.uiTreeView1.Size = new System.Drawing.Size(276, 273);
+            this.uiTreeView1.Size = new System.Drawing.Size(276, 279);
             this.uiTreeView1.Style = Sunny.UI.UIStyle.Office2010Silver;
             this.uiTreeView1.TabIndex = 0;
             this.uiTreeView1.Text = "uiTreeView1";
