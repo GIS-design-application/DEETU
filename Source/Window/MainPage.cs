@@ -115,26 +115,31 @@ namespace DEETU.Source.Window
 
         private void btnZoomIn_Click(object sender, EventArgs e)
         {
+            this.Cursor = new Cursor("./icons/ZoomIn.ico");
             mMapOpStyle = 1;
         }
 
         private void btnZoomOut_Click(object sender, EventArgs e)
         {
+            this.Cursor = new Cursor("./icons/ZoomOut.ico");
             mMapOpStyle = 2;
         }
 
         private void btnPan_Click(object sender, EventArgs e)
         {
+            this.Cursor = new Cursor("./icons/PanUp.ico");
             mMapOpStyle = 3;
         }
 
         private void btnSelect_Click(object sender, EventArgs e)
         {
+            this.Cursor = new Cursor("./icons/EditSelect.ico");
             mMapOpStyle = 4;
         }
 
         private void btnIdentify_Click(object sender, EventArgs e)
         {
+            this.Cursor = new Cursor("./icons/EditSelect.ico");
             mMapOpStyle = 5;
         }
 
@@ -239,12 +244,14 @@ namespace DEETU.Source.Window
         // 移动多边形
         private void btnMovePolygon_Click(object sender, EventArgs e)
         {
+            this.Cursor = new Cursor("./icons/EditMove.ico");
             mMapOpStyle = 6;
         }
 
         // 描绘多边形
         private void btnSketchPolygon_Click(object sender, EventArgs e)
         {
+            this.Cursor = new Cursor("./icons/Cross.ico");
             mMapOpStyle = 7;
         }
 
@@ -300,6 +307,7 @@ namespace DEETU.Source.Window
 
         private void btnEditPolygon_Click(object sender, EventArgs e)
         {
+            this.Cursor = new Cursor("./icons/EditMoveVertex.ico");
             GeoMapLayer slayer = GetPolygonLayer();
             if (slayer == null)
             {
@@ -337,6 +345,7 @@ namespace DEETU.Source.Window
             }
             else if (mMapOpStyle == 3)
             {
+                this.Cursor = new Cursor("./icons/PanDown.ico");
                 OnPan_MouseDown(e);
             }
             else if (mMapOpStyle == 4)
@@ -569,6 +578,7 @@ namespace DEETU.Source.Window
             else if (mMapOpStyle == 3)
             {
                 OnPan_MouseUp(e);
+                this.Cursor = new Cursor("./icons/PanUp.ico");
             }
             else if (mMapOpStyle == 4)
             {

@@ -13,6 +13,21 @@
     <Deterministic>true</Deterministic>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -152,6 +167,46 @@
   <ItemGroup>
     <Content Include="bin\Debug\DEETU.exe" />
     <Content Include="bin\Debug\DEETU.pdb" />
+    <Content Include="icons\baseline_add_black_48.png" />
+    <Content Include="icons\baseline_clear_black_48.png" />
+    <Content Include="icons\baseline_content_copy_black_48.png" />
+    <Content Include="icons\baseline_content_cut_black_48.png" />
+    <Content Include="icons\baseline_content_paste_black_48.png" />
+    <Content Include="icons\baseline_create_new_folder_black_48.png" />
+    <Content Include="icons\baseline_delete_black_48.png" />
+    <Content Include="icons\baseline_done_all_black_48.png" />
+    <Content Include="icons\baseline_edit_off_black_48.png" />
+    <Content Include="icons\baseline_folder_black_48.png" />
+    <Content Include="icons\baseline_folder_open_black_48.png" />
+    <Content Include="icons\baseline_insert_drive_file_black_48.png" />
+    <Content Include="icons\baseline_layers_black_48.png" />
+    <Content Include="icons\baseline_layers_clear_black_48.png" />
+    <Content Include="icons\baseline_mode_edit_black_48.png" />
+    <Content Include="icons\baseline_pan_tool_black_48.png" />
+    <Content Include="icons\baseline_photo_size_select_small_black_48.png" />
+    <Content Include="icons\baseline_redo_black_48.png" />
+    <Content Include="icons\baseline_refresh_black_48.png" />
+    <Content Include="icons\baseline_remove_circle_outline_black_48.png" />
+    <Content Include="icons\baseline_save_alt_black_48.png" />
+    <Content Include="icons\baseline_undo_black_48.png" />
+    <Content Include="icons\baseline_visibility_black_48.png" />
+    <Content Include="icons\baseline_visibility_off_black_48.png" />
+    <Content Include="icons\baseline_zoom_in_black_48.png" />
+    <Content Include="icons\baseline_zoom_out_black_48.png" />
+    <Content Include="icons\baseline_zoom_out_map_black_48.png" />
+    <Content Include="icons\Cross.ico" />
+    <Content Include="icons\EditMove.ico" />
+    <Content Include="icons\EditMoveVertex.ico" />
+    <Content Include="icons\EditSelect.ico" />
+    <Content Include="icons\MoveColumn.ico" />
+    <Content Include="icons\No.ico" />
+    <Content Include="icons\outline_mode_comment_black_48.png" />
+    <Content Include="icons\PanDown.ico" />
+    <Content Include="icons\PanUp.ico" />
+    <Content Include="icons\save.ico" />
+    <Content Include="icons\save.png" />
+    <Content Include="icons\ZoomIn.ico" />
+    <Content Include="icons\ZoomOut.ico" />
     <Content Include="obj\Debug\DEETU.csproj.FileListAbsolute.txt" />
     <Content Include="obj\Debug\DEETU.exe" />
     <Content Include="obj\Debug\DEETU.pdb" />
@@ -163,6 +218,12 @@
     <Folder Include="packages\" />
     <Folder Include="Source\Map\Projection\" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
