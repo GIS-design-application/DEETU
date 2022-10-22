@@ -51,8 +51,10 @@ namespace DEETU.Source.Window
         private bool mIsInIdentify = false; // 是否在查询
         private bool mIsInSelect = false;
         private bool mIsMovingShapes = false; // 是否正在移动图形
+        private bool mIsEditingShapes = false; // 是否正在编辑图形
         private List<GeoGeometry> mMovingGeometries = new List<GeoGeometry>(); // 正在移动的图形集合
         private GeoGeometry mEditingGeometry; // 正在编辑的图形
+        private GeoPoint mEditingPoint, mEditingLeftPoint, mEditingRightPoint; // 正在编辑的图形中被鼠标碰到的点
         private List<GeoPoints> mSketchingShape; // 正在描绘的图形, 用一个多点集合存储
         #endregion
 
@@ -444,10 +446,71 @@ namespace DEETU.Source.Window
             }
             else if (mMapOpStyle == 8)
             {
-
+                OnEditShape_MouseDown(e);
             }
         }
+        private void OnEditShape_MouseDown(MouseEventArgs e)
+        {
+            if (e.Button != MouseButtons.Left)
+            {
+                return;
+            }
 
+            GeoMultiPolygon editingPolygon = mEditingGeometry as GeoMultiPolygon; // 目前只考虑选择一个多边形
+
+            // 找到鼠标点击后对应的点
+            GeoPoint mousePoint = geoMap.ToMapPoint(e.Location.X, e.Location.Y);
+            double tolerance = geoMap.ToMapDistance(mSelectingTolerance);
+
+            // 如果鼠标的点并不在多边形附近, 直接放弃
+            if (!editingPolygon.GetEnvelope().IsInside(mousePoint, tolerance))
+            {
+                return;
+            }
+
+            // 遍历所有点集
+            for (int i = 0; i < editingPolygon.Parts.Count; i++)
+            {
+                // 对每一个点集判断是否包含鼠标的范围
+                GeoPoints points = editingPolygon.Parts.GetItem(i);
+                if (!points.GetEnvelope().IsInside(mousePoint, tolerance))
+                {
+                    continue;
+                }
+                else
+                {
+                    // 遍历每一个点
+                    for (int j = 0; j < points.Count; j++)
+                    {
+                        if (GeoMapTools.IsPointOnPoint(points.GetItem(j), mousePoint, tolerance))
+                        {
+                            mEditingPoint = points.GetItem(j);
+                            if (j == 0)
+                            {
+                                mEditingLeftPoint = points.GetItem(points.Count - 1);
+                                mEditingRightPoint = points.GetItem(j + 1);
+                            }
+                            else if (j == points.Count - 1)
+                            {
+                                mEditingLeftPoint = points.GetItem(j - 1);
+                                mEditingRightPoint = points.GetItem(0);
+                            }
+                            else
+                            {
+                                mEditingLeftPoint = points.GetItem(j - 1);
+                                mEditingRightPoint = points.GetItem(j + 1);
+                            }
+                            mIsEditingShapes = true;
+                            geoMap.RedrawTrackingShapes();
+                            return;
+                        }
+                    }
+                }
+            }
+
+            // 没有找到好奇怪, 应该是多边形在附近但是和点离得也不近, 有点蠢
+            return;
+        }
         private void OnMoveShape_MouseDown(MouseEventArgs e)
         {
             if (e.Button != MouseButtons.Left)
@@ -549,10 +612,27 @@ namespace DEETU.Source.Window
             }
             else if (mMapOpStyle == 8) // 编辑多边形
             {
-
+                OnEditShape_MouseMove(e);
             }
         }
 
+        // 移动一个点, 两边的点都需要移动一下
+        private void OnEditShape_MouseMove(MouseEventArgs e)
+        {
+            if (mIsEditingShapes == false)
+            {
+                return;
+            }
+            // 获得此时鼠标位置
+            GeoPoint sCurPoint = geoMap.ToMapPoint(e.Location.X, e.Location.Y);
+
+
+
+            geoMap.Refresh();
+            GeoUserDrawingTool sDrawingTool = geoMap.GetDrawingTool();
+            sDrawingTool.DrawLine(sCurPoint, mEditingLeftPoint, mElasticSymbol);
+            sDrawingTool.DrawLine(sCurPoint, mEditingRightPoint, mElasticSymbol);
+        }
         private void OnSketch_MouseMove(MouseEventArgs e)
         {
             GeoPoint sCurPoint = geoMap.ToMapPoint(e.Location.X, e.Location.Y);
@@ -676,11 +756,31 @@ namespace DEETU.Source.Window
             }
             else if (mMapOpStyle == 8)
             {
-
+                OnEditShape_MouseUp(e);
             }
         }
 
+        private void OnEditShape_MouseUp(MouseEventArgs e)
+        {
+            if (mIsEditingShapes == false)
+            {
+                return;
+            }
+            mIsEditingShapes = false;
+            // 保存目前鼠标指向的点
+            GeoPoint sCurPoint = geoMap.ToMapPoint(e.Location.X, e.Location.Y);
 
+            // 用现在的点替换编辑的点
+            mEditingPoint.X = sCurPoint.X;
+            mEditingPoint.Y = sCurPoint.Y;
+
+
+            (mEditingGeometry as GeoMultiPolygon).UpdateExtent();
+
+            // 重绘地图
+            geoMap.RedrawMap();
+
+        }
         private void OnMoveShape_MouseUp(MouseEventArgs e)
         {
             if (mIsMovingShapes == false)
