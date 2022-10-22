@@ -1,4 +1,4 @@
-﻿using DEETU.Core;
+using DEETU.Core;
 using DEETU.Geometry;
 using DEETU.IO;
 using DEETU.Map;
@@ -773,17 +773,41 @@ namespace DEETU
             else
             {
                 GeoMapLayer sLayer = geoMap.Layers.GetItem(0);
+
+                GeoFields sFields = sLayer.AttributeFields;
+                int sFieldCount = sFields.Count;
+                string[] sFieldString = new string[sFieldCount];
+                for (int i = 0; i < sFieldCount; i++)
+                {
+                    sFieldString[i] = sFields.GetItem(i).Name;
+                }
+
                 GeoFeatures sFeatures = sLayer.SearchByBox(sBox, tolerance);
                 // 弹出窗体
                 int sSelFeatureCount = sFeatures.Count;
                 if (sSelFeatureCount > 0)
                 {
                     GeoGeometry[] sGeometryies = new GeoGeometry[sSelFeatureCount];
+                    GeoAttributes[] sGeoAttributes = new GeoAttributes[sSelFeatureCount];
                     for (int i = 0; i < sSelFeatureCount; i++)
                     {
                         sGeometryies[i] = sFeatures.GetItem(i).Geometry;
+                        sGeoAttributes[i] = sFeatures.GetItem(i).Attributes;
                     }
-                    geoMap.FlashShapes(sGeometryies, 3, 800);
+
+                    string info = "";
+                    for (int i = 0; i < sSelFeatureCount; i++)
+                    {
+                        int sAttributeCount = sGeoAttributes[i].Count;
+                        for (int j = 0; j < sAttributeCount; j++)
+                        {
+                            info += sFieldString[j] + "：" + sGeoAttributes[i].GetItem(j).ToString() + '\n';
+                        }
+                        info += "\n";
+                    }
+                    MessageBox.Show(info, "属性信息", MessageBoxButtons.OK);
+
+                    // geoMap.FlashShapes(sGeometryies, 3, 800);
                 }
             }
         }
