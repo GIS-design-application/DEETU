@@ -92,9 +92,16 @@ namespace DEETU.Geometry
             }
         }
         #endregion
-        
-        #region 方法
 
+        #region 方法
+        /// <summary>
+        /// 点是否在多边形内部, 注意这里包含有tolerance, 为选择服务
+        /// </summary>
+        public bool IsInside(GeoPoint other, double tolerance)
+        {
+            return other.X + tolerance > _MinX && other.X - tolerance < _MaxX
+            && other.Y + tolerance > _MinY && other.Y - tolerance < _MaxY;
+        }
         #endregion
     }
 }

@@ -13,6 +13,7 @@ using DEETU.Geometry;
 using DEETU.Tool;
 using DEETU.IO;
 using System.IO;
+using System.Drawing.Drawing2D;
 
 namespace DEETU.Source.Window
 {
@@ -50,8 +51,10 @@ namespace DEETU.Source.Window
         private bool mIsInIdentify = false; // 是否在查询
         private bool mIsInSelect = false;
         private bool mIsMovingShapes = false; // 是否正在移动图形
+        private bool mIsEditingShapes = false; // 是否正在编辑图形
         private List<GeoGeometry> mMovingGeometries = new List<GeoGeometry>(); // 正在移动的图形集合
         private GeoGeometry mEditingGeometry; // 正在编辑的图形
+        private GeoPoint mEditingPoint, mEditingLeftPoint, mEditingRightPoint; // 正在编辑的图形中被鼠标碰到的点
         private List<GeoPoints> mSketchingShape; // 正在描绘的图形, 用一个多点集合存储
 
         // 与界面交互有关的变量
@@ -104,11 +107,88 @@ namespace DEETU.Source.Window
                 }
                 sStream.Dispose();
                 sr.Dispose();
+                UpdateTreeView(sLayer.Renderer, sFileName);
             }
             catch (Exception error)
             {
                 MessageBox.Show(error.ToString());
             }
+        }
+
+        // 这个方程是为了显示图层渲染方式
+        // 在加入图层和修改渲染方式时调用，现在还没有修改渲染方式的子界面，所以就先这样了。
+        // 修改的时候可以把原来的删掉再填一个新的
+        // 需要注意的是，这里没有添加事件，就是点击TreeNode弹出子窗体的事件，后面也需要补充
+        private void UpdateTreeView(GeoRenderer renderer, string filename)
+        {
+            // 按照renderer Type进行处理
+            GeoRenderer sRenderer = renderer;
+            if (sRenderer.RendererType == GeoRendererTypeConstant.Simple)
+            {
+                TreeNode style = CreateSimpleStyleTreeNode((sRenderer as GeoSimpleRenderer).Symbol);
+                layerTreeView.Nodes.Add(new TreeNode(filename, new TreeNode[] { style }));
+            }
+            else if (sRenderer.RendererType == GeoRendererTypeConstant.ClassBreaks)
+            {
+                GeoClassBreaksRenderer sClassBreaksRenderer = (GeoClassBreaksRenderer)sRenderer;
+                List<TreeNode> styles = new List<TreeNode>() { new TreeNode(sClassBreaksRenderer.Field) };
+                int BreakCount = sClassBreaksRenderer.BreakCount;
+                for(int i = 0; i < BreakCount + 1; ++i)
+                {
+                    string startValue = i == 0 ? "0" : sClassBreaksRenderer.GetBreakValue(i - 1).ToString();
+                    string endValue = sClassBreaksRenderer.GetBreakValue(i).ToString();
+                    styles.Add(CreateSimpleStyleTreeNode(sClassBreaksRenderer.GetSymbol(i), startValue + "~" + endValue));
+                }
+                layerTreeView.Nodes.Add(new TreeNode(filename, styles.ToArray()));
+            }
+            else if (sRenderer.RendererType == GeoRendererTypeConstant.UniqueValue)
+            {
+                GeoUniqueValueRenderer sUniqueValueRenderer = (GeoUniqueValueRenderer)sRenderer;
+                List<TreeNode> styles = new List<TreeNode>() { new TreeNode(sUniqueValueRenderer.Field) };
+                int ValueCount = sUniqueValueRenderer.ValueCount;
+                for (int i = 0; i < ValueCount; ++i)
+                {
+                    styles.Add(CreateSimpleStyleTreeNode(sUniqueValueRenderer.GetSymbol(i), sUniqueValueRenderer.GetValue(i)));
+                }
+                layerTreeView.Nodes.Add(new TreeNode(filename, styles.ToArray()));
+            }
+            else
+            {
+                throw new Exception("Renderer Type Error!");
+            }
+        }
+
+        private TreeNode CreateSimpleStyleTreeNode(GeoSymbol symbol, string label = "")
+        {
+            TreeNode style = new TreeNode(label);
+            Bitmap styleImage = new Bitmap(10, 10);
+            Graphics g = Graphics.FromImage(styleImage);
+            if (symbol.SymbolType == GeoSymbolTypeConstant.SimpleMarkerSymbol)
+            {
+                Rectangle sRect = new Rectangle(0, styleImage.Width, 0, styleImage.Height);
+                GeoMapDrawingTools.DrawSimpleMarker(g, sRect, 0, (symbol as GeoSimpleMarkerSymbol)); // dpm is useless in this function
+            }
+            else if (symbol.SymbolType == GeoSymbolTypeConstant.SimpleLineSymbol)
+            {
+                GeoSimpleLineSymbol sLineSymbol = (symbol as GeoSimpleLineSymbol);
+                double dpm = 10; // I don't know the correct dpm here so I just randomly assigned a number
+                Pen sPen = new Pen(sLineSymbol.Color, (float)(sLineSymbol.Size / 1000 * dpm));
+                sPen.DashStyle = (DashStyle)sLineSymbol.Style;
+                g.DrawLine(sPen, new Point(0, styleImage.Height / 2), new Point(styleImage.Width, styleImage.Height / 2));
+            }
+            else if (symbol.SymbolType == GeoSymbolTypeConstant.SimpleFillSymbol)
+            {
+                SolidBrush sBrush = new SolidBrush((symbol as GeoSimpleFillSymbol).Color);
+                g.FillRectangle(sBrush, new RectangleF(0, 0, styleImage.Width, styleImage.Height));
+            }
+            else
+            {
+                throw new Exception("Symbol Type Error!");
+            }
+            TreeImages.Images.Add(styleImage);
+            style.ImageIndex = TreeImages.Images.Count;
+            g.Dispose();
+            return style;
         }
 
         private void btnFullExtent_Click(object sender, EventArgs e)
@@ -118,26 +198,31 @@ namespace DEETU.Source.Window
 
         private void btnZoomIn_Click(object sender, EventArgs e)
         {
+            this.Cursor = new Cursor("./icons/ZoomIn.ico");
             mMapOpStyle = 1;
         }
 
         private void btnZoomOut_Click(object sender, EventArgs e)
         {
+            this.Cursor = new Cursor("./icons/ZoomOut.ico");
             mMapOpStyle = 2;
         }
 
         private void btnPan_Click(object sender, EventArgs e)
         {
+            this.Cursor = new Cursor("./icons/PanUp.ico");
             mMapOpStyle = 3;
         }
 
         private void btnSelect_Click(object sender, EventArgs e)
         {
+            this.Cursor = new Cursor("./icons/EditSelect.ico");
             mMapOpStyle = 4;
         }
 
         private void btnIdentify_Click(object sender, EventArgs e)
         {
+            this.Cursor = new Cursor("./icons/EditSelect.ico");
             mMapOpStyle = 5;
         }
 
@@ -242,12 +327,14 @@ namespace DEETU.Source.Window
         // 移动多边形
         private void btnMovePolygon_Click(object sender, EventArgs e)
         {
+            this.Cursor = new Cursor("./icons/EditMove.ico");
             mMapOpStyle = 6;
         }
 
         // 描绘多边形
         private void btnSketchPolygon_Click(object sender, EventArgs e)
         {
+            this.Cursor = new Cursor("./icons/Cross.ico");
             mMapOpStyle = 7;
         }
 
@@ -303,6 +390,7 @@ namespace DEETU.Source.Window
 
         private void btnEditPolygon_Click(object sender, EventArgs e)
         {
+            this.Cursor = new Cursor("./icons/EditMoveVertex.ico");
             GeoMapLayer slayer = GetPolygonLayer();
             if (slayer == null)
             {
@@ -340,6 +428,7 @@ namespace DEETU.Source.Window
             }
             else if (mMapOpStyle == 3)
             {
+                this.Cursor = new Cursor("./icons/PanDown.ico");
                 OnPan_MouseDown(e);
             }
             else if (mMapOpStyle == 4)
@@ -360,10 +449,71 @@ namespace DEETU.Source.Window
             }
             else if (mMapOpStyle == 8)
             {
-
+                OnEditShape_MouseDown(e);
             }
         }
+        private void OnEditShape_MouseDown(MouseEventArgs e)
+        {
+            if (e.Button != MouseButtons.Left)
+            {
+                return;
+            }
 
+            GeoMultiPolygon editingPolygon = mEditingGeometry as GeoMultiPolygon; // 目前只考虑选择一个多边形
+
+            // 找到鼠标点击后对应的点
+            GeoPoint mousePoint = geoMap.ToMapPoint(e.Location.X, e.Location.Y);
+            double tolerance = geoMap.ToMapDistance(mSelectingTolerance);
+
+            // 如果鼠标的点并不在多边形附近, 直接放弃
+            if (!editingPolygon.GetEnvelope().IsInside(mousePoint, tolerance))
+            {
+                return;
+            }
+
+            // 遍历所有点集
+            for (int i = 0; i < editingPolygon.Parts.Count; i++)
+            {
+                // 对每一个点集判断是否包含鼠标的范围
+                GeoPoints points = editingPolygon.Parts.GetItem(i);
+                if (!points.GetEnvelope().IsInside(mousePoint, tolerance))
+                {
+                    continue;
+                }
+                else
+                {
+                    // 遍历每一个点
+                    for (int j = 0; j < points.Count; j++)
+                    {
+                        if (GeoMapTools.IsPointOnPoint(points.GetItem(j), mousePoint, tolerance))
+                        {
+                            mEditingPoint = points.GetItem(j);
+                            if (j == 0)
+                            {
+                                mEditingLeftPoint = points.GetItem(points.Count - 1);
+                                mEditingRightPoint = points.GetItem(j + 1);
+                            }
+                            else if (j == points.Count - 1)
+                            {
+                                mEditingLeftPoint = points.GetItem(j - 1);
+                                mEditingRightPoint = points.GetItem(0);
+                            }
+                            else
+                            {
+                                mEditingLeftPoint = points.GetItem(j - 1);
+                                mEditingRightPoint = points.GetItem(j + 1);
+                            }
+                            mIsEditingShapes = true;
+                            geoMap.RedrawTrackingShapes();
+                            return;
+                        }
+                    }
+                }
+            }
+
+            // 没有找到好奇怪, 应该是多边形在附近但是和点离得也不近, 有点蠢
+            return;
+        }
         private void OnMoveShape_MouseDown(MouseEventArgs e)
         {
             if (e.Button != MouseButtons.Left)
@@ -465,10 +615,27 @@ namespace DEETU.Source.Window
             }
             else if (mMapOpStyle == 8) // 编辑多边形
             {
-
+                OnEditShape_MouseMove(e);
             }
         }
 
+        // 移动一个点, 两边的点都需要移动一下
+        private void OnEditShape_MouseMove(MouseEventArgs e)
+        {
+            if (mIsEditingShapes == false)
+            {
+                return;
+            }
+            // 获得此时鼠标位置
+            GeoPoint sCurPoint = geoMap.ToMapPoint(e.Location.X, e.Location.Y);
+
+
+
+            geoMap.Refresh();
+            GeoUserDrawingTool sDrawingTool = geoMap.GetDrawingTool();
+            sDrawingTool.DrawLine(sCurPoint, mEditingLeftPoint, mElasticSymbol);
+            sDrawingTool.DrawLine(sCurPoint, mEditingRightPoint, mElasticSymbol);
+        }
         private void OnSketch_MouseMove(MouseEventArgs e)
         {
             GeoPoint sCurPoint = geoMap.ToMapPoint(e.Location.X, e.Location.Y);
@@ -572,6 +739,7 @@ namespace DEETU.Source.Window
             else if (mMapOpStyle == 3)
             {
                 OnPan_MouseUp(e);
+                this.Cursor = new Cursor("./icons/PanUp.ico");
             }
             else if (mMapOpStyle == 4)
             {
@@ -591,11 +759,31 @@ namespace DEETU.Source.Window
             }
             else if (mMapOpStyle == 8)
             {
-
+                OnEditShape_MouseUp(e);
             }
         }
 
+        private void OnEditShape_MouseUp(MouseEventArgs e)
+        {
+            if (mIsEditingShapes == false)
+            {
+                return;
+            }
+            mIsEditingShapes = false;
+            // 保存目前鼠标指向的点
+            GeoPoint sCurPoint = geoMap.ToMapPoint(e.Location.X, e.Location.Y);
 
+            // 用现在的点替换编辑的点
+            mEditingPoint.X = sCurPoint.X;
+            mEditingPoint.Y = sCurPoint.Y;
+
+
+            (mEditingGeometry as GeoMultiPolygon).UpdateExtent();
+
+            // 重绘地图
+            geoMap.RedrawMap();
+
+        }
         private void OnMoveShape_MouseUp(MouseEventArgs e)
         {
             if (mIsMovingShapes == false)

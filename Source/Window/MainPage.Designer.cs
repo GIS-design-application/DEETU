@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainPage));
             System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("工程目录");
             System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("收藏夹");
@@ -138,7 +139,6 @@
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.tssCoordinate = new System.Windows.Forms.ToolStripStatusLabel();
             this.tssMapScale = new System.Windows.Forms.ToolStripStatusLabel();
-            this.geoMap = new DEETU.Map.GeoMapControl();
             this.toolStrip2 = new System.Windows.Forms.ToolStrip();
             this.切换编辑模式ToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.取消当前编辑ToolStripButton = new System.Windows.Forms.ToolStripButton();
@@ -149,6 +149,8 @@
             this.粘贴要素ToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.撤销ToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.重做ToolStripButton = new System.Windows.Forms.ToolStripButton();
+            this.TreeImages = new System.Windows.Forms.ImageList(this.components);
+            this.geoMap = new DEETU.Map.GeoMapControl();
             this.projectContextMenuStrip.SuspendLayout();
             this.favoriteContextMenuStrip1.SuspendLayout();
             this.layerContextMenuStrip.SuspendLayout();
@@ -889,7 +891,7 @@
             // 
             this.splitContainer2.Panel2.Controls.Add(this.uiPanel2);
             this.splitContainer2.Size = new System.Drawing.Size(276, 511);
-            this.splitContainer2.SplitterDistance = 218;
+            this.splitContainer2.SplitterDistance = 221;
             this.splitContainer2.TabIndex = 0;
             // 
             // uiPanel1
@@ -903,7 +905,7 @@
             this.uiPanel1.MinimumSize = new System.Drawing.Size(1, 1);
             this.uiPanel1.Name = "uiPanel1";
             this.uiPanel1.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
-            this.uiPanel1.Size = new System.Drawing.Size(276, 218);
+            this.uiPanel1.Size = new System.Drawing.Size(276, 221);
             this.uiPanel1.Style = Sunny.UI.UIStyle.Office2010Black;
             this.uiPanel1.TabIndex = 0;
             this.uiPanel1.Text = "uiPanel1";
@@ -933,7 +935,7 @@
             treeNode3});
             this.uiTreeView2.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
             this.uiTreeView2.SelectedNode = null;
-            this.uiTreeView2.Size = new System.Drawing.Size(276, 218);
+            this.uiTreeView2.Size = new System.Drawing.Size(276, 221);
             this.uiTreeView2.Style = Sunny.UI.UIStyle.Office2010Black;
             this.uiTreeView2.TabIndex = 0;
             this.uiTreeView2.Text = "uiTreeView2";
@@ -950,7 +952,7 @@
             this.uiPanel2.MinimumSize = new System.Drawing.Size(1, 1);
             this.uiPanel2.Name = "uiPanel2";
             this.uiPanel2.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
-            this.uiPanel2.Size = new System.Drawing.Size(276, 289);
+            this.uiPanel2.Size = new System.Drawing.Size(276, 286);
             this.uiPanel2.Style = Sunny.UI.UIStyle.Office2010Black;
             this.uiPanel2.TabIndex = 0;
             this.uiPanel2.Text = "uiPanel2";
@@ -990,10 +992,10 @@
             this.layerTreeView.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
             this.layerTreeView.SelectedNode = null;
             this.layerTreeView.ShowNodeToolTips = true;
-            this.layerTreeView.Size = new System.Drawing.Size(276, 289);
+            this.layerTreeView.Size = new System.Drawing.Size(276, 286);
             this.layerTreeView.Style = Sunny.UI.UIStyle.Office2010Black;
             this.layerTreeView.TabIndex = 0;
-            this.layerTreeView.Text = "uiTreeView1";
+            this.layerTreeView.Text = "layerTreeView";
             this.layerTreeView.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter;
             this.layerTreeView.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.layerTreeView_NodeMouseClick);
             // 
@@ -1038,20 +1040,6 @@
             this.tssMapScale.Name = "tssMapScale";
             this.tssMapScale.Size = new System.Drawing.Size(81, 17);
             this.tssMapScale.Text = "tssMapScale";
-            // 
-            // geoMap
-            // 
-            this.geoMap.BackColor = System.Drawing.Color.White;
-            this.geoMap.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.geoMap.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.geoMap.FlashColor = System.Drawing.Color.Green;
-            this.geoMap.Layers = geoLayers1;
-            this.geoMap.Location = new System.Drawing.Point(0, 0);
-            this.geoMap.Margin = new System.Windows.Forms.Padding(53, 82, 53, 82);
-            this.geoMap.Name = "geoMap";
-            this.geoMap.SelectionColor = System.Drawing.Color.Cyan;
-            this.geoMap.Size = new System.Drawing.Size(637, 511);
-            this.geoMap.TabIndex = 0;
             // 
             // toolStrip2
             // 
@@ -1153,6 +1141,26 @@
             this.重做ToolStripButton.Name = "重做ToolStripButton";
             this.重做ToolStripButton.Size = new System.Drawing.Size(24, 24);
             this.重做ToolStripButton.Text = "重做";
+            // 
+            // TreeImages
+            // 
+            this.TreeImages.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
+            this.TreeImages.ImageSize = new System.Drawing.Size(16, 16);
+            this.TreeImages.TransparentColor = System.Drawing.Color.Transparent;
+            // 
+            // geoMap
+            // 
+            this.geoMap.BackColor = System.Drawing.Color.White;
+            this.geoMap.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.geoMap.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.geoMap.FlashColor = System.Drawing.Color.Green;
+            this.geoMap.Layers = geoLayers1;
+            this.geoMap.Location = new System.Drawing.Point(0, 0);
+            this.geoMap.Margin = new System.Windows.Forms.Padding(88, 144, 88, 144);
+            this.geoMap.Name = "geoMap";
+            this.geoMap.SelectionColor = System.Drawing.Color.Cyan;
+            this.geoMap.Size = new System.Drawing.Size(637, 511);
+            this.geoMap.TabIndex = 0;
             // 
             // MainPage
             // 
@@ -1307,6 +1315,8 @@
         private Map.GeoMapControl geoMap;
         private System.Windows.Forms.StatusStrip statusStrip;
         private System.Windows.Forms.ToolStripStatusLabel tssCoordinate;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel2;
+        private System.Windows.Forms.ImageList TreeImages;
         private System.Windows.Forms.ToolStripStatusLabel tssMapScale;
     }
 }
