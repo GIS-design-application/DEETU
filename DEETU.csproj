@@ -66,6 +66,7 @@
     <Compile Include="Source\Core\Geometry\GeoRectangle.cs" />
     <Compile Include="Source\Core\Geometry\GeoShape.cs" />
     <Compile Include="Source\IO\GeoDatabaseIOTools.cs" />
+    <Compile Include="Source\IO\GeoShpIOTools.cs" />
     <Compile Include="Source\Testing\MultiFormApplictionStart.cs" />
     <Compile Include="Source\IO\GeoDatabase.cs" />
     <Compile Include="Source\IO\GeoDataIOTools.cs" />

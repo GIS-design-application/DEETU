@@ -57,6 +57,7 @@ namespace DEETU
         {
             InitializeComponent();
             geoMap.MouseWheel += geoMap_MouseWheel;
+            
         }
 
 
