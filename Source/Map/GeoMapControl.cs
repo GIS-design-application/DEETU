@@ -48,8 +48,8 @@ namespace DEETU.Map
         #region 构造函数
         public GeoMapControl()
         {
-            InitializeComponent();
             CreateMapDrawingReference();// 新建地图-屏幕坐标转换对象
+            InitializeComponent();
             InitializeSymbols(); // 初始化符号
             ResizeBufferMap(); // 调整缓冲位图尺寸
 

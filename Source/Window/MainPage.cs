@@ -53,6 +53,9 @@ namespace DEETU.Source.Window
         private List<GeoGeometry> mMovingGeometries = new List<GeoGeometry>(); // 正在移动的图形集合
         private GeoGeometry mEditingGeometry; // 正在编辑的图形
         private List<GeoPoints> mSketchingShape; // 正在描绘的图形, 用一个多点集合存储
+
+        // 与界面交互有关的变量
+        private TreeNode mCurrentLayerNode;
         #endregion
 
 
@@ -774,7 +777,7 @@ namespace DEETU.Source.Window
         // 显示比例尺
         private void ShowMapScale()
         {
-            tssMapScale.Text = "1 :" + geoMap.MapScale.ToString("0.00");
+            statusStrip.Text = "1 :" + geoMap.MapScale.ToString("0.00");
         }
 
         //根据屏幕上的两点获得一个地图坐标下的矩形
@@ -891,5 +894,19 @@ namespace DEETU.Source.Window
 
 
         #endregion
+
+        private void 特性ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            int layerIndex = mCurrentLayerNode.Index;
+            //GeoMapLayer layer = geoMap.Layers.GetItem(layerIndex);
+            GeoMapLayer layer = new GeoMapLayer(mCurrentLayerNode.Text, GeoGeometryTypeConstant.MultiPolygon);
+            LayerAttributesForm layerAttributes = new LayerAttributesForm(layer);
+            layerAttributes.Show();
+        }
+
+        private void layerTreeView_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
+        {
+            mCurrentLayerNode = e.Node;           
+        }
     }
 }

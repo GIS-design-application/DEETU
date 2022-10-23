@@ -71,6 +71,42 @@
     <Compile Include="Source\IO\GeoDataIOTools.cs" />
     <Compile Include="Source\IO\GeoDataTable.cs" />
     <Compile Include="Source\Map\GeoShapeFlashControler.cs" />
+    <Compile Include="Source\Window\Form1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Source\Window\Form1.Designer.cs">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Source\Window\LayerAttributes\FieldPage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Source\Window\LayerAttributes\FieldPage.Designer.cs">
+      <DependentUpon>FieldPage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Source\Window\LayerAttributes\AnnotationPage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Source\Window\LayerAttributes\AnnotationPage.Designer.cs">
+      <DependentUpon>AnnotationPage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Source\Window\LayerAttributes\SymbolPage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Source\Window\LayerAttributes\SymbolPage.Designer.cs">
+      <DependentUpon>SymbolPage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Source\Window\LayerAttributes\InfoPage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Source\Window\LayerAttributes\InfoPage.Designer.cs">
+      <DependentUpon>InfoPage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Source\Window\LayerAttributes\LayerAttributesForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Source\Window\LayerAttributes\LayerAttributesForm.Designer.cs">
+      <DependentUpon>LayerAttributesForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Source\Window\MainPage.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -111,6 +147,21 @@
     <EmbeddedResource Include="Source\Map\GeoMapControl.resx">
       <DependentUpon>GeoMapControl.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Source\Window\LayerAttributes\AnnotationPage.resx">
+      <DependentUpon>AnnotationPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Source\Window\LayerAttributes\FieldPage.resx">
+      <DependentUpon>FieldPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Source\Window\LayerAttributes\InfoPage.resx">
+      <DependentUpon>InfoPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Source\Window\LayerAttributes\LayerAttributesForm.resx">
+      <DependentUpon>LayerAttributesForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Source\Window\LayerAttributes\SymbolPage.resx">
+      <DependentUpon>SymbolPage.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Source\Window\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -138,6 +189,7 @@
     <None Include="obj\Debug\DesignTimeResolveAssemblyReferences.cache" />
     <None Include="obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
     <None Include="packages.config" />
+    <None Include="Properties\DataSources\DEETU.Core.GeoUniqueValueRenderer.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

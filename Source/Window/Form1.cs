@@ -6,18 +6,14 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using Sunny.UI;
-using DEETU.Source.Window;
 
-namespace DEETU
+namespace DEETU.Source.Window
 {
-    public partial class MainForm : UIMainFrame
+    public partial class Form1 : Form
     {
-        public MainForm()
+        public Form1()
         {
             InitializeComponent();
-            AddPage(new MainPage());
-            base.FormBorderStyle = FormBorderStyle.Sizable;
         }
     }
 }

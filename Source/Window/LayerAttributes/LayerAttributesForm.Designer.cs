@@ -1,17 +1,17 @@
-﻿using Sunny.UI;
-namespace DEETU
+﻿
+namespace DEETU.Source.Window
 {
-    partial class MainForm
+    partial class LayerAttributesForm
     {
         /// <summary>
-        /// 必需的设计器变量。
+        /// Required designer variable.
         /// </summary>
         private System.ComponentModel.IContainer components = null;
 
         /// <summary>
-        /// 清理所有正在使用的资源。
+        /// Clean up any resources being used.
         /// </summary>
-        /// <param name="disposing">如果应释放托管资源，为 true；否则为 false。</param>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -21,42 +21,41 @@ namespace DEETU
             base.Dispose(disposing);
         }
 
-        #region Windows 窗体设计器生成的代码
+        #region Windows Form Designer generated code
 
         /// <summary>
-        /// 设计器支持所需的方法 - 不要修改
-        /// 使用代码编辑器修改此方法的内容。
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            this.uiStyleManager1 = new Sunny.UI.UIStyleManager(this.components);
             this.SuspendLayout();
             // 
-            // uiStyleManager1
+            // Aside
             // 
-            this.uiStyleManager1.Style = Sunny.UI.UIStyle.Office2010Black;
+            this.Aside.LineColor = System.Drawing.Color.Black;
+            this.Aside.Size = new System.Drawing.Size(152, 786);
+            this.Aside.Style = Sunny.UI.UIStyle.Custom;
             // 
-            // MainForm
+            // LayerAttributesForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(886, 656);
-            this.Margin = new System.Windows.Forms.Padding(2);
+            this.ClientSize = new System.Drawing.Size(590, 821);
+            this.ExtendBox = true;
+            this.IsMdiContainer = true;
             this.MaximumSize = new System.Drawing.Size(10000, 10000);
-            this.Name = "MainForm";
+            this.Name = "LayerAttributesForm";
             this.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
             this.Style = Sunny.UI.UIStyle.Custom;
-            this.Text = "MainForm";
+            this.Text = "图层属性";
             this.TitleColor = System.Drawing.Color.FromArgb(((int)(((byte)(118)))), ((int)(((byte)(118)))), ((int)(((byte)(118)))));
             this.TitleForeColor = System.Drawing.Color.Black;
+            this.Controls.SetChildIndex(this.Aside, 0);
             this.ResumeLayout(false);
 
         }
 
         #endregion
-        private Map.GeoMapControl geoMap;
-        private Map.GeoMapControl geoMapControl1;
-        private UIStyleManager uiStyleManager1;
     }
 }

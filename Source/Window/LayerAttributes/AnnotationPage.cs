@@ -7,17 +7,20 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using Sunny.UI;
-using DEETU.Source.Window;
+using DEETU.Map;
 
-namespace DEETU
+namespace DEETU.Source.Window
 {
-    public partial class MainForm : UIMainFrame
+    public partial class AnnotationPage : UITitlePage
     {
-        public MainForm()
+        #region 字段
+        private GeoMapLayer mLayer;
+        #endregion
+
+        public AnnotationPage(GeoMapLayer layer)
         {
             InitializeComponent();
-            AddPage(new MainPage());
-            base.FormBorderStyle = FormBorderStyle.Sizable;
+            mLayer = layer;
         }
     }
 }
