@@ -43,7 +43,7 @@ namespace DEETU.Source.Window
 
 
         // 与地图操作有关的变量
-        private int mMapOpStyle = 0; // 1: 放大, 2: 缩小, 3: 漫游, 4: 选择, 5: 查询
+        private GeoMapOpStyleEnum mMapOpStyle = GeoMapOpStyleEnum.None; // 1: 放大, 2: 缩小, 3: 漫游, 4: 选择, 5: 查询
                                      // 6: 移动, 7: 描绘, 8: 编辑
         private PointF mStartMouseLocation; // 拉框时的起点
         private bool mIsInZoomIn = false; // 是否在放大
@@ -198,32 +198,87 @@ namespace DEETU.Source.Window
 
         private void btnZoomIn_Click(object sender, EventArgs e)
         {
-            this.Cursor = new Cursor("./icons/ZoomIn.ico");
-            mMapOpStyle = 1;
+            if (mMapOpStyle != GeoMapOpStyleEnum.ZoomIn)
+            {
+                UncheckToolStrip(mMapOpStyle);
+                this.Cursor = new Cursor("./icons/ZoomIn.ico");
+                mMapOpStyle = GeoMapOpStyleEnum.ZoomIn;
+                CheckToolStrip(mMapOpStyle);
+            }
+            else
+            {
+                UncheckToolStrip(mMapOpStyle);
+                this.Cursor = Cursors.Default;
+                mMapOpStyle = GeoMapOpStyleEnum.None;
+            }
         }
 
         private void btnZoomOut_Click(object sender, EventArgs e)
         {
-            this.Cursor = new Cursor("./icons/ZoomOut.ico");
-            mMapOpStyle = 2;
+            if (mMapOpStyle != GeoMapOpStyleEnum.ZoomOut)
+            {
+                UncheckToolStrip(mMapOpStyle);
+                this.Cursor = new Cursor("./icons/ZoomOut.ico");
+                mMapOpStyle = GeoMapOpStyleEnum.ZoomOut;
+                CheckToolStrip(mMapOpStyle);
+            }
+            else
+            {
+                UncheckToolStrip(mMapOpStyle);
+                this.Cursor = Cursors.Default;
+                mMapOpStyle = GeoMapOpStyleEnum.None;
+            }
         }
 
         private void btnPan_Click(object sender, EventArgs e)
         {
-            this.Cursor = new Cursor("./icons/PanUp.ico");
-            mMapOpStyle = 3;
+            if (mMapOpStyle != GeoMapOpStyleEnum.Pan)
+            {
+                UncheckToolStrip(mMapOpStyle);
+                this.Cursor = new Cursor("./icons/PanUp.ico");
+                mMapOpStyle = GeoMapOpStyleEnum.Pan;
+                CheckToolStrip(mMapOpStyle);
+            }
+            else
+            {
+                UncheckToolStrip(mMapOpStyle);
+                this.Cursor = Cursors.Default;
+                mMapOpStyle = GeoMapOpStyleEnum.None;
+            }
         }
 
         private void btnSelect_Click(object sender, EventArgs e)
         {
-            this.Cursor = new Cursor("./icons/EditSelect.ico");
-            mMapOpStyle = 4;
+            if (mMapOpStyle != GeoMapOpStyleEnum.Select)
+            {
+                UncheckToolStrip(mMapOpStyle);
+                this.Cursor = new Cursor("./icons/EditSelect.ico");
+                mMapOpStyle = GeoMapOpStyleEnum.Select;
+                CheckToolStrip(mMapOpStyle);
+            }
+            else
+            {
+                UncheckToolStrip(mMapOpStyle);
+                this.Cursor = Cursors.Default;
+                mMapOpStyle = GeoMapOpStyleEnum.None;
+            }
         }
 
         private void btnIdentify_Click(object sender, EventArgs e)
         {
-            this.Cursor = new Cursor("./icons/EditSelect.ico");
-            mMapOpStyle = 5;
+            if (mMapOpStyle != GeoMapOpStyleEnum.Identify)
+            {
+                UncheckToolStrip(mMapOpStyle);
+                this.Cursor = new Cursor("./icons/EditSelect.ico");
+                mMapOpStyle = GeoMapOpStyleEnum.Identify;
+                CheckToolStrip(mMapOpStyle);
+            }
+            else
+            {
+                UncheckToolStrip(mMapOpStyle);
+                this.Cursor = Cursors.Default;
+                mMapOpStyle = GeoMapOpStyleEnum.None;
+            }
         }
 
         // 简单渲染
@@ -328,14 +383,14 @@ namespace DEETU.Source.Window
         private void btnMovePolygon_Click(object sender, EventArgs e)
         {
             this.Cursor = new Cursor("./icons/EditMove.ico");
-            mMapOpStyle = 6;
+            mMapOpStyle = GeoMapOpStyleEnum.Move;
         }
 
         // 描绘多边形
         private void btnSketchPolygon_Click(object sender, EventArgs e)
         {
             this.Cursor = new Cursor("./icons/Cross.ico");
-            mMapOpStyle = 7;
+            mMapOpStyle = GeoMapOpStyleEnum.Sketch;
         }
 
         // 结束part
@@ -404,7 +459,7 @@ namespace DEETU.Source.Window
             mEditingGeometry = sDesMultiPolygon;
 
 
-            mMapOpStyle = 8;
+            mMapOpStyle = GeoMapOpStyleEnum.Edit;
             geoMap.RedrawTrackingShapes();
         }
 
@@ -418,36 +473,36 @@ namespace DEETU.Source.Window
         #region 地图控件事件处理
         private void geoMap_MouseDown(object sender, MouseEventArgs e)
         {
-            if (mMapOpStyle == 1)
+            if (mMapOpStyle == GeoMapOpStyleEnum.ZoomIn)
             {
                 OnZoomIn_MouseDown(e);
             }
-            else if (mMapOpStyle == 2)
+            else if (mMapOpStyle == GeoMapOpStyleEnum.ZoomOut)
             {
 
             }
-            else if (mMapOpStyle == 3)
+            else if (mMapOpStyle == GeoMapOpStyleEnum.Pan)
             {
                 this.Cursor = new Cursor("./icons/PanDown.ico");
                 OnPan_MouseDown(e);
             }
-            else if (mMapOpStyle == 4)
+            else if (mMapOpStyle == GeoMapOpStyleEnum.Select)
             {
                 OnSelect_MouseDown(e);
             }
-            else if (mMapOpStyle == 5)
+            else if (mMapOpStyle == GeoMapOpStyleEnum.Identify)
             {
                 OnIdentify_MouseDown(e);
             }
-            else if (mMapOpStyle == 6)
+            else if (mMapOpStyle == GeoMapOpStyleEnum.Move)
             {
                 OnMoveShape_MouseDown(e);
             }
-            else if (mMapOpStyle == 7)
+            else if (mMapOpStyle == GeoMapOpStyleEnum.Sketch)
             {
 
             }
-            else if (mMapOpStyle == 8)
+            else if (mMapOpStyle == GeoMapOpStyleEnum.Edit)
             {
                 OnEditShape_MouseDown(e);
             }
@@ -585,35 +640,35 @@ namespace DEETU.Source.Window
         {
             // 显示屏幕坐标
             ShowCoordinates(e.Location);
-            if (mMapOpStyle == 1)
+            if (mMapOpStyle == GeoMapOpStyleEnum.ZoomIn)
             {
                 OnZoomIn_MouseMove(e);
             }
-            else if (mMapOpStyle == 2)
+            else if (mMapOpStyle == GeoMapOpStyleEnum.ZoomOut)
             {
 
             }
-            else if (mMapOpStyle == 3)
+            else if (mMapOpStyle == GeoMapOpStyleEnum.Pan)
             {
                 OnPan_MouseMove(e);
             }
-            else if (mMapOpStyle == 4)
+            else if (mMapOpStyle == GeoMapOpStyleEnum.Move)
             {
                 OnSelect_MouseMove(e);
             }
-            else if (mMapOpStyle == 5)
+            else if (mMapOpStyle == GeoMapOpStyleEnum.Identify)
             {
                 OnIdentify_MouseMove(e);
             }
-            else if (mMapOpStyle == 6)
+            else if (mMapOpStyle == GeoMapOpStyleEnum.Move)
             {
                 OnMoveShape_MouseMove(e);
             }
-            else if (mMapOpStyle == 7)
+            else if (mMapOpStyle == GeoMapOpStyleEnum.Sketch)
             {
                 OnSketch_MouseMove(e);
             }
-            else if (mMapOpStyle == 8) // 编辑多边形
+            else if (mMapOpStyle == GeoMapOpStyleEnum.Edit) // 编辑多边形
             {
                 OnEditShape_MouseMove(e);
             }
@@ -728,36 +783,36 @@ namespace DEETU.Source.Window
 
         private void geoMap_MouseUp(object sender, MouseEventArgs e)
         {
-            if (mMapOpStyle == 1)
+            if (mMapOpStyle == GeoMapOpStyleEnum.ZoomIn)
             {
                 OnZoomIn_MouseUp(e);
             }
-            else if (mMapOpStyle == 2)
+            else if (mMapOpStyle == GeoMapOpStyleEnum.ZoomOut)
             {
 
             }
-            else if (mMapOpStyle == 3)
+            else if (mMapOpStyle == GeoMapOpStyleEnum.Pan)
             {
                 OnPan_MouseUp(e);
                 this.Cursor = new Cursor("./icons/PanUp.ico");
             }
-            else if (mMapOpStyle == 4)
+            else if (mMapOpStyle == GeoMapOpStyleEnum.Select)
             {
                 OnSelect_MouseUp(e);
             }
-            else if (mMapOpStyle == 5)
+            else if (mMapOpStyle == GeoMapOpStyleEnum.Identify)
             {
                 OnIdentify_MouseUp(e);
             }
-            else if (mMapOpStyle == 6)
+            else if (mMapOpStyle == GeoMapOpStyleEnum.Move)
             {
                 OnMoveShape_MouseUp(e);
             }
-            else if (mMapOpStyle == 7)
+            else if (mMapOpStyle == GeoMapOpStyleEnum.Sketch)
             {
 
             }
-            else if (mMapOpStyle == 8)
+            else if (mMapOpStyle == GeoMapOpStyleEnum.Edit)
             {
                 OnEditShape_MouseUp(e);
             }
@@ -868,7 +923,7 @@ namespace DEETU.Source.Window
 
         private void geoMap_MouseClick(object sender, MouseEventArgs e)
         {
-            if (mMapOpStyle == 7)
+            if (mMapOpStyle == GeoMapOpStyleEnum.Sketch)
             {
                 OnSketch_MouseClick(e);
             }
@@ -965,7 +1020,7 @@ namespace DEETU.Source.Window
         // 显示比例尺
         private void ShowMapScale()
         {
-            statusStrip.Text = "1 :" + geoMap.MapScale.ToString("0.00");
+            tssMapScale.Text = "1 :" + geoMap.MapScale.ToString("0.00");
         }
 
         //根据屏幕上的两点获得一个地图坐标下的矩形
@@ -1080,6 +1135,49 @@ namespace DEETU.Source.Window
             }
         }
 
+        // 取消工具栏对应按钮的选中状态
+        private void UncheckToolStrip(GeoMapOpStyleEnum mapOpStyle)
+        {
+            switch (mapOpStyle)
+            {
+                case GeoMapOpStyleEnum.ZoomIn:
+                    zoomInToolStripButton.Checked = false;
+                    break;
+                case GeoMapOpStyleEnum.ZoomOut:
+                    zoomOutToolStripButton.Checked = false;
+                    break;
+                case GeoMapOpStyleEnum.Pan:
+                    panToolStripButton.Checked = false;
+                    break;
+                case GeoMapOpStyleEnum.Identify:
+                    identifyToolStripButton.Checked = false;
+                    break;
+                    
+                default:
+                    break;
+            }
+        }
+
+        private void CheckToolStrip(GeoMapOpStyleEnum mapOpStyle)
+        {
+            switch (mapOpStyle)
+            {
+                case GeoMapOpStyleEnum.ZoomIn:
+                    zoomInToolStripButton.Checked = true;
+                    break;
+                case GeoMapOpStyleEnum.ZoomOut:
+                    zoomOutToolStripButton.Checked = true;
+                    break;
+                case GeoMapOpStyleEnum.Pan:
+                    panToolStripButton.Checked = true;
+                    break;
+                case GeoMapOpStyleEnum.Identify:
+                    identifyToolStripButton.Checked = true;
+                    break;
+                default:
+                    break;
+            }
+        }
 
         #endregion
 

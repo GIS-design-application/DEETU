@@ -114,7 +114,7 @@
             this.saveToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.panToolStripButton = new System.Windows.Forms.ToolStripButton();
-            this.zoomIntoolStripButton = new System.Windows.Forms.ToolStripButton();
+            this.zoomInToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.zoomOutToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.fullExtentToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.zoomToSelectionToolStripButton = new System.Windows.Forms.ToolStripButton();
@@ -139,6 +139,7 @@
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.tssCoordinate = new System.Windows.Forms.ToolStripStatusLabel();
             this.tssMapScale = new System.Windows.Forms.ToolStripStatusLabel();
+            this.geoMap = new DEETU.Map.GeoMapControl();
             this.toolStrip2 = new System.Windows.Forms.ToolStrip();
             this.切换编辑模式ToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.取消当前编辑ToolStripButton = new System.Windows.Forms.ToolStripButton();
@@ -150,7 +151,6 @@
             this.撤销ToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.重做ToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.TreeImages = new System.Windows.Forms.ImageList(this.components);
-            this.geoMap = new DEETU.Map.GeoMapControl();
             this.projectContextMenuStrip.SuspendLayout();
             this.favoriteContextMenuStrip1.SuspendLayout();
             this.layerContextMenuStrip.SuspendLayout();
@@ -571,6 +571,7 @@
             this.平移ToolStripMenuItem.Name = "平移ToolStripMenuItem";
             this.平移ToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
             this.平移ToolStripMenuItem.Text = "平移";
+            this.平移ToolStripMenuItem.Click += new System.EventHandler(this.btnPan_Click);
             // 
             // 放大ToolStripMenuItem
             // 
@@ -578,6 +579,7 @@
             this.放大ToolStripMenuItem.Name = "放大ToolStripMenuItem";
             this.放大ToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
             this.放大ToolStripMenuItem.Text = "放大";
+            this.放大ToolStripMenuItem.Click += new System.EventHandler(this.btnZoomIn_Click);
             // 
             // 缩小ToolStripMenuItem
             // 
@@ -585,6 +587,7 @@
             this.缩小ToolStripMenuItem.Name = "缩小ToolStripMenuItem";
             this.缩小ToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
             this.缩小ToolStripMenuItem.Text = "缩小";
+            this.缩小ToolStripMenuItem.Click += new System.EventHandler(this.btnZoomOut_Click);
             // 
             // 全图显示ToolStripMenuItem
             // 
@@ -592,6 +595,7 @@
             this.全图显示ToolStripMenuItem.Name = "全图显示ToolStripMenuItem";
             this.全图显示ToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
             this.全图显示ToolStripMenuItem.Text = "全图显示";
+            this.全图显示ToolStripMenuItem.Click += new System.EventHandler(this.btnFullExtent_Click);
             // 
             // toolStripSeparator12
             // 
@@ -659,7 +663,7 @@
             this.saveToolStripButton,
             this.toolStripSeparator1,
             this.panToolStripButton,
-            this.zoomIntoolStripButton,
+            this.zoomInToolStripButton,
             this.zoomOutToolStripButton,
             this.fullExtentToolStripButton,
             this.zoomToSelectionToolStripButton,
@@ -718,15 +722,15 @@
             this.panToolStripButton.Text = "漫游";
             this.panToolStripButton.Click += new System.EventHandler(this.btnPan_Click);
             // 
-            // zoomIntoolStripButton
+            // zoomInToolStripButton
             // 
-            this.zoomIntoolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.zoomIntoolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("zoomIntoolStripButton.Image")));
-            this.zoomIntoolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.zoomIntoolStripButton.Name = "zoomIntoolStripButton";
-            this.zoomIntoolStripButton.Size = new System.Drawing.Size(24, 24);
-            this.zoomIntoolStripButton.Text = "放大";
-            this.zoomIntoolStripButton.Click += new System.EventHandler(this.btnZoomIn_Click);
+            this.zoomInToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.zoomInToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("zoomInToolStripButton.Image")));
+            this.zoomInToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.zoomInToolStripButton.Name = "zoomInToolStripButton";
+            this.zoomInToolStripButton.Size = new System.Drawing.Size(24, 24);
+            this.zoomInToolStripButton.Text = "放大";
+            this.zoomInToolStripButton.Click += new System.EventHandler(this.btnZoomIn_Click);
             // 
             // zoomOutToolStripButton
             // 
@@ -788,6 +792,7 @@
             this.identifyToolStripButton.Name = "identifyToolStripButton";
             this.identifyToolStripButton.Size = new System.Drawing.Size(24, 24);
             this.identifyToolStripButton.Text = "识别";
+            this.identifyToolStripButton.Click += new System.EventHandler(this.btnIdentify_Click);
             // 
             // selectByValueToolStripDropDownButton
             // 
@@ -1041,6 +1046,20 @@
             this.tssMapScale.Size = new System.Drawing.Size(81, 17);
             this.tssMapScale.Text = "tssMapScale";
             // 
+            // geoMap
+            // 
+            this.geoMap.BackColor = System.Drawing.Color.White;
+            this.geoMap.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.geoMap.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.geoMap.FlashColor = System.Drawing.Color.Green;
+            this.geoMap.Layers = geoLayers1;
+            this.geoMap.Location = new System.Drawing.Point(0, 0);
+            this.geoMap.Margin = new System.Windows.Forms.Padding(147, 252, 147, 252);
+            this.geoMap.Name = "geoMap";
+            this.geoMap.SelectionColor = System.Drawing.Color.Cyan;
+            this.geoMap.Size = new System.Drawing.Size(637, 511);
+            this.geoMap.TabIndex = 0;
+            // 
             // toolStrip2
             // 
             this.toolStrip2.Dock = System.Windows.Forms.DockStyle.None;
@@ -1057,7 +1076,7 @@
             this.重做ToolStripButton});
             this.toolStrip2.Location = new System.Drawing.Point(3, 0);
             this.toolStrip2.Name = "toolStrip2";
-            this.toolStrip2.Size = new System.Drawing.Size(228, 27);
+            this.toolStrip2.Size = new System.Drawing.Size(259, 27);
             this.toolStrip2.TabIndex = 50;
             // 
             // 切换编辑模式ToolStripButton
@@ -1148,20 +1167,6 @@
             this.TreeImages.ImageSize = new System.Drawing.Size(16, 16);
             this.TreeImages.TransparentColor = System.Drawing.Color.Transparent;
             // 
-            // geoMap
-            // 
-            this.geoMap.BackColor = System.Drawing.Color.White;
-            this.geoMap.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.geoMap.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.geoMap.FlashColor = System.Drawing.Color.Green;
-            this.geoMap.Layers = geoLayers1;
-            this.geoMap.Location = new System.Drawing.Point(0, 0);
-            this.geoMap.Margin = new System.Windows.Forms.Padding(88, 144, 88, 144);
-            this.geoMap.Name = "geoMap";
-            this.geoMap.SelectionColor = System.Drawing.Color.Cyan;
-            this.geoMap.Size = new System.Drawing.Size(637, 511);
-            this.geoMap.TabIndex = 0;
-            // 
             // MainPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 21F);
@@ -1170,8 +1175,6 @@
             this.Controls.Add(this.toolStripContainer1);
             this.Controls.Add(this.menuStrip1);
             this.Name = "MainPage";
-            this.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
-            this.Style = Sunny.UI.UIStyle.Office2010Black;
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.projectContextMenuStrip.ResumeLayout(false);
@@ -1232,7 +1235,7 @@
         private System.Windows.Forms.ToolStripButton saveToolStripButton;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripButton panToolStripButton;
-        private System.Windows.Forms.ToolStripButton zoomIntoolStripButton;
+        private System.Windows.Forms.ToolStripButton zoomInToolStripButton;
         private System.Windows.Forms.ToolStripButton zoomOutToolStripButton;
         private System.Windows.Forms.ToolStripButton fullExtentToolStripButton;
         private System.Windows.Forms.ToolStripButton zoomToSelectionToolStripButton;
