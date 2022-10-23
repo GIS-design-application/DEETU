@@ -10,7 +10,9 @@ using Sunny.UI;
 using DEETU.Map;
 using DEETU.Tool;
 using DEETU.Core;
+using DEETU.Source.Window.LayerAttributes;
 using System.Drawing.Drawing2D;
+using System.Windows;
 
 namespace DEETU.Source.Window
 {
@@ -18,7 +20,7 @@ namespace DEETU.Source.Window
     {
         #region 字段
         private GeoMapLayer mLayer;
-        private Color[][] Colors;
+        private readonly Color[][] Colors = new Color[][] { new Color[]{ Color.Red, Color.Green, Color.Blue } };
         #endregion
         public LineSymbolPage(GeoMapLayer layer)
         {
@@ -52,7 +54,19 @@ namespace DEETU.Source.Window
             {
                 styleComboBox.Items.Add(s.ToString());
             }
-
+            for (int i = 0; i < Colors.Length; ++i)
+            {
+                Bitmap ColorGrad = new Bitmap(uniqueColorgradComboBox.Width, uniqueColorgradComboBox.Height);
+                Graphics g = Graphics.FromImage(ColorGrad);
+                Rectangle r = ColorGrad.Bounds(); ;
+                int ColorNum = Colors[i].Length;
+                int interval_x = r.Width / ColorNum;
+                int interval_y = r.Height / ColorNum;
+                for (int j = 0; j < ColorNum; ++j)
+                    g.FillRectangle(new SolidBrush(Colors[i][j]), new Rectangle(j * interval_x, j * interval_y, interval_x, interval_y));
+                uniqueColorgradComboBox.Items.Add(ColorGrad);
+                classColorgradComboBox.Items.Add(ColorGrad);
+            }
             // 对于不同的渲染模式进行配置
             if (mLayer.Renderer.RendererType == GeoRendererTypeConstant.Simple)
             {
@@ -77,6 +91,8 @@ namespace DEETU.Source.Window
                     Button symbolButton = GetLineSymbolButton(lineSymbol);
                     uniqueDataGridView.AddRow(symbolButton, uniqueValueRenderer.GetValue(i));
                 }
+
+
             }
             else
             {
@@ -101,12 +117,15 @@ namespace DEETU.Source.Window
             sButton.Text = "";
             sButton.Dock = DockStyle.Fill;
             sButton.FlatAppearance.BorderSize = 0;
-            sButton.MouseClick += SymbolGridButton_MouseClick;
-            sButton.BackgroundImage = CreateBitmapFromSymbol(symbol);
+            sButton.BackgroundImage = CreateLineBitmapFromSymbol(symbol);
+
+            MouseEventHandler handler = (sender, e) => SymbolGridButton_MouseClick(symbol);
+            sButton.MouseClick += handler;
+
             return sButton;
         }
 
-        private Bitmap CreateBitmapFromSymbol(GeoSimpleLineSymbol symbol)
+        private Bitmap CreateLineBitmapFromSymbol(GeoSimpleLineSymbol symbol)
         {
             Bitmap styleImage = new Bitmap(10, 10);
             Graphics g = Graphics.FromImage(styleImage);
@@ -119,9 +138,10 @@ namespace DEETU.Source.Window
         }
 
 
-        private void SymbolGridButton_MouseClick(object sender, MouseEventArgs e)
+        private void SymbolGridButton_MouseClick(GeoSimpleLineSymbol symbol)
         {
-            throw new NotImplementedException();
+            EditLineSymbolForm SimpleLineForm = new EditLineSymbolForm(symbol);
+            SimpleLineForm.Show();
         }
 
         private void ClassBreaksComboboxEx_DrawItem(object sender, DrawItemEventArgs e)
@@ -144,6 +164,33 @@ namespace DEETU.Source.Window
             int interval_y = r.Height / ColorNum;
             for (int i = 0; i < ColorNum; ++i)
                 g.FillRectangle(new SolidBrush(Colors[e.Index][i]), new Rectangle(i * interval_x, i * interval_y, interval_x, interval_y));
+
+        }
+
+        private void lineColorPicker_ValueChanged(object sender, Color value)
+        {
+            ((mLayer.Renderer as GeoSimpleRenderer).Symbol as GeoSimpleLineSymbol).Color = value;
+        }
+
+        private void styleComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ((mLayer.Renderer as GeoSimpleRenderer).Symbol as GeoSimpleLineSymbol).Style = (GeoSimpleLineSymbolStyleConstant)styleComboBox.SelectedIndex;
+
+        }
+
+        private void sizeDoubleUpDown_ValueChanged(object sender, double value)
+        {
+            ((mLayer.Renderer as GeoSimpleRenderer).Symbol as GeoSimpleLineSymbol).Size = value;
+        }
+
+        private void uniqueFieldComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            (mLayer.Renderer as GeoUniqueValueRenderer).Field = uniqueFieldComboBox.SelectedItem.ToString();
+        }
+
+        private void classFieldComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            (mLayer.Renderer as GeoClassBreaksRenderer).Field = uniqueFieldComboBox.SelectedItem.ToString();
 
         }
     }

@@ -10,6 +10,7 @@ using Sunny.UI;
 using DEETU.Map;
 using DEETU.Tool;
 using DEETU.Core;
+using DEETU.Source.Window.LayerAttributes;
 using System.Drawing.Drawing2D;
 
 namespace DEETU.Source.Window
@@ -18,6 +19,8 @@ namespace DEETU.Source.Window
     {
         #region 字段
         private GeoMapLayer mLayer;
+        private readonly Color[][] Colors = new Color[][] { new Color[] { Color.Red, Color.Green, Color.Blue } };
+
         #endregion
         public MarkerSymbolPage(GeoMapLayer layer)
         {
@@ -51,7 +54,19 @@ namespace DEETU.Source.Window
             {
                 markerStyleComboBox.Items.Add(s.ToString());
             }
-
+            for (int i = 0; i < Colors.Length; ++i)
+            {
+                Bitmap ColorGrad = new Bitmap(uniqueColorgradComboBox.Width, uniqueColorgradComboBox.Height);
+                Graphics g = Graphics.FromImage(ColorGrad);
+                Rectangle r = ColorGrad.Bounds(); ;
+                int ColorNum = Colors[i].Length;
+                int interval_x = r.Width / ColorNum;
+                int interval_y = r.Height / ColorNum;
+                for (int j = 0; j < ColorNum; ++j)
+                    g.FillRectangle(new SolidBrush(Colors[i][j]), new Rectangle(j * interval_x, j * interval_y, interval_x, interval_y));
+                uniqueColorgradComboBox.Items.Add(ColorGrad);
+                classColorgradComboBox.Items.Add(ColorGrad);
+            }
             // 对于不同的渲染模式进行配置
             if (mLayer.Renderer.RendererType == GeoRendererTypeConstant.Simple)
             {
@@ -98,8 +113,11 @@ namespace DEETU.Source.Window
             sButton.Text = "";
             sButton.Dock = DockStyle.Fill;
             sButton.FlatAppearance.BorderSize = 0;
-            sButton.MouseClick += SymbolGridButton_MouseClick;
             sButton.BackgroundImage = CreateMarkerBitmapFromSymbol(symbol);
+
+            MouseEventHandler handler = (sender, e) => SymbolGridButton_MouseClick(symbol);
+            sButton.MouseClick += handler;
+
             return sButton;
         }
 
@@ -114,9 +132,30 @@ namespace DEETU.Source.Window
         }
 
 
-        private void SymbolGridButton_MouseClick(object sender, MouseEventArgs e)
+        private void SymbolGridButton_MouseClick(GeoSimpleMarkerSymbol symbol)
         {
-            throw new NotImplementedException();
+            EditMarkerSymbolForm SimpleMarkerForm = new EditMarkerSymbolForm(symbol);
+            SimpleMarkerForm.Show();
+        }
+
+        private void markerStyleComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ((mLayer.Renderer as GeoSimpleRenderer).Symbol as GeoSimpleMarkerSymbol).Style = (GeoSimpleMarkerSymbolStyleConstant)markerStyleComboBox.SelectedIndex;
+        }
+
+        private void markerColorPicker_ValueChanged(object sender, Color value)
+        {
+            ((mLayer.Renderer as GeoSimpleRenderer).Symbol as GeoSimpleMarkerSymbol).Color = value;
+        }
+
+        private void uniqueFieldComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            (mLayer.Renderer as GeoUniqueValueRenderer).Field = uniqueFieldComboBox.SelectedItem.ToString();
+        }
+
+        private void classFieldComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            (mLayer.Renderer as GeoClassBreaksRenderer).Field = uniqueFieldComboBox.SelectedItem.ToString();
         }
     }
 }
