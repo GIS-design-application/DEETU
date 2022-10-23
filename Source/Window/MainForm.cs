@@ -15,39 +15,39 @@ namespace DEETU
 {
     public partial class MainForm : Form
     {
-        #region å­—æ®µ
-        // é€‰é¡¹å˜é‡
-        private Color mZoomBoxColor = Color.DeepPink; // æ”¾å¤§ç›’é¢œè‰²
-        private double mZoomBoxWidth = 0.53; // æ”¾å¤§ç›’çš„è¾¹ç•Œå®½åº¦
-        private Color mSelectBoxColor = Color.DarkGreen; // é€‰æ‹©ç›’é¢œè‰²
-        private double mSelectBoxWidth = 0.53; // é€‰æ‹©ç›’è¾¹ç•Œå®½åº¦
-        private double mZoomRatioFixed = 2; // å›ºå®šç¼©æ”¾ç³»æ•°
-        private double mZoomRatioMouseWheel = 1.2; //æ»‘è½®ç¼©æ”¾ç³»æ•°
-        private double mSelectingTolerance = 3;// å•ä½åƒç´ 
-        private GeoSimpleFillSymbol mSelectingBoxSymbol; // é€‰æ‹©ç›’çš„ç¬¦å·
-        private GeoSimpleFillSymbol mZoomBoxSymbol; // æ”¾å¤§ç›’çš„ç¬¦å·
-        private GeoSimpleFillSymbol mMovingPolygonSymbol; // ç§»åŠ¨å¤šè¾¹å½¢çš„ç¬¦å·
-        private GeoSimpleFillSymbol mEditingPolygonSymbol; // ç¼–è¾‘å¤šè¾¹å½¢çš„ç¬¦å·
-        private GeoSimpleMarkerSymbol mEditingVertexSymbol; // ç¼–è¾‘æ‰‹æŸ„ç¬¦å·
-        private GeoSimpleMarkerSymbol mEditingVertexHoverSymbol; // ç¼–è¾‘æ‰‹æŸ„ç¬¦å·:hover
-        private GeoSimpleLineSymbol mElasticSymbol; // æ©¡çš®ç­‹ç¬¦å·
+        #region ×Ö¶Î
+        // Ñ¡Ïî±äÁ¿
+        private Color mZoomBoxColor = Color.DeepPink; // ·Å´óºĞÑÕÉ«
+        private double mZoomBoxWidth = 0.53; // ·Å´óºĞµÄ±ß½ç¿í¶È
+        private Color mSelectBoxColor = Color.DarkGreen; // Ñ¡ÔñºĞÑÕÉ«
+        private double mSelectBoxWidth = 0.53; // Ñ¡ÔñºĞ±ß½ç¿í¶È
+        private double mZoomRatioFixed = 2; // ¹Ì¶¨Ëõ·ÅÏµÊı
+        private double mZoomRatioMouseWheel = 1.2; //»¬ÂÖËõ·ÅÏµÊı
+        private double mSelectingTolerance = 3;// µ¥Î»ÏñËØ
+        private GeoSimpleFillSymbol mSelectingBoxSymbol; // Ñ¡ÔñºĞµÄ·ûºÅ
+        private GeoSimpleFillSymbol mZoomBoxSymbol; // ·Å´óºĞµÄ·ûºÅ
+        private GeoSimpleFillSymbol mMovingPolygonSymbol; // ÒÆ¶¯¶à±ßĞÎµÄ·ûºÅ
+        private GeoSimpleFillSymbol mEditingPolygonSymbol; // ±à¼­¶à±ßĞÎµÄ·ûºÅ
+        private GeoSimpleMarkerSymbol mEditingVertexSymbol; // ±à¼­ÊÖ±ú·ûºÅ
+        private GeoSimpleMarkerSymbol mEditingVertexHoverSymbol; // ±à¼­ÊÖ±ú·ûºÅ:hover
+        private GeoSimpleLineSymbol mElasticSymbol; // ÏğÆ¤½î·ûºÅ
 
 
-        // ä¸åœ°å›¾æ“ä½œæœ‰å…³çš„å˜é‡
-        private int mMapOpStyle = 0; // 1: æ”¾å¤§, 2: ç¼©å°, 3: æ¼«æ¸¸, 4: é€‰æ‹©, 5: æŸ¥è¯¢
-                                     // 6: ç§»åŠ¨, 7: æç»˜, 8: ç¼–è¾‘
-        private PointF mStartMouseLocation; // æ‹‰æ¡†æ—¶çš„èµ·ç‚¹
-        private bool mIsInZoomIn = false; // æ˜¯å¦åœ¨æ”¾å¤§
-        private bool mIsInZoomOut = false; // æ˜¯å¦åœ¨ç¼©å°
-        private bool mIsInPan = false; // æ˜¯å¦åœ¨æ¼«æ¸¸ 
-        private bool mIsInIdentify = false; // æ˜¯å¦åœ¨æŸ¥è¯¢
+        // ÓëµØÍ¼²Ù×÷ÓĞ¹ØµÄ±äÁ¿
+        private int mMapOpStyle = 0; // 1: ·Å´ó, 2: ËõĞ¡, 3: ÂşÓÎ, 4: Ñ¡Ôñ, 5: ²éÑ¯
+                                     // 6: ÒÆ¶¯, 7: Ãè»æ, 8: ±à¼­
+        private PointF mStartMouseLocation; // À­¿òÊ±µÄÆğµã
+        private bool mIsInZoomIn = false; // ÊÇ·ñÔÚ·Å´ó
+        private bool mIsInZoomOut = false; // ÊÇ·ñÔÚËõĞ¡
+        private bool mIsInPan = false; // ÊÇ·ñÔÚÂşÓÎ 
+        private bool mIsInIdentify = false; // ÊÇ·ñÔÚ²éÑ¯
         private bool mIsInSelect = false;
-        private bool mIsMovingShapes = false; // æ˜¯å¦æ­£åœ¨ç§»åŠ¨å›¾å½¢
-        private bool mIsEditingShapes = false; // æ˜¯å¦æ­£åœ¨ç¼–è¾‘å›¾å½¢
-        private List<GeoGeometry> mMovingGeometries = new List<GeoGeometry>(); // æ­£åœ¨ç§»åŠ¨çš„å›¾å½¢é›†åˆ
-        private GeoGeometry mEditingGeometry; // æ­£åœ¨ç¼–è¾‘çš„å›¾å½¢
-        private GeoPoint mEditingPoint, mEditingLeftPoint, mEditingRightPoint; // æ­£åœ¨ç¼–è¾‘çš„å›¾å½¢ä¸­è¢«é¼ æ ‡ç¢°åˆ°çš„ç‚¹
-        private List<GeoPoints> mSketchingShape; // æ­£åœ¨æç»˜çš„å›¾å½¢, ç”¨ä¸€ä¸ªå¤šç‚¹é›†åˆå­˜å‚¨
+        private bool mIsMovingShapes = false; // ÊÇ·ñÕıÔÚÒÆ¶¯Í¼ĞÎ
+        private bool mIsEditingShapes = false; // ÊÇ·ñÕıÔÚ±à¼­Í¼ĞÎ
+        private List<GeoGeometry> mMovingGeometries = new List<GeoGeometry>(); // ÕıÔÚÒÆ¶¯µÄÍ¼ĞÎ¼¯ºÏ
+        private GeoGeometry mEditingGeometry; // ÕıÔÚ±à¼­µÄÍ¼ĞÎ
+        private GeoPoint mEditingPoint, mEditingLeftPoint, mEditingRightPoint; // ÕıÔÚ±à¼­µÄÍ¼ĞÎÖĞ±»Êó±êÅöµ½µÄµã
+        private List<GeoPoints> mSketchingShape; // ÕıÔÚÃè»æµÄÍ¼ĞÎ, ÓÃÒ»¸ö¶àµã¼¯ºÏ´æ´¢
 
 
         #endregion
@@ -60,22 +60,22 @@ namespace DEETU
         }
 
 
-        #region çª—ä½“å’ŒæŒ‰é’®äº‹ä»¶å¤„ç†
+        #region ´°ÌåºÍ°´Å¥ÊÂ¼ş´¦Àí
 
-        // è£…è½½çª—ä½“
+        // ×°ÔØ´°Ìå
         private void MainForm_Load(object sender, EventArgs e)
         {
-            // (1) åˆå§‹åŒ–ç¬¦å·
+            // (1) ³õÊ¼»¯·ûºÅ
             InitializeSymbols();
-            // (2) åˆå§‹åŒ–æç»˜å›¾å½¢
+            // (2) ³õÊ¼»¯Ãè»æÍ¼ĞÎ
             InitializeSketchingShape();
-            // (3) æ˜¾ç¤ºæ¯”ä¾‹å°º
+            // (3) ÏÔÊ¾±ÈÀı³ß
             ShowMapScale();
         }
 
         private void btnLoadLayerFile_Click(object sender, EventArgs e)
         {
-            // è·å–æ–‡ä»¶å
+            // »ñÈ¡ÎÄ¼şÃû
             OpenFileDialog sDialog = new OpenFileDialog();
             string sFileName = "";
             if (sDialog.ShowDialog() == DialogResult.OK)
@@ -142,10 +142,10 @@ namespace DEETU
             mMapOpStyle = 5;
         }
 
-        // ç®€å•æ¸²æŸ“
+        // ¼òµ¥äÖÈ¾
         private void btnSimpleRender_Click(object sender, EventArgs e)
         {
-            // æŸ¥æ‰¾å¤šè¾¹å½¢å›¾å±‚
+            // ²éÕÒ¶à±ßĞÎÍ¼²ã
             GeoMapLayer sLayer = GetPolygonLayer();
             if (sLayer == null)
                 return;
@@ -156,27 +156,27 @@ namespace DEETU
             geoMap.RedrawMap();
         }
 
-        // å”¯ä¸€å€¼æ¸²æŸ“
+        // Î¨Ò»ÖµäÖÈ¾
         private void btnUniqueValue_Click(object sender, EventArgs e)
         {
-            // æŸ¥æ‰¾å¤šè¾¹å½¢å›¾å±‚
+            // ²éÕÒ¶à±ßĞÎÍ¼²ã
             GeoMapLayer sLayer = GetPolygonLayer();
             if (sLayer == null)
                 return;
-            // å‡å®šç¬¬ä¸€ä¸ªå­—æ®µåç§°ä¸º"åç§°"ä¸”ä¸ºå­—ç¬¦å‹
+            // ¼Ù¶¨µÚÒ»¸ö×Ö¶ÎÃû³ÆÎª"Ãû³Æ"ÇÒÎª×Ö·ûĞÍ
 
             GeoUniqueValueRenderer sRenderer = new GeoUniqueValueRenderer();
-            sRenderer.Field = "åç§°";
+            sRenderer.Field = "Ãû³Æ";
             List<string> sValues = new List<string>();
             int sFeatureCount = sLayer.Features.Count;
             for (int i = 0; i < sFeatureCount; i++)
             {
-                string svalue = (string)sLayer.Features.GetItem(i).Attributes.GetItem(0); // è¿™é‡Œä½¿ç”¨0 å‡å®šç¬¬ä¸€ä¸ªå°±æ˜¯å­—ç¬¦ä¸²çš„åç§°
+                string svalue = (string)sLayer.Features.GetItem(i).Attributes.GetItem(0); // ÕâÀïÊ¹ÓÃ0 ¼Ù¶¨µÚÒ»¸ö¾ÍÊÇ×Ö·û´®µÄÃû³Æ
                 sValues.Add(svalue);
             }
-            // å»é™¤é‡å¤
+            // È¥³ıÖØ¸´
             sValues = sValues.Distinct().ToList();
-            // ç”Ÿæˆç¬¦å·
+            // Éú³É·ûºÅ
             int sValueCount = sValues.Count;
             for (int i = 0; i < sValueCount; i++)
             {
@@ -196,7 +196,7 @@ namespace DEETU
             {
                 return;
             }
-            // å‡è®¾å­˜åœ¨"f5"çš„å­—æ®µä¸”ä¸ºå•ç²¾åº¦æµ®ç‚¹å‹
+            // ¼ÙÉè´æÔÚ"f5"µÄ×Ö¶ÎÇÒÎªµ¥¾«¶È¸¡µãĞÍ
             GeoClassBreaksRenderer sRenderer = new GeoClassBreaksRenderer();
             sRenderer.Field = "F5";
             List<double> sValues = new List<double>();
@@ -207,7 +207,7 @@ namespace DEETU
                 double sValue = (float)sLayer.Features.GetItem(i).Attributes.GetItem(sFieldIndex);
                 sValues.Add(sValue);
             }
-            // è·å–æœ€å°, æœ€å¤§å€¼, å¹¶åˆ†ä¸º5çº§
+            // »ñÈ¡×îĞ¡, ×î´óÖµ, ²¢·ÖÎª5¼¶
             double sMinValue = sValues.Min();
             double sMaxValue = sValues.Max();
             for (int i = 0; i < 5; i++)
@@ -228,7 +228,7 @@ namespace DEETU
         {
             if (geoMap.Layers.Count == 0)
                 return;
-            // è·å–ç¬¬ä¸€ä¸ªå›¾å±‚
+            // »ñÈ¡µÚÒ»¸öÍ¼²ã
             GeoMapLayer sLayer = geoMap.Layers.GetItem(0);
             GeoLabelRenderer sLabelRenderer = new GeoLabelRenderer();
             sLabelRenderer.Field = sLayer.AttributeFields.GetItem(0).Name;
@@ -240,27 +240,27 @@ namespace DEETU
             geoMap.RedrawMap();
         }
 
-        // ç§»åŠ¨å¤šè¾¹å½¢
+        // ÒÆ¶¯¶à±ßĞÎ
         private void btnMovePolygon_Click(object sender, EventArgs e)
         {
             mMapOpStyle = 6;
         }
 
-        // æç»˜å¤šè¾¹å½¢
+        // Ãè»æ¶à±ßĞÎ
         private void btnSketchPolygon_Click(object sender, EventArgs e)
         {
             mMapOpStyle = 7;
         }
 
-        // ç»“æŸpart
+        // ½áÊøpart
         private void btnEndPart_Click(object sender, EventArgs e)
         {
-            // åˆ¤æ–­æ˜¯å¦å¯ä»¥ç»“æŸ:ä¸‰ä¸ªç‚¹ä»¥ä¸Š
+            // ÅĞ¶ÏÊÇ·ñ¿ÉÒÔ½áÊø:Èı¸öµãÒÔÉÏ
             if (mSketchingShape.Last().Count < 3)
             {
                 return;
             }
-            // å¾€listä¸­å¢åŠ ä¸€ä¸ªå¤šç‚¹å¯¹è±¡
+            // ÍùlistÖĞÔö¼ÓÒ»¸ö¶àµã¶ÔÏó
             GeoPoints sPoints = new GeoPoints();
             mSketchingShape.Add(sPoints);
             geoMap.RedrawTrackingShapes();
@@ -268,8 +268,8 @@ namespace DEETU
 
         private void btnEndSketch_Click(object sender, EventArgs e)
         {
-            // ç»“æŸæç»˜å¤šè¾¹å½¢
-            // æ£€éªŒæ˜¯å¦å¯ä»¥ç»“æŸ
+            // ½áÊøÃè»æ¶à±ßĞÎ
+            // ¼ìÑéÊÇ·ñ¿ÉÒÔ½áÊø
             if (mSketchingShape.Last().Count >= 1 && mSketchingShape.Last().Count < 3)
             {
                 return;
@@ -278,26 +278,26 @@ namespace DEETU
             {
                 mSketchingShape.Remove(mSketchingShape.Last());
             }
-            // å¦‚æœå»æ‰æ²¡ä¿®æ”¹å®Œçš„, åˆ æ‰ç©ºçš„, ç”¨æˆ·è‡³å°‘è¿˜è¾“å…¥äº†ä¸€ä¸ªå¤šè¾¹å½¢, é‚£ä¹ˆå°±åŠ å…¥å¤šè¾¹å½¢å›¾å±‚.
+            // Èç¹ûÈ¥µôÃ»ĞŞ¸ÄÍêµÄ, É¾µô¿ÕµÄ, ÓÃ»§ÖÁÉÙ»¹ÊäÈëÁËÒ»¸ö¶à±ßĞÎ, ÄÇÃ´¾Í¼ÓÈë¶à±ßĞÎÍ¼²ã.
             if (mSketchingShape.Count > 0)
             {
                 GeoMapLayer sLayer = GetPolygonLayer();
                 if (sLayer != null)
-                { // å®šä¹‰ä¸€ä¸ªå¤åˆå¤šè¾¹å½¢
+                { // ¶¨ÒåÒ»¸ö¸´ºÏ¶à±ßĞÎ
                     GeoMultiPolygon sMultipolygon = new GeoMultiPolygon();
                     sMultipolygon.Parts.AddRange(mSketchingShape.ToArray());
-                    sMultipolygon.UpdateExtent(); // è®°å¾—åªè¦å¤šè¾¹å½¢è¢«ä¿®æ”¹å°±éœ€è¦æ›´æ–°å¤šè¾¹å½¢çš„èŒƒå›´
-                    // ç”Ÿæˆè¦ç´ å¹¶åŠ å…¥å›¾å±‚
+                    sMultipolygon.UpdateExtent(); // ¼ÇµÃÖ»Òª¶à±ßĞÎ±»ĞŞ¸Ä¾ÍĞèÒª¸üĞÂ¶à±ßĞÎµÄ·¶Î§
+                    // Éú³ÉÒªËØ²¢¼ÓÈëÍ¼²ã
                     GeoFeature sFeature = sLayer.GetNewFeature();
 
-                    // å°†å‡ ä½•å›¾å½¢åŠ å…¥åˆ°featureä¹‹ä¸­, featureåŠ å…¥åˆ°å›¾å±‚
+                    // ½«¼¸ºÎÍ¼ĞÎ¼ÓÈëµ½featureÖ®ÖĞ, feature¼ÓÈëµ½Í¼²ã
                     sFeature.Geometry = sMultipolygon;
                     sLayer.Features.Add(sFeature);
-                    sLayer.UpdateExtent(); // è®°å¾—å›¾å±‚ä¿®æ”¹ä¹‹åä¹Ÿéœ€è¦æ›´æ–°å¤šè¾¹å½¢çš„èŒƒå›´
+                    sLayer.UpdateExtent(); // ¼ÇµÃÍ¼²ãĞŞ¸ÄÖ®ºóÒ²ĞèÒª¸üĞÂ¶à±ßĞÎµÄ·¶Î§
                 }
             }
 
-            // åˆå§‹åŒ–æç»˜å›¾å½¢
+            // ³õÊ¼»¯Ãè»æÍ¼ĞÎ
             InitializeSketchingShape();
             geoMap.RedrawMap();
         }
@@ -309,7 +309,7 @@ namespace DEETU
             {
                 return;
             }
-            // æ˜¯å¦å…·æœ‰ä¸€ä¸ªé€‰æ‹©è¦ç´ (ä¸èƒ½æ²¡æœ‰, ä¸èƒ½æœ‰å¤šä¸ª)
+            // ÊÇ·ñ¾ßÓĞÒ»¸öÑ¡ÔñÒªËØ(²»ÄÜÃ»ÓĞ, ²»ÄÜÓĞ¶à¸ö)
             if (slayer.SelectedFeatures.Count != 1)
                 return;
             GeoMultiPolygon sOriMultiPolygon = slayer.SelectedFeatures.GetItem(0).Geometry as GeoMultiPolygon;
@@ -322,21 +322,21 @@ namespace DEETU
 
         private void btnEndEdit_Click(object sender, EventArgs e)
         {
-            // å°†mEditingGeometryä¸­çš„å¤šè¾¹å½¢æ”¾å›slayerä¸­
+            // ½«mEditingGeometryÖĞµÄ¶à±ßĞÎ·Å»ØslayerÖĞ
             GeoMapLayer slayer = GetPolygonLayer();
             slayer.SelectedFeatures.GetItem(0).Geometry = mEditingGeometry;
             
-            // å–æ¶ˆç¼–è¾‘å¤šè¾¹å½¢
+            // È¡Ïû±à¼­¶à±ßĞÎ
             mEditingGeometry = null;
 
             mMapOpStyle = -1;
 
-            // é‡ç»˜
+            // ÖØ»æ
             geoMap.RedrawMap();
         }
         #endregion
 
-        #region åœ°å›¾æ§ä»¶äº‹ä»¶å¤„ç†
+        #region µØÍ¼¿Ø¼şÊÂ¼ş´¦Àí
         private void geoMap_MouseDown(object sender, MouseEventArgs e)
         {
             if (mMapOpStyle == 1)
@@ -380,22 +380,22 @@ namespace DEETU
                 return;
             }
 
-            GeoMultiPolygon editingPolygon = mEditingGeometry as GeoMultiPolygon; // ç›®å‰åªè€ƒè™‘é€‰æ‹©ä¸€ä¸ªå¤šè¾¹å½¢
+            GeoMultiPolygon editingPolygon = mEditingGeometry as GeoMultiPolygon; // Ä¿Ç°Ö»¿¼ÂÇÑ¡ÔñÒ»¸ö¶à±ßĞÎ
 
-            // æ‰¾åˆ°é¼ æ ‡ç‚¹å‡»åå¯¹åº”çš„ç‚¹
+            // ÕÒµ½Êó±êµã»÷ºó¶ÔÓ¦µÄµã
             GeoPoint mousePoint = geoMap.ToMapPoint(e.Location.X, e.Location.Y);
             double tolerance = geoMap.ToMapDistance(mSelectingTolerance);
 
-            // å¦‚æœé¼ æ ‡çš„ç‚¹å¹¶ä¸åœ¨å¤šè¾¹å½¢é™„è¿‘, ç›´æ¥æ”¾å¼ƒ
+            // Èç¹ûÊó±êµÄµã²¢²»ÔÚ¶à±ßĞÎ¸½½ü, Ö±½Ó·ÅÆú
             if (!editingPolygon.GetEnvelope().IsInside(mousePoint, tolerance))
             {
                 return;
             }
 
-            // éå†æ‰€æœ‰ç‚¹é›†
+            // ±éÀúËùÓĞµã¼¯
             for (int i = 0; i < editingPolygon.Parts.Count; i++)
             {
-                // å¯¹æ¯ä¸€ä¸ªç‚¹é›†åˆ¤æ–­æ˜¯å¦åŒ…å«é¼ æ ‡çš„èŒƒå›´
+                // ¶ÔÃ¿Ò»¸öµã¼¯ÅĞ¶ÏÊÇ·ñ°üº¬Êó±êµÄ·¶Î§
                 GeoPoints points = editingPolygon.Parts.GetItem(i);
                 if (!points.GetEnvelope().IsInside(mousePoint, tolerance))
                 {
@@ -403,7 +403,7 @@ namespace DEETU
                 }
                 else
                 {
-                    // éå†æ¯ä¸€ä¸ªç‚¹
+                    // ±éÀúÃ¿Ò»¸öµã
                     for (int j = 0; j < points.Count; j++)
                     {
                         if (GeoMapTools.IsPointOnPoint(points.GetItem(j), mousePoint, tolerance))
@@ -432,7 +432,7 @@ namespace DEETU
                 }
             }
 
-            // æ²¡æœ‰æ‰¾åˆ°å¥½å¥‡æ€ª, åº”è¯¥æ˜¯å¤šè¾¹å½¢åœ¨é™„è¿‘ä½†æ˜¯å’Œç‚¹ç¦»å¾—ä¹Ÿä¸è¿‘, æœ‰ç‚¹è ¢
+            // Ã»ÓĞÕÒµ½ºÃÆæ¹Ö, Ó¦¸ÃÊÇ¶à±ßĞÎÔÚ¸½½üµ«ÊÇºÍµãÀëµÃÒ²²»½ü, ÓĞµã´À
             return;
         }
 
@@ -440,14 +440,14 @@ namespace DEETU
         {
             if (e.Button != MouseButtons.Left)
                 return;
-            // æŸ¥æ‰¾ä¸€ä¸ªå¤šè¾¹å½¢å›¾å±‚
+            // ²éÕÒÒ»¸ö¶à±ßĞÎÍ¼²ã
             GeoMapLayer sLayer = GetPolygonLayer();
             if (sLayer == null)
             {
                 return;
             }
 
-            // åˆ¤æ–­æ˜¯å¦æœ‰é€‰ä¸­çš„è¦ç´ 
+            // ÅĞ¶ÏÊÇ·ñÓĞÑ¡ÖĞµÄÒªËØ
             int sSelFeatureCount = sLayer.SelectedFeatures.Count;
             if (sSelFeatureCount == 0)
                 return;
@@ -513,7 +513,7 @@ namespace DEETU
 
         private void geoMap_MouseMove(object sender, MouseEventArgs e)
         {
-            // æ˜¾ç¤ºå±å¹•åæ ‡
+            // ÏÔÊ¾ÆÁÄ»×ø±ê
             ShowCoordinates(e.Location);
             if (mMapOpStyle == 1)
             {
@@ -543,20 +543,20 @@ namespace DEETU
             {
                 OnSketch_MouseMove(e);
             }
-            else if (mMapOpStyle == 8) // ç¼–è¾‘å¤šè¾¹å½¢
+            else if (mMapOpStyle == 8) // ±à¼­¶à±ßĞÎ
             {
                 OnEditShape_MouseMove(e);
             }
         }
 
-        // ç§»åŠ¨ä¸€ä¸ªç‚¹, ä¸¤è¾¹çš„ç‚¹éƒ½éœ€è¦ç§»åŠ¨ä¸€ä¸‹
+        // ÒÆ¶¯Ò»¸öµã, Á½±ßµÄµã¶¼ĞèÒªÒÆ¶¯Ò»ÏÂ
         private void OnEditShape_MouseMove(MouseEventArgs e)
         {
             if (mIsEditingShapes == false)
             {
                 return;
             }
-            // è·å¾—æ­¤æ—¶é¼ æ ‡ä½ç½®
+            // »ñµÃ´ËÊ±Êó±êÎ»ÖÃ
             GeoPoint sCurPoint = geoMap.ToMapPoint(e.Location.X, e.Location.Y);
 
        
@@ -576,7 +576,7 @@ namespace DEETU
                 return;
             else if (sPointCount == 1)
             {
-                // åªæœ‰ä¸€ä¸ªé¡¶ç‚¹, é‚£ä¹ˆåªç»˜åˆ¶ä¸€ä¸ªæ©¡çš®ç­‹
+                // Ö»ÓĞÒ»¸ö¶¥µã, ÄÇÃ´Ö»»æÖÆÒ»¸öÏğÆ¤½î
                 geoMap.Refresh();
                 GeoPoint sFirstPoint = sLastPart.GetItem(0);
                 GeoUserDrawingTool sDrawingTool = geoMap.GetDrawingTool();
@@ -586,7 +586,7 @@ namespace DEETU
             else
 
             {
-                // å…·æœ‰å¤šä¸ªé¡¶ç‚¹, ç»˜åˆ¶ä¸¤æ¡æ©¡çš®ç­‹
+                // ¾ßÓĞ¶à¸ö¶¥µã, »æÖÆÁ½ÌõÏğÆ¤½î
                 geoMap.Refresh();
                 GeoPoint sFirstPoint = sLastPart.GetItem(0);
                 GeoPoint sLastPoint = sLastPart.GetItem(sPointCount - 1);
@@ -603,16 +603,16 @@ namespace DEETU
             {
                 return;
             }
-            // ä¿®æ”¹ç§»åŠ¨å›¾å½¢çš„åæ ‡
+            // ĞŞ¸ÄÒÆ¶¯Í¼ĞÎµÄ×ø±ê
             double sDeltaX = geoMap.ToMapDistance(e.Location.X - mStartMouseLocation.X);
             double sDeltaY = geoMap.ToMapDistance(mStartMouseLocation.Y - e.Location.Y);
             ModifyMovingGeometries(sDeltaX, sDeltaY);
 
             geoMap.Refresh();
-            // ç»˜åˆ¶ç§»åŠ¨å›¾å½¢
+            // »æÖÆÒÆ¶¯Í¼ĞÎ
             DrawMovingShapes();
 
-            // é‡æ–°è®¾ç½®é¼ æ ‡ç§»åŠ¨å¼€å§‹ä½ç½®
+            // ÖØĞÂÉèÖÃÊó±êÒÆ¶¯¿ªÊ¼Î»ÖÃ
             mStartMouseLocation = e.Location;
         }
 
@@ -721,17 +721,17 @@ namespace DEETU
                 return;
             }
             mIsEditingShapes = false;
-            // ä¿å­˜ç›®å‰é¼ æ ‡æŒ‡å‘çš„ç‚¹
+            // ±£´æÄ¿Ç°Êó±êÖ¸ÏòµÄµã
             GeoPoint sCurPoint = geoMap.ToMapPoint(e.Location.X, e.Location.Y);
 
-            // ç”¨ç°åœ¨çš„ç‚¹æ›¿æ¢ç¼–è¾‘çš„ç‚¹
+            // ÓÃÏÖÔÚµÄµãÌæ»»±à¼­µÄµã
             mEditingPoint.X = sCurPoint.X;
             mEditingPoint.Y = sCurPoint.Y;
 
 
             (mEditingGeometry as GeoMultiPolygon).UpdateExtent();
 
-            // é‡ç»˜åœ°å›¾
+            // ÖØ»æµØÍ¼
             geoMap.RedrawMap();
             
         }
@@ -742,17 +742,17 @@ namespace DEETU
                 return;
             mIsMovingShapes = false;
             GeoMapLayer selectLayer = geoMap.Layers.getSelectableLayer();
-            // åšç›¸åº”çš„ä¿®æ”¹æ•°æ®æ“ä½œ, ä¸å†ç¼–å†™
+            // ×öÏàÓ¦µÄĞŞ¸ÄÊı¾İ²Ù×÷, ²»ÔÙ±àĞ´
             for (int i = 0; i < mMovingGeometries.Count; i++)
             {
                 GeoGeometry geometry = mMovingGeometries[i];
                 GeoFeature feature = geoMap.Layers.getSelectableLayer().SelectedFeatures.GetItem(i);
                 feature.Replace(geometry);
             }
-            // å°±æ˜¯å°†æ­£åœ¨ç§»åŠ¨çš„å›¾å½¢ç”¨cloneçš„æ›¿æ¢
+            // ¾ÍÊÇ½«ÕıÔÚÒÆ¶¯µÄÍ¼ĞÎÓÃcloneµÄÌæ»»
 
 
-            // é‡æ–°ç»˜åˆ¶åœ°å›¾
+            // ÖØĞÂ»æÖÆµØÍ¼
             geoMap.RedrawMap();
 
             mMovingGeometries.Clear();
@@ -783,7 +783,7 @@ namespace DEETU
                 }
 
                 GeoFeatures sFeatures = sLayer.SearchByBox(sBox, tolerance);
-                // å¼¹å‡ºçª—ä½“
+                // µ¯³ö´°Ìå
                 int sSelFeatureCount = sFeatures.Count;
                 if (sSelFeatureCount > 0)
                 {
@@ -801,11 +801,11 @@ namespace DEETU
                         int sAttributeCount = sGeoAttributes[i].Count;
                         for (int j = 0; j < sAttributeCount; j++)
                         {
-                            info += sFieldString[j] + "ï¼š" + sGeoAttributes[i].GetItem(j).ToString() + '\n';
+                            info += sFieldString[j] + "£º" + sGeoAttributes[i].GetItem(j).ToString() + '\n';
                         }
                         info += "\n";
                     }
-                    MessageBox.Show(info, "å±æ€§ä¿¡æ¯", MessageBoxButtons.OK);
+                    MessageBox.Show(info, "ÊôĞÔĞÅÏ¢", MessageBoxButtons.OK);
 
                     // geoMap.FlashShapes(sGeometryies, 3, 800);
                 }
@@ -839,12 +839,12 @@ namespace DEETU
                 return;
             mIsInZoomIn = false;
             if (mStartMouseLocation.X == e.Location.X && mStartMouseLocation.Y == e.Location.Y)
-            { // ç”¨æˆ·å•ç‚¹
+            { // ÓÃ»§µ¥µã
                 GeoPoint sPoint = geoMap.ToMapPoint(mStartMouseLocation.X, mStartMouseLocation.Y);
                 geoMap.ZoomByCenter(sPoint, mZoomRatioFixed);
             }
             else
-            { // çŸ©å½¢æ”¾å¤§
+            { // ¾ØĞÎ·Å´ó
                 GeoRectangle sBox = GetMapRectByTwoPoints(mStartMouseLocation, e.Location);
                 geoMap.ZoomToExtent(sBox);
             }
@@ -870,15 +870,15 @@ namespace DEETU
 
         private void OnSketch_MouseClick(MouseEventArgs e)
         {
-            // å°†å±å¹•åæ ‡è½¬åŒ–ä¸ºåœ°å›¾åæ ‡å¹¶åŠ å…¥æç»˜å›¾å½¢
+            // ½«ÆÁÄ»×ø±ê×ª»¯ÎªµØÍ¼×ø±ê²¢¼ÓÈëÃè»æÍ¼ĞÎ
             GeoPoint sPoint = geoMap.ToMapPoint(e.Location.X, e.Location.Y);
 
-            // åœ¨æç»˜å¤šè¾¹å½¢çš„æœ€åä¸€é¡¹åŠ ä¸€ä¸ªç‚¹
+            // ÔÚÃè»æ¶à±ßĞÎµÄ×îºóÒ»Ïî¼ÓÒ»¸öµã
 
             mSketchingShape.Last().Add(sPoint);
 
             geoMap.RedrawTrackingShapes();
-            // å®ç°æŒä¹…å›¾å½¢çš„ç»˜åˆ¶
+            // ÊµÏÖ³Ö¾ÃÍ¼ĞÎµÄ»æÖÆ
         }
 
         private void geoMap_MouseWheel(object sender, MouseEventArgs e)
@@ -901,7 +901,7 @@ namespace DEETU
 
         }
 
-        // æŒä¹…ç»˜åˆ¶å›¾å½¢(ç”¨äºç»˜åˆ¶æç»˜å¤šè¾¹å½¢çš„å›¾å½¢)
+        // ³Ö¾Ã»æÖÆÍ¼ĞÎ(ÓÃÓÚ»æÖÆÃè»æ¶à±ßĞÎµÄÍ¼ĞÎ)
         private void geoMap_AfterTrackingLayerDraw(object sender, GeoUserDrawingTool drawTool)
         {
             DrawSketchingShapes(drawTool);
@@ -909,8 +909,8 @@ namespace DEETU
         }
         #endregion
 
-        #region ç§æœ‰å‡½æ•°
-        //åˆå§‹åŒ–ç¬¦å·
+        #region Ë½ÓĞº¯Êı
+        //³õÊ¼»¯·ûºÅ
         private void InitializeSymbols()
         {
             mSelectingBoxSymbol = new GeoSimpleFillSymbol();
@@ -941,7 +941,7 @@ namespace DEETU
             mElasticSymbol.Size = 0.52;
             mElasticSymbol.Style = GeoSimpleLineSymbolStyleConstant.Dash;
         }
-        // åˆå§‹åŒ–æç»˜å›¾å½¢
+        // ³õÊ¼»¯Ãè»æÍ¼ĞÎ
         private void InitializeSketchingShape()
         {
             mSketchingShape = new List<GeoPoints>();
@@ -949,7 +949,7 @@ namespace DEETU
             mSketchingShape.Add(sPoints);
         }
 
-        // æ ¹æ®å±å¹•åæ ‡æ˜¾ç¤ºåœ°å›¾åæ ‡
+        // ¸ù¾İÆÁÄ»×ø±êÏÔÊ¾µØÍ¼×ø±ê
         private void ShowCoordinates(PointF point)
         {
             GeoPoint sPoint = geoMap.ToMapPoint(point.X, point.Y);
@@ -958,13 +958,13 @@ namespace DEETU
             tssCoordinate.Text = "X:" + sX.ToString() + ", Y:" + sY.ToString();
         }
 
-        // æ˜¾ç¤ºæ¯”ä¾‹å°º
+        // ÏÔÊ¾±ÈÀı³ß
         private void ShowMapScale()
         {
             tssMapScale.Text = "1 :" + geoMap.MapScale.ToString("0.00");
         }
 
-        //æ ¹æ®å±å¹•ä¸Šçš„ä¸¤ç‚¹è·å¾—ä¸€ä¸ªåœ°å›¾åæ ‡ä¸‹çš„çŸ©å½¢
+        //¸ù¾İÆÁÄ»ÉÏµÄÁ½µã»ñµÃÒ»¸öµØÍ¼×ø±êÏÂµÄ¾ØĞÎ
         private GeoRectangle GetMapRectByTwoPoints(PointF point1, PointF point2)
         {
             GeoPoint sPoint1 = geoMap.ToMapPoint(point1.X, point1.Y);
@@ -977,7 +977,7 @@ namespace DEETU
             return sRect;
         }
 
-        //è·å–ä¸€ä¸ªå¤šè¾¹å½¢å›¾å±‚
+        //»ñÈ¡Ò»¸ö¶à±ßĞÎÍ¼²ã
         private GeoMapLayer GetPolygonLayer()
         {
             Int32 sLayerCount = geoMap.Layers.Count;
@@ -993,7 +993,7 @@ namespace DEETU
             return sLayer;
         }
 
-        //ä¿®æ”¹ç§»åŠ¨å›¾å½¢çš„åæ ‡
+        //ĞŞ¸ÄÒÆ¶¯Í¼ĞÎµÄ×ø±ê
         private void ModifyMovingGeometries(double deltaX, double deltaY)
         {
             Int32 sCount = mMovingGeometries.Count;
@@ -1018,7 +1018,7 @@ namespace DEETU
                 }
             }
         }
-        //ç»˜åˆ¶ç§»åŠ¨å›¾å½¢
+        //»æÖÆÒÆ¶¯Í¼ĞÎ
         private void DrawMovingShapes()
         {
             GeoUserDrawingTool sDrawingTool = geoMap.GetDrawingTool();
@@ -1048,22 +1048,22 @@ namespace DEETU
 #endif
         }
 
-        //ç»˜åˆ¶æ­£åœ¨æç»˜çš„å›¾å½¢
+        //»æÖÆÕıÔÚÃè»æµÄÍ¼ĞÎ
         private void DrawSketchingShapes(GeoUserDrawingTool drawingTool)
         {
             if (mSketchingShape == null)
                 return;
             Int32 sPartCount = mSketchingShape.Count;
-            //ç»˜åˆ¶å·²ç»æç»˜å®Œæˆçš„éƒ¨åˆ†
+            //»æÖÆÒÑ¾­Ãè»æÍê³ÉµÄ²¿·Ö
             for (Int32 i = 0; i <= sPartCount - 2; i++)
             {
                 drawingTool.DrawPolygon(mSketchingShape[i], mEditingPolygonSymbol);
             }
-            //æ­£åœ¨æç»˜çš„éƒ¨åˆ†ï¼ˆåªæœ‰ä¸€ä¸ªPartï¼‰
+            //ÕıÔÚÃè»æµÄ²¿·Ö£¨Ö»ÓĞÒ»¸öPart£©
             GeoPoints sLastPart = mSketchingShape.Last();
             if (sLastPart.Count >= 2)
                 drawingTool.DrawPolyline(sLastPart, mEditingPolygonSymbol.Outline);
-            //ç»˜åˆ¶æ‰€æœ‰é¡¶ç‚¹æ‰‹æŸ„
+            //»æÖÆËùÓĞ¶¥µãÊÖ±ú
             for (Int32 i = 0; i <= sPartCount - 1; i++)
             {
                 GeoPoints sPoints = mSketchingShape[i];
@@ -1071,7 +1071,7 @@ namespace DEETU
             }
         }
 
-        //ç»˜åˆ¶æ­£åœ¨ç¼–è¾‘çš„å›¾å½¢
+        //»æÖÆÕıÔÚ±à¼­µÄÍ¼ĞÎ
         private void DrawEditingShapes(GeoUserDrawingTool drawingTool)
         {
             if (mEditingGeometry == null)
@@ -1079,9 +1079,9 @@ namespace DEETU
             if (mEditingGeometry.GetType() == typeof(GeoMultiPolygon))
             {
                 GeoMultiPolygon sMultiPolygon = (GeoMultiPolygon)mEditingGeometry;
-                //ç»˜åˆ¶è¾¹ç•Œ
+                //»æÖÆ±ß½ç
                 drawingTool.DrawMultiPolygon(sMultiPolygon, mEditingPolygonSymbol);
-                //ç»˜åˆ¶é¡¶ç‚¹æ‰‹æŸ„
+                //»æÖÆ¶¥µãÊÖ±ú
                 Int32 sPartCount = sMultiPolygon.Parts.Count;
                 for (Int32 i = 0; i <= sPartCount - 1; i++)
                 {
