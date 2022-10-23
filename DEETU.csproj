@@ -49,6 +49,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="PresentationCore" />
     <Reference Include="SunnyUI, Version=3.0.4.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>packages\SunnyUI.3.0.4\lib\net40\SunnyUI.dll</HintPath>
     </Reference>
@@ -92,6 +93,24 @@
     </Compile>
     <Compile Include="Source\Window\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Source\Window\LayerAttributes\EditFillSimbolForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Source\Window\LayerAttributes\EditFillSimbolForm.Designer.cs">
+      <DependentUpon>EditFillSimbolForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Source\Window\LayerAttributes\EditLineSymbolForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Source\Window\LayerAttributes\EditLineSymbolForm.Designer.cs">
+      <DependentUpon>EditLineSymbolForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Source\Window\LayerAttributes\EditMarkerSymbolForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Source\Window\LayerAttributes\EditMarkerSymbolForm.Designer.cs">
+      <DependentUpon>EditMarkerSymbolForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Source\Window\LayerAttributes\FieldPage.cs">
       <SubType>Form</SubType>
@@ -177,6 +196,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Source\Window\LayerAttributes\AnnotationPage.resx">
       <DependentUpon>AnnotationPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Source\Window\LayerAttributes\EditFillSimbolForm.resx">
+      <DependentUpon>EditFillSimbolForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Source\Window\LayerAttributes\EditLineSymbolForm.resx">
+      <DependentUpon>EditLineSymbolForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Source\Window\LayerAttributes\EditMarkerSymbolForm.resx">
+      <DependentUpon>EditMarkerSymbolForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Source\Window\LayerAttributes\FieldPage.resx">
       <DependentUpon>FieldPage.cs</DependentUpon>
