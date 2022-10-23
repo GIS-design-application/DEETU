@@ -161,6 +161,13 @@ namespace DEETU.Source.Window
         private TreeNode CreateSimpleStyleTreeNode(GeoSymbol symbol, string label = "")
         {
             TreeNode style = new TreeNode(label);
+            TreeImages.Images.Add(CreateBitmapFromSymbol(symbol));
+            style.ImageIndex = TreeImages.Images.Count;
+            return style;
+        }
+
+        private Bitmap CreateBitmapFromSymbol(GeoSymbol symbol)
+        {
             Bitmap styleImage = new Bitmap(10, 10);
             Graphics g = Graphics.FromImage(styleImage);
             if (symbol.SymbolType == GeoSymbolTypeConstant.SimpleMarkerSymbol)
@@ -185,10 +192,8 @@ namespace DEETU.Source.Window
             {
                 throw new Exception("Symbol Type Error!");
             }
-            TreeImages.Images.Add(styleImage);
-            style.ImageIndex = TreeImages.Images.Count;
             g.Dispose();
-            return style;
+            return styleImage;
         }
 
         private void btnFullExtent_Click(object sender, EventArgs e)

@@ -10,6 +10,7 @@ using Sunny.UI;
 using DEETU.Map;
 using DEETU.Tool;
 using DEETU.Core;
+using System.Drawing.Drawing2D;
 
 namespace DEETU.Source.Window
 {
@@ -17,6 +18,7 @@ namespace DEETU.Source.Window
     {
         #region 字段
         private GeoMapLayer mLayer;
+        private Color[][] Colors;
         #endregion
         public LineSymbolPage(GeoMapLayer layer)
         {
@@ -98,15 +100,51 @@ namespace DEETU.Source.Window
             sButton.BackColor = symbol.Color;
             sButton.Text = "";
             sButton.Dock = DockStyle.Fill;
-            sButton.FlatAppearance.BorderColor = symbol.Color;
-            sButton.FlatAppearance.BorderSize = (int)symbol.Size;
+            sButton.FlatAppearance.BorderSize = 0;
             sButton.MouseClick += SymbolGridButton_MouseClick;
+            sButton.BackgroundImage = CreateBitmapFromSymbol(symbol);
             return sButton;
         }
+
+        private Bitmap CreateBitmapFromSymbol(GeoSimpleLineSymbol symbol)
+        {
+            Bitmap styleImage = new Bitmap(10, 10);
+            Graphics g = Graphics.FromImage(styleImage);
+            double dpm = 10; // I don't know the correct dpm here so I just randomly assigned a number
+            Pen sPen = new Pen(symbol.Color, (float)(symbol.Size / 1000 * dpm));
+            sPen.DashStyle = (DashStyle)symbol.Style;
+            g.DrawLine(sPen, new Point(0, styleImage.Height / 2), new Point(styleImage.Width, styleImage.Height / 2));
+            g.Dispose();
+            return styleImage;
+        }
+
 
         private void SymbolGridButton_MouseClick(object sender, MouseEventArgs e)
         {
             throw new NotImplementedException();
+        }
+
+        private void ClassBreaksComboboxEx_DrawItem(object sender, DrawItemEventArgs e)
+        {
+            Graphics g = e.Graphics;
+            Rectangle r = e.Bounds;
+            int ColorNum = Colors[e.Index].Length;
+            int interval_x = r.Width / ColorNum;
+            int interval_y = r.Height / ColorNum;
+            for(int i = 0; i < ColorNum; ++i)
+                g.FillRectangle(new SolidBrush(Colors[e.Index][i]), new Rectangle(i * interval_x, i * interval_y, interval_x, interval_y));
+        }
+
+        private void UniqueColorComboboxEx_DrawItem(object sender, DrawItemEventArgs e)
+        {
+            Graphics g = e.Graphics;
+            Rectangle r = e.Bounds;
+            int ColorNum = Colors[e.Index].Length;
+            int interval_x = r.Width / ColorNum;
+            int interval_y = r.Height / ColorNum;
+            for (int i = 0; i < ColorNum; ++i)
+                g.FillRectangle(new SolidBrush(Colors[e.Index][i]), new Rectangle(i * interval_x, i * interval_y, interval_x, interval_y));
+
         }
     }
 }

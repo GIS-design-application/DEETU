@@ -10,6 +10,7 @@ using Sunny.UI;
 using DEETU.Map;
 using DEETU.Tool;
 using DEETU.Core;
+using System.Drawing.Drawing2D;
 
 namespace DEETU.Source.Window
 {
@@ -94,13 +95,24 @@ namespace DEETU.Source.Window
         private Button GetMarkerSymbolButton(GeoSimpleMarkerSymbol symbol)
         {
             Button sButton = new Button();
-            sButton.BackColor = symbol.Color;
             sButton.Text = "";
             sButton.Dock = DockStyle.Fill;
             sButton.FlatAppearance.BorderSize = 0;
             sButton.MouseClick += SymbolGridButton_MouseClick;
+            sButton.BackgroundImage = CreateMarkerBitmapFromSymbol(symbol);
             return sButton;
         }
+
+        private Bitmap CreateMarkerBitmapFromSymbol(GeoSimpleMarkerSymbol symbol)
+        {
+            Bitmap styleImage = new Bitmap(10, 10);
+            Graphics g = Graphics.FromImage(styleImage);
+            Rectangle sRect = new Rectangle(0, styleImage.Width, 0, styleImage.Height);
+            GeoMapDrawingTools.DrawSimpleMarker(g, sRect, 0, symbol); // dpm is useless in this 
+            g.Dispose();
+            return styleImage;
+        }
+
 
         private void SymbolGridButton_MouseClick(object sender, MouseEventArgs e)
         {
