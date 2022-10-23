@@ -13,12 +13,12 @@ using DEETU.Core;
 
 namespace DEETU.Source.Window
 {
-    public partial class SymbolPage : UITitlePage
+    public partial class MarkerSymbolPage : UITitlePage
     {
         #region 字段
         private GeoMapLayer mLayer;
         #endregion
-        public SymbolPage(GeoMapLayer layer)
+        public MarkerSymbolPage(GeoMapLayer layer)
         {
             InitializeComponent();
             mLayer = layer;
@@ -46,34 +46,32 @@ namespace DEETU.Source.Window
                 uniqueFieldComboBox.Items.Add(fields.GetItem(i).Name);
                 classFieldComboBox.Items.Add(fields.GetItem(i).Name);
             }
-            foreach(GeoSimpleLineSymbolStyleConstant s in Enum.GetValues(typeof(GeoSimpleLineSymbolStyleConstant)))
+            foreach(GeoSimpleMarkerSymbolStyleConstant s in Enum.GetValues(typeof(GeoSimpleMarkerSymbolStyleConstant)))
             {
-                edgeStyleComboBox.Items.Add(s.ToString());
+                markerStyleComboBox.Items.Add(s.ToString());
             }
 
             // 对于不同的渲染模式进行配置
             if (mLayer.Renderer.RendererType == GeoRendererTypeConstant.Simple)
             {
                 GeoSimpleRenderer simpleRenderer = (GeoSimpleRenderer)mLayer.Renderer;
-                GeoSimpleFillSymbol fillSymbol = (GeoSimpleFillSymbol)simpleRenderer.Symbol;
-                fillColorPicker.Value = fillSymbol.Color;
-                edgeColorPicker.Value = fillSymbol.Outline.Color;
-                edgeWidthDoubleUpDown.Value = fillSymbol.Outline.Size;
-                edgeStyleComboBox.SelectedIndex = (int)fillSymbol.Outline.Style;
+                GeoSimpleMarkerSymbol markerSymbol = (GeoSimpleMarkerSymbol)simpleRenderer.Symbol;
+                markerColorPicker.Value = markerSymbol.Color;
+                markerStyleComboBox.SelectedIndex = (int)markerSymbol.Style;
                 // 对于一开始是simple的图层把simple symbol当做剩下两种方法的default
-                uniqueTableLayoutPanel.Controls.Add(GetFillSymbolButton(fillSymbol), 1, 2);
-                classTableLayoutPanel.Controls.Add(GetFillSymbolButton(fillSymbol), 1, 2);
+                uniqueTableLayoutPanel.Controls.Add(GetMarkerSymbolButton(markerSymbol), 1, 2);
+                classTableLayoutPanel.Controls.Add(GetMarkerSymbolButton(markerSymbol), 1, 2);
             }
             else if (mLayer.Renderer.RendererType == GeoRendererTypeConstant.UniqueValue)
             {
                 GeoUniqueValueRenderer uniqueValueRenderer = (GeoUniqueValueRenderer)mLayer.Renderer;
                 uniqueFieldComboBox.SelectedItem = uniqueValueRenderer.Field;
-                Button defaultSymbolButton = GetFillSymbolButton((GeoSimpleFillSymbol)uniqueValueRenderer.DefaultSymbol);
+                Button defaultSymbolButton = GetMarkerSymbolButton((GeoSimpleMarkerSymbol)uniqueValueRenderer.DefaultSymbol);
                 uniqueTableLayoutPanel.Controls.Add(defaultSymbolButton, 1, 2);
                 for (int i = 0; i < uniqueValueRenderer.ValueCount; i++)
                 {
-                    GeoSimpleFillSymbol fillSymbol = (GeoSimpleFillSymbol)uniqueValueRenderer.GetSymbol(i);
-                    Button symbolButton = GetFillSymbolButton(fillSymbol);
+                    GeoSimpleMarkerSymbol markerSymbol = (GeoSimpleMarkerSymbol)uniqueValueRenderer.GetSymbol(i);
+                    Button symbolButton = GetMarkerSymbolButton(markerSymbol);
                     uniqueDataGridView.AddRow(symbolButton, uniqueValueRenderer.GetValue(i));
                 }
             }
@@ -81,26 +79,25 @@ namespace DEETU.Source.Window
             {
                 GeoClassBreaksRenderer classBreaksRenderer = (GeoClassBreaksRenderer)mLayer.Renderer;
                 classFieldComboBox.SelectedItem = classBreaksRenderer.Field;
-                Button defaultSymbolButton = GetFillSymbolButton((GeoSimpleFillSymbol)classBreaksRenderer.DefaultSymbol);
+                Button defaultSymbolButton = GetMarkerSymbolButton((GeoSimpleMarkerSymbol)classBreaksRenderer.DefaultSymbol);
                 classTableLayoutPanel.Controls.Add(defaultSymbolButton, 1, 2);
                 for (int i = 0; i < classBreaksRenderer.BreakCount; i++)
                 {
-                    GeoSimpleFillSymbol fillSymbol = (GeoSimpleFillSymbol)classBreaksRenderer.GetSymbol(i);
-                    Button symbolButton = GetFillSymbolButton(fillSymbol);
+                    GeoSimpleMarkerSymbol markerSymbol = (GeoSimpleMarkerSymbol)classBreaksRenderer.GetSymbol(i);
+                    Button symbolButton = GetMarkerSymbolButton(markerSymbol);
                     uniqueDataGridView.AddRow(symbolButton, classBreaksRenderer.GetBreakValue(i));
                 }
             }
             
         }
 
-        private Button GetFillSymbolButton(GeoSimpleFillSymbol symbol)
+        private Button GetMarkerSymbolButton(GeoSimpleMarkerSymbol symbol)
         {
             Button sButton = new Button();
             sButton.BackColor = symbol.Color;
             sButton.Text = "";
             sButton.Dock = DockStyle.Fill;
-            sButton.FlatAppearance.BorderColor = symbol.Outline.Color;
-            sButton.FlatAppearance.BorderSize = (int)symbol.Outline.Size;
+            sButton.FlatAppearance.BorderSize = 0;
             sButton.MouseClick += SymbolGridButton_MouseClick;
             return sButton;
         }

@@ -1185,7 +1185,7 @@ namespace DEETU.Source.Window
         {
             int layerIndex = mCurrentLayerNode.Index;
             //GeoMapLayer layer = geoMap.Layers.GetItem(layerIndex);
-            GeoMapLayer layer = new GeoMapLayer(mCurrentLayerNode.Text, GeoGeometryTypeConstant.MultiPolygon);
+            GeoMapLayer layer = new GeoMapLayer(mCurrentLayerNode.Text, GeoGeometryTypeConstant.Point);
             LayerAttributesForm layerAttributes = new LayerAttributesForm(layer);
             layerAttributes.Show();
         }

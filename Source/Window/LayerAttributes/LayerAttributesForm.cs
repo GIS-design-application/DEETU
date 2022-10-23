@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using Sunny.UI;
 using DEETU.Map;
+using DEETU.Tool;
 
 namespace DEETU.Source.Window
 {
@@ -22,7 +23,20 @@ namespace DEETU.Source.Window
             mLayer = layer;
 
             AddPage(new InfoPage(layer), 1);
-            AddPage(new SymbolPage(layer), 2);
+            switch (layer.ShapeType)
+            {
+                case GeoGeometryTypeConstant.Point:
+                    AddPage(new MarkerSymbolPage(layer), 2);
+                    break;
+                case GeoGeometryTypeConstant.MultiPolyline:
+                    AddPage(new LineSymbolPage(layer), 2);
+                    break;
+                case GeoGeometryTypeConstant.MultiPolygon:
+                    AddPage(new FillSymbolPage(layer), 2);
+                    break;
+                default:
+                    break;
+            }
             AddPage(new FieldPage(layer), 3);
             AddPage(new AnnotationPage(layer), 4);
             

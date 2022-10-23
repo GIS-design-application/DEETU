@@ -105,11 +105,23 @@
     <Compile Include="Source\Window\LayerAttributes\AnnotationPage.Designer.cs">
       <DependentUpon>AnnotationPage.cs</DependentUpon>
     </Compile>
-    <Compile Include="Source\Window\LayerAttributes\SymbolPage.cs">
+    <Compile Include="Source\Window\LayerAttributes\MarkerSymbolPage.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Source\Window\LayerAttributes\SymbolPage.Designer.cs">
-      <DependentUpon>SymbolPage.cs</DependentUpon>
+    <Compile Include="Source\Window\LayerAttributes\MarkerSymbolPage.Designer.cs">
+      <DependentUpon>MarkerSymbolPage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Source\Window\LayerAttributes\LineSymbolPage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Source\Window\LayerAttributes\LineSymbolPage.Designer.cs">
+      <DependentUpon>LineSymbolPage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Source\Window\LayerAttributes\FillSymbolPage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Source\Window\LayerAttributes\FillSymbolPage.Designer.cs">
+      <DependentUpon>FillSymbolPage.cs</DependentUpon>
     </Compile>
     <Compile Include="Source\Window\LayerAttributes\InfoPage.cs">
       <SubType>Form</SubType>
@@ -169,14 +181,20 @@
     <EmbeddedResource Include="Source\Window\LayerAttributes\FieldPage.resx">
       <DependentUpon>FieldPage.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Source\Window\LayerAttributes\MarkerSymbolPage.resx">
+      <DependentUpon>MarkerSymbolPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Source\Window\LayerAttributes\LineSymbolPage.resx">
+      <DependentUpon>LineSymbolPage.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Source\Window\LayerAttributes\InfoPage.resx">
       <DependentUpon>InfoPage.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Source\Window\LayerAttributes\LayerAttributesForm.resx">
       <DependentUpon>LayerAttributesForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Source\Window\LayerAttributes\SymbolPage.resx">
-      <DependentUpon>SymbolPage.cs</DependentUpon>
+    <EmbeddedResource Include="Source\Window\LayerAttributes\FillSymbolPage.resx">
+      <DependentUpon>FillSymbolPage.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Source\Window\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
