@@ -52,37 +52,37 @@ namespace DEETU.Source.Window
             this.edgeWidthDoubleUpDown = new Sunny.UI.UIDoubleUpDown();
             this.edgeStyleComboBox = new Sunny.UI.UIComboBox();
             this.uniqueValueTab = new System.Windows.Forms.TabPage();
-            this.classBreakTab = new System.Windows.Forms.TabPage();
-            this.renderMethodCB = new Sunny.UI.UIComboBox();
-            this.uniqueTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
-            this.uiLabel4 = new Sunny.UI.UILabel();
-            this.uiLabel6 = new Sunny.UI.UILabel();
-            this.uniqueColorgradComboBox = new Sunny.UI.UIComboBox();
-            this.uniqueFieldComboBox = new Sunny.UI.UIComboBox();
             this.uniqueDataGridView = new Sunny.UI.UIDataGridView();
             this.symbolCol = new System.Windows.Forms.DataGridViewButtonColumn();
             this.valueCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.uniqueTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
+            this.uiLabel8 = new Sunny.UI.UILabel();
+            this.uiLabel4 = new Sunny.UI.UILabel();
+            this.uiLabel6 = new Sunny.UI.UILabel();
+            this.uniqueFieldComboBox = new Sunny.UI.UIComboBox();
+            this.uniqueColorgradComboBox = new Sunny.UI.UIComboBox();
+            this.classBreakTab = new System.Windows.Forms.TabPage();
+            this.uiIntegerUpDown1 = new Sunny.UI.UIIntegerUpDown();
+            this.uiLabel3 = new Sunny.UI.UILabel();
             this.uiDataGridView2 = new Sunny.UI.UIDataGridView();
+            this.dataGridViewButtonColumn1 = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.classTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
+            this.uiLabel11 = new Sunny.UI.UILabel();
             this.uiLabel9 = new Sunny.UI.UILabel();
             this.uiLabel10 = new Sunny.UI.UILabel();
             this.classFieldComboBox = new Sunny.UI.UIComboBox();
             this.classColorgradComboBox = new Sunny.UI.UIComboBox();
-            this.dataGridViewButtonColumn1 = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.uiLabel3 = new Sunny.UI.UILabel();
-            this.uiIntegerUpDown1 = new Sunny.UI.UIIntegerUpDown();
-            this.uiLabel8 = new Sunny.UI.UILabel();
-            this.uiLabel11 = new Sunny.UI.UILabel();
+            this.renderMethodCB = new Sunny.UI.UIComboBox();
             this.geoUniqueValueRendererBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.PagePanel.SuspendLayout();
             this.renderTabControl.SuspendLayout();
             this.simpleTab.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.uniqueValueTab.SuspendLayout();
-            this.classBreakTab.SuspendLayout();
-            this.uniqueTableLayoutPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.uniqueDataGridView)).BeginInit();
+            this.uniqueTableLayoutPanel.SuspendLayout();
+            this.classBreakTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.uiDataGridView2)).BeginInit();
             this.classTableLayoutPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.geoUniqueValueRendererBindingSource)).BeginInit();
@@ -92,10 +92,7 @@ namespace DEETU.Source.Window
             // 
             this.PagePanel.Controls.Add(this.renderMethodCB);
             this.PagePanel.Controls.Add(this.renderTabControl);
-            this.PagePanel.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(211)))), ((int)(((byte)(211)))), ((int)(((byte)(211)))));
-            this.PagePanel.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
             this.PagePanel.Size = new System.Drawing.Size(480, 565);
-            this.PagePanel.Style = Sunny.UI.UIStyle.Office2010Black;
             // 
             // renderTabControl
             // 
@@ -166,7 +163,7 @@ namespace DEETU.Source.Window
             this.uiLabel1.Location = new System.Drawing.Point(3, 39);
             this.uiLabel1.Name = "uiLabel1";
             this.uiLabel1.Size = new System.Drawing.Size(94, 39);
-            this.uiLabel1.Style = Sunny.UI.UIStyle.Office2010Black;
+            this.uiLabel1.Style = Sunny.UI.UIStyle.Custom;
             this.uiLabel1.TabIndex = 1;
             this.uiLabel1.Text = "描边颜色";
             this.uiLabel1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -178,7 +175,7 @@ namespace DEETU.Source.Window
             this.uiLabel2.Location = new System.Drawing.Point(3, 0);
             this.uiLabel2.Name = "uiLabel2";
             this.uiLabel2.Size = new System.Drawing.Size(94, 39);
-            this.uiLabel2.Style = Sunny.UI.UIStyle.Office2010Black;
+            this.uiLabel2.Style = Sunny.UI.UIStyle.Custom;
             this.uiLabel2.TabIndex = 2;
             this.uiLabel2.Text = "填充颜色";
             this.uiLabel2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -190,7 +187,7 @@ namespace DEETU.Source.Window
             this.uiLabel5.Location = new System.Drawing.Point(3, 78);
             this.uiLabel5.Name = "uiLabel5";
             this.uiLabel5.Size = new System.Drawing.Size(94, 39);
-            this.uiLabel5.Style = Sunny.UI.UIStyle.Office2010Black;
+            this.uiLabel5.Style = Sunny.UI.UIStyle.Custom;
             this.uiLabel5.TabIndex = 5;
             this.uiLabel5.Text = "描边宽度";
             this.uiLabel5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -202,7 +199,7 @@ namespace DEETU.Source.Window
             this.uiLabel7.Location = new System.Drawing.Point(3, 117);
             this.uiLabel7.Name = "uiLabel7";
             this.uiLabel7.Size = new System.Drawing.Size(94, 39);
-            this.uiLabel7.Style = Sunny.UI.UIStyle.Office2010Black;
+            this.uiLabel7.Style = Sunny.UI.UIStyle.Custom;
             this.uiLabel7.TabIndex = 7;
             this.uiLabel7.Text = "描边样式";
             this.uiLabel7.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -287,126 +284,9 @@ namespace DEETU.Source.Window
             this.uniqueValueTab.Controls.Add(this.uniqueTableLayoutPanel);
             this.uniqueValueTab.Location = new System.Drawing.Point(0, 40);
             this.uniqueValueTab.Name = "uniqueValueTab";
-            this.uniqueValueTab.Size = new System.Drawing.Size(480, 488);
+            this.uniqueValueTab.Size = new System.Drawing.Size(993, 488);
             this.uniqueValueTab.TabIndex = 1;
             this.uniqueValueTab.Text = "unique value";
-            // 
-            // classBreakTab
-            // 
-            this.classBreakTab.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(228)))), ((int)(((byte)(233)))));
-            this.classBreakTab.Controls.Add(this.uiIntegerUpDown1);
-            this.classBreakTab.Controls.Add(this.uiLabel3);
-            this.classBreakTab.Controls.Add(this.uiDataGridView2);
-            this.classBreakTab.Controls.Add(this.classTableLayoutPanel);
-            this.classBreakTab.Location = new System.Drawing.Point(0, 40);
-            this.classBreakTab.Name = "classBreakTab";
-            this.classBreakTab.Size = new System.Drawing.Size(480, 488);
-            this.classBreakTab.TabIndex = 2;
-            this.classBreakTab.Text = "class break";
-            // 
-            // renderMethodCB
-            // 
-            this.renderMethodCB.Dock = System.Windows.Forms.DockStyle.Top;
-            this.renderMethodCB.DropDownStyle = Sunny.UI.UIDropDownStyle.DropDownList;
-            this.renderMethodCB.FillColor = System.Drawing.Color.White;
-            this.renderMethodCB.Font = new System.Drawing.Font("微软雅黑", 12F);
-            this.renderMethodCB.Items.AddRange(new object[] {
-            "单一符号",
-            "唯一值",
-            "分级符号"});
-            this.renderMethodCB.Location = new System.Drawing.Point(0, 0);
-            this.renderMethodCB.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.renderMethodCB.MinimumSize = new System.Drawing.Size(63, 0);
-            this.renderMethodCB.Name = "renderMethodCB";
-            this.renderMethodCB.Padding = new System.Windows.Forms.Padding(0, 0, 30, 2);
-            this.renderMethodCB.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
-            this.renderMethodCB.Size = new System.Drawing.Size(480, 29);
-            this.renderMethodCB.Style = Sunny.UI.UIStyle.Office2010Black;
-            this.renderMethodCB.TabIndex = 1;
-            this.renderMethodCB.TextAlignment = System.Drawing.ContentAlignment.MiddleLeft;
-            this.renderMethodCB.SelectedIndexChanged += new System.EventHandler(this.renderMethodCB_SelectedIndexChanged);
-            // 
-            // uniqueTableLayoutPanel
-            // 
-            this.uniqueTableLayoutPanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.uniqueTableLayoutPanel.AutoSize = true;
-            this.uniqueTableLayoutPanel.ColumnCount = 2;
-            this.uniqueTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.uniqueTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.uniqueTableLayoutPanel.Controls.Add(this.uiLabel8, 0, 2);
-            this.uniqueTableLayoutPanel.Controls.Add(this.uiLabel4, 0, 0);
-            this.uniqueTableLayoutPanel.Controls.Add(this.uiLabel6, 0, 1);
-            this.uniqueTableLayoutPanel.Controls.Add(this.uniqueFieldComboBox, 1, 0);
-            this.uniqueTableLayoutPanel.Controls.Add(this.uniqueColorgradComboBox, 1, 1);
-            this.uniqueTableLayoutPanel.Location = new System.Drawing.Point(12, 3);
-            this.uniqueTableLayoutPanel.Name = "uniqueTableLayoutPanel";
-            this.uniqueTableLayoutPanel.RowCount = 3;
-            this.uniqueTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.uniqueTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.uniqueTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.uniqueTableLayoutPanel.Size = new System.Drawing.Size(456, 118);
-            this.uniqueTableLayoutPanel.TabIndex = 5;
-            // 
-            // uiLabel4
-            // 
-            this.uiLabel4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.uiLabel4.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.uiLabel4.Location = new System.Drawing.Point(3, 0);
-            this.uiLabel4.Name = "uiLabel4";
-            this.uiLabel4.Size = new System.Drawing.Size(94, 39);
-            this.uiLabel4.Style = Sunny.UI.UIStyle.Office2010Black;
-            this.uiLabel4.TabIndex = 2;
-            this.uiLabel4.Text = "唯一值字段";
-            this.uiLabel4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // uiLabel6
-            // 
-            this.uiLabel6.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.uiLabel6.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.uiLabel6.Location = new System.Drawing.Point(3, 39);
-            this.uiLabel6.Name = "uiLabel6";
-            this.uiLabel6.Size = new System.Drawing.Size(94, 40);
-            this.uiLabel6.Style = Sunny.UI.UIStyle.Office2010Black;
-            this.uiLabel6.TabIndex = 5;
-            this.uiLabel6.Text = "颜色渐变";
-            this.uiLabel6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // uniqueColorgradComboBox
-            // 
-            this.uniqueColorgradComboBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.uniqueColorgradComboBox.FillColor = System.Drawing.Color.White;
-            this.uniqueColorgradComboBox.Font = new System.Drawing.Font("微软雅黑", 12F);
-            this.uniqueColorgradComboBox.Location = new System.Drawing.Point(104, 44);
-            this.uniqueColorgradComboBox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.uniqueColorgradComboBox.MinimumSize = new System.Drawing.Size(63, 0);
-            this.uniqueColorgradComboBox.Name = "uniqueColorgradComboBox";
-            this.uniqueColorgradComboBox.Padding = new System.Windows.Forms.Padding(0, 0, 30, 2);
-            this.uniqueColorgradComboBox.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
-            this.uniqueColorgradComboBox.Size = new System.Drawing.Size(348, 29);
-            this.uniqueColorgradComboBox.Style = Sunny.UI.UIStyle.Office2010Black;
-            this.uniqueColorgradComboBox.StyleCustomMode = true;
-            this.uniqueColorgradComboBox.TabIndex = 14;
-            this.uniqueColorgradComboBox.Text = "uiComboBox1";
-            this.uniqueColorgradComboBox.TextAlignment = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // uniqueFieldComboBox
-            // 
-            this.uniqueFieldComboBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.uniqueFieldComboBox.FillColor = System.Drawing.Color.White;
-            this.uniqueFieldComboBox.Font = new System.Drawing.Font("微软雅黑", 12F);
-            this.uniqueFieldComboBox.Location = new System.Drawing.Point(104, 5);
-            this.uniqueFieldComboBox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.uniqueFieldComboBox.MinimumSize = new System.Drawing.Size(63, 0);
-            this.uniqueFieldComboBox.Name = "uniqueFieldComboBox";
-            this.uniqueFieldComboBox.Padding = new System.Windows.Forms.Padding(0, 0, 30, 2);
-            this.uniqueFieldComboBox.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
-            this.uniqueFieldComboBox.Size = new System.Drawing.Size(348, 29);
-            this.uniqueFieldComboBox.Style = Sunny.UI.UIStyle.Office2010Black;
-            this.uniqueFieldComboBox.StyleCustomMode = true;
-            this.uniqueFieldComboBox.TabIndex = 13;
-            this.uniqueFieldComboBox.Text = "uiComboBox2";
-            this.uniqueFieldComboBox.TextAlignment = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // uniqueDataGridView
             // 
@@ -459,7 +339,7 @@ namespace DEETU.Source.Window
             this.uniqueDataGridView.RowTemplate.Height = 29;
             this.uniqueDataGridView.SelectedIndex = -1;
             this.uniqueDataGridView.ShowGridLine = true;
-            this.uniqueDataGridView.Size = new System.Drawing.Size(456, 349);
+            this.uniqueDataGridView.Size = new System.Drawing.Size(0, 0);
             this.uniqueDataGridView.StripeOddColor = System.Drawing.Color.FromArgb(((int)(((byte)(211)))), ((int)(((byte)(211)))), ((int)(((byte)(211)))));
             this.uniqueDataGridView.Style = Sunny.UI.UIStyle.Office2010Black;
             this.uniqueDataGridView.StyleCustomMode = true;
@@ -477,6 +357,148 @@ namespace DEETU.Source.Window
             this.valueCol.FillWeight = 169.5432F;
             this.valueCol.HeaderText = "唯一值";
             this.valueCol.Name = "valueCol";
+            // 
+            // uniqueTableLayoutPanel
+            // 
+            this.uniqueTableLayoutPanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.uniqueTableLayoutPanel.AutoSize = true;
+            this.uniqueTableLayoutPanel.ColumnCount = 2;
+            this.uniqueTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.uniqueTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.uniqueTableLayoutPanel.Controls.Add(this.uiLabel8, 0, 2);
+            this.uniqueTableLayoutPanel.Controls.Add(this.uiLabel4, 0, 0);
+            this.uniqueTableLayoutPanel.Controls.Add(this.uiLabel6, 0, 1);
+            this.uniqueTableLayoutPanel.Controls.Add(this.uniqueFieldComboBox, 1, 0);
+            this.uniqueTableLayoutPanel.Controls.Add(this.uniqueColorgradComboBox, 1, 1);
+            this.uniqueTableLayoutPanel.Location = new System.Drawing.Point(12, 3);
+            this.uniqueTableLayoutPanel.Name = "uniqueTableLayoutPanel";
+            this.uniqueTableLayoutPanel.RowCount = 3;
+            this.uniqueTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.uniqueTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.uniqueTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.uniqueTableLayoutPanel.Size = new System.Drawing.Size(426, 118);
+            this.uniqueTableLayoutPanel.TabIndex = 5;
+            // 
+            // uiLabel8
+            // 
+            this.uiLabel8.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.uiLabel8.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.uiLabel8.Location = new System.Drawing.Point(3, 79);
+            this.uiLabel8.Name = "uiLabel8";
+            this.uiLabel8.Size = new System.Drawing.Size(94, 39);
+            this.uiLabel8.Style = Sunny.UI.UIStyle.Custom;
+            this.uiLabel8.TabIndex = 15;
+            this.uiLabel8.Text = "默认颜色";
+            this.uiLabel8.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // uiLabel4
+            // 
+            this.uiLabel4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.uiLabel4.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.uiLabel4.Location = new System.Drawing.Point(3, 0);
+            this.uiLabel4.Name = "uiLabel4";
+            this.uiLabel4.Size = new System.Drawing.Size(94, 39);
+            this.uiLabel4.Style = Sunny.UI.UIStyle.Custom;
+            this.uiLabel4.TabIndex = 2;
+            this.uiLabel4.Text = "唯一值字段";
+            this.uiLabel4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // uiLabel6
+            // 
+            this.uiLabel6.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.uiLabel6.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.uiLabel6.Location = new System.Drawing.Point(3, 39);
+            this.uiLabel6.Name = "uiLabel6";
+            this.uiLabel6.Size = new System.Drawing.Size(94, 40);
+            this.uiLabel6.Style = Sunny.UI.UIStyle.Custom;
+            this.uiLabel6.TabIndex = 5;
+            this.uiLabel6.Text = "颜色渐变";
+            this.uiLabel6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // uniqueFieldComboBox
+            // 
+            this.uniqueFieldComboBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.uniqueFieldComboBox.FillColor = System.Drawing.Color.White;
+            this.uniqueFieldComboBox.Font = new System.Drawing.Font("微软雅黑", 12F);
+            this.uniqueFieldComboBox.Location = new System.Drawing.Point(104, 5);
+            this.uniqueFieldComboBox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.uniqueFieldComboBox.MinimumSize = new System.Drawing.Size(63, 0);
+            this.uniqueFieldComboBox.Name = "uniqueFieldComboBox";
+            this.uniqueFieldComboBox.Padding = new System.Windows.Forms.Padding(0, 0, 30, 2);
+            this.uniqueFieldComboBox.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
+            this.uniqueFieldComboBox.Size = new System.Drawing.Size(318, 29);
+            this.uniqueFieldComboBox.Style = Sunny.UI.UIStyle.Office2010Black;
+            this.uniqueFieldComboBox.StyleCustomMode = true;
+            this.uniqueFieldComboBox.TabIndex = 13;
+            this.uniqueFieldComboBox.Text = "uiComboBox2";
+            this.uniqueFieldComboBox.TextAlignment = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // uniqueColorgradComboBox
+            // 
+            this.uniqueColorgradComboBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.uniqueColorgradComboBox.FillColor = System.Drawing.Color.White;
+            this.uniqueColorgradComboBox.Font = new System.Drawing.Font("微软雅黑", 12F);
+            this.uniqueColorgradComboBox.Location = new System.Drawing.Point(104, 44);
+            this.uniqueColorgradComboBox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.uniqueColorgradComboBox.MinimumSize = new System.Drawing.Size(63, 0);
+            this.uniqueColorgradComboBox.Name = "uniqueColorgradComboBox";
+            this.uniqueColorgradComboBox.Padding = new System.Windows.Forms.Padding(0, 0, 30, 2);
+            this.uniqueColorgradComboBox.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
+            this.uniqueColorgradComboBox.Size = new System.Drawing.Size(318, 29);
+            this.uniqueColorgradComboBox.Style = Sunny.UI.UIStyle.Office2010Black;
+            this.uniqueColorgradComboBox.StyleCustomMode = true;
+            this.uniqueColorgradComboBox.TabIndex = 14;
+            this.uniqueColorgradComboBox.Text = "uiComboBox1";
+            this.uniqueColorgradComboBox.TextAlignment = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // classBreakTab
+            // 
+            this.classBreakTab.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(228)))), ((int)(((byte)(233)))));
+            this.classBreakTab.Controls.Add(this.uiIntegerUpDown1);
+            this.classBreakTab.Controls.Add(this.uiLabel3);
+            this.classBreakTab.Controls.Add(this.uiDataGridView2);
+            this.classBreakTab.Controls.Add(this.classTableLayoutPanel);
+            this.classBreakTab.Location = new System.Drawing.Point(0, 40);
+            this.classBreakTab.Name = "classBreakTab";
+            this.classBreakTab.Size = new System.Drawing.Size(993, 488);
+            this.classBreakTab.TabIndex = 2;
+            this.classBreakTab.Text = "class break";
+            // 
+            // uiIntegerUpDown1
+            // 
+            this.uiIntegerUpDown1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.uiIntegerUpDown1.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(211)))), ((int)(((byte)(211)))), ((int)(((byte)(211)))));
+            this.uiIntegerUpDown1.Font = new System.Drawing.Font("微软雅黑", 12F);
+            this.uiIntegerUpDown1.Location = new System.Drawing.Point(69, 450);
+            this.uiIntegerUpDown1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.uiIntegerUpDown1.MinimumSize = new System.Drawing.Size(100, 0);
+            this.uiIntegerUpDown1.Name = "uiIntegerUpDown1";
+            this.uiIntegerUpDown1.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
+            this.uiIntegerUpDown1.Size = new System.Drawing.Size(100, 0);
+            this.uiIntegerUpDown1.Style = Sunny.UI.UIStyle.Office2010Black;
+            this.uiIntegerUpDown1.StyleCustomMode = true;
+            this.uiIntegerUpDown1.TabIndex = 10;
+            this.uiIntegerUpDown1.Text = "uiIntegerUpDown1";
+            this.uiIntegerUpDown1.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter;
+            this.uiIntegerUpDown1.Value = 5;
+            // 
+            // uiLabel3
+            // 
+            this.uiLabel3.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.uiLabel3.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.uiLabel3.Location = new System.Drawing.Point(12, 450);
+            this.uiLabel3.Name = "uiLabel3";
+            this.uiLabel3.Size = new System.Drawing.Size(0, 0);
+            this.uiLabel3.Style = Sunny.UI.UIStyle.Custom;
+            this.uiLabel3.StyleCustomMode = true;
+            this.uiLabel3.TabIndex = 9;
+            this.uiLabel3.Text = "类别数";
+            this.uiLabel3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // uiDataGridView2
             // 
@@ -529,11 +551,24 @@ namespace DEETU.Source.Window
             this.uiDataGridView2.RowTemplate.Height = 29;
             this.uiDataGridView2.SelectedIndex = -1;
             this.uiDataGridView2.ShowGridLine = true;
-            this.uiDataGridView2.Size = new System.Drawing.Size(456, 314);
+            this.uiDataGridView2.Size = new System.Drawing.Size(0, 0);
             this.uiDataGridView2.StripeOddColor = System.Drawing.Color.FromArgb(((int)(((byte)(211)))), ((int)(((byte)(211)))), ((int)(((byte)(211)))));
             this.uiDataGridView2.Style = Sunny.UI.UIStyle.Office2010Black;
             this.uiDataGridView2.StyleCustomMode = true;
             this.uiDataGridView2.TabIndex = 8;
+            // 
+            // dataGridViewButtonColumn1
+            // 
+            this.dataGridViewButtonColumn1.DividerWidth = 1;
+            this.dataGridViewButtonColumn1.FillWeight = 30.45685F;
+            this.dataGridViewButtonColumn1.HeaderText = "符号";
+            this.dataGridViewButtonColumn1.Name = "dataGridViewButtonColumn1";
+            // 
+            // dataGridViewTextBoxColumn1
+            // 
+            this.dataGridViewTextBoxColumn1.FillWeight = 169.5432F;
+            this.dataGridViewTextBoxColumn1.HeaderText = "分类值";
+            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
             // 
             // classTableLayoutPanel
             // 
@@ -554,8 +589,20 @@ namespace DEETU.Source.Window
             this.classTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.classTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.classTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.classTableLayoutPanel.Size = new System.Drawing.Size(456, 119);
+            this.classTableLayoutPanel.Size = new System.Drawing.Size(426, 119);
             this.classTableLayoutPanel.TabIndex = 7;
+            // 
+            // uiLabel11
+            // 
+            this.uiLabel11.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.uiLabel11.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.uiLabel11.Location = new System.Drawing.Point(3, 80);
+            this.uiLabel11.Name = "uiLabel11";
+            this.uiLabel11.Size = new System.Drawing.Size(94, 39);
+            this.uiLabel11.Style = Sunny.UI.UIStyle.Custom;
+            this.uiLabel11.TabIndex = 15;
+            this.uiLabel11.Text = "默认颜色";
+            this.uiLabel11.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // uiLabel9
             // 
@@ -564,7 +611,7 @@ namespace DEETU.Source.Window
             this.uiLabel9.Location = new System.Drawing.Point(3, 0);
             this.uiLabel9.Name = "uiLabel9";
             this.uiLabel9.Size = new System.Drawing.Size(94, 39);
-            this.uiLabel9.Style = Sunny.UI.UIStyle.Office2010Black;
+            this.uiLabel9.Style = Sunny.UI.UIStyle.Custom;
             this.uiLabel9.TabIndex = 2;
             this.uiLabel9.Text = "分类字段";
             this.uiLabel9.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -576,7 +623,7 @@ namespace DEETU.Source.Window
             this.uiLabel10.Location = new System.Drawing.Point(3, 39);
             this.uiLabel10.Name = "uiLabel10";
             this.uiLabel10.Size = new System.Drawing.Size(94, 41);
-            this.uiLabel10.Style = Sunny.UI.UIStyle.Office2010Black;
+            this.uiLabel10.Style = Sunny.UI.UIStyle.Custom;
             this.uiLabel10.TabIndex = 5;
             this.uiLabel10.Text = "颜色渐变";
             this.uiLabel10.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -592,7 +639,7 @@ namespace DEETU.Source.Window
             this.classFieldComboBox.Name = "classFieldComboBox";
             this.classFieldComboBox.Padding = new System.Windows.Forms.Padding(0, 0, 30, 2);
             this.classFieldComboBox.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
-            this.classFieldComboBox.Size = new System.Drawing.Size(348, 29);
+            this.classFieldComboBox.Size = new System.Drawing.Size(318, 29);
             this.classFieldComboBox.Style = Sunny.UI.UIStyle.Custom;
             this.classFieldComboBox.StyleCustomMode = true;
             this.classFieldComboBox.TabIndex = 13;
@@ -610,98 +657,47 @@ namespace DEETU.Source.Window
             this.classColorgradComboBox.Name = "classColorgradComboBox";
             this.classColorgradComboBox.Padding = new System.Windows.Forms.Padding(0, 0, 30, 2);
             this.classColorgradComboBox.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
-            this.classColorgradComboBox.Size = new System.Drawing.Size(348, 29);
+            this.classColorgradComboBox.Size = new System.Drawing.Size(318, 29);
             this.classColorgradComboBox.Style = Sunny.UI.UIStyle.Custom;
             this.classColorgradComboBox.StyleCustomMode = true;
             this.classColorgradComboBox.TabIndex = 14;
             this.classColorgradComboBox.Text = "uiComboBox3";
             this.classColorgradComboBox.TextAlignment = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // dataGridViewButtonColumn1
+            // renderMethodCB
             // 
-            this.dataGridViewButtonColumn1.DividerWidth = 1;
-            this.dataGridViewButtonColumn1.FillWeight = 30.45685F;
-            this.dataGridViewButtonColumn1.HeaderText = "符号";
-            this.dataGridViewButtonColumn1.Name = "dataGridViewButtonColumn1";
-            // 
-            // dataGridViewTextBoxColumn1
-            // 
-            this.dataGridViewTextBoxColumn1.FillWeight = 169.5432F;
-            this.dataGridViewTextBoxColumn1.HeaderText = "分类值";
-            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
-            // 
-            // uiLabel3
-            // 
-            this.uiLabel3.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.uiLabel3.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.uiLabel3.Location = new System.Drawing.Point(12, 450);
-            this.uiLabel3.Name = "uiLabel3";
-            this.uiLabel3.Size = new System.Drawing.Size(50, 29);
-            this.uiLabel3.Style = Sunny.UI.UIStyle.Custom;
-            this.uiLabel3.StyleCustomMode = true;
-            this.uiLabel3.TabIndex = 9;
-            this.uiLabel3.Text = "类别数";
-            this.uiLabel3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // uiIntegerUpDown1
-            // 
-            this.uiIntegerUpDown1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.uiIntegerUpDown1.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(211)))), ((int)(((byte)(211)))), ((int)(((byte)(211)))));
-            this.uiIntegerUpDown1.Font = new System.Drawing.Font("微软雅黑", 12F);
-            this.uiIntegerUpDown1.Location = new System.Drawing.Point(69, 450);
-            this.uiIntegerUpDown1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.uiIntegerUpDown1.MinimumSize = new System.Drawing.Size(100, 0);
-            this.uiIntegerUpDown1.Name = "uiIntegerUpDown1";
-            this.uiIntegerUpDown1.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
-            this.uiIntegerUpDown1.Size = new System.Drawing.Size(100, 29);
-            this.uiIntegerUpDown1.Style = Sunny.UI.UIStyle.Office2010Black;
-            this.uiIntegerUpDown1.StyleCustomMode = true;
-            this.uiIntegerUpDown1.TabIndex = 10;
-            this.uiIntegerUpDown1.Text = "uiIntegerUpDown1";
-            this.uiIntegerUpDown1.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter;
-            this.uiIntegerUpDown1.Value = 5;
-            // 
-            // uiLabel8
-            // 
-            this.uiLabel8.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.uiLabel8.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.uiLabel8.Location = new System.Drawing.Point(3, 79);
-            this.uiLabel8.Name = "uiLabel8";
-            this.uiLabel8.Size = new System.Drawing.Size(94, 39);
-            this.uiLabel8.Style = Sunny.UI.UIStyle.Office2010Black;
-            this.uiLabel8.TabIndex = 15;
-            this.uiLabel8.Text = "默认颜色";
-            this.uiLabel8.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // uiLabel11
-            // 
-            this.uiLabel11.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.uiLabel11.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.uiLabel11.Location = new System.Drawing.Point(3, 80);
-            this.uiLabel11.Name = "uiLabel11";
-            this.uiLabel11.Size = new System.Drawing.Size(94, 39);
-            this.uiLabel11.Style = Sunny.UI.UIStyle.Office2010Black;
-            this.uiLabel11.TabIndex = 15;
-            this.uiLabel11.Text = "默认颜色";
-            this.uiLabel11.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.renderMethodCB.Dock = System.Windows.Forms.DockStyle.Top;
+            this.renderMethodCB.DropDownStyle = Sunny.UI.UIDropDownStyle.DropDownList;
+            this.renderMethodCB.FillColor = System.Drawing.Color.White;
+            this.renderMethodCB.Font = new System.Drawing.Font("微软雅黑", 12F);
+            this.renderMethodCB.Items.AddRange(new object[] {
+            "单一符号",
+            "唯一值",
+            "分级符号"});
+            this.renderMethodCB.Location = new System.Drawing.Point(0, 0);
+            this.renderMethodCB.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.renderMethodCB.MinimumSize = new System.Drawing.Size(63, 0);
+            this.renderMethodCB.Name = "renderMethodCB";
+            this.renderMethodCB.Padding = new System.Windows.Forms.Padding(0, 0, 30, 2);
+            this.renderMethodCB.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
+            this.renderMethodCB.Size = new System.Drawing.Size(480, 29);
+            this.renderMethodCB.Style = Sunny.UI.UIStyle.Office2010Black;
+            this.renderMethodCB.StyleCustomMode = true;
+            this.renderMethodCB.TabIndex = 1;
+            this.renderMethodCB.TextAlignment = System.Drawing.ContentAlignment.MiddleLeft;
+            this.renderMethodCB.SelectedIndexChanged += new System.EventHandler(this.renderMethodCB_SelectedIndexChanged);
             // 
             // geoUniqueValueRendererBindingSource
             // 
             this.geoUniqueValueRendererBindingSource.DataSource = typeof(DEETU.Core.GeoUniqueValueRenderer);
             // 
-            // SymbolPage
+            // FillSymbolPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(480, 600);
-            this.Name = "SymbolPage";
-            this.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
-            this.Style = Sunny.UI.UIStyle.Office2010Black;
+            this.Name = "FillSymbolPage";
             this.Text = "符号化";
             this.PagePanel.ResumeLayout(false);
             this.renderTabControl.ResumeLayout(false);
@@ -710,10 +706,10 @@ namespace DEETU.Source.Window
             this.tableLayoutPanel1.ResumeLayout(false);
             this.uniqueValueTab.ResumeLayout(false);
             this.uniqueValueTab.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.uniqueDataGridView)).EndInit();
+            this.uniqueTableLayoutPanel.ResumeLayout(false);
             this.classBreakTab.ResumeLayout(false);
             this.classBreakTab.PerformLayout();
-            this.uniqueTableLayoutPanel.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.uniqueDataGridView)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.uiDataGridView2)).EndInit();
             this.classTableLayoutPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.geoUniqueValueRendererBindingSource)).EndInit();

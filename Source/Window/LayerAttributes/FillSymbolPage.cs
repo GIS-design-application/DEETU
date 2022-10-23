@@ -108,6 +108,7 @@ namespace DEETU.Source.Window
         private void SymbolGridButton_MouseClick(object sender, MouseEventArgs e)
         {
             throw new NotImplementedException();
+            
         }
     }
 }

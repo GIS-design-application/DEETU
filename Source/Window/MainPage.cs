@@ -107,6 +107,7 @@ namespace DEETU.Source.Window
                 }
                 sStream.Dispose();
                 sr.Dispose();
+                
                 UpdateTreeView(sLayer.Renderer, sFileName);
             }
             catch (Exception error)
@@ -126,7 +127,10 @@ namespace DEETU.Source.Window
             if (sRenderer.RendererType == GeoRendererTypeConstant.Simple)
             {
                 TreeNode style = CreateSimpleStyleTreeNode((sRenderer as GeoSimpleRenderer).Symbol);
-                layerTreeView.Nodes.Add(new TreeNode(filename, new TreeNode[] { style }));
+                TreeNode layerNode = new TreeNode(filename, new TreeNode[] { style });
+                layerNode.ContextMenuStrip = layerContextMenuStrip;
+                //layerTreeView.Nodes.Insert(0,layerNode);
+                layerTreeView.Nodes.Add(layerNode);
             }
             else if (sRenderer.RendererType == GeoRendererTypeConstant.ClassBreaks)
             {
@@ -139,7 +143,10 @@ namespace DEETU.Source.Window
                     string endValue = sClassBreaksRenderer.GetBreakValue(i).ToString();
                     styles.Add(CreateSimpleStyleTreeNode(sClassBreaksRenderer.GetSymbol(i), startValue + "~" + endValue));
                 }
-                layerTreeView.Nodes.Add(new TreeNode(filename, styles.ToArray()));
+                TreeNode layerNode = new TreeNode(filename, styles.ToArray());
+                layerNode.ContextMenuStrip = layerContextMenuStrip;
+                //layerTreeView.Nodes.Insert(0,layerNode);
+                layerTreeView.Nodes.Add(layerNode);
             }
             else if (sRenderer.RendererType == GeoRendererTypeConstant.UniqueValue)
             {
@@ -150,7 +157,10 @@ namespace DEETU.Source.Window
                 {
                     styles.Add(CreateSimpleStyleTreeNode(sUniqueValueRenderer.GetSymbol(i), sUniqueValueRenderer.GetValue(i)));
                 }
-                layerTreeView.Nodes.Add(new TreeNode(filename, styles.ToArray()));
+                TreeNode layerNode = new TreeNode(filename, styles.ToArray());
+                layerNode.ContextMenuStrip = layerContextMenuStrip;
+                //layerTreeView.Nodes.Insert(0,layerNode);
+                layerTreeView.Nodes.Add(layerNode);
             }
             else
             {
@@ -961,7 +971,7 @@ namespace DEETU.Source.Window
 
         private void geoMap_MapScaleChanged(object sender)
         {
-
+            ShowMapScale();
         }
 
         // 持久绘制图形(用于绘制描绘多边形的图形)
@@ -1184,8 +1194,10 @@ namespace DEETU.Source.Window
         private void 特性ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             int layerIndex = mCurrentLayerNode.Index;
-            //GeoMapLayer layer = geoMap.Layers.GetItem(layerIndex);
-            GeoMapLayer layer = new GeoMapLayer(mCurrentLayerNode.Text, GeoGeometryTypeConstant.Point);
+            // !这里获取layer时应该是按名字获取，或许可以考虑在Layers里面加一个GetItem(string name)的函数。
+            GeoMapLayer layer = geoMap.Layers.GetItem(layerIndex);
+            
+            //GeoMapLayer layer = new GeoMapLayer(mCurrentLayerNode.Text, GeoGeometryTypeConstant.Point);
             LayerAttributesForm layerAttributes = new LayerAttributesForm(layer);
             layerAttributes.Show();
         }

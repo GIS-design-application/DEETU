@@ -33,15 +33,6 @@
             System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("工程目录");
             System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("收藏夹");
             System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("C:\\");
-            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("节点0");
-            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("节点3");
-            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("节点0", new System.Windows.Forms.TreeNode[] {
-            treeNode4,
-            treeNode5});
-            System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("节点1");
-            System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("节点2");
-            System.Windows.Forms.TreeNode treeNode9 = new System.Windows.Forms.TreeNode("节点2");
-            System.Windows.Forms.TreeNode treeNode10 = new System.Windows.Forms.TreeNode("节点4");
             DEETU.Map.GeoLayers geoLayers1 = new DEETU.Map.GeoLayers();
             this.projectContextMenuStrip = new Sunny.UI.UIContextMenuStrip();
             this.设置工程目录ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -108,6 +99,7 @@
             this.隐藏所有图层ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.图层ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.打开图层ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.newToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.openToolStripButton = new System.Windows.Forms.ToolStripButton();
@@ -649,9 +641,18 @@
             // 
             // 图层ToolStripMenuItem
             // 
+            this.图层ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.打开图层ToolStripMenuItem});
             this.图层ToolStripMenuItem.Name = "图层ToolStripMenuItem";
             this.图层ToolStripMenuItem.Size = new System.Drawing.Size(44, 21);
             this.图层ToolStripMenuItem.Text = "图层";
+            // 
+            // 打开图层ToolStripMenuItem
+            // 
+            this.打开图层ToolStripMenuItem.Name = "打开图层ToolStripMenuItem";
+            this.打开图层ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.打开图层ToolStripMenuItem.Text = "打开图层";
+            this.打开图层ToolStripMenuItem.Click += new System.EventHandler(this.btnLoadLayerFile_Click);
             // 
             // toolStrip1
             // 
@@ -673,7 +674,7 @@
             this.identifyToolStripButton,
             this.selectByValueToolStripDropDownButton,
             this.selectByExtentToolStripDropDownButton});
-            this.toolStrip1.Location = new System.Drawing.Point(3, 27);
+            this.toolStrip1.Location = new System.Drawing.Point(3, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
             this.toolStrip1.Size = new System.Drawing.Size(354, 27);
@@ -861,8 +862,8 @@
             // 
             // toolStripContainer1.TopToolStripPanel
             // 
-            this.toolStripContainer1.TopToolStripPanel.Controls.Add(this.toolStrip2);
             this.toolStripContainer1.TopToolStripPanel.Controls.Add(this.toolStrip1);
+            this.toolStripContainer1.TopToolStripPanel.Controls.Add(this.toolStrip2);
             // 
             // splitContainer1
             // 
@@ -973,27 +974,6 @@
             this.layerTreeView.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.layerTreeView.MinimumSize = new System.Drawing.Size(1, 1);
             this.layerTreeView.Name = "layerTreeView";
-            treeNode4.Name = "节点0";
-            treeNode4.Text = "节点0";
-            treeNode5.Name = "节点3";
-            treeNode5.Text = "节点3";
-            treeNode6.ContextMenuStrip = this.layerContextMenuStrip;
-            treeNode6.Name = "节点0";
-            treeNode6.Text = "节点0";
-            treeNode7.Name = "节点1";
-            treeNode7.Text = "节点1";
-            treeNode8.Name = "节点2";
-            treeNode8.Text = "节点2";
-            treeNode9.Name = "节点2";
-            treeNode9.Text = "节点2";
-            treeNode10.Name = "节点4";
-            treeNode10.Text = "节点4";
-            this.layerTreeView.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode6,
-            treeNode7,
-            treeNode8,
-            treeNode9,
-            treeNode10});
             this.layerTreeView.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
             this.layerTreeView.SelectedNode = null;
             this.layerTreeView.ShowNodeToolTips = true;
@@ -1054,11 +1034,16 @@
             this.geoMap.FlashColor = System.Drawing.Color.Green;
             this.geoMap.Layers = geoLayers1;
             this.geoMap.Location = new System.Drawing.Point(0, 0);
-            this.geoMap.Margin = new System.Windows.Forms.Padding(147, 252, 147, 252);
+            this.geoMap.Margin = new System.Windows.Forms.Padding(680, 1351, 680, 1351);
             this.geoMap.Name = "geoMap";
             this.geoMap.SelectionColor = System.Drawing.Color.Cyan;
             this.geoMap.Size = new System.Drawing.Size(637, 511);
             this.geoMap.TabIndex = 0;
+            this.geoMap.MapScaleChanged += new DEETU.Map.GeoMapControl.MapScaleChangedHandle(this.geoMap_MapScaleChanged);
+            this.geoMap.MouseClick += new System.Windows.Forms.MouseEventHandler(this.geoMap_MouseClick);
+            this.geoMap.MouseDown += new System.Windows.Forms.MouseEventHandler(this.geoMap_MouseDown);
+            this.geoMap.MouseMove += new System.Windows.Forms.MouseEventHandler(this.geoMap_MouseMove);
+            this.geoMap.MouseUp += new System.Windows.Forms.MouseEventHandler(this.geoMap_MouseUp);
             // 
             // toolStrip2
             // 
@@ -1074,9 +1059,9 @@
             this.粘贴要素ToolStripButton,
             this.撤销ToolStripButton,
             this.重做ToolStripButton});
-            this.toolStrip2.Location = new System.Drawing.Point(3, 0);
+            this.toolStrip2.Location = new System.Drawing.Point(3, 27);
             this.toolStrip2.Name = "toolStrip2";
-            this.toolStrip2.Size = new System.Drawing.Size(259, 27);
+            this.toolStrip2.Size = new System.Drawing.Size(228, 27);
             this.toolStrip2.TabIndex = 50;
             // 
             // 切换编辑模式ToolStripButton
@@ -1321,5 +1306,6 @@
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel2;
         private System.Windows.Forms.ImageList TreeImages;
         private System.Windows.Forms.ToolStripStatusLabel tssMapScale;
+        private System.Windows.Forms.ToolStripMenuItem 打开图层ToolStripMenuItem;
     }
 }

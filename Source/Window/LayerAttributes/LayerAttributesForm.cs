@@ -12,15 +12,18 @@ using DEETU.Tool;
 
 namespace DEETU.Source.Window
 {
-    public partial class LayerAttributesForm : UIAsideMainFrame
+    public partial class LayerAttributesForm : UIAsideHeaderMainFooterFrame
     {
         #region 字段
         private GeoMapLayer mLayer;
+        private GeoMapLayer mTemporaryLayer;
         #endregion
         public LayerAttributesForm(GeoMapLayer layer)
         {
             InitializeComponent();
             mLayer = layer;
+            //mTemporaryLayer = layer.Clone();
+            // !为什么layer竟然没有clone函数
 
             AddPage(new InfoPage(layer), 1);
             switch (layer.ShapeType)
