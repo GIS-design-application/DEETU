@@ -34,6 +34,10 @@ namespace DEETU.Geometry
         {
             get { return _Parts.Count; }
         }
+        public List<GeoPoints> Parts
+        {
+            get { return _Parts; }
+        }
         #endregion
 
         #region 方法
