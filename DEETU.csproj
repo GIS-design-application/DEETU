@@ -163,6 +163,7 @@
     </Compile>
     <Compile Include="Source\Window\MainPage.Designer.cs">
       <DependentUpon>MainPage.cs</DependentUpon>
+    </Compile>
     <Compile Include="Source\Testing\DebugForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -232,11 +233,13 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Source\Window\LayerAttributes\FillSymbolPage.resx">
       <DependentUpon>FillSymbolPage.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Source\Testing\DebugForm.resx">
       <DependentUpon>DebugForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Source\Window\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="obj\Debug\DEETU.MainForm.resources" />
     <EmbeddedResource Include="obj\Debug\DEETU.Properties.Resources.resources" />

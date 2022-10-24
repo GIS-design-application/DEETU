@@ -24,8 +24,9 @@ namespace DEETU.Testing
 
         public MultiFormApplictionStart()
         {
-            var mainform = new MainForm();
+            
             var debugform = new DebugForm();
+            var mainform = new MainForm(debugform);
             //将要显示的窗体集合
             var formList = new List<Form>(){
                 mainform, debugform
@@ -40,8 +41,6 @@ namespace DEETU.Testing
             {
                 item.Show();
             }
-
-            mainform.SetDebugForm(debugform);
         }
     }
 }

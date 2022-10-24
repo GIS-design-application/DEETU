@@ -14,6 +14,7 @@ using DEETU.Tool;
 using DEETU.IO;
 using System.IO;
 using System.Drawing.Drawing2D;
+using DEETU.Testing;
 
 namespace DEETU.Source.Window
 {
@@ -39,6 +40,7 @@ namespace DEETU.Source.Window
         private GeoSimpleFillSymbol mMovingPolygonSymbol; // 移动多边形的符号
         private GeoSimpleFillSymbol mEditingPolygonSymbol; // 编辑多边形的符号
         private GeoSimpleMarkerSymbol mEditingVertexSymbol; // 编辑手柄符号
+        private GeoSimpleMarkerSymbol mEditingVertexHoverSymbol; // 编辑手柄符号:hover
         private GeoSimpleLineSymbol mElasticSymbol; // 橡皮筋符号
 
 
@@ -47,6 +49,7 @@ namespace DEETU.Source.Window
                                      // 6: 移动, 7: 描绘, 8: 编辑
         private PointF mStartMouseLocation; // 拉框时的起点
         private bool mIsInZoomIn = false; // 是否在放大
+        private bool mIsInZoomOut = false; // 是否在缩小
         private bool mIsInPan = false; // 是否在漫游 
         private bool mIsInIdentify = false; // 是否在查询
         private bool mIsInSelect = false;
@@ -480,7 +483,17 @@ namespace DEETU.Source.Window
 
         private void btnEndEdit_Click(object sender, EventArgs e)
         {
-            // 结束编辑
+                        // 将mEditingGeometry中的多边形放回slayer中
+            GeoMapLayer slayer = GetPolygonLayer();
+            slayer.SelectedFeatures.GetItem(0).Geometry = mEditingGeometry;
+            
+            // 取消编辑多边形
+            mEditingGeometry = null;
+
+            mMapOpStyle = GeoMapOpStyleEnum.None;
+
+            // 重绘
+            geoMap.RedrawMap();
         }
         #endregion
 
@@ -494,7 +507,7 @@ namespace DEETU.Source.Window
             }
             else if (mMapOpStyle == GeoMapOpStyleEnum.ZoomOut)
             {
-
+OnZoomOut_MouseDown(e);
             }
             else if (mMapOpStyle == GeoMapOpStyleEnum.Pan)
             {
@@ -584,6 +597,7 @@ namespace DEETU.Source.Window
             // 没有找到好奇怪, 应该是多边形在附近但是和点离得也不近, 有点蠢
             return;
         }
+
         private void OnMoveShape_MouseDown(MouseEventArgs e)
         {
             if (e.Button != MouseButtons.Left)
@@ -632,7 +646,6 @@ namespace DEETU.Source.Window
             }
         }
 
-
         private void OnPan_MouseDown(MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
@@ -641,13 +654,22 @@ namespace DEETU.Source.Window
                 mIsInPan = true;
             }
         }
+
         private void OnZoomIn_MouseDown(MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
             {
                 mStartMouseLocation = e.Location;
                 mIsInZoomIn = true;
+            }
+        }
 
+                private void OnZoomOut_MouseDown(MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                mStartMouseLocation = e.Location;
+                mIsInZoomOut = true;
             }
         }
 
@@ -661,7 +683,7 @@ namespace DEETU.Source.Window
             }
             else if (mMapOpStyle == GeoMapOpStyleEnum.ZoomOut)
             {
-
+OnZoomOut_MouseMove(e);
             }
             else if (mMapOpStyle == GeoMapOpStyleEnum.Pan)
             {
@@ -706,6 +728,7 @@ namespace DEETU.Source.Window
             sDrawingTool.DrawLine(sCurPoint, mEditingLeftPoint, mElasticSymbol);
             sDrawingTool.DrawLine(sCurPoint, mEditingRightPoint, mElasticSymbol);
         }
+
         private void OnSketch_MouseMove(MouseEventArgs e)
         {
             GeoPoint sCurPoint = geoMap.ToMapPoint(e.Location.X, e.Location.Y);
@@ -780,7 +803,16 @@ namespace DEETU.Source.Window
 
         private void OnPan_MouseMove(MouseEventArgs e)
         {
+            if (mIsInPan == false)
+            {
+                return;
+            }
+            geoMap.Refresh();
+            GeoPoint point1 = geoMap.ToMapPoint(e.Location.X, e.Location.Y);
+            GeoPoint point2 = geoMap.ToMapPoint(mStartMouseLocation.X, mStartMouseLocation.Y);
 
+            GeoUserDrawingTool drawingTool = geoMap.GetDrawingTool();
+            drawingTool.DrawLine(point1, point2, mElasticSymbol);
         }
 
         private void OnZoomIn_MouseMove(MouseEventArgs e)
@@ -796,6 +828,17 @@ namespace DEETU.Source.Window
 
         }
 
+private void OnZoomOut_MouseMove(MouseEventArgs e)
+        {
+            if (mIsInZoomOut == false)
+            {
+                return;
+            }
+            geoMap.Refresh();
+            GeoRectangle sRect = GetMapRectByTwoPoints(mStartMouseLocation, e.Location);
+            GeoUserDrawingTool sDrawingTool = geoMap.GetDrawingTool();
+            sDrawingTool.DrawRectangle(sRect, mZoomBoxSymbol);
+        }
         private void geoMap_MouseUp(object sender, MouseEventArgs e)
         {
             if (mMapOpStyle == GeoMapOpStyleEnum.ZoomIn)
@@ -804,7 +847,7 @@ namespace DEETU.Source.Window
             }
             else if (mMapOpStyle == GeoMapOpStyleEnum.ZoomOut)
             {
-
+OnZoomOut_MouseUp(e);
             }
             else if (mMapOpStyle == GeoMapOpStyleEnum.Pan)
             {
@@ -854,12 +897,20 @@ namespace DEETU.Source.Window
             geoMap.RedrawMap();
 
         }
+
         private void OnMoveShape_MouseUp(MouseEventArgs e)
         {
             if (mIsMovingShapes == false)
                 return;
             mIsMovingShapes = false;
+            GeoMapLayer selectLayer = geoMap.Layers.getSelectableLayer();
             // 做相应的修改数据操作, 不再编写
+            for (int i = 0; i < mMovingGeometries.Count; i++)
+            {
+                GeoGeometry geometry = mMovingGeometries[i];
+                GeoFeature feature = geoMap.Layers.getSelectableLayer().SelectedFeatures.GetItem(i);
+                feature.Replace(geometry);
+            }
             // 就是将正在移动的图形用clone的替换
 
 
@@ -868,6 +919,7 @@ namespace DEETU.Source.Window
 
             mMovingGeometries.Clear();
         }
+       
         private void OnIdentify_MouseUp(MouseEventArgs e)
         {
             if (mIsInIdentify == false)
@@ -879,22 +931,45 @@ namespace DEETU.Source.Window
             if (geoMap.Layers.Count == 0)
             {
                 return;
-
             }
             else
             {
                 GeoMapLayer sLayer = geoMap.Layers.GetItem(0);
+                
+                GeoFields sFields = sLayer.AttributeFields;
+                int sFieldCount = sFields.Count;
+                string[] sFieldString = new string[sFieldCount];
+                for (int i = 0; i < sFieldCount; i++)
+                {
+                    sFieldString[i] = sFields.GetItem(i).Name;
+                }
+
                 GeoFeatures sFeatures = sLayer.SearchByBox(sBox, tolerance);
                 // 弹出窗体
                 int sSelFeatureCount = sFeatures.Count;
                 if (sSelFeatureCount > 0)
                 {
-                    GeoGeometry[] sGeometryies = new GeoGeometry[sSelFeatureCount];
+                   GeoGeometry[] sGeometryies = new GeoGeometry[sSelFeatureCount];
+                    GeoAttributes[] sGeoAttributes = new GeoAttributes[sSelFeatureCount];
                     for (int i = 0; i < sSelFeatureCount; i++)
                     {
                         sGeometryies[i] = sFeatures.GetItem(i).Geometry;
+                        sGeoAttributes[i] = sFeatures.GetItem(i).Attributes;
                     }
-                    geoMap.FlashShapes(sGeometryies, 3, 800);
+
+                    string info = "";
+                    for (int i = 0; i < sSelFeatureCount; i++)
+                    {
+                        int sAttributeCount = sGeoAttributes[i].Count;
+                        for (int j = 0; j < sAttributeCount; j++)
+                        {
+                            info += sFieldString[j] + "：" + sGeoAttributes[i].GetItem(j).ToString() + '\n';
+                        }
+                        info += "\n";
+                    }
+                    MessageBox.Show(info, "属性信息", MessageBoxButtons.OK);
+
+                    // geoMap.FlashShapes(sGeometryies, 3, 800);
                 }
             }
         }
@@ -934,6 +1009,16 @@ namespace DEETU.Source.Window
                 GeoRectangle sBox = GetMapRectByTwoPoints(mStartMouseLocation, e.Location);
                 geoMap.ZoomToExtent(sBox);
             }
+        }
+
+        private void OnZoomOut_MouseUp(MouseEventArgs e)
+        {
+            if (mIsInZoomOut == false)
+                return;
+            mIsInZoomOut = false;
+
+            GeoPoint sPoint = geoMap.ToMapPoint(mStartMouseLocation.X, mStartMouseLocation.Y);
+            geoMap.ZoomByCenter(sPoint, 1 / mZoomRatioFixed);
         }
 
         private void geoMap_MouseClick(object sender, MouseEventArgs e)
@@ -1210,6 +1295,43 @@ namespace DEETU.Source.Window
         private void layerTreeView_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
         {
             mCurrentLayerNode = e.Node;           
+        }
+
+#if DEBUG
+        private string logging
+        {
+            get
+            {
+                return _logging.Text;
+            }
+            set
+            {
+                _logging.AppendText("\r\n" + System.DateTime.Now.ToString("HH:mm:ss") + "  " + value);
+                _logging.ScrollToCaret();
+            }
+        }
+        private TextBox _logging = null;
+        public void SetDebugForm(DebugForm form)
+        {
+            _logging = form.logging;
+        }
+
+
+#endif
+
+        private void MainPage_KeyDown(object sender, KeyEventArgs e)
+        {
+#if DEBUG
+
+            logging = e.KeyValue.ToString() + " key down";
+#endif
+        }
+
+        private void MainPage_KeyUp(object sender, KeyEventArgs e)
+        {
+#if DEBUG
+            logging = e.KeyValue.ToString() + " key up";
+#endif
         }
     }
 }

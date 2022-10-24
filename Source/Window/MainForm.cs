@@ -8,16 +8,25 @@ using System.Text;
 using System.Windows.Forms;
 using Sunny.UI;
 using DEETU.Source.Window;
+using DEETU.Testing;
 
 namespace DEETU
 {
     public partial class MainForm : UIMainFrame
     {
-        public MainForm()
+        public MainForm(DebugForm debugForm)
         {
             InitializeComponent();
-            AddPage(new MainPage());
+            var mainPage = new MainPage();
+            mainPage.SetDebugForm(debugForm);
+            AddPage(mainPage);
+            
             base.FormBorderStyle = FormBorderStyle.Sizable;
+        }
+
+        public void SetDebugForm(DebugForm debugForm)
+        {
+
         }
     }
 }
