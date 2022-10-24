@@ -14,19 +14,24 @@ namespace DEETU.Map
     {
         #region 字段
         
+        // 图层属性部分
         private GeoGeometryTypeConstant _ShapeType = GeoGeometryTypeConstant.Point; // 要素几何类型
         private string _Name = "Untitled"; // 图层名称
         private bool _Visible = true; // 图层是否可见
         private bool _Selectable = true; // 是否可以执行选择操作 //TODO:这里需要注意, 在增加图层管理之后, 这个变量决定了图层是否可以被选择
         private string _Description = ""; // 描述
         private bool _IsDirty = false; // 是否被修改过
+        private GeoRenderer _Renderer; // 符号渲染
+        private GeoLabelRenderer _LabelRenderer; // 注记渲染对象
         private GeoFields _AttributeFields = new GeoFields(); // 字段集合
+
+        // 投影部分
+        private GeoCoordinateReferenceSystem _Crs;
+
+        // 要素部分
         private GeoFeatures _Features = new GeoFeatures(); // 要素集合
         private GeoFeatures _SelectedFeatures = new GeoFeatures(); // 选择的要素集合
         private GeoRectangle _Extent = new GeoRectangle(0,0,0,0); // 图层范围
-        private GeoRenderer _Renderer; // 符号渲染
-        private GeoLabelRenderer _LabelRenderer; // 注记渲染对象
-        private GeoCoordinateReferenceSystem _Crs;
         #endregion
 
         #region 构造函数
@@ -251,6 +256,10 @@ namespace DEETU.Map
             return CreateNewFeature();
         }
 
+        public GeoMapLayer Clone()
+        {
+            throw new NotImplementedException("服务于撤销, 重做, 属性修改等.");
+        }
         #endregion
 
         #region 程序集方法
