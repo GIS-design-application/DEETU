@@ -144,10 +144,6 @@ namespace DEETU.Map
         public GeoFields AttributeFields
         {
             get { return _AttributeFields; }
-            set
-            {
-                _AttributeFields = value;
-            }
         }
 
         /// <summary>

@@ -153,7 +153,7 @@ namespace DEETU.IO
             return sAttributes;
         }
 
-        public static object LoadValue(GeoValueTypeConstant valueType, BinaryReader sr)
+        private static object LoadValue(GeoValueTypeConstant valueType, BinaryReader sr)
         {
             if (valueType == GeoValueTypeConstant.dInt16)
             {

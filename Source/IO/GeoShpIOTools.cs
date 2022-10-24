@@ -11,7 +11,7 @@ using DEETU.Tool;
 using System.Runtime.InteropServices;
 using System.Data;
 
-namespace DEETU.IO
+namespace DEETU.Source.IO
 {
     public class GeoDBFTable
     {
@@ -62,7 +62,7 @@ namespace DEETU.IO
             }
         }
         
-        public static GeoMapLayer ReadSHPFile(string shpPath)
+        private static GeoMapLayer ReadSHPFile(string shpPath)
         {
             int sShapeType;
             GeoMapLayer sLayer;
@@ -215,7 +215,7 @@ namespace DEETU.IO
             fs.Close();
             return sLayer;
         }
-        public static void ReadDBFFile(string dbfPath, GeoMapLayer layer)
+        private static void ReadDBFFile(string dbfPath, GeoMapLayer layer)
         {
             
             GeoDBFTable table=new GeoDBFTable();
@@ -231,7 +231,7 @@ namespace DEETU.IO
             table.mColumnCount = (br.ReadInt16() - 33) / 32;//文件头中的字节数
             _ = br.ReadInt16();//一条记录中的字节长度
             _ = br.ReadBytes(20);//系统保留
-            GeoFields sFields = new GeoFields();
+
             for (int i = 0; i < table.mColumnCount; i++)
             {
                 string name = System.Text.Encoding.Default.GetString(br.ReadBytes(10));
@@ -243,9 +243,7 @@ namespace DEETU.IO
                 table.mColumnsLength.Add(length);
                 sField.Length = length;
                 _ = br.ReadBytes(15);
-                sFields.Append(sField);
             }
-            layer.AttributeFields = sFields;
             _ = br.ReadBytes(1);//终止符0x0D
             for (int i = 0; i < table.mRowCount; i++)
             {
@@ -253,15 +251,12 @@ namespace DEETU.IO
                 _ = br.ReadByte();//占位符
                 DataRow dr;
                 dr = table.dt.NewRow();
-                sFeature.Attributes = new GeoAttributes();
                 for (int j = 0; j < table.mColumnCount; j++)
                 {
                     string temp = System.Text.Encoding.Default.GetString(br.ReadBytes(table.mColumnsLength[j]));
                     if (j == 0) table.ID.Add(temp);
                     dr[(string)table.mColumnsName[j]] = temp;
-                    object sValue = temp as object;
-
-                    sFeature.Attributes.Append(sValue);
+                    sFeature.Attributes.Append(temp);
                 }
                 table.dt.Rows.Add(dr);
             }
