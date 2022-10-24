@@ -1,4 +1,4 @@
-﻿using Sunny.UI;
+using Sunny.UI;
 namespace DEETU
 {
     partial class MainForm

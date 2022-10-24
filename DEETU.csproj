@@ -70,6 +70,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Source\Core\CoordinateSystem\CoordinateTransform.cs" />
+    <Compile Include="Source\Core\CoordinateSystem\GeoCoordinateFactory.cs" />
+    <Compile Include="Source\Core\CoordinateSystem\GeoCoordinateReferenceSystem.cs" />
     <Compile Include="Source\Core\Feature\GeoFeature.cs" />
     <Compile Include="Source\Core\Feature\GeoFeatures.cs" />
     <Compile Include="Source\Core\Field\GeoField.cs" />
@@ -83,6 +86,7 @@
     <Compile Include="Source\Core\Geometry\GeoPoints.cs" />
     <Compile Include="Source\Core\Geometry\GeoRectangle.cs" />
     <Compile Include="Source\Core\Geometry\GeoShape.cs" />
+    <Compile Include="Source\Testing\MultiFormApplictionStart.cs" />
     <Compile Include="Source\IO\GeoDatabase.cs" />
     <Compile Include="Source\IO\GeoDataIOTools.cs" />
     <Compile Include="Source\IO\GeoDataTable.cs" />
@@ -159,6 +163,11 @@
     </Compile>
     <Compile Include="Source\Window\MainPage.Designer.cs">
       <DependentUpon>MainPage.cs</DependentUpon>
+    <Compile Include="Source\Testing\DebugForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Source\Testing\DebugForm.Designer.cs">
+      <DependentUpon>DebugForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Source\Window\MainForm.cs">
       <SubType>Form</SubType>
@@ -223,6 +232,8 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Source\Window\LayerAttributes\FillSymbolPage.resx">
       <DependentUpon>FillSymbolPage.cs</DependentUpon>
+    <EmbeddedResource Include="Source\Testing\DebugForm.resx">
+      <DependentUpon>DebugForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Source\Window\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>

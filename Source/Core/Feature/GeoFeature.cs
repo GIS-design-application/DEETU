@@ -124,6 +124,15 @@ namespace DEETU.Core
             return sFeature;
         }
 
+        /// <summary>
+        /// 用某个几何要素替换现在的几何要素
+        /// </summary>
+        /// <param name="srcGeometry"></param>
+        public void Replace(GeoGeometry srcGeometry)
+        {
+            _Geometry = srcGeometry;
+        }
+
 
         #endregion
     }

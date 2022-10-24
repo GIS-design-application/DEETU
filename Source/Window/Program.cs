@@ -1,8 +1,10 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+#if DEBUG
+using DEETU.Testing;
+#endif
 using System.Windows.Forms;
-using Sunny.UI;
 
 namespace DEETU
 {
@@ -16,7 +18,11 @@ namespace DEETU
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+#if DEBUG
+            Application.Run(new MultiFormApplictionStart());
+#else
             Application.Run(new MainForm());
+#endif
         }
     }
 }

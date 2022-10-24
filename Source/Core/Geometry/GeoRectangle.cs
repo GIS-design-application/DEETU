@@ -79,9 +79,9 @@ namespace DEETU.Geometry
         /// <summary>
         /// 指示是否为空矩形
         /// </summary>
-        public bool IsEmpty 
+        public bool IsEmpty
         {
-            get 
+            get
             {
                 bool flag = false;
                 if (_MaxX <= _MinX)
@@ -91,6 +91,7 @@ namespace DEETU.Geometry
                 return flag;
             }
         }
+
         #endregion
 
         #region 方法

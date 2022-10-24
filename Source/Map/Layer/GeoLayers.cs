@@ -96,6 +96,22 @@ namespace DEETU.Map
             }
         }
 
+        /// <summary>
+        /// 用于获得选择的图层, 整张地图只能有一个图层正在被选择
+        /// </summary>
+        /// <returns></returns>
+        public GeoMapLayer getSelectableLayer()
+        {
+            for(int i = 0; i < _Layers.Count; i++)
+            {
+                if (_Layers[i].Selectable)
+                {
+                    return _Layers[i];
+                }
+            }
+            throw new Exception("没有图层或没有可以选择的图层");
+        }
+
         #endregion
     }
 }

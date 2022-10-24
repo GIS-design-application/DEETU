@@ -63,7 +63,10 @@ namespace DEETU.Geometry
         {
             get { return _Points.Count(); }
         }
-
+        public List<GeoPoint> Points
+        {
+            get { return _Points; }
+        }
 
         #endregion
 
