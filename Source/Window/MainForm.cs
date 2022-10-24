@@ -112,7 +112,45 @@ namespace DEETU
                 MessageBox.Show(error.ToString());
             }
         }
+        private void btnSHPLoad_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog sOpenFileDialog = new OpenFileDialog();
+            sOpenFileDialog.Filter = "shapefiles(*.shp)|*.shp|All files(*.*)|*.*";
+            sOpenFileDialog.FilterIndex = 1;
+            if (sOpenFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+                    GeoMapLayer sLayer = GeoShpIOTools.ReadSHPFile(sOpenFileDialog.FileName);
+                    char[] path = sOpenFileDialog.FileName.ToCharArray();
+                    if (path.Length != 0)
+                    {
+                        path[path.Length - 1] = 'f';
+                        path[path.Length - 2] = 'b';
+                        path[path.Length - 3] = 'd';
 
+                        GeoShpIOTools.ReadDBFFile(new string(path), sLayer);
+                    }
+                    //TODO:layer加入layers
+                    //TODO:刷新画布
+                    geoMap.Layers.Add(sLayer);
+                    if (geoMap.Layers.Count == 1)
+                    {
+                        geoMap.FullExtent();
+                    }
+                    else
+                    {
+                        geoMap.RedrawMap();
+                    }
+                }
+                catch (Exception error)
+                {
+                    MessageBox.Show(error.ToString());
+                }
+
+            }
+
+        }
         private void btnFullExtent_Click(object sender, EventArgs e)
         {
             geoMap.FullExtent();
@@ -1110,6 +1148,7 @@ namespace DEETU
                 _logging.ScrollToCaret();
             }
         }
+
         private TextBox _logging = null;
         public void SetDebugForm(DebugForm form)
         {

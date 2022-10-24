@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DEETU.Map.GeoLayers geoLayers1 = new DEETU.Map.GeoLayers();
+            this.geoMap = new Map.GeoMapControl();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.tssCoordinate = new System.Windows.Forms.ToolStripStatusLabel();
             this.tssMapScale = new System.Windows.Forms.ToolStripStatusLabel();
@@ -50,7 +50,9 @@
             this.btnEndEdit = new System.Windows.Forms.Button();
             this.btnEndSketch = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.geoMap = new DEETU.Map.GeoMapControl();
+            this.btnSHPLoad = new System.Windows.Forms.Button();
+            this.btnDatabaseLoad = new System.Windows.Forms.Button();
+            this.btnDatabaseSave = new System.Windows.Forms.Button();
             this.statusStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -61,9 +63,10 @@
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tssCoordinate,
             this.tssMapScale});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 706);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 1804);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(913, 26);
+            this.statusStrip1.Padding = new System.Windows.Forms.Padding(2, 0, 35, 0);
+            this.statusStrip1.Size = new System.Drawing.Size(2282, 26);
             this.statusStrip1.TabIndex = 0;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -75,7 +78,7 @@
             | System.Windows.Forms.ToolStripStatusLabelBorderSides.Bottom)));
             this.tssCoordinate.BorderStyle = System.Windows.Forms.Border3DStyle.SunkenOuter;
             this.tssCoordinate.Name = "tssCoordinate";
-            this.tssCoordinate.Size = new System.Drawing.Size(200, 21);
+            this.tssCoordinate.Size = new System.Drawing.Size(200, 13);
             this.tssCoordinate.Text = "toolStripStatusLabel1";
             // 
             // tssMapScale
@@ -88,14 +91,15 @@
             this.tssMapScale.IsLink = true;
             this.tssMapScale.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(255)))));
             this.tssMapScale.Name = "tssMapScale";
-            this.tssMapScale.Size = new System.Drawing.Size(200, 21);
+            this.tssMapScale.Size = new System.Drawing.Size(200, 13);
             this.tssMapScale.Text = "tssMapScale";
             // 
             // btnLoadLayerFile
             // 
-            this.btnLoadLayerFile.Location = new System.Drawing.Point(32, 16);
+            this.btnLoadLayerFile.Location = new System.Drawing.Point(80, 40);
+            this.btnLoadLayerFile.Margin = new System.Windows.Forms.Padding(8, 8, 8, 8);
             this.btnLoadLayerFile.Name = "btnLoadLayerFile";
-            this.btnLoadLayerFile.Size = new System.Drawing.Size(75, 23);
+            this.btnLoadLayerFile.Size = new System.Drawing.Size(188, 58);
             this.btnLoadLayerFile.TabIndex = 0;
             this.btnLoadLayerFile.Text = "载入图层";
             this.btnLoadLayerFile.UseVisualStyleBackColor = true;
@@ -103,9 +107,10 @@
             // 
             // btnFullExtent
             // 
-            this.btnFullExtent.Location = new System.Drawing.Point(32, 60);
+            this.btnFullExtent.Location = new System.Drawing.Point(80, 150);
+            this.btnFullExtent.Margin = new System.Windows.Forms.Padding(8, 8, 8, 8);
             this.btnFullExtent.Name = "btnFullExtent";
-            this.btnFullExtent.Size = new System.Drawing.Size(75, 23);
+            this.btnFullExtent.Size = new System.Drawing.Size(188, 58);
             this.btnFullExtent.TabIndex = 1;
             this.btnFullExtent.Text = "全范围显示";
             this.btnFullExtent.UseVisualStyleBackColor = true;
@@ -113,9 +118,10 @@
             // 
             // btnZoomIn
             // 
-            this.btnZoomIn.Location = new System.Drawing.Point(32, 104);
+            this.btnZoomIn.Location = new System.Drawing.Point(80, 260);
+            this.btnZoomIn.Margin = new System.Windows.Forms.Padding(8, 8, 8, 8);
             this.btnZoomIn.Name = "btnZoomIn";
-            this.btnZoomIn.Size = new System.Drawing.Size(75, 23);
+            this.btnZoomIn.Size = new System.Drawing.Size(188, 58);
             this.btnZoomIn.TabIndex = 2;
             this.btnZoomIn.Text = "放大";
             this.btnZoomIn.UseVisualStyleBackColor = true;
@@ -123,9 +129,10 @@
             // 
             // btnZoomOut
             // 
-            this.btnZoomOut.Location = new System.Drawing.Point(32, 148);
+            this.btnZoomOut.Location = new System.Drawing.Point(80, 370);
+            this.btnZoomOut.Margin = new System.Windows.Forms.Padding(8, 8, 8, 8);
             this.btnZoomOut.Name = "btnZoomOut";
-            this.btnZoomOut.Size = new System.Drawing.Size(75, 23);
+            this.btnZoomOut.Size = new System.Drawing.Size(188, 58);
             this.btnZoomOut.TabIndex = 3;
             this.btnZoomOut.Text = "缩小";
             this.btnZoomOut.UseVisualStyleBackColor = true;
@@ -133,9 +140,10 @@
             // 
             // btnPan
             // 
-            this.btnPan.Location = new System.Drawing.Point(32, 192);
+            this.btnPan.Location = new System.Drawing.Point(80, 480);
+            this.btnPan.Margin = new System.Windows.Forms.Padding(8, 8, 8, 8);
             this.btnPan.Name = "btnPan";
-            this.btnPan.Size = new System.Drawing.Size(75, 23);
+            this.btnPan.Size = new System.Drawing.Size(188, 58);
             this.btnPan.TabIndex = 4;
             this.btnPan.Text = "漫游";
             this.btnPan.UseVisualStyleBackColor = true;
@@ -143,9 +151,10 @@
             // 
             // btnSelect
             // 
-            this.btnSelect.Location = new System.Drawing.Point(32, 236);
+            this.btnSelect.Location = new System.Drawing.Point(80, 590);
+            this.btnSelect.Margin = new System.Windows.Forms.Padding(8, 8, 8, 8);
             this.btnSelect.Name = "btnSelect";
-            this.btnSelect.Size = new System.Drawing.Size(75, 23);
+            this.btnSelect.Size = new System.Drawing.Size(188, 58);
             this.btnSelect.TabIndex = 5;
             this.btnSelect.Text = "选择";
             this.btnSelect.UseVisualStyleBackColor = true;
@@ -153,9 +162,10 @@
             // 
             // btnIdentify
             // 
-            this.btnIdentify.Location = new System.Drawing.Point(32, 280);
+            this.btnIdentify.Location = new System.Drawing.Point(80, 700);
+            this.btnIdentify.Margin = new System.Windows.Forms.Padding(8, 8, 8, 8);
             this.btnIdentify.Name = "btnIdentify";
-            this.btnIdentify.Size = new System.Drawing.Size(75, 23);
+            this.btnIdentify.Size = new System.Drawing.Size(188, 58);
             this.btnIdentify.TabIndex = 6;
             this.btnIdentify.Text = "查询";
             this.btnIdentify.UseVisualStyleBackColor = true;
@@ -163,9 +173,10 @@
             // 
             // btnSimpleRender
             // 
-            this.btnSimpleRender.Location = new System.Drawing.Point(32, 324);
+            this.btnSimpleRender.Location = new System.Drawing.Point(80, 810);
+            this.btnSimpleRender.Margin = new System.Windows.Forms.Padding(8, 8, 8, 8);
             this.btnSimpleRender.Name = "btnSimpleRender";
-            this.btnSimpleRender.Size = new System.Drawing.Size(75, 23);
+            this.btnSimpleRender.Size = new System.Drawing.Size(188, 58);
             this.btnSimpleRender.TabIndex = 7;
             this.btnSimpleRender.Text = "简单渲染";
             this.btnSimpleRender.UseVisualStyleBackColor = true;
@@ -173,9 +184,10 @@
             // 
             // btnUniqueValue
             // 
-            this.btnUniqueValue.Location = new System.Drawing.Point(32, 368);
+            this.btnUniqueValue.Location = new System.Drawing.Point(80, 920);
+            this.btnUniqueValue.Margin = new System.Windows.Forms.Padding(8, 8, 8, 8);
             this.btnUniqueValue.Name = "btnUniqueValue";
-            this.btnUniqueValue.Size = new System.Drawing.Size(75, 23);
+            this.btnUniqueValue.Size = new System.Drawing.Size(188, 58);
             this.btnUniqueValue.TabIndex = 8;
             this.btnUniqueValue.Text = "唯一值渲染";
             this.btnUniqueValue.UseVisualStyleBackColor = true;
@@ -183,9 +195,10 @@
             // 
             // btnClassBreaks
             // 
-            this.btnClassBreaks.Location = new System.Drawing.Point(32, 412);
+            this.btnClassBreaks.Location = new System.Drawing.Point(80, 1030);
+            this.btnClassBreaks.Margin = new System.Windows.Forms.Padding(8, 8, 8, 8);
             this.btnClassBreaks.Name = "btnClassBreaks";
-            this.btnClassBreaks.Size = new System.Drawing.Size(75, 23);
+            this.btnClassBreaks.Size = new System.Drawing.Size(188, 58);
             this.btnClassBreaks.TabIndex = 9;
             this.btnClassBreaks.Text = "分级渲染";
             this.btnClassBreaks.UseVisualStyleBackColor = true;
@@ -193,9 +206,10 @@
             // 
             // btnShowLabela
             // 
-            this.btnShowLabela.Location = new System.Drawing.Point(32, 456);
+            this.btnShowLabela.Location = new System.Drawing.Point(80, 1140);
+            this.btnShowLabela.Margin = new System.Windows.Forms.Padding(8, 8, 8, 8);
             this.btnShowLabela.Name = "btnShowLabela";
-            this.btnShowLabela.Size = new System.Drawing.Size(75, 23);
+            this.btnShowLabela.Size = new System.Drawing.Size(188, 58);
             this.btnShowLabela.TabIndex = 10;
             this.btnShowLabela.Text = "显示注记";
             this.btnShowLabela.UseVisualStyleBackColor = true;
@@ -203,9 +217,10 @@
             // 
             // btnMovePolygon
             // 
-            this.btnMovePolygon.Location = new System.Drawing.Point(32, 500);
+            this.btnMovePolygon.Location = new System.Drawing.Point(80, 1250);
+            this.btnMovePolygon.Margin = new System.Windows.Forms.Padding(8, 8, 8, 8);
             this.btnMovePolygon.Name = "btnMovePolygon";
-            this.btnMovePolygon.Size = new System.Drawing.Size(75, 23);
+            this.btnMovePolygon.Size = new System.Drawing.Size(188, 58);
             this.btnMovePolygon.TabIndex = 11;
             this.btnMovePolygon.Text = "移动多边形";
             this.btnMovePolygon.UseVisualStyleBackColor = true;
@@ -213,9 +228,10 @@
             // 
             // btnSketchPolygon
             // 
-            this.btnSketchPolygon.Location = new System.Drawing.Point(32, 544);
+            this.btnSketchPolygon.Location = new System.Drawing.Point(80, 1360);
+            this.btnSketchPolygon.Margin = new System.Windows.Forms.Padding(8, 8, 8, 8);
             this.btnSketchPolygon.Name = "btnSketchPolygon";
-            this.btnSketchPolygon.Size = new System.Drawing.Size(75, 23);
+            this.btnSketchPolygon.Size = new System.Drawing.Size(188, 58);
             this.btnSketchPolygon.TabIndex = 12;
             this.btnSketchPolygon.Text = "描绘多边形";
             this.btnSketchPolygon.UseVisualStyleBackColor = true;
@@ -223,9 +239,10 @@
             // 
             // btnEndPart
             // 
-            this.btnEndPart.Location = new System.Drawing.Point(32, 588);
+            this.btnEndPart.Location = new System.Drawing.Point(80, 1470);
+            this.btnEndPart.Margin = new System.Windows.Forms.Padding(8, 8, 8, 8);
             this.btnEndPart.Name = "btnEndPart";
-            this.btnEndPart.Size = new System.Drawing.Size(75, 23);
+            this.btnEndPart.Size = new System.Drawing.Size(188, 58);
             this.btnEndPart.TabIndex = 13;
             this.btnEndPart.Text = "结束部分";
             this.btnEndPart.UseVisualStyleBackColor = true;
@@ -233,9 +250,10 @@
             // 
             // btnEditPolygon
             // 
-            this.btnEditPolygon.Location = new System.Drawing.Point(32, 632);
+            this.btnEditPolygon.Location = new System.Drawing.Point(80, 1580);
+            this.btnEditPolygon.Margin = new System.Windows.Forms.Padding(8, 8, 8, 8);
             this.btnEditPolygon.Name = "btnEditPolygon";
-            this.btnEditPolygon.Size = new System.Drawing.Size(75, 23);
+            this.btnEditPolygon.Size = new System.Drawing.Size(188, 58);
             this.btnEditPolygon.TabIndex = 14;
             this.btnEditPolygon.Text = "编辑多边形";
             this.btnEditPolygon.UseVisualStyleBackColor = true;
@@ -243,9 +261,10 @@
             // 
             // btnEndEdit
             // 
-            this.btnEndEdit.Location = new System.Drawing.Point(113, 632);
+            this.btnEndEdit.Location = new System.Drawing.Point(282, 1580);
+            this.btnEndEdit.Margin = new System.Windows.Forms.Padding(8, 8, 8, 8);
             this.btnEndEdit.Name = "btnEndEdit";
-            this.btnEndEdit.Size = new System.Drawing.Size(75, 23);
+            this.btnEndEdit.Size = new System.Drawing.Size(188, 58);
             this.btnEndEdit.TabIndex = 15;
             this.btnEndEdit.Text = "结束编辑";
             this.btnEndEdit.UseVisualStyleBackColor = true;
@@ -253,9 +272,10 @@
             // 
             // btnEndSketch
             // 
-            this.btnEndSketch.Location = new System.Drawing.Point(113, 588);
+            this.btnEndSketch.Location = new System.Drawing.Point(282, 1470);
+            this.btnEndSketch.Margin = new System.Windows.Forms.Padding(8, 8, 8, 8);
             this.btnEndSketch.Name = "btnEndSketch";
-            this.btnEndSketch.Size = new System.Drawing.Size(75, 23);
+            this.btnEndSketch.Size = new System.Drawing.Size(188, 58);
             this.btnEndSketch.TabIndex = 16;
             this.btnEndSketch.Text = "结束描绘";
             this.btnEndSketch.UseVisualStyleBackColor = true;
@@ -263,6 +283,9 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.btnDatabaseSave);
+            this.panel1.Controls.Add(this.btnDatabaseLoad);
+            this.panel1.Controls.Add(this.btnSHPLoad);
             this.panel1.Controls.Add(this.btnEndSketch);
             this.panel1.Controls.Add(this.btnEndEdit);
             this.panel1.Controls.Add(this.btnEditPolygon);
@@ -281,40 +304,52 @@
             this.panel1.Controls.Add(this.btnFullExtent);
             this.panel1.Controls.Add(this.btnLoadLayerFile);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel1.Location = new System.Drawing.Point(713, 0);
+            this.panel1.Location = new System.Drawing.Point(1782, 0);
+            this.panel1.Margin = new System.Windows.Forms.Padding(8, 8, 8, 8);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(200, 706);
+            this.panel1.Size = new System.Drawing.Size(500, 1804);
             this.panel1.TabIndex = 3;
             // 
-            // geoMap
+            // btnSHPLoad
             // 
-            this.geoMap.BackColor = System.Drawing.Color.White;
-            this.geoMap.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.geoMap.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.geoMap.FlashColor = System.Drawing.Color.Green;
-            this.geoMap.Layers = geoLayers1;
-            this.geoMap.Location = new System.Drawing.Point(0, 0);
-            this.geoMap.Name = "geoMap";
-            this.geoMap.SelectionColor = System.Drawing.Color.Cyan;
-            this.geoMap.Size = new System.Drawing.Size(713, 706);
-            this.geoMap.TabIndex = 5;
-            this.geoMap.MapScaleChanged += new DEETU.Map.GeoMapControl.MapScaleChangedHandle(this.geoMap_MapScaleChanged);
-            this.geoMap.AfterTrackingLayerDraw += new DEETU.Map.GeoMapControl.AfterTrackingLayerDrawHandle(this.geoMap_AfterTrackingLayerDraw);
-            this.geoMap.MouseClick += new System.Windows.Forms.MouseEventHandler(this.geoMap_MouseClick);
-            this.geoMap.MouseDown += new System.Windows.Forms.MouseEventHandler(this.geoMap_MouseDown);
-            this.geoMap.MouseMove += new System.Windows.Forms.MouseEventHandler(this.geoMap_MouseMove);
-            this.geoMap.MouseUp += new System.Windows.Forms.MouseEventHandler(this.geoMap_MouseUp);
+            this.btnSHPLoad.Location = new System.Drawing.Point(295, 40);
+            this.btnSHPLoad.Margin = new System.Windows.Forms.Padding(8);
+            this.btnSHPLoad.Name = "btnSHPLoad";
+            this.btnSHPLoad.Size = new System.Drawing.Size(188, 58);
+            this.btnSHPLoad.TabIndex = 17;
+            this.btnSHPLoad.Text = "载入shp";
+            this.btnSHPLoad.UseVisualStyleBackColor = true;
+            this.btnSHPLoad.Click += new System.EventHandler(this.btnSHPLoad_Click);
+            // 
+            // btnDatabaseLoad
+            // 
+            this.btnDatabaseLoad.Location = new System.Drawing.Point(295, 150);
+            this.btnDatabaseLoad.Margin = new System.Windows.Forms.Padding(8);
+            this.btnDatabaseLoad.Name = "btnDatabaseLoad";
+            this.btnDatabaseLoad.Size = new System.Drawing.Size(188, 58);
+            this.btnDatabaseLoad.TabIndex = 18;
+            this.btnDatabaseLoad.Text = "载入数据库";
+            this.btnDatabaseLoad.UseVisualStyleBackColor = true;
+            // 
+            // btnDatabaseSave
+            // 
+            this.btnDatabaseSave.Location = new System.Drawing.Point(295, 260);
+            this.btnDatabaseSave.Margin = new System.Windows.Forms.Padding(8);
+            this.btnDatabaseSave.Name = "btnDatabaseSave";
+            this.btnDatabaseSave.Size = new System.Drawing.Size(188, 58);
+            this.btnDatabaseSave.TabIndex = 19;
+            this.btnDatabaseSave.Text = "存储数据库";
+            this.btnDatabaseSave.UseVisualStyleBackColor = true;
             // 
             // MainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(15F, 30F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(913, 732);
-            this.Controls.Add(this.geoMap);
+            this.ClientSize = new System.Drawing.Size(2282, 1830);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.statusStrip1);
             this.KeyPreview = true;
-            this.Margin = new System.Windows.Forms.Padding(1);
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "MainForm";
             this.Text = "MainForm";
             this.Load += new System.EventHandler(this.MainForm_Load);
@@ -352,6 +387,9 @@
         private System.Windows.Forms.Button btnEndSketch;
         private System.Windows.Forms.Panel panel1;
         private Map.GeoMapControl geoMap;
+        private System.Windows.Forms.Button btnDatabaseSave;
+        private System.Windows.Forms.Button btnDatabaseLoad;
+        private System.Windows.Forms.Button btnSHPLoad;
     }
 }
 
