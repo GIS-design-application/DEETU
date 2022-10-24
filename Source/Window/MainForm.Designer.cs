@@ -51,6 +51,9 @@
             this.btnEndSketch = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.geoMap = new DEETU.Map.GeoMapControl();
+            this.btnSHPLoad = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
+            this.button3 = new System.Windows.Forms.Button();
             this.statusStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -263,6 +266,9 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.button3);
+            this.panel1.Controls.Add(this.button2);
+            this.panel1.Controls.Add(this.btnSHPLoad);
             this.panel1.Controls.Add(this.btnEndSketch);
             this.panel1.Controls.Add(this.btnEndEdit);
             this.panel1.Controls.Add(this.btnEditPolygon);
@@ -304,6 +310,34 @@
             this.geoMap.MouseDown += new System.Windows.Forms.MouseEventHandler(this.geoMap_MouseDown);
             this.geoMap.MouseMove += new System.Windows.Forms.MouseEventHandler(this.geoMap_MouseMove);
             this.geoMap.MouseUp += new System.Windows.Forms.MouseEventHandler(this.geoMap_MouseUp);
+            // 
+            // btnSHPLoad
+            // 
+            this.btnSHPLoad.Location = new System.Drawing.Point(113, 16);
+            this.btnSHPLoad.Name = "btnSHPLoad";
+            this.btnSHPLoad.Size = new System.Drawing.Size(75, 23);
+            this.btnSHPLoad.TabIndex = 17;
+            this.btnSHPLoad.Text = "载入Shp";
+            this.btnSHPLoad.UseVisualStyleBackColor = true;
+            this.btnSHPLoad.Click += new System.EventHandler(this.btnSHPLoad_Click);
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(113, 60);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(75, 23);
+            this.button2.TabIndex = 18;
+            this.button2.Text = "载入图层";
+            this.button2.UseVisualStyleBackColor = true;
+            // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(113, 104);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(75, 23);
+            this.button3.TabIndex = 19;
+            this.button3.Text = "载入图层";
+            this.button3.UseVisualStyleBackColor = true;
             // 
             // MainForm
             // 
@@ -352,6 +386,9 @@
         private System.Windows.Forms.Button btnEndSketch;
         private System.Windows.Forms.Panel panel1;
         private Map.GeoMapControl geoMap;
+        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button btnSHPLoad;
     }
 }
 
