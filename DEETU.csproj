@@ -92,12 +92,6 @@
     <Compile Include="Source\IO\GeoDataTable.cs" />
     <Compile Include="Source\Map\GeoShapeFlashControler.cs" />
     <Compile Include="Source\Window\GeoFormEnum.cs" />
-    <Compile Include="Source\Window\Form1.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Source\Window\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
-    </Compile>
     <Compile Include="Source\Window\LayerAttributes\EditFillSimbolForm.cs">
       <SubType>Form</SubType>
     </Compile>
