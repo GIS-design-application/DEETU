@@ -117,16 +117,16 @@ namespace DEETU.Source.Window
             sButton.FlatAppearance.BorderColor = symbol.Outline.Color;
             sButton.FlatAppearance.BorderSize = (int)symbol.Outline.Size;
 
-            MouseEventHandler handler = (sender, e) => SymbolGridButton_MouseClick(symbol);
+            MouseEventHandler handler = (sender, e) => SymbolGridButton_MouseClick();
             sButton.MouseClick += handler;
 
             return sButton;
         }
 
-        private void SymbolGridButton_MouseClick(GeoSimpleFillSymbol symbol)
+        private void SymbolGridButton_MouseClick()
         {
-            EditFillSimbolForm SimpleFillForm = new EditFillSimbolForm(symbol);
-            SimpleFillForm.Show();
+            EditSimpleSymbolForm SimpleForm = new EditSimpleSymbolForm(mLayer);
+            SimpleForm.Show();
         }
 
         private void fillColorPicker_ValueChanged(object sender, Color value)

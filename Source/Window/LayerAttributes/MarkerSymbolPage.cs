@@ -115,7 +115,7 @@ namespace DEETU.Source.Window
             sButton.FlatAppearance.BorderSize = 0;
             sButton.BackgroundImage = CreateMarkerBitmapFromSymbol(symbol);
 
-            MouseEventHandler handler = (sender, e) => SymbolGridButton_MouseClick(symbol);
+            MouseEventHandler handler = (sender, e) => SymbolGridButton_MouseClick();
             sButton.MouseClick += handler;
 
             return sButton;
@@ -132,10 +132,10 @@ namespace DEETU.Source.Window
         }
 
 
-        private void SymbolGridButton_MouseClick(GeoSimpleMarkerSymbol symbol)
+        private void SymbolGridButton_MouseClick()
         {
-            EditMarkerSymbolForm SimpleMarkerForm = new EditMarkerSymbolForm(symbol);
-            SimpleMarkerForm.Show();
+            EditSimpleSymbolForm SimpleForm = new EditSimpleSymbolForm(mLayer);
+            SimpleForm.Show();
         }
 
         private void markerStyleComboBox_SelectedIndexChanged(object sender, EventArgs e)

@@ -1,7 +1,7 @@
 ﻿
 namespace DEETU.Source.Window.LayerAttributes
 {
-    partial class EditMarkerSymbolForm
+    partial class EditLineSymbolPage
     {
         /// <summary>
         /// Required designer variable.
@@ -30,20 +30,24 @@ namespace DEETU.Source.Window.LayerAttributes
         private void InitializeComponent()
         {
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.uiLabel2 = new Sunny.UI.UILabel();
+            this.uiLabel1 = new Sunny.UI.UILabel();
             this.uiLabel5 = new Sunny.UI.UILabel();
             this.uiLabel7 = new Sunny.UI.UILabel();
-            this.markerColorPicker = new Sunny.UI.UIColorPicker();
+            this.lineColorPicker = new Sunny.UI.UIColorPicker();
             this.sizeDoubleUpDown = new Sunny.UI.UIDoubleUpDown();
-            this.markerStyleComboBox = new Sunny.UI.UIComboBox();
+            this.styleComboBox = new Sunny.UI.UIComboBox();
+            this.CancelButton = new Sunny.UI.UIButton();
+            this.ConformButton = new Sunny.UI.UIButton();
             this.PagePanel.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // PagePanel
             // 
+            this.PagePanel.Controls.Add(this.ConformButton);
+            this.PagePanel.Controls.Add(this.CancelButton);
             this.PagePanel.Controls.Add(this.tableLayoutPanel1);
-            this.PagePanel.Size = new System.Drawing.Size(800, 415);
+            this.PagePanel.Size = new System.Drawing.Size(427, 215);
             // 
             // tableLayoutPanel1
             // 
@@ -53,12 +57,12 @@ namespace DEETU.Source.Window.LayerAttributes
             this.tableLayoutPanel1.ColumnCount = 2;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Controls.Add(this.uiLabel2, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.uiLabel1, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.uiLabel5, 0, 2);
             this.tableLayoutPanel1.Controls.Add(this.uiLabel7, 0, 3);
-            this.tableLayoutPanel1.Controls.Add(this.markerColorPicker, 1, 0);
+            this.tableLayoutPanel1.Controls.Add(this.lineColorPicker, 1, 1);
             this.tableLayoutPanel1.Controls.Add(this.sizeDoubleUpDown, 1, 2);
-            this.tableLayoutPanel1.Controls.Add(this.markerStyleComboBox, 1, 3);
+            this.tableLayoutPanel1.Controls.Add(this.styleComboBox, 1, 3);
             this.tableLayoutPanel1.Location = new System.Drawing.Point(12, 6);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 4;
@@ -70,19 +74,19 @@ namespace DEETU.Source.Window.LayerAttributes
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(456, 137);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(403, 137);
             this.tableLayoutPanel1.TabIndex = 5;
             // 
-            // uiLabel2
+            // uiLabel1
             // 
-            this.uiLabel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.uiLabel2.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.uiLabel2.Location = new System.Drawing.Point(3, 0);
-            this.uiLabel2.Name = "uiLabel2";
-            this.uiLabel2.Size = new System.Drawing.Size(94, 49);
-            this.uiLabel2.TabIndex = 2;
-            this.uiLabel2.Text = "标记颜色";
-            this.uiLabel2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.uiLabel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.uiLabel1.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.uiLabel1.Location = new System.Drawing.Point(3, 0);
+            this.uiLabel1.Name = "uiLabel1";
+            this.uiLabel1.Size = new System.Drawing.Size(94, 49);
+            this.uiLabel1.TabIndex = 1;
+            this.uiLabel1.Text = "描边颜色";
+            this.uiLabel1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // uiLabel5
             // 
@@ -92,7 +96,7 @@ namespace DEETU.Source.Window.LayerAttributes
             this.uiLabel5.Name = "uiLabel5";
             this.uiLabel5.Size = new System.Drawing.Size(94, 39);
             this.uiLabel5.TabIndex = 5;
-            this.uiLabel5.Text = "标记大小";
+            this.uiLabel5.Text = "描边宽度";
             this.uiLabel5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // uiLabel7
@@ -103,28 +107,28 @@ namespace DEETU.Source.Window.LayerAttributes
             this.uiLabel7.Name = "uiLabel7";
             this.uiLabel7.Size = new System.Drawing.Size(94, 49);
             this.uiLabel7.TabIndex = 7;
-            this.uiLabel7.Text = "标记样式";
+            this.uiLabel7.Text = "描边样式";
             this.uiLabel7.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // markerColorPicker
+            // lineColorPicker
             // 
-            this.markerColorPicker.DropDownStyle = Sunny.UI.UIDropDownStyle.DropDownList;
-            this.markerColorPicker.FillColor = System.Drawing.Color.White;
-            this.markerColorPicker.Font = new System.Drawing.Font("微软雅黑", 12F);
-            this.markerColorPicker.Location = new System.Drawing.Point(104, 5);
-            this.markerColorPicker.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.markerColorPicker.MinimumSize = new System.Drawing.Size(63, 0);
-            this.markerColorPicker.Name = "markerColorPicker";
-            this.markerColorPicker.Padding = new System.Windows.Forms.Padding(0, 0, 30, 2);
-            this.markerColorPicker.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
-            this.markerColorPicker.Size = new System.Drawing.Size(295, 39);
-            this.markerColorPicker.Style = Sunny.UI.UIStyle.Office2010Black;
-            this.markerColorPicker.StyleCustomMode = true;
-            this.markerColorPicker.TabIndex = 8;
-            this.markerColorPicker.Text = "uiColorPicker1";
-            this.markerColorPicker.TextAlignment = System.Drawing.ContentAlignment.MiddleLeft;
-            this.markerColorPicker.Value = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(160)))), ((int)(((byte)(255)))));
-            this.markerColorPicker.ValueChanged += new Sunny.UI.UIColorPicker.OnColorChanged(this.markerColorPicker_ValueChanged);
+            this.lineColorPicker.DropDownStyle = Sunny.UI.UIDropDownStyle.DropDownList;
+            this.lineColorPicker.FillColor = System.Drawing.Color.White;
+            this.lineColorPicker.Font = new System.Drawing.Font("微软雅黑", 12F);
+            this.lineColorPicker.Location = new System.Drawing.Point(104, 5);
+            this.lineColorPicker.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.lineColorPicker.MinimumSize = new System.Drawing.Size(63, 0);
+            this.lineColorPicker.Name = "lineColorPicker";
+            this.lineColorPicker.Padding = new System.Windows.Forms.Padding(0, 0, 30, 2);
+            this.lineColorPicker.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
+            this.lineColorPicker.Size = new System.Drawing.Size(295, 39);
+            this.lineColorPicker.Style = Sunny.UI.UIStyle.Office2010Black;
+            this.lineColorPicker.StyleCustomMode = true;
+            this.lineColorPicker.TabIndex = 9;
+            this.lineColorPicker.Text = "uiColorPicker2";
+            this.lineColorPicker.TextAlignment = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lineColorPicker.Value = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(160)))), ((int)(((byte)(255)))));
+            this.lineColorPicker.ValueChanged += new Sunny.UI.UIColorPicker.OnColorChanged(this.lineColorPicker_ValueChanged);
             // 
             // sizeDoubleUpDown
             // 
@@ -145,31 +149,55 @@ namespace DEETU.Source.Window.LayerAttributes
             this.sizeDoubleUpDown.Value = 0D;
             this.sizeDoubleUpDown.ValueChanged += new Sunny.UI.UIDoubleUpDown.OnValueChanged(this.sizeDoubleUpDown_ValueChanged);
             // 
-            // markerStyleComboBox
+            // styleComboBox
             // 
-            this.markerStyleComboBox.FillColor = System.Drawing.Color.White;
-            this.markerStyleComboBox.Font = new System.Drawing.Font("微软雅黑", 12F);
-            this.markerStyleComboBox.Location = new System.Drawing.Point(104, 93);
-            this.markerStyleComboBox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.markerStyleComboBox.MinimumSize = new System.Drawing.Size(63, 0);
-            this.markerStyleComboBox.Name = "markerStyleComboBox";
-            this.markerStyleComboBox.Padding = new System.Windows.Forms.Padding(0, 0, 30, 2);
-            this.markerStyleComboBox.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
-            this.markerStyleComboBox.Size = new System.Drawing.Size(295, 39);
-            this.markerStyleComboBox.Style = Sunny.UI.UIStyle.Office2010Black;
-            this.markerStyleComboBox.StyleCustomMode = true;
-            this.markerStyleComboBox.TabIndex = 13;
-            this.markerStyleComboBox.Text = "uiComboBox1";
-            this.markerStyleComboBox.TextAlignment = System.Drawing.ContentAlignment.MiddleLeft;
-            this.markerStyleComboBox.SelectedIndexChanged += new System.EventHandler(this.markerStyleComboBox_SelectedIndexChanged);
+            this.styleComboBox.FillColor = System.Drawing.Color.White;
+            this.styleComboBox.Font = new System.Drawing.Font("微软雅黑", 12F);
+            this.styleComboBox.Location = new System.Drawing.Point(104, 93);
+            this.styleComboBox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.styleComboBox.MinimumSize = new System.Drawing.Size(63, 0);
+            this.styleComboBox.Name = "styleComboBox";
+            this.styleComboBox.Padding = new System.Windows.Forms.Padding(0, 0, 30, 2);
+            this.styleComboBox.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
+            this.styleComboBox.Size = new System.Drawing.Size(295, 39);
+            this.styleComboBox.Style = Sunny.UI.UIStyle.Office2010Black;
+            this.styleComboBox.StyleCustomMode = true;
+            this.styleComboBox.TabIndex = 13;
+            this.styleComboBox.Text = "uiComboBox1";
+            this.styleComboBox.TextAlignment = System.Drawing.ContentAlignment.MiddleLeft;
+            this.styleComboBox.SelectedIndexChanged += new System.EventHandler(this.styleComboBox_SelectedIndexChanged);
             // 
-            // EditMarkerSymbolForm
+            // CancelButton
+            // 
+            this.CancelButton.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.CancelButton.Font = new System.Drawing.Font("微软雅黑", 12F);
+            this.CancelButton.Location = new System.Drawing.Point(219, 159);
+            this.CancelButton.MinimumSize = new System.Drawing.Size(1, 1);
+            this.CancelButton.Name = "CancelButton";
+            this.CancelButton.Size = new System.Drawing.Size(111, 44);
+            this.CancelButton.TabIndex = 7;
+            this.CancelButton.Text = "取消";
+            this.CancelButton.Click += new System.EventHandler(this.CancelButton_Click);
+            // 
+            // ConformButton
+            // 
+            this.ConformButton.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.ConformButton.Font = new System.Drawing.Font("微软雅黑", 12F);
+            this.ConformButton.Location = new System.Drawing.Point(65, 159);
+            this.ConformButton.MinimumSize = new System.Drawing.Size(1, 1);
+            this.ConformButton.Name = "ConformButton";
+            this.ConformButton.Size = new System.Drawing.Size(111, 44);
+            this.ConformButton.TabIndex = 8;
+            this.ConformButton.Text = "确定";
+            this.ConformButton.Click += new System.EventHandler(this.ConformButton_Click);
+            // 
+            // EditLineSymbolPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(14F, 31F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Name = "EditMarkerSymbolForm";
-            this.Text = "EditUniqueValueSymbolForm";
+            this.ClientSize = new System.Drawing.Size(427, 250);
+            this.Name = "EditLineSymbolPage";
+            this.Text = "EditLineSymbolForm";
             this.PagePanel.ResumeLayout(false);
             this.PagePanel.PerformLayout();
             this.tableLayoutPanel1.ResumeLayout(false);
@@ -180,11 +208,13 @@ namespace DEETU.Source.Window.LayerAttributes
         #endregion
 
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private Sunny.UI.UILabel uiLabel2;
+        private Sunny.UI.UILabel uiLabel1;
         private Sunny.UI.UILabel uiLabel5;
         private Sunny.UI.UILabel uiLabel7;
-        private Sunny.UI.UIColorPicker markerColorPicker;
+        private Sunny.UI.UIColorPicker lineColorPicker;
         private Sunny.UI.UIDoubleUpDown sizeDoubleUpDown;
-        private Sunny.UI.UIComboBox markerStyleComboBox;
+        private Sunny.UI.UIComboBox styleComboBox;
+        private Sunny.UI.UIButton ConformButton;
+        private Sunny.UI.UIButton CancelButton;
     }
 }

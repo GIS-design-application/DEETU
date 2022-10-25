@@ -1,7 +1,7 @@
 ﻿
 namespace DEETU.Source.Window.LayerAttributes
 {
-    partial class EditFillSimbolForm
+    partial class EditFillSymbolPage
     {
         /// <summary>
         /// Required designer variable.
@@ -38,14 +38,18 @@ namespace DEETU.Source.Window.LayerAttributes
             this.edgeColorPicker = new Sunny.UI.UIColorPicker();
             this.edgeWidthDoubleUpDown = new Sunny.UI.UIDoubleUpDown();
             this.edgeStyleComboBox = new Sunny.UI.UIComboBox();
+            this.ConformButton = new Sunny.UI.UIButton();
+            this.CancelButton = new Sunny.UI.UIButton();
             this.PagePanel.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // PagePanel
             // 
+            this.PagePanel.Controls.Add(this.ConformButton);
+            this.PagePanel.Controls.Add(this.CancelButton);
             this.PagePanel.Controls.Add(this.tableLayoutPanel1);
-            this.PagePanel.Size = new System.Drawing.Size(800, 415);
+            this.PagePanel.Size = new System.Drawing.Size(433, 254);
             // 
             // tableLayoutPanel1
             // 
@@ -74,7 +78,7 @@ namespace DEETU.Source.Window.LayerAttributes
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(456, 186);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(409, 186);
             this.tableLayoutPanel1.TabIndex = 8;
             // 
             // uiLabel1
@@ -198,12 +202,36 @@ namespace DEETU.Source.Window.LayerAttributes
             this.edgeStyleComboBox.TextAlignment = System.Drawing.ContentAlignment.MiddleLeft;
             this.edgeStyleComboBox.SelectedIndexChanged += new System.EventHandler(this.edgeStyleComboBox_SelectedIndexChanged);
             // 
-            // EditFillSimbolForm
+            // ConformButton
+            // 
+            this.ConformButton.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.ConformButton.Font = new System.Drawing.Font("微软雅黑", 12F);
+            this.ConformButton.Location = new System.Drawing.Point(69, 207);
+            this.ConformButton.MinimumSize = new System.Drawing.Size(1, 1);
+            this.ConformButton.Name = "ConformButton";
+            this.ConformButton.Size = new System.Drawing.Size(111, 44);
+            this.ConformButton.TabIndex = 10;
+            this.ConformButton.Text = "确定";
+            this.ConformButton.Click += new System.EventHandler(this.ConformButton_Click);
+            // 
+            // CancelButton
+            // 
+            this.CancelButton.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.CancelButton.Font = new System.Drawing.Font("微软雅黑", 12F);
+            this.CancelButton.Location = new System.Drawing.Point(223, 207);
+            this.CancelButton.MinimumSize = new System.Drawing.Size(1, 1);
+            this.CancelButton.Name = "CancelButton";
+            this.CancelButton.Size = new System.Drawing.Size(111, 44);
+            this.CancelButton.TabIndex = 9;
+            this.CancelButton.Text = "取消";
+            this.CancelButton.Click += new System.EventHandler(this.CancelButton_Click);
+            // 
+            // EditFillSymbolPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(14F, 31F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Name = "EditFillSimbolForm";
+            this.ClientSize = new System.Drawing.Size(433, 289);
+            this.Name = "EditFillSymbolPage";
             this.Text = "EditFillSimbolForm";
             this.PagePanel.ResumeLayout(false);
             this.PagePanel.PerformLayout();
@@ -223,5 +251,7 @@ namespace DEETU.Source.Window.LayerAttributes
         private Sunny.UI.UIColorPicker edgeColorPicker;
         private Sunny.UI.UIDoubleUpDown edgeWidthDoubleUpDown;
         private Sunny.UI.UIComboBox edgeStyleComboBox;
+        private Sunny.UI.UIButton ConformButton;
+        private Sunny.UI.UIButton CancelButton;
     }
 }

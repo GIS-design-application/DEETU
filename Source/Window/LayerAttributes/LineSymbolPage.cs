@@ -119,7 +119,7 @@ namespace DEETU.Source.Window
             sButton.FlatAppearance.BorderSize = 0;
             sButton.BackgroundImage = CreateLineBitmapFromSymbol(symbol);
 
-            MouseEventHandler handler = (sender, e) => SymbolGridButton_MouseClick(symbol);
+            MouseEventHandler handler = (sender, e) => SymbolGridButton_MouseClick();
             sButton.MouseClick += handler;
 
             return sButton;
@@ -138,10 +138,10 @@ namespace DEETU.Source.Window
         }
 
 
-        private void SymbolGridButton_MouseClick(GeoSimpleLineSymbol symbol)
+        private void SymbolGridButton_MouseClick()
         {
-            EditLineSymbolForm SimpleLineForm = new EditLineSymbolForm(symbol);
-            SimpleLineForm.Show();
+            EditSimpleSymbolForm SimpleForm = new EditSimpleSymbolForm(mLayer);
+            SimpleForm.Show();
         }
 
         private void ClassBreaksComboboxEx_DrawItem(object sender, DrawItemEventArgs e)
