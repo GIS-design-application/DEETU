@@ -400,8 +400,10 @@ namespace DEETU.Source.Window
         // 移动多边形
         private void btnMovePolygon_Click(object sender, EventArgs e)
         {
+            UncheckToolStrip(mMapOpStyle);
             this.Cursor = new Cursor("./icons/EditMove.ico");
             mMapOpStyle = GeoMapOpStyleEnum.Move;
+            CheckToolStrip(mMapOpStyle);
         }
 
         // 描绘多边形
@@ -472,13 +474,16 @@ namespace DEETU.Source.Window
             // 是否具有一个选择要素(不能没有, 不能有多个)
             if (slayer.SelectedFeatures.Count != 1)
                 return;
+            UncheckToolStrip(mMapOpStyle);
             GeoMultiPolygon sOriMultiPolygon = slayer.SelectedFeatures.GetItem(0).Geometry as GeoMultiPolygon;
             GeoMultiPolygon sDesMultiPolygon = sOriMultiPolygon.Clone() as GeoMultiPolygon;
             mEditingGeometry = sDesMultiPolygon;
-
-
             mMapOpStyle = GeoMapOpStyleEnum.Edit;
             geoMap.RedrawTrackingShapes();
+#if DEBUG
+            logging = "test";
+#endif
+            CheckToolStrip(mMapOpStyle);
         }
 
         private void btnEndEdit_Click(object sender, EventArgs e)
@@ -1252,7 +1257,16 @@ OnZoomOut_MouseUp(e);
                 case GeoMapOpStyleEnum.Identify:
                     identifyToolStripButton.Checked = false;
                     break;
-                    
+                case GeoMapOpStyleEnum.Select:
+                    startEditToolStripButton.Checked = false;
+                    break;
+                case GeoMapOpStyleEnum.Move:
+                    moveItemToolStripButton.Checked = false;
+                    break;
+                case GeoMapOpStyleEnum.Edit:
+                    editToolStripButton.Checked = false;
+                    btnEndEdit_Click(null, null);
+                    break;
                 default:
                     break;
             }
@@ -1273,6 +1287,15 @@ OnZoomOut_MouseUp(e);
                     break;
                 case GeoMapOpStyleEnum.Identify:
                     identifyToolStripButton.Checked = true;
+                    break;
+                case GeoMapOpStyleEnum.Select:
+                    startEditToolStripButton.Checked = true;
+                    break;
+                case GeoMapOpStyleEnum.Move:
+                    moveItemToolStripButton.Checked = true;
+                    break;
+                case GeoMapOpStyleEnum.Edit:
+                    editToolStripButton.Checked = true;
                     break;
                 default:
                     break;
