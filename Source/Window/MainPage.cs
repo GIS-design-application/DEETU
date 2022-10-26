@@ -1281,6 +1281,7 @@ OnZoomOut_MouseUp(e);
 
         #endregion
 
+        #region 图层右键菜单
         private void 特性ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             int layerIndex = mCurrentLayerNode.Index;
@@ -1292,6 +1293,17 @@ OnZoomOut_MouseUp(e);
             layerAttributes.FormClosed += layerAttributes_FormClosed;
             layerAttributes.Show();
         }
+
+        private void 定义坐标参照系ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void 坐标参照系转换ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+        #endregion
 
         private void layerAttributes_FormClosed(object sender, FormClosedEventArgs e)
         {

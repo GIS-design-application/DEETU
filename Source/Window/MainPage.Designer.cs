@@ -30,10 +30,10 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainPage));
-            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("工程目录");
-            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("收藏夹");
-            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("C:\\");
-            DEETU.Map.GeoLayers geoLayers1 = new DEETU.Map.GeoLayers();
+            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("工程目录");
+            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("收藏夹");
+            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("C:\\");
+            DEETU.Map.GeoLayers geoLayers2 = new DEETU.Map.GeoLayers();
             this.projectContextMenuStrip = new Sunny.UI.UIContextMenuStrip();
             this.设置工程目录ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.favoriteContextMenuStrip1 = new Sunny.UI.UIContextMenuStrip();
@@ -297,12 +297,14 @@
             this.定义坐标参照系ToolStripMenuItem.Name = "定义坐标参照系ToolStripMenuItem";
             this.定义坐标参照系ToolStripMenuItem.Size = new System.Drawing.Size(180, 24);
             this.定义坐标参照系ToolStripMenuItem.Text = "定义坐标参照系";
+            this.定义坐标参照系ToolStripMenuItem.Click += new System.EventHandler(this.定义坐标参照系ToolStripMenuItem_Click);
             // 
             // 坐标参照系转换ToolStripMenuItem
             // 
             this.坐标参照系转换ToolStripMenuItem.Name = "坐标参照系转换ToolStripMenuItem";
             this.坐标参照系转换ToolStripMenuItem.Size = new System.Drawing.Size(180, 24);
             this.坐标参照系转换ToolStripMenuItem.Text = "坐标参照系转换";
+            this.坐标参照系转换ToolStripMenuItem.Click += new System.EventHandler(this.坐标参照系转换ToolStripMenuItem_Click);
             // 
             // toolStripSeparator9
             // 
@@ -862,8 +864,8 @@
             // 
             // toolStripContainer1.TopToolStripPanel
             // 
-            this.toolStripContainer1.TopToolStripPanel.Controls.Add(this.toolStrip1);
             this.toolStripContainer1.TopToolStripPanel.Controls.Add(this.toolStrip2);
+            this.toolStripContainer1.TopToolStripPanel.Controls.Add(this.toolStrip1);
             // 
             // splitContainer1
             // 
@@ -927,18 +929,18 @@
             this.uiTreeView2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.uiTreeView2.MinimumSize = new System.Drawing.Size(1, 1);
             this.uiTreeView2.Name = "uiTreeView2";
-            treeNode1.ContextMenuStrip = this.projectContextMenuStrip;
-            treeNode1.Name = "节点0";
-            treeNode1.Text = "工程目录";
-            treeNode2.ContextMenuStrip = this.favoriteContextMenuStrip1;
-            treeNode2.Name = "节点0";
-            treeNode2.Text = "收藏夹";
-            treeNode3.Name = "节点1";
-            treeNode3.Text = "C:\\";
+            treeNode4.ContextMenuStrip = this.projectContextMenuStrip;
+            treeNode4.Name = "节点0";
+            treeNode4.Text = "工程目录";
+            treeNode5.ContextMenuStrip = this.favoriteContextMenuStrip1;
+            treeNode5.Name = "节点0";
+            treeNode5.Text = "收藏夹";
+            treeNode6.Name = "节点1";
+            treeNode6.Text = "C:\\";
             this.uiTreeView2.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode1,
-            treeNode2,
-            treeNode3});
+            treeNode4,
+            treeNode5,
+            treeNode6});
             this.uiTreeView2.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
             this.uiTreeView2.SelectedNode = null;
             this.uiTreeView2.Size = new System.Drawing.Size(276, 220);
@@ -1032,9 +1034,9 @@
             this.geoMap.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.geoMap.Dock = System.Windows.Forms.DockStyle.Fill;
             this.geoMap.FlashColor = System.Drawing.Color.Green;
-            this.geoMap.Layers = geoLayers1;
+            this.geoMap.Layers = geoLayers2;
             this.geoMap.Location = new System.Drawing.Point(0, 0);
-            this.geoMap.Margin = new System.Windows.Forms.Padding(1795, 4039, 1795, 4039);
+            this.geoMap.Margin = new System.Windows.Forms.Padding(2992, 7068, 2992, 7068);
             this.geoMap.Name = "geoMap";
             this.geoMap.SelectionColor = System.Drawing.Color.Cyan;
             this.geoMap.Size = new System.Drawing.Size(637, 511);
