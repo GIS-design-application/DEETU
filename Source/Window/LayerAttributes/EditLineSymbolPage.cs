@@ -50,12 +50,12 @@ namespace DEETU.Source.Window.LayerAttributes
         private void ConformButton_Click(object sender, EventArgs e)
         {
             mLineSymbol = mTempLineSymbol;
-            this.Parent.Parent.Parent.Hide();
+            (this.Parent.Parent.Parent as UIAsideHeaderMainFooterFrame).Close();
         }
 
         private void CancelButton_Click(object sender, EventArgs e)
         {
-            this.Parent.Parent.Parent.Hide();
+            (this.Parent.Parent.Parent as UIAsideHeaderMainFooterFrame).Close();
         }
     }
 }

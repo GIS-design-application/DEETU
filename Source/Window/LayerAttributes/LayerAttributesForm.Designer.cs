@@ -83,6 +83,7 @@ namespace DEETU.Source.Window
             this.okButton.Style = Sunny.UI.UIStyle.Office2010Black;
             this.okButton.TabIndex = 0;
             this.okButton.Text = "确认";
+            this.okButton.Click += new System.EventHandler(this.okButton_Click);
             // 
             // cancelButton
             // 
@@ -110,10 +111,11 @@ namespace DEETU.Source.Window
             this.cancelButton.Style = Sunny.UI.UIStyle.Office2010Black;
             this.cancelButton.TabIndex = 1;
             this.cancelButton.Text = "取消";
+            this.cancelButton.Click += new System.EventHandler(this.cancelButton_Click);
             // 
             // LayerAttributesForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 21F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(14F, 31F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(590, 821);
             this.ExtendBox = true;

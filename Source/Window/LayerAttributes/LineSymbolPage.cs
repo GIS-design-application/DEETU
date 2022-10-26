@@ -141,9 +141,14 @@ namespace DEETU.Source.Window
         private void SymbolGridButton_MouseClick()
         {
             EditSimpleSymbolForm SimpleForm = new EditSimpleSymbolForm(mLayer);
+            SimpleForm.FormClosed += SimpleForm_FormClosed;
             SimpleForm.Show();
         }
 
+        private void SimpleForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            this.Refresh();
+        }
         private void ClassBreaksComboboxEx_DrawItem(object sender, DrawItemEventArgs e)
         {
             Graphics g = e.Graphics;

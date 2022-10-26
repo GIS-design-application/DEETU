@@ -1289,7 +1289,13 @@ OnZoomOut_MouseUp(e);
             
             //GeoMapLayer layer = new GeoMapLayer(mCurrentLayerNode.Text, GeoGeometryTypeConstant.Point);
             LayerAttributesForm layerAttributes = new LayerAttributesForm(layer);
+            layerAttributes.FormClosed += layerAttributes_FormClosed;
             layerAttributes.Show();
+        }
+
+        private void layerAttributes_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            geoMap.RedrawMap();
         }
 
         private void layerTreeView_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)

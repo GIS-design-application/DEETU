@@ -92,7 +92,10 @@ namespace DEETU.Source.Window
             // 
             this.PagePanel.Controls.Add(this.renderMethodCB);
             this.PagePanel.Controls.Add(this.renderTabControl);
+            this.PagePanel.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(211)))), ((int)(((byte)(211)))), ((int)(((byte)(211)))));
+            this.PagePanel.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
             this.PagePanel.Size = new System.Drawing.Size(480, 565);
+            this.PagePanel.Style = Sunny.UI.UIStyle.Office2010Black;
             // 
             // renderTabControl
             // 
@@ -187,7 +190,7 @@ namespace DEETU.Source.Window
             this.uiLabel5.Location = new System.Drawing.Point(3, 98);
             this.uiLabel5.Name = "uiLabel5";
             this.uiLabel5.Size = new System.Drawing.Size(94, 39);
-            this.uiLabel5.Style = Sunny.UI.UIStyle.Custom;
+            this.uiLabel5.Style = Sunny.UI.UIStyle.Office2010Black;
             this.uiLabel5.TabIndex = 5;
             this.uiLabel5.Text = "描边宽度";
             this.uiLabel5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -288,7 +291,7 @@ namespace DEETU.Source.Window
             this.uniqueValueTab.Controls.Add(this.uniqueTableLayoutPanel);
             this.uniqueValueTab.Location = new System.Drawing.Point(0, 40);
             this.uniqueValueTab.Name = "uniqueValueTab";
-            this.uniqueValueTab.Size = new System.Drawing.Size(993, 488);
+            this.uniqueValueTab.Size = new System.Drawing.Size(480, 488);
             this.uniqueValueTab.TabIndex = 1;
             this.uniqueValueTab.Text = "unique value";
             // 
@@ -344,7 +347,7 @@ namespace DEETU.Source.Window
             this.uniqueDataGridView.RowTemplate.Height = 29;
             this.uniqueDataGridView.SelectedIndex = -1;
             this.uniqueDataGridView.ShowGridLine = true;
-            this.uniqueDataGridView.Size = new System.Drawing.Size(0, 91);
+            this.uniqueDataGridView.Size = new System.Drawing.Size(0, 0);
             this.uniqueDataGridView.StripeOddColor = System.Drawing.Color.FromArgb(((int)(((byte)(211)))), ((int)(((byte)(211)))), ((int)(((byte)(211)))));
             this.uniqueDataGridView.Style = Sunny.UI.UIStyle.Office2010Black;
             this.uniqueDataGridView.StyleCustomMode = true;
@@ -469,7 +472,7 @@ namespace DEETU.Source.Window
             this.classBreakTab.Controls.Add(this.classTableLayoutPanel);
             this.classBreakTab.Location = new System.Drawing.Point(0, 40);
             this.classBreakTab.Name = "classBreakTab";
-            this.classBreakTab.Size = new System.Drawing.Size(480, 488);
+            this.classBreakTab.Size = new System.Drawing.Size(993, 488);
             this.classBreakTab.TabIndex = 2;
             this.classBreakTab.Text = "class break";
             // 
@@ -560,7 +563,7 @@ namespace DEETU.Source.Window
             this.uiDataGridView2.RowTemplate.Height = 29;
             this.uiDataGridView2.SelectedIndex = -1;
             this.uiDataGridView2.ShowGridLine = true;
-            this.uiDataGridView2.Size = new System.Drawing.Size(0, 56);
+            this.uiDataGridView2.Size = new System.Drawing.Size(0, 0);
             this.uiDataGridView2.StripeOddColor = System.Drawing.Color.FromArgb(((int)(((byte)(211)))), ((int)(((byte)(211)))), ((int)(((byte)(211)))));
             this.uiDataGridView2.Style = Sunny.UI.UIStyle.Office2010Black;
             this.uiDataGridView2.StyleCustomMode = true;
@@ -600,7 +603,7 @@ namespace DEETU.Source.Window
             this.classTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.classTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.classTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.classTableLayoutPanel.Size = new System.Drawing.Size(456, 137);
+            this.classTableLayoutPanel.Size = new System.Drawing.Size(426, 137);
             this.classTableLayoutPanel.TabIndex = 7;
             // 
             // uiLabel11
@@ -650,7 +653,7 @@ namespace DEETU.Source.Window
             this.classFieldComboBox.Name = "classFieldComboBox";
             this.classFieldComboBox.Padding = new System.Windows.Forms.Padding(0, 0, 30, 2);
             this.classFieldComboBox.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
-            this.classFieldComboBox.Size = new System.Drawing.Size(348, 39);
+            this.classFieldComboBox.Size = new System.Drawing.Size(318, 39);
             this.classFieldComboBox.Style = Sunny.UI.UIStyle.Custom;
             this.classFieldComboBox.StyleCustomMode = true;
             this.classFieldComboBox.TabIndex = 13;
@@ -669,7 +672,7 @@ namespace DEETU.Source.Window
             this.classColorgradComboBox.Name = "classColorgradComboBox";
             this.classColorgradComboBox.Padding = new System.Windows.Forms.Padding(0, 0, 30, 2);
             this.classColorgradComboBox.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
-            this.classColorgradComboBox.Size = new System.Drawing.Size(348, 39);
+            this.classColorgradComboBox.Size = new System.Drawing.Size(318, 39);
             this.classColorgradComboBox.Style = Sunny.UI.UIStyle.Custom;
             this.classColorgradComboBox.StyleCustomMode = true;
             this.classColorgradComboBox.TabIndex = 14;
