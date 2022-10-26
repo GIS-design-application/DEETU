@@ -82,7 +82,7 @@ namespace DEETU.Geometry
         /// <summary>
         /// 更新坐标范围
         /// </summary>
-        public void UpdateExtent()
+        public override void UpdateExtent()
         {
             CalExtent();
         }

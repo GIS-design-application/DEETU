@@ -41,6 +41,8 @@ namespace DEETU.Source.Window
         private GeoSimpleLineSymbol mMovingPolylineSymbol;
         private GeoSimpleMarkerSymbol mMovingPointSymbol;
         private GeoSimpleFillSymbol mEditingPolygonSymbol; // 编辑多边形的符号
+        private GeoSimpleLineSymbol mEditingPolylineSymbol;
+        private GeoSimpleMarkerSymbol mEditingPointSymbol;
         private GeoSimpleMarkerSymbol mEditingVertexSymbol; // 编辑手柄符号
         private GeoSimpleMarkerSymbol mEditingVertexHoverSymbol; // 编辑手柄符号:hover
         private GeoSimpleLineSymbol mElasticSymbol; // 橡皮筋符号
@@ -1226,6 +1228,12 @@ OnZoomOut_MouseUp(e);
             mEditingPolygonSymbol.Color = Color.Transparent;
             mEditingPolygonSymbol.Outline.Color = Color.DarkGreen;
             mEditingPolygonSymbol.Outline.Size = 0.53;
+            mEditingPolylineSymbol = new GeoSimpleLineSymbol();
+            mEditingPolylineSymbol.Color = Color.DarkGreen;
+            mEditingPolylineSymbol.Size = 1;
+            mEditingPointSymbol = new GeoSimpleMarkerSymbol();
+            mEditingPointSymbol.Color = Color.DarkGreen;
+            mEditingPointSymbol.Size = 1;
             mEditingVertexSymbol = new GeoSimpleMarkerSymbol();
             mEditingVertexSymbol.Color = Color.DarkGreen;
             mEditingVertexSymbol.Style = GeoSimpleMarkerSymbolStyleConstant.SolidSquare;
@@ -1398,6 +1406,19 @@ OnZoomOut_MouseUp(e);
                 for (Int32 i = 0; i <= sPartCount - 1; i++)
                 {
                     GeoPoints sPoints = sMultiPolygon.Parts.GetItem(i);
+                    drawingTool.DrawPoints(sPoints, mEditingVertexSymbol);
+                }
+            }
+            else if (mEditingGeometry.GetType() == typeof(GeoMultiPolyline))
+            {
+                GeoMultiPolyline sMultiPolyline = (GeoMultiPolyline)mEditingGeometry;
+                //绘制边界
+                drawingTool.DrawMultiPolyline(sMultiPolyline, mEditingPolygonSymbol);
+                //绘制顶点手柄
+                Int32 sPartCount = sMultiPolyline.Parts.Count;
+                for (Int32 i = 0; i <= sPartCount - 1; i++)
+                {
+                    GeoPoints sPoints = sMultiPolyline.Parts.GetItem(i);
                     drawingTool.DrawPoints(sPoints, mEditingVertexSymbol);
                 }
             }

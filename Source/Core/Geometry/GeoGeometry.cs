@@ -12,7 +12,7 @@ namespace DEETU.Geometry
             throw new Exception("Clone method should be called with specified Geo object");
         }
 
-        public virtual GeoRectangle UpdateExtent()
+        public virtual void UpdateExtent()
         {
             throw new Exception("UpdateExtent method should be called with specified Geo object");
         }
