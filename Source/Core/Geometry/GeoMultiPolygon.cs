@@ -90,7 +90,7 @@ namespace DEETU.Geometry
         /// 复制
         /// </summary>
         /// <returns></returns>
-        public override object Clone()
+        public override GeoGeometry Clone()
         {
             GeoMultiPolygon sMultiPolygon = new GeoMultiPolygon();
             sMultiPolygon.Parts = _Parts.Clone() as GeoParts;

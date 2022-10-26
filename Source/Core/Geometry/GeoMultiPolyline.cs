@@ -103,7 +103,7 @@ namespace DEETU.Geometry
         /// 复制
         /// </summary>
         /// <returns></returns>
-        override public object Clone()
+        override public GeoGeometry Clone()
         {
             GeoMultiPolyline sMultiPolyline = new GeoMultiPolyline();
             sMultiPolyline.Parts = _Parts.Clone() as GeoParts;

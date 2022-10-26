@@ -11,5 +11,10 @@ namespace DEETU.Geometry
         {
             throw new NotImplementedException("Clone method should be called with specified Geo object");
         }
+
+        public virtual void UpdateExtent()
+        {
+            throw new NotImplementedException("UpdateExtent method should be called with specified Geo object");
+        }
     }
 }
