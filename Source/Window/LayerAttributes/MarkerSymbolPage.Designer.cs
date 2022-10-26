@@ -94,11 +94,10 @@ namespace DEETU.Source.Window
             // 
             // renderTabControl
             // 
-            this.renderTabControl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.renderTabControl.Controls.Add(this.simpleTab);
             this.renderTabControl.Controls.Add(this.uniqueValueTab);
             this.renderTabControl.Controls.Add(this.classBreakTab);
+            this.renderTabControl.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.renderTabControl.DrawMode = System.Windows.Forms.TabDrawMode.OwnerDrawFixed;
             this.renderTabControl.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(228)))), ((int)(((byte)(233)))));
             this.renderTabControl.Font = new System.Drawing.Font("微软雅黑", 12F);
@@ -259,9 +258,6 @@ namespace DEETU.Source.Window
             // 
             dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(211)))), ((int)(((byte)(211)))), ((int)(((byte)(211)))));
             this.uniqueDataGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
-            this.uniqueDataGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.uniqueDataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.uniqueDataGridView.BackgroundColor = System.Drawing.Color.White;
             this.uniqueDataGridView.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
@@ -286,10 +282,11 @@ namespace DEETU.Source.Window
             dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
             dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.uniqueDataGridView.DefaultCellStyle = dataGridViewCellStyle3;
+            this.uniqueDataGridView.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.uniqueDataGridView.EnableHeadersVisualStyles = false;
             this.uniqueDataGridView.Font = new System.Drawing.Font("微软雅黑", 12F);
             this.uniqueDataGridView.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
-            this.uniqueDataGridView.Location = new System.Drawing.Point(12, 148);
+            this.uniqueDataGridView.Location = new System.Drawing.Point(0, 160);
             this.uniqueDataGridView.Name = "uniqueDataGridView";
             this.uniqueDataGridView.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
             dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
@@ -307,7 +304,7 @@ namespace DEETU.Source.Window
             this.uniqueDataGridView.RowTemplate.Height = 29;
             this.uniqueDataGridView.SelectedIndex = -1;
             this.uniqueDataGridView.ShowGridLine = true;
-            this.uniqueDataGridView.Size = new System.Drawing.Size(456, 328);
+            this.uniqueDataGridView.Size = new System.Drawing.Size(480, 328);
             this.uniqueDataGridView.StripeOddColor = System.Drawing.Color.FromArgb(((int)(((byte)(211)))), ((int)(((byte)(211)))), ((int)(((byte)(211)))));
             this.uniqueDataGridView.Style = Sunny.UI.UIStyle.Office2010Black;
             this.uniqueDataGridView.StyleCustomMode = true;
@@ -420,6 +417,7 @@ namespace DEETU.Source.Window
             this.uniqueColorgradComboBox.Size = new System.Drawing.Size(348, 40);
             this.uniqueColorgradComboBox.TabIndex = 14;
             this.uniqueColorgradComboBox.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.UniqueColorComboboxEx_DrawItem);
+            this.uniqueColorgradComboBox.SelectedIndexChanged += new System.EventHandler(this.uniqueColorgradComboBox_SelectedIndexChanged);
             // 
             // classBreakTab
             // 
@@ -634,6 +632,7 @@ namespace DEETU.Source.Window
             this.classColorgradComboBox.Size = new System.Drawing.Size(348, 40);
             this.classColorgradComboBox.TabIndex = 14;
             this.classColorgradComboBox.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.ClassBreaksComboboxEx_DrawItem);
+            this.classColorgradComboBox.SelectedIndexChanged += new System.EventHandler(this.classColorgradComboBox_SelectedIndexChanged);
             // 
             // renderMethodCB
             // 
