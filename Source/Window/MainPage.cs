@@ -683,7 +683,7 @@ OnZoomOut_MouseDown(e);
             }
             else if (mMapOpStyle == GeoMapOpStyleEnum.ZoomOut)
             {
-OnZoomOut_MouseMove(e);
+                OnZoomOut_MouseMove(e);
             }
             else if (mMapOpStyle == GeoMapOpStyleEnum.Pan)
             {

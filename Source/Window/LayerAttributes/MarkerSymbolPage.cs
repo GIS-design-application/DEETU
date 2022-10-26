@@ -19,16 +19,22 @@ namespace DEETU.Source.Window
     {
         #region 字段
         private GeoMapLayer mLayer;
+        private GeoSimpleRenderer mSimpleRenderer = null;
+        private GeoClassBreaksRenderer mClassBreaksRenderer = null;
+        private GeoUniqueValueRenderer mUniqueValueRenderer = null;
         private readonly Color[][] Colors = new Color[][] { new Color[] { Color.Red, Color.Green }, new Color[] { Color.Red, Color.Blue }, new Color[] { Color.Green, Color.Blue } };
 
         #endregion
+
+        #region 构造函数
         public MarkerSymbolPage(GeoMapLayer layer)
         {
             InitializeComponent();
             // mLayer = layer.Clone();
             mLayer = layer;
             renderMethodCB.SelectedIndex = (int)layer.Renderer.RendererType;
-            
+            renderMethodCB.SelectedIndexChanged += RenderMethodCB_SelectedIndexChanged;
+            renderTabControl.SelectedIndexChanged += RenderTabControl_SelectedIndexChanged;
             InitializeTabs();
         }
 
@@ -57,42 +63,60 @@ namespace DEETU.Source.Window
             // 对于不同的渲染模式进行配置
             if (mLayer.Renderer.RendererType == GeoRendererTypeConstant.Simple)
             {
-                GeoSimpleRenderer simpleRenderer = (GeoSimpleRenderer)mLayer.Renderer;
-                GeoSimpleMarkerSymbol markerSymbol = (GeoSimpleMarkerSymbol)simpleRenderer.Symbol;
-                markerColorPicker.Value = markerSymbol.Color;
-                markerStyleComboBox.SelectedIndex = (int)markerSymbol.Style;
-                // 对于一开始是simple的图层把simple symbol当做剩下两种方法的default
-                uniqueTableLayoutPanel.Controls.Add(GetMarkerSymbolButton(markerSymbol), 1, 2);
-                classTableLayoutPanel.Controls.Add(GetMarkerSymbolButton(markerSymbol), 1, 2);
+                initializeSimpleRenderer();
             }
             else if (mLayer.Renderer.RendererType == GeoRendererTypeConstant.UniqueValue)
             {
-                GeoUniqueValueRenderer uniqueValueRenderer = (GeoUniqueValueRenderer)mLayer.Renderer;
-                uniqueFieldComboBox.SelectedItem = uniqueValueRenderer.Field;
-                Button defaultSymbolButton = GetMarkerSymbolButton((GeoSimpleMarkerSymbol)uniqueValueRenderer.DefaultSymbol);
-                uniqueTableLayoutPanel.Controls.Add(defaultSymbolButton, 1, 2);
-                for (int i = 0; i < uniqueValueRenderer.ValueCount; i++)
-                {
-                    GeoSimpleMarkerSymbol markerSymbol = (GeoSimpleMarkerSymbol)uniqueValueRenderer.GetSymbol(i);
-                    Button symbolButton = GetMarkerSymbolButton(markerSymbol);
-                    uniqueDataGridView.AddRow(symbolButton, uniqueValueRenderer.GetValue(i));
-                }
+                initializeUniqueValueRenderer();
             }
             else
             {
-                GeoClassBreaksRenderer classBreaksRenderer = (GeoClassBreaksRenderer)mLayer.Renderer;
-                classFieldComboBox.SelectedItem = classBreaksRenderer.Field;
-                Button defaultSymbolButton = GetMarkerSymbolButton((GeoSimpleMarkerSymbol)classBreaksRenderer.DefaultSymbol);
-                classTableLayoutPanel.Controls.Add(defaultSymbolButton, 1, 2);
-                for (int i = 0; i < classBreaksRenderer.BreakCount; i++)
-                {
-                    GeoSimpleMarkerSymbol markerSymbol = (GeoSimpleMarkerSymbol)classBreaksRenderer.GetSymbol(i);
-                    Button symbolButton = GetMarkerSymbolButton(markerSymbol);
-                    uniqueDataGridView.AddRow(symbolButton, classBreaksRenderer.GetBreakValue(i));
-                }
+                initializeClassBreaksRenderer();
             }
             
         }
+
+        private void initializeSimpleRenderer()
+        {
+            GeoSimpleRenderer simpleRenderer = (GeoSimpleRenderer)mLayer.Renderer;
+            mSimpleRenderer = simpleRenderer;
+            GeoSimpleMarkerSymbol markerSymbol = (GeoSimpleMarkerSymbol)simpleRenderer.Symbol;
+            markerColorPicker.Value = markerSymbol.Color;
+            markerStyleComboBox.SelectedIndex = (int)markerSymbol.Style;
+        }
+
+        private void initializeUniqueValueRenderer()
+        {
+            GeoUniqueValueRenderer uniqueValueRenderer = (GeoUniqueValueRenderer)mLayer.Renderer;
+            mUniqueValueRenderer = uniqueValueRenderer;
+            uniqueFieldComboBox.SelectedItem = uniqueValueRenderer.Field;
+            Button defaultSymbolButton = GetMarkerSymbolButton((GeoSimpleMarkerSymbol)uniqueValueRenderer.DefaultSymbol);
+            uniqueTableLayoutPanel.Controls.Add(defaultSymbolButton, 1, 2);
+            for (int i = 0; i < uniqueValueRenderer.ValueCount; i++)
+            {
+                GeoSimpleMarkerSymbol markerSymbol = (GeoSimpleMarkerSymbol)uniqueValueRenderer.GetSymbol(i);
+                Bitmap symbolImage = CreateMarkerBitmapFromSymbol(markerSymbol);
+                uniqueDataGridView.AddRow(symbolImage, uniqueValueRenderer.GetValue(i));
+            }
+        }
+
+        private void initializeClassBreaksRenderer()
+        {
+            GeoClassBreaksRenderer classBreaksRenderer = (GeoClassBreaksRenderer)mLayer.Renderer;
+            mClassBreaksRenderer = classBreaksRenderer;
+            classFieldComboBox.SelectedItem = classBreaksRenderer.Field;
+            Button defaultSymbolButton = GetMarkerSymbolButton((GeoSimpleMarkerSymbol)classBreaksRenderer.DefaultSymbol);
+            classTableLayoutPanel.Controls.Add(defaultSymbolButton, 1, 2);
+            for (int i = 0; i < classBreaksRenderer.BreakCount; i++)
+            {
+                GeoSimpleMarkerSymbol markerSymbol = (GeoSimpleMarkerSymbol)classBreaksRenderer.GetSymbol(i);
+                Bitmap symbolImage = CreateMarkerBitmapFromSymbol(markerSymbol);
+                classDataGridView.AddRow(symbolImage, classBreaksRenderer.GetBreakValue(i));
+            }
+        }
+
+
+
 
         private Button GetMarkerSymbolButton(GeoSimpleMarkerSymbol symbol)
         {
@@ -101,6 +125,7 @@ namespace DEETU.Source.Window
             sButton.Dock = DockStyle.Fill;
             sButton.FlatAppearance.BorderSize = 0;
             sButton.BackgroundImage = CreateMarkerBitmapFromSymbol(symbol);
+            sButton.BackgroundImageLayout = ImageLayout.Center;
 
             MouseEventHandler handler = (sender, e) => SymbolGridButton_MouseClick(sButton, symbol);
             sButton.MouseClick += handler;
@@ -110,15 +135,18 @@ namespace DEETU.Source.Window
 
         private Bitmap CreateMarkerBitmapFromSymbol(GeoSimpleMarkerSymbol symbol)
         {
-            Bitmap styleImage = new Bitmap(10, 10);
+            Bitmap styleImage = new Bitmap(20, 20);
             Graphics g = Graphics.FromImage(styleImage);
-            Rectangle sRect = new Rectangle(0, styleImage.Width, 0, styleImage.Height);
+            Rectangle sRect = new Rectangle(0, 0, 20, 20);
             GeoMapDrawingTools.DrawSimpleMarker(g, sRect, 0, symbol); // dpm is useless in this 
             g.Dispose();
             return styleImage;
         }
 
+        #endregion
 
+
+        #region 事件处理
         private void SymbolGridButton_MouseClick(Button button, GeoSymbol symbol)
         {
             EditSimpleSymbolForm SimpleForm = new EditSimpleSymbolForm(symbol);
@@ -176,32 +204,73 @@ namespace DEETU.Source.Window
             e.DrawFocusRectangle();
         }
 
-        private void renderTabControl_SelectedIndexChanged(object sender, EventArgs e)
+        private void RenderTabControl_SelectedIndexChanged(object sender, EventArgs e)
         {
             renderMethodCB.SelectedIndex = renderTabControl.SelectedIndex;
             if (renderMethodCB.SelectedItem.ToString() == "单一符号")
-                CreateSimpleRenderer();
+            {
+                if (mSimpleRenderer == null)
+                {
+                    CreateSimpleRenderer();
+                    initializeSimpleRenderer();
+                }
+                else mLayer.Renderer = mSimpleRenderer;
+            }
             else if (renderMethodCB.SelectedItem.ToString() == "分级符号")
-                CreateClassBreaksRenderer();
-            else
-                CreateUniqueValueRenderer();
+            {
+                if (mClassBreaksRenderer == null)
+                {
+                    CreateClassBreaksRenderer();
+                    initializeClassBreaksRenderer();
+                }
+                else mLayer.Renderer = mClassBreaksRenderer;
+            }
+            else if (renderMethodCB.SelectedItem.ToString() == "唯一值")
+            {
+                if (mUniqueValueRenderer == null)
+                {
+                    CreateUniqueValueRenderer();
+                    initializeUniqueValueRenderer();
+                }
+                else mLayer.Renderer = mUniqueValueRenderer;
+            }
         }
-        private void renderMethodCB_SelectedIndexChanged(object sender, EventArgs e)
+        private void RenderMethodCB_SelectedIndexChanged(object sender, EventArgs e)
         {
             renderTabControl.SelectedIndex = renderMethodCB.SelectedIndex;
             if (renderMethodCB.SelectedItem.ToString() == "单一符号")
-                CreateSimpleRenderer();
+            {
+                if (mSimpleRenderer == null)
+                {
+                    CreateSimpleRenderer();
+                    initializeSimpleRenderer();
+                }
+                else mLayer.Renderer = mSimpleRenderer;
+            }
             else if (renderMethodCB.SelectedItem.ToString() == "分级符号")
-                CreateClassBreaksRenderer();
-            else
-                CreateUniqueValueRenderer();
+            {
+                if (mClassBreaksRenderer == null)
+                {
+                    CreateClassBreaksRenderer();
+                    initializeClassBreaksRenderer();
+                }
+                else mLayer.Renderer = mClassBreaksRenderer;
+            }
+            else if (renderMethodCB.SelectedItem.ToString() == "唯一值")
+            {
+                if (mUniqueValueRenderer == null)
+                {
+                    CreateUniqueValueRenderer();
+                    initializeUniqueValueRenderer();
+                }
+                else mLayer.Renderer = mUniqueValueRenderer;
+            }
         }
 
         private void CreateClassBreaksRenderer()
         {
-            // 假设存在"f5"的字段且为单精度浮点型
             GeoClassBreaksRenderer sRenderer = new GeoClassBreaksRenderer();
-            sRenderer.Field = "F5";
+            sRenderer.Field = mLayer.AttributeFields.GetItem(mLayer.AttributeFields.Count - 1).Name;
             List<double> sValues = new List<double>();
             int sFeatureCount = mLayer.Features.Count;
             int sFieldIndex = mLayer.AttributeFields.FindField(sRenderer.Field);
@@ -216,13 +285,13 @@ namespace DEETU.Source.Window
             for (int i = 0; i < 5; i++)
             {
                 double sValue = sMinValue + (sMaxValue - sMinValue) * (i + 1) / 5;
-                GeoSimpleFillSymbol sSymbol = new GeoSimpleFillSymbol();
+                GeoSimpleMarkerSymbol sSymbol = new GeoSimpleMarkerSymbol();
                 sRenderer.AddBreakValue(sValue, sSymbol);
             }
             Color sStartColor = Color.FromArgb(255, 255, 192, 192);
             Color sEndColor = Color.Maroon;
             sRenderer.RampColor(sStartColor, sEndColor);
-            sRenderer.DefaultSymbol = new GeoSimpleFillSymbol();
+            sRenderer.DefaultSymbol = new GeoSimpleMarkerSymbol();
             mLayer.Renderer = sRenderer;
         }
 
@@ -245,11 +314,11 @@ namespace DEETU.Source.Window
             int sValueCount = sValues.Count;
             for (int i = 0; i < sValueCount; i++)
             {
-                GeoSimpleFillSymbol sSymbol = new GeoSimpleFillSymbol();
+                GeoSimpleMarkerSymbol sSymbol = new GeoSimpleMarkerSymbol();
                 sRenderer.AddUniqueValue(sValues[i], sSymbol);
 
             }
-            sRenderer.DefaultSymbol = new GeoSimpleFillSymbol();
+            sRenderer.DefaultSymbol = new GeoSimpleMarkerSymbol();
             mLayer.Renderer = sRenderer;
 
         }
@@ -257,9 +326,10 @@ namespace DEETU.Source.Window
         private void CreateSimpleRenderer()
         {
             GeoSimpleRenderer sRenderer = new GeoSimpleRenderer();
-            GeoSimpleFillSymbol sSymbol = new GeoSimpleFillSymbol();
+            GeoSimpleMarkerSymbol sSymbol = new GeoSimpleMarkerSymbol();
             sRenderer.Symbol = sSymbol;
             mLayer.Renderer = sRenderer;
         }
+        #endregion
     }
 }
