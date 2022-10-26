@@ -38,11 +38,8 @@ namespace DEETU.Source.Window
             // 
             this.Footer.Controls.Add(this.cancelButton);
             this.Footer.Controls.Add(this.okButton);
-            this.Footer.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(211)))), ((int)(((byte)(211)))), ((int)(((byte)(211)))));
-            this.Footer.Location = new System.Drawing.Point(133, 781);
-            this.Footer.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
-            this.Footer.Size = new System.Drawing.Size(457, 40);
-            this.Footer.Style = Sunny.UI.UIStyle.Office2010Black;
+            this.Footer.Location = new System.Drawing.Point(135, 779);
+            this.Footer.Size = new System.Drawing.Size(453, 40);
             this.Footer.StyleCustomMode = true;
             // 
             // Header
@@ -54,7 +51,8 @@ namespace DEETU.Source.Window
             // 
             // Aside
             // 
-            this.Aside.Size = new System.Drawing.Size(133, 786);
+            this.Aside.Location = new System.Drawing.Point(2, 35);
+            this.Aside.Size = new System.Drawing.Size(133, 784);
             this.Aside.Style = Sunny.UI.UIStyle.Custom;
             // 
             // okButton
@@ -79,7 +77,7 @@ namespace DEETU.Source.Window
             this.okButton.RectHoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(238)))), ((int)(((byte)(201)))), ((int)(((byte)(88)))));
             this.okButton.RectPressColor = System.Drawing.Color.FromArgb(((int)(((byte)(194)))), ((int)(((byte)(118)))), ((int)(((byte)(43)))));
             this.okButton.RectSelectedColor = System.Drawing.Color.FromArgb(((int)(((byte)(194)))), ((int)(((byte)(118)))), ((int)(((byte)(43)))));
-            this.okButton.Size = new System.Drawing.Size(80, 35);
+            this.okButton.Size = new System.Drawing.Size(76, 35);
             this.okButton.Style = Sunny.UI.UIStyle.Office2010Black;
             this.okButton.TabIndex = 0;
             this.okButton.Text = "确认";
@@ -107,7 +105,7 @@ namespace DEETU.Source.Window
             this.cancelButton.RectHoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(238)))), ((int)(((byte)(201)))), ((int)(((byte)(88)))));
             this.cancelButton.RectPressColor = System.Drawing.Color.FromArgb(((int)(((byte)(194)))), ((int)(((byte)(118)))), ((int)(((byte)(43)))));
             this.cancelButton.RectSelectedColor = System.Drawing.Color.FromArgb(((int)(((byte)(194)))), ((int)(((byte)(118)))), ((int)(((byte)(43)))));
-            this.cancelButton.Size = new System.Drawing.Size(80, 35);
+            this.cancelButton.Size = new System.Drawing.Size(76, 35);
             this.cancelButton.Style = Sunny.UI.UIStyle.Office2010Black;
             this.cancelButton.TabIndex = 1;
             this.cancelButton.Text = "取消";
@@ -115,13 +113,16 @@ namespace DEETU.Source.Window
             // 
             // LayerAttributesForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(14F, 31F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(590, 821);
             this.ExtendBox = true;
             this.IsMdiContainer = true;
             this.MaximumSize = new System.Drawing.Size(10000, 10000);
             this.Name = "LayerAttributesForm";
+            this.Padding = new System.Windows.Forms.Padding(2, 35, 2, 2);
+            this.ShowDragStretch = true;
+            this.ShowRadius = false;
             this.Style = Sunny.UI.UIStyle.Custom;
             this.Text = "图层属性";
             this.Controls.SetChildIndex(this.Header, 0);

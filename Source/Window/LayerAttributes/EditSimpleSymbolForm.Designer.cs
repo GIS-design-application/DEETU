@@ -35,9 +35,10 @@ namespace DEETU.Source.Window.LayerAttributes
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(498, 384);
-            this.Name = "EditSimpleSymbolForm";
+            this.ClientSize = new System.Drawing.Size(800, 450);
             this.Text = "EditSimpleSymbolForm";
+            this.TitleColor = System.Drawing.Color.FromArgb(((int)(((byte)(118)))), ((int)(((byte)(118)))), ((int)(((byte)(118)))));
+            this.TitleForeColor = System.Drawing.Color.Black;
             this.ResumeLayout(false);
 
         }
