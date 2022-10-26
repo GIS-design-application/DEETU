@@ -131,22 +131,22 @@
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.tssCoordinate = new System.Windows.Forms.ToolStripStatusLabel();
             this.tssMapScale = new System.Windows.Forms.ToolStripStatusLabel();
+            this.geoMap = new DEETU.Map.GeoMapControl();
             this.toolStrip2 = new System.Windows.Forms.ToolStrip();
             this.startEditToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.保存当前编辑ToolStripButton = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator13 = new System.Windows.Forms.ToolStripSeparator();
+            this.mouseEditToolStripSeparator = new System.Windows.Forms.ToolStripSeparator();
             this.删除所选要素ToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.moveItemToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.editToolStripButton = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator13 = new System.Windows.Forms.ToolStripSeparator();
+            this.EditPasteToolStripSeparator = new System.Windows.Forms.ToolStripSeparator();
             this.剪切要素ToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.复制要素ToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.粘贴要素ToolStripButton = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator14 = new System.Windows.Forms.ToolStripSeparator();
+            this.PasteUndoToolStripSeparator14 = new System.Windows.Forms.ToolStripSeparator();
             this.撤销ToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.重做ToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.TreeImages = new System.Windows.Forms.ImageList(this.components);
-            this.geoMap = new DEETU.Map.GeoMapControl();
             this.projectContextMenuStrip.SuspendLayout();
             this.favoriteContextMenuStrip1.SuspendLayout();
             this.layerContextMenuStrip.SuspendLayout();
@@ -681,7 +681,7 @@
             this.toolStrip1.Location = new System.Drawing.Point(3, 27);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.toolStrip1.Size = new System.Drawing.Size(354, 27);
+            this.toolStrip1.Size = new System.Drawing.Size(385, 27);
             this.toolStrip1.TabIndex = 49;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -1030,6 +1030,26 @@
             this.tssMapScale.Size = new System.Drawing.Size(81, 17);
             this.tssMapScale.Text = "tssMapScale";
             // 
+            // geoMap
+            // 
+            this.geoMap.BackColor = System.Drawing.Color.White;
+            this.geoMap.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.geoMap.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.geoMap.FlashColor = System.Drawing.Color.Green;
+            this.geoMap.Layers = geoLayers2;
+            this.geoMap.Location = new System.Drawing.Point(0, 0);
+            this.geoMap.Margin = new System.Windows.Forms.Padding(38480, 116008, 38480, 116008);
+            this.geoMap.Name = "geoMap";
+            this.geoMap.SelectionColor = System.Drawing.Color.Cyan;
+            this.geoMap.Size = new System.Drawing.Size(637, 511);
+            this.geoMap.TabIndex = 0;
+            this.geoMap.MapScaleChanged += new DEETU.Map.GeoMapControl.MapScaleChangedHandle(this.geoMap_MapScaleChanged);
+            this.geoMap.AfterTrackingLayerDraw += new DEETU.Map.GeoMapControl.AfterTrackingLayerDrawHandle(this.geoMap_AfterTrackingLayerDraw);
+            this.geoMap.MouseClick += new System.Windows.Forms.MouseEventHandler(this.geoMap_MouseClick);
+            this.geoMap.MouseDown += new System.Windows.Forms.MouseEventHandler(this.geoMap_MouseDown);
+            this.geoMap.MouseMove += new System.Windows.Forms.MouseEventHandler(this.geoMap_MouseMove);
+            this.geoMap.MouseUp += new System.Windows.Forms.MouseEventHandler(this.geoMap_MouseUp);
+            // 
             // toolStrip2
             // 
             this.toolStrip2.Dock = System.Windows.Forms.DockStyle.None;
@@ -1037,20 +1057,20 @@
             this.toolStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.startEditToolStripButton,
             this.保存当前编辑ToolStripButton,
-            this.toolStripSeparator13,
+            this.mouseEditToolStripSeparator,
             this.删除所选要素ToolStripButton,
             this.moveItemToolStripButton,
             this.editToolStripButton,
-            this.toolStripSeparator13,
+            this.EditPasteToolStripSeparator,
             this.剪切要素ToolStripButton,
             this.复制要素ToolStripButton,
             this.粘贴要素ToolStripButton,
-            this.toolStripSeparator14,
+            this.PasteUndoToolStripSeparator14,
             this.撤销ToolStripButton,
             this.重做ToolStripButton});
             this.toolStrip2.Location = new System.Drawing.Point(3, 0);
             this.toolStrip2.Name = "toolStrip2";
-            this.toolStrip2.Size = new System.Drawing.Size(295, 27);
+            this.toolStrip2.Size = new System.Drawing.Size(270, 27);
             this.toolStrip2.TabIndex = 50;
             // 
             // startEditToolStripButton
@@ -1072,10 +1092,10 @@
             this.保存当前编辑ToolStripButton.Size = new System.Drawing.Size(24, 24);
             this.保存当前编辑ToolStripButton.Text = "保存当前编辑";
             // 
-            // toolStripSeparator13
+            // mouseEditToolStripSeparator
             // 
-            this.toolStripSeparator13.Name = "toolStripSeparator13";
-            this.toolStripSeparator13.Size = new System.Drawing.Size(6, 27);
+            this.mouseEditToolStripSeparator.Name = "mouseEditToolStripSeparator";
+            this.mouseEditToolStripSeparator.Size = new System.Drawing.Size(6, 27);
             // 
             // 删除所选要素ToolStripButton
             // 
@@ -1104,12 +1124,12 @@
             this.editToolStripButton.Name = "editToolStripButton";
             this.editToolStripButton.Size = new System.Drawing.Size(24, 24);
             this.editToolStripButton.Text = "编辑";
-            this.editToolStripButton.Click += new System.EventHandler(this.btnEditPolygon_Click);
+            this.editToolStripButton.Click += new System.EventHandler(this.btnEditItem_Click);
             // 
-            // toolStripSeparator13
+            // EditPasteToolStripSeparator
             // 
-            this.toolStripSeparator13.Name = "toolStripSeparator13";
-            this.toolStripSeparator13.Size = new System.Drawing.Size(6, 27);
+            this.EditPasteToolStripSeparator.Name = "EditPasteToolStripSeparator";
+            this.EditPasteToolStripSeparator.Size = new System.Drawing.Size(6, 27);
             // 
             // 剪切要素ToolStripButton
             // 
@@ -1138,10 +1158,10 @@
             this.粘贴要素ToolStripButton.Size = new System.Drawing.Size(24, 24);
             this.粘贴要素ToolStripButton.Text = "粘贴要素";
             // 
-            // toolStripSeparator14
+            // PasteUndoToolStripSeparator14
             // 
-            this.toolStripSeparator14.Name = "toolStripSeparator14";
-            this.toolStripSeparator14.Size = new System.Drawing.Size(6, 27);
+            this.PasteUndoToolStripSeparator14.Name = "PasteUndoToolStripSeparator14";
+            this.PasteUndoToolStripSeparator14.Size = new System.Drawing.Size(6, 27);
             // 
             // 撤销ToolStripButton
             // 
@@ -1166,26 +1186,6 @@
             this.TreeImages.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
             this.TreeImages.ImageSize = new System.Drawing.Size(16, 16);
             this.TreeImages.TransparentColor = System.Drawing.Color.Transparent;
-            // 
-            // geoMap
-            // 
-            this.geoMap.BackColor = System.Drawing.Color.White;
-            this.geoMap.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.geoMap.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.geoMap.FlashColor = System.Drawing.Color.Green;
-            this.geoMap.Layers = geoLayers2;
-            this.geoMap.Location = new System.Drawing.Point(0, 0);
-            this.geoMap.Margin = new System.Windows.Forms.Padding(23088, 66290, 23088, 66290);
-            this.geoMap.Name = "geoMap";
-            this.geoMap.SelectionColor = System.Drawing.Color.Cyan;
-            this.geoMap.Size = new System.Drawing.Size(637, 511);
-            this.geoMap.TabIndex = 0;
-            this.geoMap.MapScaleChanged += new DEETU.Map.GeoMapControl.MapScaleChangedHandle(this.geoMap_MapScaleChanged);
-            this.geoMap.MouseClick += new System.Windows.Forms.MouseEventHandler(this.geoMap_MouseClick);
-            this.geoMap.MouseDown += new System.Windows.Forms.MouseEventHandler(this.geoMap_MouseDown);
-            this.geoMap.MouseMove += new System.Windows.Forms.MouseEventHandler(this.geoMap_MouseMove);
-            this.geoMap.MouseUp += new System.Windows.Forms.MouseEventHandler(this.geoMap_MouseUp);
-            this.geoMap.AfterTrackingLayerDraw += new Map.GeoMapControl.AfterTrackingLayerDrawHandle(this.geoMap_AfterTrackingLayerDraw);
             // 
             // MainPage
             // 
@@ -1344,8 +1344,9 @@
         private System.Windows.Forms.ImageList TreeImages;
         private System.Windows.Forms.ToolStripStatusLabel tssMapScale;
         private System.Windows.Forms.ToolStripMenuItem 打开图层ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator13;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator14;
+        private System.Windows.Forms.ToolStripSeparator mouseEditToolStripSeparator;
+        private System.Windows.Forms.ToolStripSeparator EditPasteToolStripSeparator;
+        private System.Windows.Forms.ToolStripSeparator PasteUndoToolStripSeparator14;
         private System.Windows.Forms.ToolStripButton moveItemToolStripButton;
         private System.Windows.Forms.ToolStripButton editToolStripButton;
     }

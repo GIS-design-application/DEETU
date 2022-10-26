@@ -38,6 +38,8 @@ namespace DEETU.Source.Window
         private GeoSimpleFillSymbol mSelectingBoxSymbol; // 选择盒的符号
         private GeoSimpleFillSymbol mZoomBoxSymbol; // 放大盒的符号
         private GeoSimpleFillSymbol mMovingPolygonSymbol; // 移动多边形的符号
+        private GeoSimpleLineSymbol mMovingPolylineSymbol;
+        private GeoSimpleMarkerSymbol mMovingPointSymbol;
         private GeoSimpleFillSymbol mEditingPolygonSymbol; // 编辑多边形的符号
         private GeoSimpleMarkerSymbol mEditingVertexSymbol; // 编辑手柄符号
         private GeoSimpleMarkerSymbol mEditingVertexHoverSymbol; // 编辑手柄符号:hover
@@ -304,7 +306,7 @@ namespace DEETU.Source.Window
         private void btnSimpleRender_Click(object sender, EventArgs e)
         {
             // 查找多边形图层
-            GeoMapLayer sLayer = GetPolygonLayer();
+            GeoMapLayer sLayer = GetSelectableLayer();
             if (sLayer == null)
                 return;
             GeoSimpleRenderer sRenderer = new GeoSimpleRenderer();
@@ -318,7 +320,7 @@ namespace DEETU.Source.Window
         private void btnUniqueValue_Click(object sender, EventArgs e)
         {
             // 查找多边形图层
-            GeoMapLayer sLayer = GetPolygonLayer();
+            GeoMapLayer sLayer = GetSelectableLayer();
             if (sLayer == null)
                 return;
             // 假定第一个字段名称为"名称"且为字符型
@@ -349,7 +351,7 @@ namespace DEETU.Source.Window
 
         private void btnClassBreaks_Click(object sender, EventArgs e)
         {
-            GeoMapLayer sLayer = GetPolygonLayer();
+            GeoMapLayer sLayer = GetSelectableLayer();
             if (sLayer == null)
             {
                 return;
@@ -402,10 +404,20 @@ namespace DEETU.Source.Window
         // 移动多边形
         private void btnMovePolygon_Click(object sender, EventArgs e)
         {
-            UncheckToolStrip(mMapOpStyle);
-            this.Cursor = new Cursor("./icons/EditMove.ico");
-            mMapOpStyle = GeoMapOpStyleEnum.Move;
-            CheckToolStrip(mMapOpStyle);
+            if (mMapOpStyle != GeoMapOpStyleEnum.Move)
+            {
+                UncheckToolStrip(mMapOpStyle);
+                this.Cursor = new Cursor("./icons/EditMove.ico");
+                mMapOpStyle = GeoMapOpStyleEnum.Move;
+                CheckToolStrip(mMapOpStyle);
+            }
+            else
+            {
+                UncheckToolStrip(mMapOpStyle);
+                mMapOpStyle = GeoMapOpStyleEnum.None;
+                this.Cursor = Cursors.Default;
+            }
+
         }
 
         // 描绘多边形
@@ -444,7 +456,7 @@ namespace DEETU.Source.Window
             // 如果去掉没修改完的, 删掉空的, 用户至少还输入了一个多边形, 那么就加入多边形图层.
             if (mSketchingShape.Count > 0)
             {
-                GeoMapLayer sLayer = GetPolygonLayer();
+                GeoMapLayer sLayer = GetSelectableLayer();
                 if (sLayer != null)
                 { // 定义一个复合多边形
                     GeoMultiPolygon sMultipolygon = new GeoMultiPolygon();
@@ -465,10 +477,17 @@ namespace DEETU.Source.Window
             geoMap.RedrawMap();
         }
 
-        private void btnEditPolygon_Click(object sender, EventArgs e)
+        private void btnEditItem_Click(object sender, EventArgs e)
         {
+            if (mMapOpStyle == GeoMapOpStyleEnum.Edit)
+            {
+                UncheckToolStrip(mMapOpStyle);
+                this.Cursor = Cursors.Default;
+                mMapOpStyle = GeoMapOpStyleEnum.None;
+                return;
+            }
             this.Cursor = new Cursor("./icons/EditMoveVertex.ico");
-            GeoMapLayer slayer = GetPolygonLayer();
+            GeoMapLayer slayer = GetSelectableLayer();
             if (slayer == null)
             {
                 return;
@@ -483,7 +502,7 @@ namespace DEETU.Source.Window
             mMapOpStyle = GeoMapOpStyleEnum.Edit;
             geoMap.RedrawTrackingShapes();
 #if DEBUG
-            logging = "test";
+
 #endif
             CheckToolStrip(mMapOpStyle);
         }
@@ -491,7 +510,7 @@ namespace DEETU.Source.Window
         private void btnEndEdit_Click(object sender, EventArgs e)
         {
                         // 将mEditingGeometry中的多边形放回slayer中
-            GeoMapLayer slayer = GetPolygonLayer();
+            GeoMapLayer slayer = GetSelectableLayer();
             slayer.SelectedFeatures.GetItem(0).Geometry = mEditingGeometry;
             
             // 取消编辑多边形
@@ -610,7 +629,7 @@ OnZoomOut_MouseDown(e);
             if (e.Button != MouseButtons.Left)
                 return;
             // 查找一个多边形图层
-            GeoMapLayer sLayer = GetPolygonLayer();
+            GeoMapLayer sLayer = GetSelectableLayer();
             if (sLayer == null)
             {
                 return;
@@ -621,14 +640,36 @@ OnZoomOut_MouseDown(e);
             if (sSelFeatureCount == 0)
                 return;
             mMovingGeometries.Clear();
-            for (int i = 0; i < sSelFeatureCount; i++)
+            if (sLayer.ShapeType == GeoGeometryTypeConstant.MultiPolygon)
             {
-                GeoMultiPolygon sOriPolygon = (GeoMultiPolygon)sLayer.SelectedFeatures
-                                                                    .GetItem(i).Geometry;
-                GeoMultiPolygon sDesPolygon = (GeoMultiPolygon)sOriPolygon.Clone();
-                mMovingGeometries.Add(sDesPolygon);
-
+                for (int i = 0; i < sSelFeatureCount; i++)
+                {
+                    GeoMultiPolygon sOriPolygon = (GeoMultiPolygon)sLayer.SelectedFeatures
+                                                                        .GetItem(i).Geometry;
+                    GeoMultiPolygon sDesPolygon = (GeoMultiPolygon)sOriPolygon.Clone();
+                    mMovingGeometries.Add(sDesPolygon);
+                }
             }
+
+            else if (sLayer.ShapeType == GeoGeometryTypeConstant.MultiPolyline)
+            {
+                for (int i = 0; i < sSelFeatureCount; i++)
+                {
+                    GeoMultiPolyline sOriPolyline = (GeoMultiPolyline)sLayer.SelectedFeatures.GetItem(i).Geometry;
+                    GeoMultiPolyline sDesPolyline = (GeoMultiPolyline)sOriPolyline.Clone();
+                    mMovingGeometries.Add(sDesPolyline);
+                }
+            }
+            else
+            {
+                for (int i = 0; i < sSelFeatureCount; i++)
+                {
+                    GeoPoint sOriPoint = (GeoPoint)sLayer.SelectedFeatures.GetItem(i).Geometry;
+                    GeoPoint sDesPoint = (GeoPoint)sOriPoint.Clone();
+                    mMovingGeometries.Add(sDesPoint);
+                }
+            }
+
 
             mStartMouseLocation = e.Location;
             mIsMovingShapes = true;
@@ -1094,6 +1135,12 @@ OnZoomOut_MouseUp(e);
             mMovingPolygonSymbol = new GeoSimpleFillSymbol();
             mMovingPolygonSymbol.Color = Color.Transparent;
             mMovingPolygonSymbol.Outline.Color = Color.Black;
+            mMovingPolylineSymbol = new GeoSimpleLineSymbol();
+            mMovingPolylineSymbol.Color = Color.Black;
+            mMovingPolylineSymbol.Size = 0.3;
+            mMovingPointSymbol = new GeoSimpleMarkerSymbol();
+            mMovingPointSymbol.Color = Color.Black;
+            mMovingPointSymbol.Size = 1;
             mEditingPolygonSymbol = new GeoSimpleFillSymbol();
             mEditingPolygonSymbol.Color = Color.Transparent;
             mEditingPolygonSymbol.Outline.Color = Color.DarkGreen;
@@ -1143,14 +1190,14 @@ OnZoomOut_MouseUp(e);
             return sRect;
         }
 
-        //获取一个多边形图层
-        private GeoMapLayer GetPolygonLayer()
+        //获取一个可以选择的多边形
+        private GeoMapLayer GetSelectableLayer()
         {
             Int32 sLayerCount = geoMap.Layers.Count;
             GeoMapLayer sLayer = null;
             for (Int32 i = 0; i <= sLayerCount - 1; i++)
             {
-                if (geoMap.Layers.GetItem(i).ShapeType == GeoGeometryTypeConstant.MultiPolygon)
+                if (geoMap.Layers.GetItem(i).Selectable)
                 {
                     sLayer = geoMap.Layers.GetItem(i);
                     break;
@@ -1182,6 +1229,29 @@ OnZoomOut_MouseUp(e);
                     }
                     sMultiPolygon.UpdateExtent();
                 }
+                else if (mMovingGeometries[i].GetType() == typeof(GeoMultiPolyline))
+                {
+                    GeoMultiPolyline sMultiPolyline = (GeoMultiPolyline)mMovingGeometries[i];
+                    Int32 sPartCount = sMultiPolyline.Parts.Count;
+                    for (Int32 j = 0; j <= sPartCount - 1; j++)
+                    {
+                        GeoPoints sPoints = sMultiPolyline.Parts.GetItem(j);
+                        Int32 sPointCount = sPoints.Count;
+                        for (Int32 k = 0; k <= sPointCount - 1; k++)
+                        {
+                            GeoPoint sPoint = sPoints.GetItem(k);
+                            sPoint.X = sPoint.X + deltaX;
+                            sPoint.Y = sPoint.Y + deltaY;
+                        }
+                    }
+                    sMultiPolyline.UpdateExtent();
+                }
+                else
+                {
+                    GeoPoint sPoint = (GeoPoint)mMovingGeometries[i];
+                    sPoint.X += deltaX;
+                    sPoint.Y += deltaY;
+                }
             }
         }
         //绘制移动图形
@@ -1195,6 +1265,16 @@ OnZoomOut_MouseUp(e);
                 {
                     GeoMultiPolygon sMultiPolygon = (GeoMultiPolygon)mMovingGeometries[i];
                     sDrawingTool.DrawMultiPolygon(sMultiPolygon, mMovingPolygonSymbol);
+                }
+                else if(mMovingGeometries[i].GetType() == typeof(GeoMultiPolyline))
+                {
+                    GeoMultiPolyline sMultiPolyline = (GeoMultiPolyline)mMovingGeometries[i];
+                    sDrawingTool.DrawMultiPolyline(sMultiPolyline, mMovingPolylineSymbol);
+                }
+                else
+                {
+                    GeoPoint sPoint = (GeoPoint)mMovingGeometries[i];
+                    sDrawingTool.DrawPoint(sPoint, mMovingPointSymbol);
                 }
             }
         }
@@ -1328,9 +1408,21 @@ OnZoomOut_MouseUp(e);
             geoMap.RedrawMap();
         }
 
+        /// <summary>
+        /// 每当一个图层被选择时, 自动选择该图层作为编辑的对象
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void layerTreeView_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
         {
-            mCurrentLayerNode = e.Node;           
+            mCurrentLayerNode = e.Node;
+#if DEBUG
+            logging = mCurrentLayerNode.Text;
+#endif
+            int layerIndex = mCurrentLayerNode.Index;
+            geoMap.Layers.Deselect();
+            GeoMapLayer layer = geoMap.Layers.GetItem(layerIndex);
+            layer.Selectable = true;
         }
 
 #if DEBUG
