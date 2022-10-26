@@ -231,7 +231,6 @@ namespace DEETU.Source.Window.LayerAttributes
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(433, 289);
             this.Name = "EditFillSymbolPage";
-            this.ShowTitle = false;
             this.Text = "EditFillSimbolForm";
             this.tableLayoutPanel1.ResumeLayout(false);
             this.ResumeLayout(false);

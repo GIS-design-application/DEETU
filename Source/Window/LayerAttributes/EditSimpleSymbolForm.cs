@@ -7,25 +7,23 @@ namespace DEETU.Source.Window.LayerAttributes
 {
     public partial class EditSimpleSymbolForm : UIMainFrame
     {
-        private GeoMapLayer mLayer;
-        public EditSimpleSymbolForm(GeoMapLayer layer)
+        public EditSimpleSymbolForm(GeoSymbol symbol)
         {
-            mLayer = layer;
             InitializeComponent();
-            switch (mLayer.ShapeType)
+            switch (symbol.SymbolType)
             {
-                case GeoGeometryTypeConstant.MultiPolygon:
-                    EditFillSymbolPage FillPage = new EditFillSymbolPage((GeoSimpleFillSymbol)(layer.Renderer as GeoSimpleRenderer).Symbol);
+                case GeoSymbolTypeConstant.SimpleFillSymbol:
+                    EditFillSymbolPage FillPage = new EditFillSymbolPage((GeoSimpleFillSymbol)symbol);
                     AddPage(FillPage);
                     this.Size = FillPage.Size;
                     break;
-                case GeoGeometryTypeConstant.MultiPolyline:
-                    EditLineSymbolPage LinePage = new EditLineSymbolPage((GeoSimpleLineSymbol)(layer.Renderer as GeoSimpleRenderer).Symbol);
+                case GeoSymbolTypeConstant.SimpleLineSymbol:
+                    EditLineSymbolPage LinePage = new EditLineSymbolPage((GeoSimpleLineSymbol)symbol);
                     AddPage(LinePage);
                     this.Size = LinePage.Size;
                     break;
-                case GeoGeometryTypeConstant.Point:
-                    EditMarkerSymbolPage MarkerPage = new EditMarkerSymbolPage((GeoSimpleMarkerSymbol)(layer.Renderer as GeoSimpleRenderer).Symbol);
+                case GeoSymbolTypeConstant.SimpleMarkerSymbol:
+                    EditMarkerSymbolPage MarkerPage = new EditMarkerSymbolPage((GeoSimpleMarkerSymbol)symbol);
                     AddPage(MarkerPage);
                     this.Size = MarkerPage.Size;                    
                     break;

@@ -23,8 +23,8 @@ namespace DEETU.Source.Window
         public FillSymbolPage(GeoMapLayer layer)
         {
             InitializeComponent();
+            // mLayer = layer.Clone();
             mLayer = layer;
-
             renderMethodCB.SelectedIndex = (int)layer.Renderer.RendererType;
             
             InitializeTabs();
@@ -102,15 +102,15 @@ namespace DEETU.Source.Window
             sButton.FlatAppearance.BorderColor = symbol.Outline.Color;
             sButton.FlatAppearance.BorderSize = (int)symbol.Outline.Size;
 
-            MouseEventHandler handler = (sender, e) => SymbolGridButton_MouseClick(sButton);
+            MouseEventHandler handler = (sender, e) => SymbolGridButton_MouseClick(sButton, symbol);
             sButton.MouseClick += handler;
 
             return sButton;
         }
 
-        private void SymbolGridButton_MouseClick(Button button)
+        private void SymbolGridButton_MouseClick(Button button, GeoSymbol symbol)
         {
-            EditSimpleSymbolForm SimpleForm = new EditSimpleSymbolForm(mLayer);
+            EditSimpleSymbolForm SimpleForm = new EditSimpleSymbolForm(symbol);
             FormClosedEventHandler handle = (sender, e) => SimpleForm_FormClosed(button);
             SimpleForm.FormClosed += handle;
             SimpleForm.Show();
@@ -148,7 +148,7 @@ namespace DEETU.Source.Window
 
         private void classFieldComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            (mLayer.Renderer as GeoClassBreaksRenderer).Field = uniqueFieldComboBox.SelectedItem.ToString();
+            (mLayer.Renderer as GeoClassBreaksRenderer).Field = classFieldComboBox.SelectedItem.ToString();
         }
 
         private void ClassColorgradComboBox_DrawItem(object sender, DrawItemEventArgs e)

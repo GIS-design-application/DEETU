@@ -193,7 +193,6 @@ namespace DEETU.Source.Window.LayerAttributes
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(444, 240);
             this.Name = "EditMarkerSymbolPage";
-            this.ShowTitle = false;
             this.Text = "EditUniqueValueSymbolForm";
             this.tableLayoutPanel1.ResumeLayout(false);
             this.ResumeLayout(false);

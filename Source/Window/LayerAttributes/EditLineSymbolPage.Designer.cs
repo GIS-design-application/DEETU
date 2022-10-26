@@ -195,7 +195,6 @@ namespace DEETU.Source.Window.LayerAttributes
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(427, 250);
             this.Name = "EditLineSymbolPage";
-            this.ShowTitle = false;
             this.Text = "EditLineSymbolForm";
             this.tableLayoutPanel1.ResumeLayout(false);
             this.ResumeLayout(false);
