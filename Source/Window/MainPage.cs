@@ -299,6 +299,7 @@ namespace DEETU.Source.Window
             }
         }
 
+        #region 渲染部分代码(弃用)
         // 简单渲染
         private void btnSimpleRender_Click(object sender, EventArgs e)
         {
@@ -396,6 +397,7 @@ namespace DEETU.Source.Window
             sLayer.LabelRenderer = sLabelRenderer;
             geoMap.RedrawMap();
         }
+        #endregion
 
         // 移动多边形
         private void btnMovePolygon_Click(object sender, EventArgs e)
@@ -689,7 +691,7 @@ OnZoomOut_MouseDown(e);
             {
                 OnPan_MouseMove(e);
             }
-            else if (mMapOpStyle == GeoMapOpStyleEnum.Move)
+            else if (mMapOpStyle == GeoMapOpStyleEnum.Select)
             {
                 OnSelect_MouseMove(e);
             }
@@ -1257,6 +1259,11 @@ OnZoomOut_MouseUp(e);
                     break;
             }
         }
+
+        /// <summary>
+        /// 标记toolstripbutton已经被点击
+        /// </summary>
+        /// <param name="mapOpStyle"></param>
 
         private void CheckToolStrip(GeoMapOpStyleEnum mapOpStyle)
         {
