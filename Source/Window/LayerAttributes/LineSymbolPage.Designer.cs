@@ -51,6 +51,8 @@ namespace DEETU.Source.Window
             this.styleComboBox = new Sunny.UI.UIComboBox();
             this.uniqueValueTab = new System.Windows.Forms.TabPage();
             this.uniqueDataGridView = new Sunny.UI.UIDataGridView();
+            this.symbolCol = new System.Windows.Forms.DataGridViewImageColumn();
+            this.valueCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.uniqueTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.uiLabel8 = new Sunny.UI.UILabel();
             this.uiLabel4 = new Sunny.UI.UILabel();
@@ -61,6 +63,8 @@ namespace DEETU.Source.Window
             this.uiIntegerUpDown1 = new Sunny.UI.UIIntegerUpDown();
             this.uiLabel3 = new Sunny.UI.UILabel();
             this.classDataGridView = new Sunny.UI.UIDataGridView();
+            this.dataGridViewButtonColumn1 = new System.Windows.Forms.DataGridViewImageColumn();
+            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.classTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.uiLabel11 = new Sunny.UI.UILabel();
             this.uiLabel9 = new Sunny.UI.UILabel();
@@ -69,10 +73,6 @@ namespace DEETU.Source.Window
             this.ClassBreaksComboBoxEx = new System.Windows.Forms.ComboBox();
             this.renderMethodCB = new Sunny.UI.UIComboBox();
             this.geoUniqueValueRendererBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.dataGridViewButtonColumn1 = new System.Windows.Forms.DataGridViewImageColumn();
-            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.symbolCol = new System.Windows.Forms.DataGridViewImageColumn();
-            this.valueCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.PagePanel.SuspendLayout();
             this.renderTabControl.SuspendLayout();
             this.simpleTab.SuspendLayout();
@@ -314,6 +314,22 @@ namespace DEETU.Source.Window
             this.uniqueDataGridView.StyleCustomMode = true;
             this.uniqueDataGridView.TabIndex = 6;
             // 
+            // symbolCol
+            // 
+            this.symbolCol.DividerWidth = 1;
+            this.symbolCol.FillWeight = 30.45685F;
+            this.symbolCol.HeaderText = "符号";
+            this.symbolCol.MinimumWidth = 8;
+            this.symbolCol.Name = "symbolCol";
+            this.symbolCol.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            // 
+            // valueCol
+            // 
+            this.valueCol.FillWeight = 169.5432F;
+            this.valueCol.HeaderText = "唯一值";
+            this.valueCol.MinimumWidth = 8;
+            this.valueCol.Name = "valueCol";
+            // 
             // uniqueTableLayoutPanel
             // 
             this.uniqueTableLayoutPanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -506,11 +522,27 @@ namespace DEETU.Source.Window
             this.classDataGridView.RowTemplate.Height = 29;
             this.classDataGridView.SelectedIndex = -1;
             this.classDataGridView.ShowGridLine = true;
-            this.classDataGridView.Size = new System.Drawing.Size(456, 324);
+            this.classDataGridView.Size = new System.Drawing.Size(452, 324);
             this.classDataGridView.StripeOddColor = System.Drawing.Color.FromArgb(((int)(((byte)(211)))), ((int)(((byte)(211)))), ((int)(((byte)(211)))));
             this.classDataGridView.Style = Sunny.UI.UIStyle.Office2010Black;
             this.classDataGridView.StyleCustomMode = true;
             this.classDataGridView.TabIndex = 8;
+            // 
+            // dataGridViewButtonColumn1
+            // 
+            this.dataGridViewButtonColumn1.DividerWidth = 1;
+            this.dataGridViewButtonColumn1.FillWeight = 30.45685F;
+            this.dataGridViewButtonColumn1.HeaderText = "符号";
+            this.dataGridViewButtonColumn1.MinimumWidth = 8;
+            this.dataGridViewButtonColumn1.Name = "dataGridViewButtonColumn1";
+            this.dataGridViewButtonColumn1.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            // 
+            // dataGridViewTextBoxColumn1
+            // 
+            this.dataGridViewTextBoxColumn1.FillWeight = 169.5432F;
+            this.dataGridViewTextBoxColumn1.HeaderText = "分类值";
+            this.dataGridViewTextBoxColumn1.MinimumWidth = 8;
+            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
             // 
             // classTableLayoutPanel
             // 
@@ -626,38 +658,6 @@ namespace DEETU.Source.Window
             // geoUniqueValueRendererBindingSource
             // 
             this.geoUniqueValueRendererBindingSource.DataSource = typeof(DEETU.Core.GeoUniqueValueRenderer);
-            // 
-            // dataGridViewButtonColumn1
-            // 
-            this.dataGridViewButtonColumn1.DividerWidth = 1;
-            this.dataGridViewButtonColumn1.FillWeight = 30.45685F;
-            this.dataGridViewButtonColumn1.HeaderText = "符号";
-            this.dataGridViewButtonColumn1.MinimumWidth = 8;
-            this.dataGridViewButtonColumn1.Name = "dataGridViewButtonColumn1";
-            this.dataGridViewButtonColumn1.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            // 
-            // dataGridViewTextBoxColumn1
-            // 
-            this.dataGridViewTextBoxColumn1.FillWeight = 169.5432F;
-            this.dataGridViewTextBoxColumn1.HeaderText = "分类值";
-            this.dataGridViewTextBoxColumn1.MinimumWidth = 8;
-            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
-            // 
-            // symbolCol
-            // 
-            this.symbolCol.DividerWidth = 1;
-            this.symbolCol.FillWeight = 30.45685F;
-            this.symbolCol.HeaderText = "符号";
-            this.symbolCol.MinimumWidth = 8;
-            this.symbolCol.Name = "symbolCol";
-            this.symbolCol.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            // 
-            // valueCol
-            // 
-            this.valueCol.FillWeight = 169.5432F;
-            this.valueCol.HeaderText = "唯一值";
-            this.valueCol.MinimumWidth = 8;
-            this.valueCol.Name = "valueCol";
             // 
             // LineSymbolPage
             // 
