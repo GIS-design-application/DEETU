@@ -136,7 +136,7 @@ namespace DEETU.Source.Window.LayerAttributes
             this.fillColorPicker.Name = "fillColorPicker";
             this.fillColorPicker.Padding = new System.Windows.Forms.Padding(0, 0, 30, 2);
             this.fillColorPicker.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
-            this.fillColorPicker.Size = new System.Drawing.Size(295, 39);
+            this.fillColorPicker.Size = new System.Drawing.Size(295, 29);
             this.fillColorPicker.Style = Sunny.UI.UIStyle.Office2010Black;
             this.fillColorPicker.StyleCustomMode = true;
             this.fillColorPicker.TabIndex = 8;
@@ -156,7 +156,7 @@ namespace DEETU.Source.Window.LayerAttributes
             this.edgeColorPicker.Name = "edgeColorPicker";
             this.edgeColorPicker.Padding = new System.Windows.Forms.Padding(0, 0, 30, 2);
             this.edgeColorPicker.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
-            this.edgeColorPicker.Size = new System.Drawing.Size(295, 39);
+            this.edgeColorPicker.Size = new System.Drawing.Size(295, 29);
             this.edgeColorPicker.Style = Sunny.UI.UIStyle.Office2010Black;
             this.edgeColorPicker.StyleCustomMode = true;
             this.edgeColorPicker.TabIndex = 9;
@@ -194,7 +194,7 @@ namespace DEETU.Source.Window.LayerAttributes
             this.edgeStyleComboBox.Name = "edgeStyleComboBox";
             this.edgeStyleComboBox.Padding = new System.Windows.Forms.Padding(0, 0, 30, 2);
             this.edgeStyleComboBox.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
-            this.edgeStyleComboBox.Size = new System.Drawing.Size(295, 39);
+            this.edgeStyleComboBox.Size = new System.Drawing.Size(295, 29);
             this.edgeStyleComboBox.Style = Sunny.UI.UIStyle.Office2010Black;
             this.edgeStyleComboBox.StyleCustomMode = true;
             this.edgeStyleComboBox.TabIndex = 13;
@@ -228,10 +228,11 @@ namespace DEETU.Source.Window.LayerAttributes
             // 
             // EditFillSymbolPage
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(14F, 31F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(433, 289);
             this.Name = "EditFillSymbolPage";
+            this.ShowTitle = false;
             this.Text = "EditFillSimbolForm";
             this.PagePanel.ResumeLayout(false);
             this.PagePanel.PerformLayout();

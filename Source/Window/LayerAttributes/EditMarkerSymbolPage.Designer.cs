@@ -121,7 +121,7 @@ namespace DEETU.Source.Window.LayerAttributes
             this.markerColorPicker.Name = "markerColorPicker";
             this.markerColorPicker.Padding = new System.Windows.Forms.Padding(0, 0, 30, 2);
             this.markerColorPicker.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
-            this.markerColorPicker.Size = new System.Drawing.Size(295, 39);
+            this.markerColorPicker.Size = new System.Drawing.Size(295, 29);
             this.markerColorPicker.Style = Sunny.UI.UIStyle.Office2010Black;
             this.markerColorPicker.StyleCustomMode = true;
             this.markerColorPicker.TabIndex = 8;
@@ -159,7 +159,7 @@ namespace DEETU.Source.Window.LayerAttributes
             this.markerStyleComboBox.Name = "markerStyleComboBox";
             this.markerStyleComboBox.Padding = new System.Windows.Forms.Padding(0, 0, 30, 2);
             this.markerStyleComboBox.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
-            this.markerStyleComboBox.Size = new System.Drawing.Size(295, 39);
+            this.markerStyleComboBox.Size = new System.Drawing.Size(295, 29);
             this.markerStyleComboBox.Style = Sunny.UI.UIStyle.Office2010Black;
             this.markerStyleComboBox.StyleCustomMode = true;
             this.markerStyleComboBox.TabIndex = 13;
@@ -193,10 +193,11 @@ namespace DEETU.Source.Window.LayerAttributes
             // 
             // EditMarkerSymbolPage
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(14F, 31F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(444, 240);
             this.Name = "EditMarkerSymbolPage";
+            this.ShowTitle = false;
             this.Text = "EditUniqueValueSymbolForm";
             this.PagePanel.ResumeLayout(false);
             this.PagePanel.PerformLayout();

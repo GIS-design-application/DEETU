@@ -57,12 +57,12 @@ namespace DEETU.Source.Window.LayerAttributes
         private void ConformButton_Click(object sender, EventArgs e)
         {
             mFillSymbol = mTempFillSymbol;
-            (this.Parent.Parent.Parent as UIAsideHeaderMainFooterFrame).Close();
+            (this.Parent.Parent.Parent as EditSimpleSymbolForm).Close();
         }
 
         private void CancelButton_Click(object sender, EventArgs e)
         {
-            (this.Parent.Parent.Parent as UIAsideHeaderMainFooterFrame).Close();
+            (this.Parent.Parent.Parent as EditSimpleSymbolForm).Close();
         }
     }
 }

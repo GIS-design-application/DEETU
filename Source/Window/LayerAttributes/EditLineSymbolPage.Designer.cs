@@ -121,7 +121,7 @@ namespace DEETU.Source.Window.LayerAttributes
             this.lineColorPicker.Name = "lineColorPicker";
             this.lineColorPicker.Padding = new System.Windows.Forms.Padding(0, 0, 30, 2);
             this.lineColorPicker.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
-            this.lineColorPicker.Size = new System.Drawing.Size(295, 39);
+            this.lineColorPicker.Size = new System.Drawing.Size(295, 29);
             this.lineColorPicker.Style = Sunny.UI.UIStyle.Office2010Black;
             this.lineColorPicker.StyleCustomMode = true;
             this.lineColorPicker.TabIndex = 9;
@@ -159,7 +159,7 @@ namespace DEETU.Source.Window.LayerAttributes
             this.styleComboBox.Name = "styleComboBox";
             this.styleComboBox.Padding = new System.Windows.Forms.Padding(0, 0, 30, 2);
             this.styleComboBox.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
-            this.styleComboBox.Size = new System.Drawing.Size(295, 39);
+            this.styleComboBox.Size = new System.Drawing.Size(295, 29);
             this.styleComboBox.Style = Sunny.UI.UIStyle.Office2010Black;
             this.styleComboBox.StyleCustomMode = true;
             this.styleComboBox.TabIndex = 13;
@@ -193,10 +193,11 @@ namespace DEETU.Source.Window.LayerAttributes
             // 
             // EditLineSymbolPage
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(14F, 31F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(427, 250);
             this.Name = "EditLineSymbolPage";
+            this.ShowTitle = false;
             this.Text = "EditLineSymbolForm";
             this.PagePanel.ResumeLayout(false);
             this.PagePanel.PerformLayout();

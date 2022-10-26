@@ -222,6 +222,9 @@
     <EmbeddedResource Include="Source\Window\LayerAttributes\EditMarkerSymbolPage.resx">
       <DependentUpon>EditMarkerSymbolPage.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Source\Window\LayerAttributes\EditSimpleSymbolForm.resx">
+      <DependentUpon>EditSimpleSymbolForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Source\Window\LayerAttributes\FieldPage.resx">
       <DependentUpon>FieldPage.cs</DependentUpon>
     </EmbeddedResource>
