@@ -18,6 +18,7 @@ namespace DEETU.Source.Window
         private GeoMapLayer mLayer;
         private GeoMapLayer mTemporaryLayer;
         #endregion
+
         public LayerAttributesForm(GeoMapLayer layer)
         {
             InitializeComponent();
@@ -47,6 +48,17 @@ namespace DEETU.Source.Window
             Aside.CreateNode("符号化", 61452, 24, 2); 
             Aside.CreateNode("字段", 61453, 24, 3); 
             Aside.CreateNode("注记", 61454, 24, 4); 
+        }
+
+        private void okButton_Click(object sender, EventArgs e)
+        {
+            mLayer = mTemporaryLayer;
+            this.Close();
+        }
+
+        private void cancelButton_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

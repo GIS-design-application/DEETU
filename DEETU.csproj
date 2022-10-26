@@ -13,6 +13,7 @@
     <Deterministic>true</Deterministic>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -25,7 +26,6 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -92,23 +92,29 @@
     <Compile Include="Source\IO\GeoDataTable.cs" />
     <Compile Include="Source\Map\GeoShapeFlashControler.cs" />
     <Compile Include="Source\Window\GeoFormEnum.cs" />
-    <Compile Include="Source\Window\LayerAttributes\EditFillSimbolForm.cs">
+    <Compile Include="Source\Window\LayerAttributes\EditFillSymbolPage.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Source\Window\LayerAttributes\EditFillSimbolForm.Designer.cs">
-      <DependentUpon>EditFillSimbolForm.cs</DependentUpon>
+    <Compile Include="Source\Window\LayerAttributes\EditFillSymbolPage.Designer.cs">
+      <DependentUpon>EditFillSymbolPage.cs</DependentUpon>
     </Compile>
-    <Compile Include="Source\Window\LayerAttributes\EditLineSymbolForm.cs">
+    <Compile Include="Source\Window\LayerAttributes\EditLineSymbolPage.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Source\Window\LayerAttributes\EditLineSymbolForm.Designer.cs">
-      <DependentUpon>EditLineSymbolForm.cs</DependentUpon>
+    <Compile Include="Source\Window\LayerAttributes\EditLineSymbolPage.Designer.cs">
+      <DependentUpon>EditLineSymbolPage.cs</DependentUpon>
     </Compile>
-    <Compile Include="Source\Window\LayerAttributes\EditMarkerSymbolForm.cs">
+    <Compile Include="Source\Window\LayerAttributes\EditMarkerSymbolPage.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Source\Window\LayerAttributes\EditMarkerSymbolForm.Designer.cs">
-      <DependentUpon>EditMarkerSymbolForm.cs</DependentUpon>
+    <Compile Include="Source\Window\LayerAttributes\EditMarkerSymbolPage.Designer.cs">
+      <DependentUpon>EditMarkerSymbolPage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Source\Window\LayerAttributes\EditSimpleSymbolForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Source\Window\LayerAttributes\EditSimpleSymbolForm.Designer.cs">
+      <DependentUpon>EditSimpleSymbolForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Source\Window\LayerAttributes\FieldPage.cs">
       <SubType>Form</SubType>
@@ -201,14 +207,17 @@
     <EmbeddedResource Include="Source\Window\LayerAttributes\AnnotationPage.resx">
       <DependentUpon>AnnotationPage.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Source\Window\LayerAttributes\EditFillSimbolForm.resx">
-      <DependentUpon>EditFillSimbolForm.cs</DependentUpon>
+    <EmbeddedResource Include="Source\Window\LayerAttributes\EditFillSymbolPage.resx">
+      <DependentUpon>EditFillSymbolPage.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Source\Window\LayerAttributes\EditLineSymbolForm.resx">
-      <DependentUpon>EditLineSymbolForm.cs</DependentUpon>
+    <EmbeddedResource Include="Source\Window\LayerAttributes\EditLineSymbolPage.resx">
+      <DependentUpon>EditLineSymbolPage.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Source\Window\LayerAttributes\EditMarkerSymbolForm.resx">
-      <DependentUpon>EditMarkerSymbolForm.cs</DependentUpon>
+    <EmbeddedResource Include="Source\Window\LayerAttributes\EditMarkerSymbolPage.resx">
+      <DependentUpon>EditMarkerSymbolPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Source\Window\LayerAttributes\EditSimpleSymbolForm.resx">
+      <DependentUpon>EditSimpleSymbolForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Source\Window\LayerAttributes\FieldPage.resx">
       <DependentUpon>FieldPage.cs</DependentUpon>

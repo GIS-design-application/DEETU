@@ -46,6 +46,9 @@ namespace DEETU
             this.Margin = new System.Windows.Forms.Padding(2);
             this.MaximumSize = new System.Drawing.Size(10000, 10000);
             this.Name = "MainForm";
+            this.Padding = new System.Windows.Forms.Padding(2, 35, 2, 2);
+            this.ShowDragStretch = true;
+            this.ShowRadius = false;
             this.Style = Sunny.UI.UIStyle.Custom;
             this.Text = "MainForm";
             this.ResumeLayout(false);

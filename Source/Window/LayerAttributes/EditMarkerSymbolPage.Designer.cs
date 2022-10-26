@@ -1,7 +1,7 @@
 ﻿
 namespace DEETU.Source.Window.LayerAttributes
 {
-    partial class EditMarkerSymbolForm
+    partial class EditMarkerSymbolPage
     {
         /// <summary>
         /// Required designer variable.
@@ -36,14 +36,14 @@ namespace DEETU.Source.Window.LayerAttributes
             this.markerColorPicker = new Sunny.UI.UIColorPicker();
             this.sizeDoubleUpDown = new Sunny.UI.UIDoubleUpDown();
             this.markerStyleComboBox = new Sunny.UI.UIComboBox();
-            this.PagePanel.SuspendLayout();
+            this.ConformButton = new Sunny.UI.UIButton();
+            this.CancelButton = new Sunny.UI.UIButton();
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // PagePanel
-            // 
-            this.PagePanel.Controls.Add(this.tableLayoutPanel1);
-            this.PagePanel.Size = new System.Drawing.Size(800, 415);
+            
+            this.Controls.Add(this.ConformButton);
+            this.Controls.Add(this.CancelButton);
+            this.Controls.Add(this.tableLayoutPanel1);
             // 
             // tableLayoutPanel1
             // 
@@ -70,7 +70,7 @@ namespace DEETU.Source.Window.LayerAttributes
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(456, 137);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(420, 137);
             this.tableLayoutPanel1.TabIndex = 5;
             // 
             // uiLabel2
@@ -117,7 +117,7 @@ namespace DEETU.Source.Window.LayerAttributes
             this.markerColorPicker.Name = "markerColorPicker";
             this.markerColorPicker.Padding = new System.Windows.Forms.Padding(0, 0, 30, 2);
             this.markerColorPicker.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
-            this.markerColorPicker.Size = new System.Drawing.Size(295, 39);
+            this.markerColorPicker.Size = new System.Drawing.Size(295, 29);
             this.markerColorPicker.Style = Sunny.UI.UIStyle.Office2010Black;
             this.markerColorPicker.StyleCustomMode = true;
             this.markerColorPicker.TabIndex = 8;
@@ -155,7 +155,7 @@ namespace DEETU.Source.Window.LayerAttributes
             this.markerStyleComboBox.Name = "markerStyleComboBox";
             this.markerStyleComboBox.Padding = new System.Windows.Forms.Padding(0, 0, 30, 2);
             this.markerStyleComboBox.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
-            this.markerStyleComboBox.Size = new System.Drawing.Size(295, 39);
+            this.markerStyleComboBox.Size = new System.Drawing.Size(295, 29);
             this.markerStyleComboBox.Style = Sunny.UI.UIStyle.Office2010Black;
             this.markerStyleComboBox.StyleCustomMode = true;
             this.markerStyleComboBox.TabIndex = 13;
@@ -163,15 +163,37 @@ namespace DEETU.Source.Window.LayerAttributes
             this.markerStyleComboBox.TextAlignment = System.Drawing.ContentAlignment.MiddleLeft;
             this.markerStyleComboBox.SelectedIndexChanged += new System.EventHandler(this.markerStyleComboBox_SelectedIndexChanged);
             // 
-            // EditMarkerSymbolForm
+            // ConformButton
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(14F, 31F);
+            this.ConformButton.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.ConformButton.Font = new System.Drawing.Font("微软雅黑", 12F);
+            this.ConformButton.Location = new System.Drawing.Point(76, 158);
+            this.ConformButton.MinimumSize = new System.Drawing.Size(1, 1);
+            this.ConformButton.Name = "ConformButton";
+            this.ConformButton.Size = new System.Drawing.Size(111, 44);
+            this.ConformButton.TabIndex = 10;
+            this.ConformButton.Text = "确定";
+            this.ConformButton.Click += new System.EventHandler(this.ConformButton_Click);
+            // 
+            // CancelButton
+            // 
+            this.CancelButton.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.CancelButton.Font = new System.Drawing.Font("微软雅黑", 12F);
+            this.CancelButton.Location = new System.Drawing.Point(230, 158);
+            this.CancelButton.MinimumSize = new System.Drawing.Size(1, 1);
+            this.CancelButton.Name = "CancelButton";
+            this.CancelButton.Size = new System.Drawing.Size(111, 44);
+            this.CancelButton.TabIndex = 9;
+            this.CancelButton.Text = "取消";
+            this.CancelButton.Click += new System.EventHandler(this.CancelButton_Click);
+            // 
+            // EditMarkerSymbolPage
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Name = "EditMarkerSymbolForm";
+            this.ClientSize = new System.Drawing.Size(444, 240);
+            this.Name = "EditMarkerSymbolPage";
             this.Text = "EditUniqueValueSymbolForm";
-            this.PagePanel.ResumeLayout(false);
-            this.PagePanel.PerformLayout();
             this.tableLayoutPanel1.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -186,5 +208,7 @@ namespace DEETU.Source.Window.LayerAttributes
         private Sunny.UI.UIColorPicker markerColorPicker;
         private Sunny.UI.UIDoubleUpDown sizeDoubleUpDown;
         private Sunny.UI.UIComboBox markerStyleComboBox;
+        private Sunny.UI.UIButton ConformButton;
+        private Sunny.UI.UIButton CancelButton;
     }
 }

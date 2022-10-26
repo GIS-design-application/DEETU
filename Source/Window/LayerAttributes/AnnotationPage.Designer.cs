@@ -44,33 +44,30 @@ namespace DEETU.Source.Window
             this.maskColorPicker = new Sunny.UI.UIColorPicker();
             this.maskSizeDoubleUpDown = new Sunny.UI.UIDoubleUpDown();
             this.posTitlePanel = new Sunny.UI.UITitlePanel();
+            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.xOffsetDoubleUpDown = new Sunny.UI.UIDoubleUpDown();
+            this.uiLabel4 = new Sunny.UI.UILabel();
+            this.uiLabel6 = new Sunny.UI.UILabel();
+            this.yOffsetDoubleUpDown = new Sunny.UI.UIDoubleUpDown();
+            this.uiLabel3 = new Sunny.UI.UILabel();
             this.alignmentRadioButtonGroup = new Sunny.UI.UIRadioButtonGroup();
             this.labelPanel = new Sunny.UI.UIPanel();
             this.enableCheckBox = new Sunny.UI.UICheckBox();
-            this.uiLabel3 = new Sunny.UI.UILabel();
-            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-            this.uiLabel4 = new Sunny.UI.UILabel();
-            this.uiDoubleUpDown2 = new Sunny.UI.UIDoubleUpDown();
-            this.uiDoubleUpDown1 = new Sunny.UI.UIDoubleUpDown();
-            this.uiLabel6 = new Sunny.UI.UILabel();
             this.PagePanel.SuspendLayout();
             this.uiTitlePanel1.SuspendLayout();
             this.fontTitlePanel.SuspendLayout();
             this.maskTitlePanel.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.posTitlePanel.SuspendLayout();
-            this.labelPanel.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
+            this.labelPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // PagePanel
             // 
             this.PagePanel.Controls.Add(this.enableCheckBox);
             this.PagePanel.Controls.Add(this.labelPanel);
-            this.PagePanel.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(211)))), ((int)(((byte)(211)))), ((int)(((byte)(211)))));
-            this.PagePanel.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
             this.PagePanel.Size = new System.Drawing.Size(480, 765);
-            this.PagePanel.Style = Sunny.UI.UIStyle.Office2010Black;
             // 
             // fieldComboBox
             // 
@@ -116,9 +113,8 @@ namespace DEETU.Source.Window
             this.uiRichTextBox1.Name = "uiRichTextBox1";
             this.uiRichTextBox1.Padding = new System.Windows.Forms.Padding(2);
             this.uiRichTextBox1.RadiusSides = Sunny.UI.UICornerRadiusSides.None;
-            this.uiRichTextBox1.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(139)))), ((int)(((byte)(144)))), ((int)(((byte)(151)))));
             this.uiRichTextBox1.Size = new System.Drawing.Size(472, 73);
-            this.uiRichTextBox1.Style = Sunny.UI.UIStyle.Office2010Silver;
+            this.uiRichTextBox1.Style = Sunny.UI.UIStyle.Custom;
             this.uiRichTextBox1.TabIndex = 4;
             this.uiRichTextBox1.Text = "Lorem Ipsum 乱数假文";
             this.uiRichTextBox1.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter;
@@ -165,7 +161,7 @@ namespace DEETU.Source.Window
             this.fontTitlePanel.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(139)))), ((int)(((byte)(144)))), ((int)(((byte)(151)))));
             this.fontTitlePanel.ShowCollapse = true;
             this.fontTitlePanel.Size = new System.Drawing.Size(472, 56);
-            this.fontTitlePanel.Style = Sunny.UI.UIStyle.Office2010Silver;
+            this.fontTitlePanel.Style = Sunny.UI.UIStyle.Custom;
             this.fontTitlePanel.StyleCustomMode = true;
             this.fontTitlePanel.TabIndex = 6;
             this.fontTitlePanel.Text = "字体";
@@ -237,7 +233,7 @@ namespace DEETU.Source.Window
             this.maskTitlePanel.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(139)))), ((int)(((byte)(144)))), ((int)(((byte)(151)))));
             this.maskTitlePanel.ShowCollapse = true;
             this.maskTitlePanel.Size = new System.Drawing.Size(472, 148);
-            this.maskTitlePanel.Style = Sunny.UI.UIStyle.Office2010Silver;
+            this.maskTitlePanel.Style = Sunny.UI.UIStyle.Custom;
             this.maskTitlePanel.StyleCustomMode = true;
             this.maskTitlePanel.TabIndex = 7;
             this.maskTitlePanel.Text = "描边";
@@ -251,7 +247,7 @@ namespace DEETU.Source.Window
             this.maskCheckBox.CheckBoxColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(49)))), ((int)(((byte)(49)))));
             this.maskCheckBox.Cursor = System.Windows.Forms.Cursors.Hand;
             this.maskCheckBox.Font = new System.Drawing.Font("微软雅黑", 12F);
-            this.maskCheckBox.Location = new System.Drawing.Point(4, 29);
+            this.maskCheckBox.Location = new System.Drawing.Point(4, 36);
             this.maskCheckBox.MinimumSize = new System.Drawing.Size(1, 1);
             this.maskCheckBox.Name = "maskCheckBox";
             this.maskCheckBox.Padding = new System.Windows.Forms.Padding(22, 0, 0, 0);
@@ -260,6 +256,7 @@ namespace DEETU.Source.Window
             this.maskCheckBox.StyleCustomMode = true;
             this.maskCheckBox.TabIndex = 6;
             this.maskCheckBox.Text = "是否使用描边";
+            this.maskCheckBox.CheckedChanged += new System.EventHandler(this.maskCheckBox_CheckedChanged);
             // 
             // tableLayoutPanel1
             // 
@@ -359,7 +356,7 @@ namespace DEETU.Source.Window
             this.posTitlePanel.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(139)))), ((int)(((byte)(144)))), ((int)(((byte)(151)))));
             this.posTitlePanel.ShowCollapse = true;
             this.posTitlePanel.Size = new System.Drawing.Size(472, 291);
-            this.posTitlePanel.Style = Sunny.UI.UIStyle.Office2010Silver;
+            this.posTitlePanel.Style = Sunny.UI.UIStyle.Custom;
             this.posTitlePanel.StyleCustomMode = true;
             this.posTitlePanel.TabIndex = 8;
             this.posTitlePanel.Text = "位置";
@@ -367,6 +364,97 @@ namespace DEETU.Source.Window
             this.posTitlePanel.TextAlignment = System.Drawing.ContentAlignment.MiddleLeft;
             this.posTitlePanel.TitleColor = System.Drawing.Color.Silver;
             this.posTitlePanel.TitleHeight = 25;
+            // 
+            // tableLayoutPanel2
+            // 
+            this.tableLayoutPanel2.AutoSize = true;
+            this.tableLayoutPanel2.ColumnCount = 2;
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel2.Controls.Add(this.xOffsetDoubleUpDown, 1, 0);
+            this.tableLayoutPanel2.Controls.Add(this.uiLabel4, 0, 0);
+            this.tableLayoutPanel2.Controls.Add(this.uiLabel6, 0, 1);
+            this.tableLayoutPanel2.Controls.Add(this.yOffsetDoubleUpDown, 1, 1);
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(96, 35);
+            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
+            this.tableLayoutPanel2.RowCount = 2;
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(272, 60);
+            this.tableLayoutPanel2.TabIndex = 6;
+            // 
+            // xOffsetDoubleUpDown
+            // 
+            this.xOffsetDoubleUpDown.Decimal = 2;
+            this.xOffsetDoubleUpDown.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.xOffsetDoubleUpDown.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(211)))), ((int)(((byte)(211)))), ((int)(((byte)(211)))));
+            this.xOffsetDoubleUpDown.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.xOffsetDoubleUpDown.Location = new System.Drawing.Point(104, 5);
+            this.xOffsetDoubleUpDown.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.xOffsetDoubleUpDown.MinimumSize = new System.Drawing.Size(100, 0);
+            this.xOffsetDoubleUpDown.Name = "xOffsetDoubleUpDown";
+            this.xOffsetDoubleUpDown.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
+            this.xOffsetDoubleUpDown.Size = new System.Drawing.Size(164, 20);
+            this.xOffsetDoubleUpDown.Style = Sunny.UI.UIStyle.Office2010Black;
+            this.xOffsetDoubleUpDown.StyleCustomMode = true;
+            this.xOffsetDoubleUpDown.TabIndex = 13;
+            this.xOffsetDoubleUpDown.Text = "xOffsetDoubleUpDown";
+            this.xOffsetDoubleUpDown.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter;
+            this.xOffsetDoubleUpDown.Value = 0D;
+            // 
+            // uiLabel4
+            // 
+            this.uiLabel4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.uiLabel4.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.uiLabel4.Location = new System.Drawing.Point(3, 0);
+            this.uiLabel4.Name = "uiLabel4";
+            this.uiLabel4.Size = new System.Drawing.Size(94, 30);
+            this.uiLabel4.Style = Sunny.UI.UIStyle.Office2010Silver;
+            this.uiLabel4.TabIndex = 1;
+            this.uiLabel4.Text = "横坐标";
+            this.uiLabel4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // uiLabel6
+            // 
+            this.uiLabel6.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.uiLabel6.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.uiLabel6.Location = new System.Drawing.Point(3, 30);
+            this.uiLabel6.Name = "uiLabel6";
+            this.uiLabel6.Size = new System.Drawing.Size(94, 30);
+            this.uiLabel6.Style = Sunny.UI.UIStyle.Office2010Silver;
+            this.uiLabel6.TabIndex = 5;
+            this.uiLabel6.Text = "纵坐标";
+            this.uiLabel6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // yOffsetDoubleUpDown
+            // 
+            this.yOffsetDoubleUpDown.Decimal = 2;
+            this.yOffsetDoubleUpDown.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.yOffsetDoubleUpDown.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(211)))), ((int)(((byte)(211)))), ((int)(((byte)(211)))));
+            this.yOffsetDoubleUpDown.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.yOffsetDoubleUpDown.Location = new System.Drawing.Point(104, 35);
+            this.yOffsetDoubleUpDown.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.yOffsetDoubleUpDown.MinimumSize = new System.Drawing.Size(100, 0);
+            this.yOffsetDoubleUpDown.Name = "yOffsetDoubleUpDown";
+            this.yOffsetDoubleUpDown.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
+            this.yOffsetDoubleUpDown.Size = new System.Drawing.Size(164, 20);
+            this.yOffsetDoubleUpDown.Style = Sunny.UI.UIStyle.Office2010Black;
+            this.yOffsetDoubleUpDown.StyleCustomMode = true;
+            this.yOffsetDoubleUpDown.TabIndex = 12;
+            this.yOffsetDoubleUpDown.Text = "yOffsetDoubleUpDown1";
+            this.yOffsetDoubleUpDown.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter;
+            this.yOffsetDoubleUpDown.Value = 0D;
+            // 
+            // uiLabel3
+            // 
+            this.uiLabel3.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.uiLabel3.Location = new System.Drawing.Point(3, 35);
+            this.uiLabel3.Name = "uiLabel3";
+            this.uiLabel3.Size = new System.Drawing.Size(91, 23);
+            this.uiLabel3.Style = Sunny.UI.UIStyle.Office2010Silver;
+            this.uiLabel3.TabIndex = 1;
+            this.uiLabel3.Text = "坐标偏移：";
+            this.uiLabel3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // alignmentRadioButtonGroup
             // 
@@ -415,6 +503,7 @@ namespace DEETU.Source.Window
             this.labelPanel.Size = new System.Drawing.Size(480, 728);
             this.labelPanel.Style = Sunny.UI.UIStyle.Office2010Black;
             this.labelPanel.TabIndex = 9;
+            this.labelPanel.Text = null;
             this.labelPanel.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // enableCheckBox
@@ -432,97 +521,7 @@ namespace DEETU.Source.Window
             this.enableCheckBox.StyleCustomMode = true;
             this.enableCheckBox.TabIndex = 7;
             this.enableCheckBox.Text = "开启注记";
-            // 
-            // uiLabel3
-            // 
-            this.uiLabel3.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.uiLabel3.Location = new System.Drawing.Point(3, 35);
-            this.uiLabel3.Name = "uiLabel3";
-            this.uiLabel3.Size = new System.Drawing.Size(91, 23);
-            this.uiLabel3.Style = Sunny.UI.UIStyle.Office2010Silver;
-            this.uiLabel3.TabIndex = 1;
-            this.uiLabel3.Text = "坐标偏移：";
-            this.uiLabel3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // tableLayoutPanel2
-            // 
-            this.tableLayoutPanel2.AutoSize = true;
-            this.tableLayoutPanel2.ColumnCount = 2;
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.Controls.Add(this.uiDoubleUpDown2, 1, 0);
-            this.tableLayoutPanel2.Controls.Add(this.uiLabel4, 0, 0);
-            this.tableLayoutPanel2.Controls.Add(this.uiLabel6, 0, 1);
-            this.tableLayoutPanel2.Controls.Add(this.uiDoubleUpDown1, 1, 1);
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(96, 35);
-            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-            this.tableLayoutPanel2.RowCount = 2;
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(272, 60);
-            this.tableLayoutPanel2.TabIndex = 6;
-            // 
-            // uiLabel4
-            // 
-            this.uiLabel4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.uiLabel4.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.uiLabel4.Location = new System.Drawing.Point(3, 0);
-            this.uiLabel4.Name = "uiLabel4";
-            this.uiLabel4.Size = new System.Drawing.Size(94, 30);
-            this.uiLabel4.Style = Sunny.UI.UIStyle.Office2010Silver;
-            this.uiLabel4.TabIndex = 1;
-            this.uiLabel4.Text = "横坐标";
-            this.uiLabel4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // uiDoubleUpDown2
-            // 
-            this.uiDoubleUpDown2.Decimal = 2;
-            this.uiDoubleUpDown2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.uiDoubleUpDown2.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(211)))), ((int)(((byte)(211)))), ((int)(((byte)(211)))));
-            this.uiDoubleUpDown2.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.uiDoubleUpDown2.Location = new System.Drawing.Point(104, 5);
-            this.uiDoubleUpDown2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.uiDoubleUpDown2.MinimumSize = new System.Drawing.Size(100, 0);
-            this.uiDoubleUpDown2.Name = "uiDoubleUpDown2";
-            this.uiDoubleUpDown2.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
-            this.uiDoubleUpDown2.Size = new System.Drawing.Size(164, 20);
-            this.uiDoubleUpDown2.Style = Sunny.UI.UIStyle.Office2010Black;
-            this.uiDoubleUpDown2.StyleCustomMode = true;
-            this.uiDoubleUpDown2.TabIndex = 13;
-            this.uiDoubleUpDown2.Text = "xOffsetDoubleUpDown";
-            this.uiDoubleUpDown2.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter;
-            this.uiDoubleUpDown2.Value = 0D;
-            // 
-            // uiDoubleUpDown1
-            // 
-            this.uiDoubleUpDown1.Decimal = 2;
-            this.uiDoubleUpDown1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.uiDoubleUpDown1.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(211)))), ((int)(((byte)(211)))), ((int)(((byte)(211)))));
-            this.uiDoubleUpDown1.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.uiDoubleUpDown1.Location = new System.Drawing.Point(104, 35);
-            this.uiDoubleUpDown1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.uiDoubleUpDown1.MinimumSize = new System.Drawing.Size(100, 0);
-            this.uiDoubleUpDown1.Name = "uiDoubleUpDown1";
-            this.uiDoubleUpDown1.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
-            this.uiDoubleUpDown1.Size = new System.Drawing.Size(164, 20);
-            this.uiDoubleUpDown1.Style = Sunny.UI.UIStyle.Office2010Black;
-            this.uiDoubleUpDown1.StyleCustomMode = true;
-            this.uiDoubleUpDown1.TabIndex = 12;
-            this.uiDoubleUpDown1.Text = "yOffsetDoubleUpDown1";
-            this.uiDoubleUpDown1.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter;
-            this.uiDoubleUpDown1.Value = 0D;
-            // 
-            // uiLabel6
-            // 
-            this.uiLabel6.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.uiLabel6.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.uiLabel6.Location = new System.Drawing.Point(3, 30);
-            this.uiLabel6.Name = "uiLabel6";
-            this.uiLabel6.Size = new System.Drawing.Size(94, 30);
-            this.uiLabel6.Style = Sunny.UI.UIStyle.Office2010Silver;
-            this.uiLabel6.TabIndex = 5;
-            this.uiLabel6.Text = "纵坐标";
-            this.uiLabel6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.enableCheckBox.CheckedChanged += new System.EventHandler(this.enableCheckBox_CheckedChanged);
             // 
             // AnnotationPage
             // 
@@ -539,8 +538,8 @@ namespace DEETU.Source.Window
             this.tableLayoutPanel1.ResumeLayout(false);
             this.posTitlePanel.ResumeLayout(false);
             this.posTitlePanel.PerformLayout();
-            this.labelPanel.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
+            this.labelPanel.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -566,9 +565,9 @@ namespace DEETU.Source.Window
         private Sunny.UI.UIPanel labelPanel;
         private Sunny.UI.UILabel uiLabel3;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
-        private Sunny.UI.UIDoubleUpDown uiDoubleUpDown2;
+        private Sunny.UI.UIDoubleUpDown xOffsetDoubleUpDown;
         private Sunny.UI.UILabel uiLabel4;
         private Sunny.UI.UILabel uiLabel6;
-        private Sunny.UI.UIDoubleUpDown uiDoubleUpDown1;
+        private Sunny.UI.UIDoubleUpDown yOffsetDoubleUpDown;
     }
 }

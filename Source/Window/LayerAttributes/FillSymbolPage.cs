@@ -18,22 +18,16 @@ namespace DEETU.Source.Window
     {
         #region 字段
         private GeoMapLayer mLayer;
-        private readonly Color[][] Colors = new Color[][] { new Color[] { Color.Red, Color.Green, Color.Blue } };
-
+        private readonly Color[][] Colors = new Color[][] { new Color[] { Color.Red, Color.Green}, new Color[] { Color.Red, Color.Blue } , new Color[] { Color.Green, Color.Blue } };
         #endregion
         public FillSymbolPage(GeoMapLayer layer)
         {
             InitializeComponent();
+            // mLayer = layer.Clone();
             mLayer = layer;
-
             renderMethodCB.SelectedIndex = (int)layer.Renderer.RendererType;
             
             InitializeTabs();
-        }
-
-        private void renderMethodCB_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            renderTabControl.SelectedIndex = renderMethodCB.SelectedIndex;
         }
 
         private void InitializeTabs()
@@ -53,19 +47,10 @@ namespace DEETU.Source.Window
             {
                 edgeStyleComboBox.Items.Add(s.ToString());
             }
-            for (int i = 0; i < Colors.Length; ++i)
-            {
-                Bitmap ColorGrad = new Bitmap(uniqueColorgradComboBox.Width, uniqueColorgradComboBox.Height);
-                Graphics g = Graphics.FromImage(ColorGrad);
-                Rectangle r = ColorGrad.Bounds(); ;
-                int ColorNum = Colors[i].Length;
-                int interval_x = r.Width / ColorNum;
-                int interval_y = r.Height / ColorNum;
-                for (int j = 0; j < ColorNum; ++j)
-                    g.FillRectangle(new SolidBrush(Colors[i][j]), new Rectangle(j * interval_x, j * interval_y, interval_x, interval_y));
-                uniqueColorgradComboBox.Items.Add(ColorGrad);
-                classColorgradComboBox.Items.Add(ColorGrad);
-            }
+            classColorgradComboBox.Items.AddRange(Colors);
+            classColorgradComboBox.SelectedIndex = 0;
+            uniqueColorgradComboBox.Items.AddRange(Colors);
+            uniqueColorgradComboBox.SelectedIndex = 0;
             // 对于不同的渲染模式进行配置
             if (mLayer.Renderer.RendererType == GeoRendererTypeConstant.Simple)
             {
@@ -117,16 +102,23 @@ namespace DEETU.Source.Window
             sButton.FlatAppearance.BorderColor = symbol.Outline.Color;
             sButton.FlatAppearance.BorderSize = (int)symbol.Outline.Size;
 
-            MouseEventHandler handler = (sender, e) => SymbolGridButton_MouseClick(symbol);
+            MouseEventHandler handler = (sender, e) => SymbolGridButton_MouseClick(sButton, symbol);
             sButton.MouseClick += handler;
 
             return sButton;
         }
 
-        private void SymbolGridButton_MouseClick(GeoSimpleFillSymbol symbol)
+        private void SymbolGridButton_MouseClick(Button button, GeoSymbol symbol)
         {
-            EditFillSimbolForm SimpleFillForm = new EditFillSimbolForm(symbol);
-            SimpleFillForm.Show();
+            EditSimpleSymbolForm SimpleForm = new EditSimpleSymbolForm(symbol);
+            FormClosedEventHandler handle = (sender, e) => SimpleForm_FormClosed(button);
+            SimpleForm.FormClosed += handle;
+            SimpleForm.Show();
+        }
+
+        private void SimpleForm_FormClosed(Button button)
+        {
+            button.Refresh();
         }
 
         private void fillColorPicker_ValueChanged(object sender, Color value)
@@ -156,7 +148,118 @@ namespace DEETU.Source.Window
 
         private void classFieldComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            (mLayer.Renderer as GeoClassBreaksRenderer).Field = uniqueFieldComboBox.SelectedItem.ToString();
+            (mLayer.Renderer as GeoClassBreaksRenderer).Field = classFieldComboBox.SelectedItem.ToString();
         }
+
+        private void ClassColorgradComboBox_DrawItem(object sender, DrawItemEventArgs e)
+        {
+            e.DrawBackground();
+            Graphics g = e.Graphics;
+            Rectangle r = e.Bounds;
+            int ColorNum = Colors[e.Index].Length;
+            int interval_x = r.Width / ColorNum;
+            for (int i = 0; i < ColorNum; ++i)
+                g.FillRectangle(new SolidBrush(Colors[e.Index][i]), new Rectangle(i * interval_x, 0, interval_x, r.Height));
+            e.DrawFocusRectangle();
+        }
+
+        private void UniqueColorgradComboBox_DrawItem(object sender, DrawItemEventArgs e)
+        {
+            e.DrawBackground();
+            Graphics g = e.Graphics;
+            Rectangle r = e.Bounds;
+            int ColorNum = Colors[e.Index].Length;
+            int interval_x = r.Width / ColorNum;
+            for (int i = 0; i < ColorNum; ++i)
+                g.FillRectangle(new SolidBrush(Colors[e.Index][i]), new Rectangle(i * interval_x, 0, interval_x, r.Height));
+            e.DrawFocusRectangle();
+        }
+
+        private void renderTabControl_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            renderMethodCB.SelectedIndex = renderTabControl.SelectedIndex;
+            if(renderMethodCB.SelectedItem.ToString() == "单一符号")
+                CreateSimpleRenderer();
+            else if(renderMethodCB.SelectedItem.ToString() == "分级符号")
+                CreateClassBreaksRenderer();
+            else
+                CreateUniqueValueRenderer();
+        }
+        private void renderMethodCB_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            renderTabControl.SelectedIndex = renderMethodCB.SelectedIndex;
+            if (renderMethodCB.SelectedItem.ToString() == "单一符号")
+                CreateSimpleRenderer();
+            else if (renderMethodCB.SelectedItem.ToString() == "分级符号")
+                CreateClassBreaksRenderer();
+            else
+                CreateUniqueValueRenderer();
+        }
+
+        private void CreateClassBreaksRenderer()
+        {
+            // 假设存在"f5"的字段且为单精度浮点型
+            GeoClassBreaksRenderer sRenderer = new GeoClassBreaksRenderer();
+            sRenderer.Field = "F5";
+            List<double> sValues = new List<double>();
+            int sFeatureCount = mLayer.Features.Count;
+            int sFieldIndex = mLayer.AttributeFields.FindField(sRenderer.Field);
+            for (int i = 0; i < sFeatureCount; i++)
+            {
+                double sValue = (float)mLayer.Features.GetItem(i).Attributes.GetItem(sFieldIndex);
+                sValues.Add(sValue);
+            }
+            // 获取最小, 最大值, 并分为5级
+            double sMinValue = sValues.Min();
+            double sMaxValue = sValues.Max();
+            for (int i = 0; i < 5; i++)
+            {
+                double sValue = sMinValue + (sMaxValue - sMinValue) * (i + 1) / 5;
+                GeoSimpleFillSymbol sSymbol = new GeoSimpleFillSymbol();
+                sRenderer.AddBreakValue(sValue, sSymbol);
+            }
+            Color sStartColor = Color.FromArgb(255, 255, 192, 192);
+            Color sEndColor = Color.Maroon;
+            sRenderer.RampColor(sStartColor, sEndColor);
+            sRenderer.DefaultSymbol = new GeoSimpleFillSymbol();
+            mLayer.Renderer = sRenderer;
+        }
+
+        private void CreateUniqueValueRenderer()
+        {
+            // 假定第一个字段名称为"名称"且为字符型
+
+            GeoUniqueValueRenderer sRenderer = new GeoUniqueValueRenderer();
+            sRenderer.Field = "名称";
+            List<string> sValues = new List<string>();
+            int sFeatureCount = mLayer.Features.Count;
+            for (int i = 0; i < sFeatureCount; i++)
+            {
+                string svalue = (string)mLayer.Features.GetItem(i).Attributes.GetItem(0); // 这里使用0 假定第一个就是字符串的名称
+                sValues.Add(svalue);
+            }
+            // 去除重复
+            sValues = sValues.Distinct().ToList();
+            // 生成符号
+            int sValueCount = sValues.Count;
+            for (int i = 0; i < sValueCount; i++)
+            {
+                GeoSimpleFillSymbol sSymbol = new GeoSimpleFillSymbol();
+                sRenderer.AddUniqueValue(sValues[i], sSymbol);
+
+            }
+            sRenderer.DefaultSymbol = new GeoSimpleFillSymbol();
+            mLayer.Renderer = sRenderer;
+
+        }
+
+        private void CreateSimpleRenderer()
+        {
+            GeoSimpleRenderer sRenderer = new GeoSimpleRenderer();
+            GeoSimpleFillSymbol sSymbol = new GeoSimpleFillSymbol();
+            sRenderer.Symbol = sSymbol;
+            mLayer.Renderer = sRenderer;
+        }
+
     }
 }

@@ -40,15 +40,36 @@ namespace DEETU.Source.Window
                 return;
             }    
             fontTextBox.Text = labelRenderer.TextSymbol.Font.ToString();
+
             maskCheckBox.Checked = labelRenderer.TextSymbol.UseMask;
+            maskColorPicker.Value = labelRenderer.TextSymbol.MaskColor;
+            maskSizeDoubleUpDown.Value = labelRenderer.TextSymbol.MaskWidth;
             if (maskCheckBox.Checked)
             {
-                maskColorPicker.Value = labelRenderer.TextSymbol.MaskColor;
-                maskSizeDoubleUpDown.Value = labelRenderer.TextSymbol.MaskWidth;
+                tableLayoutPanel1.SetEnabled();
             }
             else
                 tableLayoutPanel1.SetDisabled();
             alignmentRadioButtonGroup.SelectedIndex = (int)labelRenderer.TextSymbol.Alignment;
+            xOffsetDoubleUpDown.Value = labelRenderer.TextSymbol.OffsetX;
+            yOffsetDoubleUpDown.Value = labelRenderer.TextSymbol.OffsetY;
+            
+        }
+
+        private void enableCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (enableCheckBox.Checked)
+                labelPanel.SetEnabled();
+            else
+                labelPanel.SetDisabled();
+        }
+
+        private void maskCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (maskCheckBox.Checked)
+                tableLayoutPanel1.SetEnabled();
+            else
+                tableLayoutPanel1.SetDisabled();
         }
     }
 }
