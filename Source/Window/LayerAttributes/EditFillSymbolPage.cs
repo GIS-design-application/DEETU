@@ -12,7 +12,7 @@ using DEETU.Tool;
 
 namespace DEETU.Source.Window.LayerAttributes
 {
-    public partial class EditFillSymbolPage : UITitlePage
+    public partial class EditFillSymbolPage : UIPage
     {
         private GeoSimpleFillSymbol mFillSymbol;
         private GeoSimpleFillSymbol mTempFillSymbol;

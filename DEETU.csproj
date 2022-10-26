@@ -13,6 +13,7 @@
     <Deterministic>true</Deterministic>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -25,7 +26,6 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -210,6 +210,9 @@
     <EmbeddedResource Include="Source\Map\GeoMapControl.resx">
       <DependentUpon>GeoMapControl.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Source\Window\Form1.resx">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Source\Window\LayerAttributes\AnnotationPage.resx">
       <DependentUpon>AnnotationPage.cs</DependentUpon>
     </EmbeddedResource>
@@ -221,6 +224,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Source\Window\LayerAttributes\EditMarkerSymbolPage.resx">
       <DependentUpon>EditMarkerSymbolPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Source\Window\LayerAttributes\EditSimpleSymbolForm.resx">
+      <DependentUpon>EditSimpleSymbolForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Source\Window\LayerAttributes\FieldPage.resx">
       <DependentUpon>FieldPage.cs</DependentUpon>

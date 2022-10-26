@@ -12,6 +12,8 @@
     <VerifyUploadedFiles>false</VerifyUploadedFiles>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
-    <StartWorkingDirectory>C:\Users\映火岚烟\source\repos\DEETU\</StartWorkingDirectory>
+    <StartWorkingDirectory>
+    </StartWorkingDirectory>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
 </Project>

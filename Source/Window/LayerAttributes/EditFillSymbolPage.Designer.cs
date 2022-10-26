@@ -40,16 +40,15 @@ namespace DEETU.Source.Window.LayerAttributes
             this.edgeStyleComboBox = new Sunny.UI.UIComboBox();
             this.ConformButton = new Sunny.UI.UIButton();
             this.CancelButton = new Sunny.UI.UIButton();
-            this.PagePanel.SuspendLayout();
+            this.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // PagePanel
             // 
-            this.PagePanel.Controls.Add(this.ConformButton);
-            this.PagePanel.Controls.Add(this.CancelButton);
-            this.PagePanel.Controls.Add(this.tableLayoutPanel1);
-            this.PagePanel.Size = new System.Drawing.Size(433, 254);
+            this.Controls.Add(this.ConformButton);
+            this.Controls.Add(this.CancelButton);
+            this.Controls.Add(this.tableLayoutPanel1);
             // 
             // tableLayoutPanel1
             // 
@@ -233,8 +232,6 @@ namespace DEETU.Source.Window.LayerAttributes
             this.ClientSize = new System.Drawing.Size(433, 289);
             this.Name = "EditFillSymbolPage";
             this.Text = "EditFillSimbolForm";
-            this.PagePanel.ResumeLayout(false);
-            this.PagePanel.PerformLayout();
             this.tableLayoutPanel1.ResumeLayout(false);
             this.ResumeLayout(false);
 

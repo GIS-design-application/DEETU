@@ -12,7 +12,7 @@ using DEETU.Tool;
 
 namespace DEETU.Source.Window.LayerAttributes
 {
-    public partial class EditLineSymbolPage : UITitlePage
+    public partial class EditLineSymbolPage : UIPage
     {
         private GeoSimpleLineSymbol mLineSymbol;
         private GeoSimpleLineSymbol mTempLineSymbol;

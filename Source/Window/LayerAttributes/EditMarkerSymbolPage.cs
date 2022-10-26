@@ -12,7 +12,7 @@ using System.Windows.Forms;
 
 namespace DEETU.Source.Window.LayerAttributes
 {
-    public partial class EditMarkerSymbolPage : UITitlePage
+    public partial class EditMarkerSymbolPage : UIPage
     {
         private GeoSimpleMarkerSymbol mMarkerSymbol;
         private GeoSimpleMarkerSymbol mTempMarkerSymbol;
