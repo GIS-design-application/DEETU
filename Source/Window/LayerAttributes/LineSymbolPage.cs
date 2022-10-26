@@ -27,7 +27,7 @@ namespace DEETU.Source.Window
             InitializeComponent();
             // mLayer = layer.Clone();
             mLayer = layer;
-            renderMethodCB.SelectedIndex = (int)layer.Renderer.RendererType;
+            renderMethodCB.SelectedIndex = (int)(layer.Renderer.RendererType);
             
             InitializeTabs();
         }
@@ -227,13 +227,13 @@ namespace DEETU.Source.Window
             for (int i = 0; i < 5; i++)
             {
                 double sValue = sMinValue + (sMaxValue - sMinValue) * (i + 1) / 5;
-                GeoSimpleFillSymbol sSymbol = new GeoSimpleFillSymbol();
+                GeoSimpleLineSymbol sSymbol = new GeoSimpleLineSymbol();
                 sRenderer.AddBreakValue(sValue, sSymbol);
             }
             Color sStartColor = Color.FromArgb(255, 255, 192, 192);
             Color sEndColor = Color.Maroon;
             sRenderer.RampColor(sStartColor, sEndColor);
-            sRenderer.DefaultSymbol = new GeoSimpleFillSymbol();
+            sRenderer.DefaultSymbol = new GeoSimpleLineSymbol();
             mLayer.Renderer = sRenderer;
         }
 
@@ -256,11 +256,11 @@ namespace DEETU.Source.Window
             int sValueCount = sValues.Count;
             for (int i = 0; i < sValueCount; i++)
             {
-                GeoSimpleFillSymbol sSymbol = new GeoSimpleFillSymbol();
+                GeoSimpleLineSymbol sSymbol = new GeoSimpleLineSymbol();
                 sRenderer.AddUniqueValue(sValues[i], sSymbol);
 
             }
-            sRenderer.DefaultSymbol = new GeoSimpleFillSymbol();
+            sRenderer.DefaultSymbol = new GeoSimpleLineSymbol();
             mLayer.Renderer = sRenderer;
 
         }
@@ -268,7 +268,7 @@ namespace DEETU.Source.Window
         private void CreateSimpleRenderer()
         {
             GeoSimpleRenderer sRenderer = new GeoSimpleRenderer();
-            GeoSimpleFillSymbol sSymbol = new GeoSimpleFillSymbol();
+            GeoSimpleLineSymbol sSymbol = new GeoSimpleLineSymbol();
             sRenderer.Symbol = sSymbol;
             mLayer.Renderer = sRenderer;
         }

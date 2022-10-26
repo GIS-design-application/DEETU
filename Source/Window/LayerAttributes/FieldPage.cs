@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using Sunny.UI;
 using DEETU.Map;
 using DEETU.Core;
+using DEETU.Tool;
 
 namespace DEETU.Source.Window
 {
@@ -56,8 +57,20 @@ namespace DEETU.Source.Window
 
         private void addFieldButton_Click(object sender, EventArgs e)
         {
-            UIEditForm editForm = new UIEditForm();
+            UIEditOption option = new UIEditOption();
+            option.AutoLabelWidth = true;
+            option.Text = "增加一个字段";
+            option.AddText("Name", "字段名称", "", true);
+            option.AddText("AliasName", "别名", "", false);
+            option.AddCombobox("Type", "数据类型", Enum.GetNames(typeof(GeoValueTypeConstant)));
+
+            UIEditForm editForm = new UIEditForm(option);
             editForm.ShowDialog();
+
+            if (editForm.IsOK)
+            {
+                fieldDataGridView.Rows.Add(editForm["Name"], editForm["AliasName"], ((GeoValueTypeConstant)editForm["Type"] ).ToString());
+            }
         }
 
         private void removeFieldButton_Click(object sender, EventArgs e)
