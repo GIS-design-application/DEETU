@@ -134,6 +134,7 @@
             this.toolStrip2 = new System.Windows.Forms.ToolStrip();
             this.startEditToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.保存当前编辑ToolStripButton = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator13 = new System.Windows.Forms.ToolStripSeparator();
             this.删除所选要素ToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.moveItemToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.editToolStripButton = new System.Windows.Forms.ToolStripButton();
@@ -1036,6 +1037,7 @@
             this.toolStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.startEditToolStripButton,
             this.保存当前编辑ToolStripButton,
+            this.toolStripSeparator13,
             this.删除所选要素ToolStripButton,
             this.moveItemToolStripButton,
             this.editToolStripButton,
@@ -1069,6 +1071,11 @@
             this.保存当前编辑ToolStripButton.Name = "保存当前编辑ToolStripButton";
             this.保存当前编辑ToolStripButton.Size = new System.Drawing.Size(24, 24);
             this.保存当前编辑ToolStripButton.Text = "保存当前编辑";
+            // 
+            // toolStripSeparator13
+            // 
+            this.toolStripSeparator13.Name = "toolStripSeparator13";
+            this.toolStripSeparator13.Size = new System.Drawing.Size(6, 27);
             // 
             // 删除所选要素ToolStripButton
             // 
