@@ -1311,6 +1311,7 @@ OnZoomOut_MouseUp(e);
             {
                 geoMap.RedrawMap();
                 geoMap.FullExtent();
+                geoMap.Refresh();
             }
         }
 
@@ -1327,7 +1328,14 @@ OnZoomOut_MouseUp(e);
             {
                 geoMap.RedrawMap();
                 geoMap.FullExtent();
+                geoMap.Refresh();
             }
+        }
+
+        private void 打开属性表ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AttributeTableForm attributeForm = new AttributeTableForm();
+            attributeForm.Show();
         }
         #endregion
 
@@ -1359,6 +1367,7 @@ OnZoomOut_MouseUp(e);
         {
             _logging = form.logging;
         }
+
 
 
 #endif
