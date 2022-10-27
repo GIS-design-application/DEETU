@@ -11,7 +11,7 @@ using System.Text;
 using DEETU.Core;
 using DEETU.Geometry;
 
-namespace DEETU.Source.Core.CoordinateSystem
+namespace DEETU.Core
 {
     /// <summary>
     /// 投影类型枚举
@@ -19,13 +19,13 @@ namespace DEETU.Source.Core.CoordinateSystem
     /// </summary>
     public enum GeographicCrsType
     {
-        WGS84,
-        Beijing1954,
+        WGS84 = 1,
+        Beijing1954 = 2,
     }
     public enum ProjectedCrsType
     {
-        WebMercator,
-        Lambert2SP
+        WebMercator = 1,
+        Lambert2SP = 2
     }
     public enum CrsType
     {
@@ -72,7 +72,7 @@ namespace DEETU.Source.Core.CoordinateSystem
             _DefaultWebMercatorParam.Add("Name", "WebMercator");
             _DefaultWebMercatorParam.Add("False Northing", "0");
             _DefaultWebMercatorParam.Add("False Easting", "0");
-            _DefaultLambert2SPParam.Add("Origin longitude", "0");
+            _DefaultWebMercatorParam.Add("Origin longitude", "0");
         }
 
         #region 属性

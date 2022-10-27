@@ -60,7 +60,7 @@ namespace DEETU.Source.Window
             this.uiLabel4 = new Sunny.UI.UILabel();
             this.uiLabel6 = new Sunny.UI.UILabel();
             this.uniqueFieldComboBox = new Sunny.UI.UIComboBox();
-            this.uniqueColorgradComboBox = new System.Windows.Forms.ComboBox();
+            this.uniqueColorgradComboBox = new Sunny.UI.UIComboBox();
             this.classBreakTab = new System.Windows.Forms.TabPage();
             this.uiIntegerUpDown1 = new Sunny.UI.UIIntegerUpDown();
             this.uiLabel3 = new Sunny.UI.UILabel();
@@ -72,7 +72,7 @@ namespace DEETU.Source.Window
             this.uiLabel9 = new Sunny.UI.UILabel();
             this.uiLabel10 = new Sunny.UI.UILabel();
             this.classFieldComboBox = new Sunny.UI.UIComboBox();
-            this.classColorgradComboBox = new System.Windows.Forms.ComboBox();
+            this.classColorgradComboBox = new Sunny.UI.UIComboBox();
             this.renderMethodCB = new Sunny.UI.UIComboBox();
             this.geoUniqueValueRendererBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.PagePanel.SuspendLayout();
@@ -118,7 +118,6 @@ namespace DEETU.Source.Window
             this.renderTabControl.Style = Sunny.UI.UIStyle.Custom;
             this.renderTabControl.StyleCustomMode = true;
             this.renderTabControl.TabIndex = 0;
-            this.renderTabControl.SelectedIndexChanged += new System.EventHandler(this.renderTabControl_SelectedIndexChanged);
             // 
             // simpleTab
             // 
@@ -219,7 +218,7 @@ namespace DEETU.Source.Window
             this.fillColorPicker.Name = "fillColorPicker";
             this.fillColorPicker.Padding = new System.Windows.Forms.Padding(0, 0, 30, 2);
             this.fillColorPicker.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
-            this.fillColorPicker.Size = new System.Drawing.Size(295, 29);
+            this.fillColorPicker.Size = new System.Drawing.Size(295, 39);
             this.fillColorPicker.Style = Sunny.UI.UIStyle.Office2010Black;
             this.fillColorPicker.StyleCustomMode = true;
             this.fillColorPicker.TabIndex = 8;
@@ -239,7 +238,7 @@ namespace DEETU.Source.Window
             this.edgeColorPicker.Name = "edgeColorPicker";
             this.edgeColorPicker.Padding = new System.Windows.Forms.Padding(0, 0, 30, 2);
             this.edgeColorPicker.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
-            this.edgeColorPicker.Size = new System.Drawing.Size(295, 29);
+            this.edgeColorPicker.Size = new System.Drawing.Size(295, 39);
             this.edgeColorPicker.Style = Sunny.UI.UIStyle.Office2010Black;
             this.edgeColorPicker.StyleCustomMode = true;
             this.edgeColorPicker.TabIndex = 9;
@@ -277,7 +276,7 @@ namespace DEETU.Source.Window
             this.edgeStyleComboBox.Name = "edgeStyleComboBox";
             this.edgeStyleComboBox.Padding = new System.Windows.Forms.Padding(0, 0, 30, 2);
             this.edgeStyleComboBox.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
-            this.edgeStyleComboBox.Size = new System.Drawing.Size(295, 29);
+            this.edgeStyleComboBox.Size = new System.Drawing.Size(295, 39);
             this.edgeStyleComboBox.Style = Sunny.UI.UIStyle.Office2010Black;
             this.edgeStyleComboBox.StyleCustomMode = true;
             this.edgeStyleComboBox.TabIndex = 13;
@@ -388,16 +387,16 @@ namespace DEETU.Source.Window
             this.uniqueTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.uniqueTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.uniqueTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.uniqueTableLayoutPanel.Size = new System.Drawing.Size(456, 139);
+            this.uniqueTableLayoutPanel.Size = new System.Drawing.Size(456, 137);
             this.uniqueTableLayoutPanel.TabIndex = 5;
             // 
             // uiLabel8
             // 
             this.uiLabel8.Dock = System.Windows.Forms.DockStyle.Fill;
             this.uiLabel8.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.uiLabel8.Location = new System.Drawing.Point(3, 99);
+            this.uiLabel8.Location = new System.Drawing.Point(3, 98);
             this.uiLabel8.Name = "uiLabel8";
-            this.uiLabel8.Size = new System.Drawing.Size(94, 40);
+            this.uiLabel8.Size = new System.Drawing.Size(94, 39);
             this.uiLabel8.Style = Sunny.UI.UIStyle.Office2010Black;
             this.uiLabel8.TabIndex = 15;
             this.uiLabel8.Text = "默认颜色";
@@ -421,7 +420,7 @@ namespace DEETU.Source.Window
             this.uiLabel6.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.uiLabel6.Location = new System.Drawing.Point(3, 49);
             this.uiLabel6.Name = "uiLabel6";
-            this.uiLabel6.Size = new System.Drawing.Size(94, 50);
+            this.uiLabel6.Size = new System.Drawing.Size(94, 49);
             this.uiLabel6.Style = Sunny.UI.UIStyle.Office2010Black;
             this.uiLabel6.TabIndex = 5;
             this.uiLabel6.Text = "颜色渐变";
@@ -438,7 +437,7 @@ namespace DEETU.Source.Window
             this.uniqueFieldComboBox.Name = "uniqueFieldComboBox";
             this.uniqueFieldComboBox.Padding = new System.Windows.Forms.Padding(0, 0, 30, 2);
             this.uniqueFieldComboBox.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
-            this.uniqueFieldComboBox.Size = new System.Drawing.Size(348, 29);
+            this.uniqueFieldComboBox.Size = new System.Drawing.Size(348, 39);
             this.uniqueFieldComboBox.Style = Sunny.UI.UIStyle.Office2010Black;
             this.uniqueFieldComboBox.StyleCustomMode = true;
             this.uniqueFieldComboBox.TabIndex = 13;
@@ -448,18 +447,21 @@ namespace DEETU.Source.Window
             // 
             // uniqueColorgradComboBox
             // 
-            this.uniqueColorgradComboBox.BackColor = System.Drawing.Color.White;
             this.uniqueColorgradComboBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.uniqueColorgradComboBox.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.uniqueColorgradComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.uniqueColorgradComboBox.FillColor = System.Drawing.Color.White;
             this.uniqueColorgradComboBox.Font = new System.Drawing.Font("微软雅黑", 12F);
             this.uniqueColorgradComboBox.Location = new System.Drawing.Point(104, 54);
             this.uniqueColorgradComboBox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.uniqueColorgradComboBox.MinimumSize = new System.Drawing.Size(63, 0);
             this.uniqueColorgradComboBox.Name = "uniqueColorgradComboBox";
-            this.uniqueColorgradComboBox.Size = new System.Drawing.Size(348, 30);
+            this.uniqueColorgradComboBox.Padding = new System.Windows.Forms.Padding(0, 0, 30, 2);
+            this.uniqueColorgradComboBox.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
+            this.uniqueColorgradComboBox.Size = new System.Drawing.Size(348, 39);
+            this.uniqueColorgradComboBox.Style = Sunny.UI.UIStyle.Office2010Black;
+            this.uniqueColorgradComboBox.StyleCustomMode = true;
             this.uniqueColorgradComboBox.TabIndex = 14;
-            this.uniqueColorgradComboBox.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.UniqueColorgradComboBox_DrawItem);
+            this.uniqueColorgradComboBox.Text = "uiComboBox1";
+            this.uniqueColorgradComboBox.TextAlignment = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // classBreakTab
             // 
@@ -470,7 +472,7 @@ namespace DEETU.Source.Window
             this.classBreakTab.Controls.Add(this.classTableLayoutPanel);
             this.classBreakTab.Location = new System.Drawing.Point(0, 40);
             this.classBreakTab.Name = "classBreakTab";
-            this.classBreakTab.Size = new System.Drawing.Size(480, 488);
+            this.classBreakTab.Size = new System.Drawing.Size(993, 488);
             this.classBreakTab.TabIndex = 2;
             this.classBreakTab.Text = "class break";
             // 
@@ -601,16 +603,16 @@ namespace DEETU.Source.Window
             this.classTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.classTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.classTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.classTableLayoutPanel.Size = new System.Drawing.Size(426, 139);
+            this.classTableLayoutPanel.Size = new System.Drawing.Size(426, 137);
             this.classTableLayoutPanel.TabIndex = 7;
             // 
             // uiLabel11
             // 
             this.uiLabel11.Dock = System.Windows.Forms.DockStyle.Fill;
             this.uiLabel11.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.uiLabel11.Location = new System.Drawing.Point(3, 99);
+            this.uiLabel11.Location = new System.Drawing.Point(3, 98);
             this.uiLabel11.Name = "uiLabel11";
-            this.uiLabel11.Size = new System.Drawing.Size(94, 40);
+            this.uiLabel11.Size = new System.Drawing.Size(94, 39);
             this.uiLabel11.Style = Sunny.UI.UIStyle.Office2010Black;
             this.uiLabel11.TabIndex = 15;
             this.uiLabel11.Text = "默认颜色";
@@ -634,7 +636,7 @@ namespace DEETU.Source.Window
             this.uiLabel10.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.uiLabel10.Location = new System.Drawing.Point(3, 49);
             this.uiLabel10.Name = "uiLabel10";
-            this.uiLabel10.Size = new System.Drawing.Size(94, 50);
+            this.uiLabel10.Size = new System.Drawing.Size(94, 49);
             this.uiLabel10.Style = Sunny.UI.UIStyle.Office2010Black;
             this.uiLabel10.TabIndex = 5;
             this.uiLabel10.Text = "颜色渐变";
@@ -651,7 +653,7 @@ namespace DEETU.Source.Window
             this.classFieldComboBox.Name = "classFieldComboBox";
             this.classFieldComboBox.Padding = new System.Windows.Forms.Padding(0, 0, 30, 2);
             this.classFieldComboBox.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
-            this.classFieldComboBox.Size = new System.Drawing.Size(318, 29);
+            this.classFieldComboBox.Size = new System.Drawing.Size(318, 39);
             this.classFieldComboBox.Style = Sunny.UI.UIStyle.Custom;
             this.classFieldComboBox.StyleCustomMode = true;
             this.classFieldComboBox.TabIndex = 13;
@@ -661,18 +663,21 @@ namespace DEETU.Source.Window
             // 
             // classColorgradComboBox
             // 
-            this.classColorgradComboBox.BackColor = System.Drawing.Color.White;
             this.classColorgradComboBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.classColorgradComboBox.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.classColorgradComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.classColorgradComboBox.FillColor = System.Drawing.Color.White;
             this.classColorgradComboBox.Font = new System.Drawing.Font("微软雅黑", 12F);
             this.classColorgradComboBox.Location = new System.Drawing.Point(104, 54);
             this.classColorgradComboBox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.classColorgradComboBox.MinimumSize = new System.Drawing.Size(63, 0);
             this.classColorgradComboBox.Name = "classColorgradComboBox";
-            this.classColorgradComboBox.Size = new System.Drawing.Size(318, 30);
+            this.classColorgradComboBox.Padding = new System.Windows.Forms.Padding(0, 0, 30, 2);
+            this.classColorgradComboBox.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
+            this.classColorgradComboBox.Size = new System.Drawing.Size(318, 39);
+            this.classColorgradComboBox.Style = Sunny.UI.UIStyle.Custom;
+            this.classColorgradComboBox.StyleCustomMode = true;
             this.classColorgradComboBox.TabIndex = 14;
-            this.classColorgradComboBox.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.ClassColorgradComboBox_DrawItem);
+            this.classColorgradComboBox.Text = "uiComboBox3";
+            this.classColorgradComboBox.TextAlignment = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // renderMethodCB
             // 
@@ -690,7 +695,7 @@ namespace DEETU.Source.Window
             this.renderMethodCB.Name = "renderMethodCB";
             this.renderMethodCB.Padding = new System.Windows.Forms.Padding(0, 0, 30, 2);
             this.renderMethodCB.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
-            this.renderMethodCB.Size = new System.Drawing.Size(480, 29);
+            this.renderMethodCB.Size = new System.Drawing.Size(480, 39);
             this.renderMethodCB.Style = Sunny.UI.UIStyle.Office2010Black;
             this.renderMethodCB.TabIndex = 1;
             this.renderMethodCB.TextAlignment = System.Drawing.ContentAlignment.MiddleLeft;
@@ -702,7 +707,7 @@ namespace DEETU.Source.Window
             // 
             // FillSymbolPage
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 21F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(14F, 31F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(480, 600);
@@ -749,7 +754,7 @@ namespace DEETU.Source.Window
         private Sunny.UI.UILabel uiLabel6;
         private Sunny.UI.UIDataGridView uniqueDataGridView;
         private Sunny.UI.UIComboBox uniqueFieldComboBox;
-        private System.Windows.Forms.ComboBox uniqueColorgradComboBox;
+        private Sunny.UI.UIComboBox uniqueColorgradComboBox;
         private System.Windows.Forms.DataGridViewButtonColumn symbolCol;
         private System.Windows.Forms.DataGridViewTextBoxColumn valueCol;
         private Sunny.UI.UIDataGridView uiDataGridView2;
@@ -759,7 +764,7 @@ namespace DEETU.Source.Window
         private Sunny.UI.UILabel uiLabel9;
         private Sunny.UI.UILabel uiLabel10;
         private Sunny.UI.UIComboBox classFieldComboBox;
-        private System.Windows.Forms.ComboBox classColorgradComboBox;
+        private Sunny.UI.UIComboBox classColorgradComboBox;
         private Sunny.UI.UIIntegerUpDown uiIntegerUpDown1;
         private Sunny.UI.UILabel uiLabel3;
         private System.Windows.Forms.BindingSource geoUniqueValueRendererBindingSource;

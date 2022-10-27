@@ -6,7 +6,6 @@ using System.Drawing;
 using DEETU.Geometry;
 using DEETU.Core;
 using DEETU.Tool;
-using DEETU.Source.Core.CoordinateSystem;
 
 namespace DEETU.Map
 {
@@ -427,7 +426,9 @@ namespace DEETU.Map
             _AttributeFields.FieldRemoved += _AttributeFields_FieldRemoved;
             _AttributeFields.FieldAppended += _AttributeFields_FieldAppended;
             // （2）初始化图层的渲染
-            InitializeRenderer();        
+            InitializeRenderer();
+            //  (3) 初始化图层的坐标系
+            _Crs = new GeoCoordinateReferenceSystem();
         }
 
         // 初始化渲染

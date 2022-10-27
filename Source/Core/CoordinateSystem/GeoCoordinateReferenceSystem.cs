@@ -7,7 +7,7 @@ using DEETU.Core;
 using System.Diagnostics;
 using System.CodeDom;
 
-namespace DEETU.Source.Core.CoordinateSystem
+namespace DEETU.Core
 {
     /// <summary>
     /// 用来记录图层或地图的坐标系统
@@ -21,7 +21,8 @@ namespace DEETU.Source.Core.CoordinateSystem
         Dictionary<string, string> _ProjectedParameters;
         string _Unit;//单位
 
-        GeoCoordinateReferenceSystem()
+        #region 构造函数
+        public GeoCoordinateReferenceSystem()
         {
             _GeographicCrs = null;
             _ProjectedCrs = null;
@@ -29,6 +30,14 @@ namespace DEETU.Source.Core.CoordinateSystem
             _GeographicParameters = new Dictionary<string, string>();
             _ProjectedParameters = new Dictionary<string, string>();
         }
+
+        public GeoCoordinateReferenceSystem(GeographicCrsType? geographicCrs, ProjectedCrsType? projectedCrs)
+        {
+            _GeographicCrs = geographicCrs;
+            _ProjectedCrs = projectedCrs;
+            SetParameters(_GeographicCrs, _ProjectedCrs);
+        }
+        #endregion
 
         #region 运算符重载
         public static bool operator == (GeoCoordinateReferenceSystem crs1,GeoCoordinateReferenceSystem crs2)
@@ -167,5 +176,34 @@ namespace DEETU.Source.Core.CoordinateSystem
             }
         }
         #endregion
+
+        private void SetParameters(GeographicCrsType? geographicCrs, ProjectedCrsType? projectedCrs)
+        {
+            switch (geographicCrs)
+            {
+                case GeographicCrsType.Beijing1954:
+                    _GeographicParameters = GeoCoordinateFactory.DefaultBeijing1954Param;
+                    break;
+                case GeographicCrsType.WGS84:
+                    _GeographicParameters = GeoCoordinateFactory.DefaultWGS84Param;
+                    break;
+                default:
+                    Debug.Assert(false);
+                    break;
+            }
+
+            switch (projectedCrs)
+            {
+                case ProjectedCrsType.Lambert2SP:
+                    _ProjectedParameters = GeoCoordinateFactory.DefaultLambert2SPParam;
+                    break;
+                case ProjectedCrsType.WebMercator:
+                    _ProjectedParameters = GeoCoordinateFactory.DefaultWebMercatorParam;
+                    break;
+                default:
+                    Debug.Assert(false);
+                    break;
+            }
+        }
     }
 }

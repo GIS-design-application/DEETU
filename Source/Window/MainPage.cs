@@ -111,7 +111,7 @@ namespace DEETU.Source.Window
                 sStream.Dispose();
                 sr.Dispose();
                 
-                UpdateTreeView(sLayer.Renderer, sFileName);
+                UpdateTreeView(sLayer, sFileName);
             }
             catch (Exception error)
             {
@@ -123,16 +123,17 @@ namespace DEETU.Source.Window
         // 在加入图层和修改渲染方式时调用，现在还没有修改渲染方式的子界面，所以就先这样了。
         // 修改的时候可以把原来的删掉再填一个新的
         // 需要注意的是，这里没有添加事件，就是点击TreeNode弹出子窗体的事件，后面也需要补充
-        private void UpdateTreeView(GeoRenderer renderer, string filename)
+        private void UpdateTreeView(GeoMapLayer layer, string filename)
         {
             // 按照renderer Type进行处理
-            GeoRenderer sRenderer = renderer;
+            GeoRenderer sRenderer = layer.Renderer;
             if (sRenderer.RendererType == GeoRendererTypeConstant.Simple)
             {
                 TreeNode style = CreateSimpleStyleTreeNode((sRenderer as GeoSimpleRenderer).Symbol);
                 TreeNode layerNode = new TreeNode(filename, new TreeNode[] { style });
                 layerNode.ContextMenuStrip = layerContextMenuStrip;
                 //layerTreeView.Nodes.Insert(0,layerNode);
+                layerNode.Tag = layer;
                 layerTreeView.Nodes.Add(layerNode);
             }
             else if (sRenderer.RendererType == GeoRendererTypeConstant.ClassBreaks)
@@ -149,6 +150,7 @@ namespace DEETU.Source.Window
                 TreeNode layerNode = new TreeNode(filename, styles.ToArray());
                 layerNode.ContextMenuStrip = layerContextMenuStrip;
                 //layerTreeView.Nodes.Insert(0,layerNode);
+                layerNode.Tag = layer;
                 layerTreeView.Nodes.Add(layerNode);
             }
             else if (sRenderer.RendererType == GeoRendererTypeConstant.UniqueValue)
@@ -163,6 +165,7 @@ namespace DEETU.Source.Window
                 TreeNode layerNode = new TreeNode(filename, styles.ToArray());
                 layerNode.ContextMenuStrip = layerContextMenuStrip;
                 //layerTreeView.Nodes.Insert(0,layerNode);
+                layerNode.Tag = layer;
                 layerTreeView.Nodes.Add(layerNode);
             }
             else
@@ -1284,9 +1287,9 @@ OnZoomOut_MouseUp(e);
         #region 图层右键菜单
         private void 特性ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            int layerIndex = mCurrentLayerNode.Index;
             // !这里获取layer时应该是按名字获取，或许可以考虑在Layers里面加一个GetItem(string name)的函数。
-            GeoMapLayer layer = geoMap.Layers.GetItem(layerIndex);
+            // ** 现在用code的Tag data 的形式实现了；
+            GeoMapLayer layer = mCurrentLayerNode.Tag as GeoMapLayer;
             
             //GeoMapLayer layer = new GeoMapLayer(mCurrentLayerNode.Text, GeoGeometryTypeConstant.Point);
             LayerAttributesForm layerAttributes = new LayerAttributesForm(layer);
@@ -1296,12 +1299,35 @@ OnZoomOut_MouseUp(e);
 
         private void 定义坐标参照系ToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            GeoMapLayer layer = mCurrentLayerNode.Tag as GeoMapLayer;
+#if DEBUG
+            if (layer.Crs.Type == CrsType.None)
+                layer.Crs = new GeoCoordinateReferenceSystem(GeographicCrsType.Beijing1954, ProjectedCrsType.Lambert2SP);
+#endif
+            CrsDefineForm crsDefine = new CrsDefineForm(layer);
+            crsDefine.Show();
 
+            if (crsDefine.IsOK)
+            {
+                geoMap.RedrawMap();
+                geoMap.FullExtent();
+            }
         }
 
         private void 坐标参照系转换ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            GeoMapLayer layer = mCurrentLayerNode.Tag as GeoMapLayer;
+#if DEBUG
+            if (layer.Crs.Type == CrsType.None)
+                layer.Crs = new GeoCoordinateReferenceSystem(GeographicCrsType.Beijing1954, ProjectedCrsType.Lambert2SP);
+#endif
+            CrsTransferForm crsTransfer = new CrsTransferForm(layer);
+            crsTransfer.Show();
+            if (crsTransfer.IsOK)
+            {
+                geoMap.RedrawMap();
+                geoMap.FullExtent();
+            }
         }
         #endregion
 

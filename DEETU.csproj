@@ -91,6 +91,30 @@
     <Compile Include="Source\IO\GeoDataIOTools.cs" />
     <Compile Include="Source\IO\GeoDataTable.cs" />
     <Compile Include="Source\Map\GeoShapeFlashControler.cs" />
+    <Compile Include="Source\Window\AttributeTable\AttributeTableForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Source\Window\AttributeTable\AttributeTableForm.Designer.cs">
+      <DependentUpon>AttributeTableForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Source\Window\Crs\CrsDefineForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Source\Window\Crs\CrsDefineForm.Designer.cs">
+      <DependentUpon>CrsDefineForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Source\Window\Crs\CrsEditForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Source\Window\Crs\CrsEditForm.Designer.cs">
+      <DependentUpon>CrsEditForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Source\Window\Crs\CrsTransferForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Source\Window\Crs\CrsTransferForm.Designer.cs">
+      <DependentUpon>CrsTransferForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Source\Window\GeoFormEnum.cs" />
     <Compile Include="Source\Window\LayerAttributes\EditFillSymbolPage.cs">
       <SubType>Form</SubType>
@@ -204,6 +228,18 @@
     <EmbeddedResource Include="Source\Map\GeoMapControl.resx">
       <DependentUpon>GeoMapControl.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Source\Window\AttributeTable\AttributeTableForm.resx">
+      <DependentUpon>AttributeTableForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Source\Window\Crs\CrsDefineForm.resx">
+      <DependentUpon>CrsDefineForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Source\Window\Crs\CrsEditForm.resx">
+      <DependentUpon>CrsEditForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Source\Window\Crs\CrsTransferForm.resx">
+      <DependentUpon>CrsTransferForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Source\Window\LayerAttributes\AnnotationPage.resx">
       <DependentUpon>AnnotationPage.cs</DependentUpon>
     </EmbeddedResource>
@@ -261,6 +297,7 @@
     <None Include=".gitignore" />
     <None Include=".vs\slnx.sqlite" />
     <None Include=".vs\VSWorkspaceState.json" />
+    <None Include="ClassDiagram1.cd" />
     <None Include="LICENSE" />
     <None Include="obj\Debug\DEETU.csproj.CoreCompileInputs.cache" />
     <None Include="obj\Debug\DEETU.csproj.GenerateResource.cache" />
