@@ -124,11 +124,9 @@ namespace DEETU.Source.Window
             }
         }
 
-        // 这个方程是为了显示图层渲染方式
-        // 在加入图层和修改渲染方式时调用，现在还没有修改渲染方式的子界面，所以就先这样了。
-        // 修改的时候可以把原来的删掉再填一个新的
-        // 需要注意的是，这里没有添加事件，就是点击TreeNode弹出子窗体的事件，后面也需要补充
-        private void UpdateTreeView(GeoMapLayer layer, string filename)
+        // 这个函数是为了显示图层渲染方式
+        // 在加入图层和修改渲染方式时调用
+        private void UpdateTreeView(GeoRenderer renderer, string filename)
         {
             // 按照renderer Type进行处理
             GeoRenderer sRenderer = layer.Renderer;
@@ -183,13 +181,13 @@ namespace DEETU.Source.Window
         {
             TreeNode style = new TreeNode(label);
             TreeImages.Images.Add(CreateBitmapFromSymbol(symbol));
-            style.ImageIndex = TreeImages.Images.Count;
+            style.ImageIndex = TreeImages.Images.Count - 1;
             return style;
         }
 
         private Bitmap CreateBitmapFromSymbol(GeoSymbol symbol)
         {
-            Bitmap styleImage = new Bitmap(10, 10);
+            Bitmap styleImage = new Bitmap(50, 20);
             Graphics g = Graphics.FromImage(styleImage);
             if (symbol.SymbolType == GeoSymbolTypeConstant.SimpleMarkerSymbol)
             {
@@ -203,11 +201,13 @@ namespace DEETU.Source.Window
                 Pen sPen = new Pen(sLineSymbol.Color, (float)(sLineSymbol.Size / 1000 * dpm));
                 sPen.DashStyle = (DashStyle)sLineSymbol.Style;
                 g.DrawLine(sPen, new Point(0, styleImage.Height / 2), new Point(styleImage.Width, styleImage.Height / 2));
+                sPen.Dispose();
             }
             else if (symbol.SymbolType == GeoSymbolTypeConstant.SimpleFillSymbol)
             {
                 SolidBrush sBrush = new SolidBrush((symbol as GeoSimpleFillSymbol).Color);
                 g.FillRectangle(sBrush, new RectangleF(0, 0, styleImage.Width, styleImage.Height));
+                sBrush.Dispose();
             }
             else
             {
