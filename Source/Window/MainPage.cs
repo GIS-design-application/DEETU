@@ -1546,7 +1546,8 @@ OnZoomOut_MouseUp(e);
 
         private void 打开属性表ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            AttributeTableForm attributeForm = new AttributeTableForm();
+            GeoMapLayer layer = mCurrentLayerNode.Tag as GeoMapLayer;
+            AttributeTableForm attributeForm = new AttributeTableForm(layer);
             attributeForm.Show();
         }
         #endregion
