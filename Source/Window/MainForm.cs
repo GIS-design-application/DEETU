@@ -9,7 +9,9 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+using System.Data.SQLite;
 using DEETU.Testing;
+using DEETU.Source.IO;
 
 namespace DEETU
 {
@@ -147,9 +149,7 @@ namespace DEETU
                 {
                     MessageBox.Show(error.ToString());
                 }
-
             }
-
         }
         private void btnFullExtent_Click(object sender, EventArgs e)
         {
@@ -1148,6 +1148,59 @@ namespace DEETU
                 _logging.ScrollToCaret();
             }
         }
+
+        private void btnLoadDatabase_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog sOpenFileDialog = new OpenFileDialog();
+            sOpenFileDialog.Filter = "SQLite(*.db)|*.db|All files(*.*)|*.*";
+            sOpenFileDialog.FilterIndex = 1;
+            GeoLayers sLayers = new GeoLayers();
+
+            if (sOpenFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                string path = sOpenFileDialog.FileName.ToString();
+                try
+                {
+                    string conn_str = "Data Source = ";
+                    conn_str += path;
+                    SQLiteConnection conn = new SQLiteConnection(conn_str);
+                    conn.Open();
+                    GeoDatabaseIOTools.LoadMeta(sLayers, conn);
+                    //读取属性信息
+                    GeoDatabaseIOTools.LoadLayers(sLayers, conn);
+                    
+                    //TODO:刷新画布
+                    if (geoMap.Layers.Count == 1)
+                    {
+                        geoMap.FullExtent();
+                    }
+                    else
+                    {
+                        geoMap.RedrawMap();
+                    }
+                }
+                catch (Exception error)
+                {
+                    MessageBox.Show(error.ToString());
+                }
+
+            }
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                GeoDatabaseIOTools.SaveGeoProject(geoMap.Layers, "C:\\Users\\zwy99\\Desktop\\test");
+            }
+            catch (Exception error)
+            {
+                MessageBox.Show(error.ToString());
+            }
+
+        }
+    
+
         private TextBox _logging = null;
         public void SetDebugForm(DebugForm form)
         {

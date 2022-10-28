@@ -80,11 +80,11 @@ namespace DEETU.IO
             double xmin, ymax, xmax, ymin;
             double temp = br.ReadDouble();
             xmin = temp;
-            temp = -br.ReadDouble();
+            temp = br.ReadDouble();
             ymax = temp;
             temp = br.ReadDouble();
             xmax = temp;
-            temp = -br.ReadDouble();
+            temp = br.ReadDouble();
             ymin = temp;
             _ = br.ReadBytes(32);//Z、M的范围
             //读取主文件记录内容
@@ -101,7 +101,7 @@ namespace DEETU.IO
                             _ = br.ReadInt32();//记录内容长度
                             _ = br.ReadInt32();//记录内容头的图形类型编号
                             point.X = br.ReadDouble();
-                            point.Y = -br.ReadDouble();
+                            point.Y = br.ReadDouble();
                             GeoFeature sPointFeature = new GeoFeature(GeoGeometryTypeConstant.Point, point);
                             sLayer.Features.Add(sPointFeature);
                         }
@@ -146,7 +146,7 @@ namespace DEETU.IO
                                 {
                                     GeoPoint point = new GeoPoint();
                                     point.X = br.ReadDouble();
-                                    point.Y = -br.ReadDouble();
+                                    point.Y = br.ReadDouble();
                                     sPart.Add(point);
                                 }
                                 sParts.Add(sPart);
@@ -191,7 +191,7 @@ namespace DEETU.IO
                                 {
                                     GeoPoint point = new GeoPoint();
                                     point.X = br.ReadDouble();
-                                    point.Y = -br.ReadDouble();
+                                    point.Y = br.ReadDouble();
                                     sPart.Add(point);
                                 }
                                 sParts.Add(sPart);
@@ -210,6 +210,7 @@ namespace DEETU.IO
                         throw new Exception("不支持的几何类型，错误集合类型值:" + (sShapeType).ToString());
                     }
             }
+            sLayer.UpdateExtent();
             //关闭流
             br.Close();
             fs.Close();
