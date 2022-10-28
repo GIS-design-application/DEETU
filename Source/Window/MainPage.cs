@@ -103,6 +103,7 @@ namespace DEETU.Source.Window
                 FileStream sStream = new FileStream(sFileName, FileMode.Open);
                 BinaryReader sr = new BinaryReader(sStream);
                 GeoMapLayer sLayer = GeoDataIOTools.LoadMapLayer(sr);
+                sLayer.Name = sFileName.Split('\\').Last().Split('.').First();
                 geoMap.Layers.Add(sLayer);
                 if (geoMap.Layers.Count == 1)
                 {
@@ -1591,6 +1592,11 @@ OnZoomOut_MouseUp(e);
         public void SetDebugForm(DebugForm form)
         {
             _logging = form.logging;
+        }
+
+        private void 另存为ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            GeoDatabaseIOTools.SaveGeoProject(geoMap.Layers, "C:\\Users\\zwy99\\Desktop\\test\\test1.db");
         }
 
 

@@ -11,9 +11,9 @@ using DEETU.Geometry;
 using DEETU.Map;
 using DEETU.Tool;
 using System.Windows.Forms;
-using DEETU.Source.Core.CoordinateSystem;
+using DEETU.Core;
 
-namespace DEETU.Source.IO
+namespace DEETU.IO
 {
 
     internal static class GeoDatabaseIOTools
@@ -32,7 +32,7 @@ namespace DEETU.Source.IO
             catch (SerializationException e)
             {
                 Console.WriteLine("Failed to serialize. Reason: " + e.Message);
-                throw;
+                throw new Exception("Failed to serialize. Reason: " + e.Message);
             }
             finally
             {
@@ -84,7 +84,7 @@ namespace DEETU.Source.IO
                 {
                     GeoMapLayer sLayer = project.GetItem(i);
                     string attribute_str = "CREATE TABLE " + sLayer.Name + " (id integer,renderer BLOB,geometry BLOB,";
-                    for (int j = 0; j < sLayer.AttributeFields.Count; i++)
+                    for (int j = 0; j < sLayer.AttributeFields.Count; j++)
                     {
                         attribute_str += sLayer.AttributeFields.GetItem(j).Name;
                         switch (sLayer.AttributeFields.GetItem(j).ValueType)
@@ -122,13 +122,13 @@ namespace DEETU.Source.IO
                 switch (project.GetItem(i).ShapeType)
                 {
                     case GeoGeometryTypeConstant.Point:
-                        meta_str += "\"" + 0 + "\",";
+                        meta_str += "0)";
                         break;
                     case GeoGeometryTypeConstant.MultiPolyline:
-                        meta_str += "\"" + 1 + "\",";
+                        meta_str += "1)";
                         break;
                     default:
-                        meta_str += "\"" + 2 + "\",";
+                        meta_str += "2)";
                         break;
                 }
                 MessageBox.Show(meta_str);
