@@ -12,6 +12,7 @@ namespace DEETU.Core
     /// <summary>
     /// 用来记录图层或地图的坐标系统
     /// </summary>
+    [Serializable]
     public class GeoCoordinateReferenceSystem
     {
 

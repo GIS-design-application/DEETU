@@ -11,15 +11,73 @@ using DEETU.Geometry;
 using DEETU.Map;
 using DEETU.Tool;
 using System.Windows.Forms;
-using DEETU.Source.Core.CoordinateSystem;
+using DEETU.Core;
+using Sunny.UI.Win32;
+using System.Diagnostics;
 
-namespace DEETU.Source.IO
+namespace DEETU.IO
 {
 
     internal static class GeoDatabaseIOTools
     {
         #region 数据库保存
-        
+        /// <summary>
+        /// 渲染类转二进制
+        /// </summary>
+        /// <param name="renderer"></param>
+        /// <returns></returns>
+        internal static byte[] RendererToByteArray(GeoRenderer renderer)
+        {
+            byte[] byteArray;
+            MemoryStream fs = new MemoryStream();
+            BinaryFormatter formatter = new BinaryFormatter();
+            try
+            {
+                formatter.Serialize(fs, renderer);
+            }
+            catch (SerializationException e)
+            {
+                Console.WriteLine("Failed to serialize. Reason: " + e.Message);
+                throw new Exception("Failed to serialize. Reason: " + e.Message);
+            }
+            finally
+            {
+                byteArray = fs.ToArray();
+                fs.Close();
+            }
+            return byteArray;
+        }
+        /// <summary>
+        /// 几何类转二进制
+        /// </summary>
+        /// <param name="geometry"></param>
+        /// <returns></returns>
+        internal static byte[] GeometryToByteArray(GeoGeometry geometry)
+        {
+            byte[] byteArray;
+            MemoryStream fs = new MemoryStream();
+            BinaryFormatter formatter = new BinaryFormatter();
+            try
+            {
+                formatter.Serialize(fs, geometry);
+            }
+            catch (SerializationException e)
+            {
+                Console.WriteLine("Failed to serialize. Reason: " + e.Message);
+                throw new Exception("Failed to serialize. Reason: " + e.Message);
+            }
+            finally
+            {
+                byteArray = fs.ToArray();
+                fs.Close();
+            }
+            return byteArray;
+        }
+        /// <summary>
+        /// 坐标系类转二进制
+        /// </summary>
+        /// <param name="crs"></param>
+        /// <returns></returns>
         internal static byte[] CrsToByteArray(GeoCoordinateReferenceSystem crs)
         {
             byte[] byteArray;
@@ -32,7 +90,7 @@ namespace DEETU.Source.IO
             catch (SerializationException e)
             {
                 Console.WriteLine("Failed to serialize. Reason: " + e.Message);
-                throw;
+                throw new Exception("Failed to serialize. Reason: " + e.Message);
             }
             finally
             {
@@ -51,7 +109,12 @@ namespace DEETU.Source.IO
             //    }
             //}
         }
-
+        /// <summary>
+        /// 保存函数
+        /// </summary>
+        /// <param name="project">待保存项目</param>
+        /// <param name="path">带保存路径，需要以.db结尾</param>
+        /// <returns></returns>
         internal static bool SaveGeoProject(GeoLayers project,string path)
         {
             string conn_str = "Data Source = ";
@@ -78,13 +141,13 @@ namespace DEETU.Source.IO
             if (is_new)
             {
                 //新建表
-                cmd.CommandText = "CREATE TABLE project_metadata (name varchar,crs BLOB, geotype int)";
+                cmd.CommandText = "CREATE TABLE project_metadata (name varchar,crs BLOB, geotype int,renderer BLOB)";
                 try { cmd.ExecuteNonQuery(); } catch (Exception e) { MessageBox.Show(e.Message.ToString()); }
                 for (int i = 0; i < project.Count; i++)
                 {
                     GeoMapLayer sLayer = project.GetItem(i);
-                    string attribute_str = "CREATE TABLE " + sLayer.Name + " (id integer,renderer BLOB,geometry BLOB,";
-                    for (int j = 0; j < sLayer.AttributeFields.Count; i++)
+                    string attribute_str = "CREATE TABLE " + sLayer.Name + " (id integer,geometry BLOB,";
+                    for (int j = 0; j < sLayer.AttributeFields.Count; j++)
                     {
                         attribute_str += sLayer.AttributeFields.GetItem(j).Name;
                         switch (sLayer.AttributeFields.GetItem(j).ValueType)
@@ -105,7 +168,7 @@ namespace DEETU.Source.IO
                     }
                     attribute_str += ")";
                     cmd.CommandText = attribute_str;
-                    MessageBox.Show(attribute_str);
+                    //MessageBox.Show(attribute_str);
                     try { cmd.ExecuteNonQuery(); } catch (Exception e) { MessageBox.Show(e.Message.ToString()); }
                 }
             }
@@ -113,58 +176,123 @@ namespace DEETU.Source.IO
             //存储project的元数据
             for(int i=0;i<project.Count;i++)
             {
-                string meta_str = "INSERT INTO project_metadata VALUES(";
-                meta_str += "\"" + project.GetItem(i).Name + "\",";
+                string meta_str = "INSERT INTO project_metadata VALUES(@name,@crs,@geotype,@renderer)";
+                //meta_str += "\"" + project.GetItem(i).Name + "\",";
 
                 byte[] sByteArray = CrsToByteArray(project.GetItem(i).Crs);
-                meta_str+= "@" + sByteArray + ""+",";
+                //meta_str+= "@" + sByteArray + ""+",";
+                cmd.CommandText = meta_str;
+                cmd.Parameters.Add("@name", System.Data.DbType.String).Value = project.GetItem(i).Name;
+                cmd.Parameters.Add("@crs", System.Data.DbType.Binary).Value = sByteArray;
 
                 switch (project.GetItem(i).ShapeType)
                 {
                     case GeoGeometryTypeConstant.Point:
-                        meta_str += "\"" + 0 + "\",";
+                        cmd.Parameters.Add("@geotype", System.Data.DbType.Int32).Value = 0;
+                        //meta_str += "0)";
                         break;
                     case GeoGeometryTypeConstant.MultiPolyline:
-                        meta_str += "\"" + 1 + "\",";
+                        cmd.Parameters.Add("@geotype", System.Data.DbType.Int32).Value = 1;
+                        //meta_str += "1)";
                         break;
                     default:
-                        meta_str += "\"" + 2 + "\",";
+                        cmd.Parameters.Add("@geotype", System.Data.DbType.Int32).Value = 2;
+                        //meta_str += "2)";
                         break;
                 }
-                MessageBox.Show(meta_str);
-                cmd.CommandText = meta_str;
+                cmd.Parameters.Add("@renderer", System.Data.DbType.Binary).Value = 
+                    RendererToByteArray(project.GetItem(i).Renderer);
+                //MessageBox.Show(meta_str);
+
                 cmd.ExecuteNonQuery();
             }
 
-            //每个图层存储一张表
-            return true;
+            //为每个图层对应的要素赋值
             for (int i=0;i<project.Count;i++)
             {
                 GeoMapLayer sLayer = project.GetItem(i);
                 GeoFields sFields = project.GetItem(i).AttributeFields;
                 for(int ID=0;ID<sLayer.Features.Count; ID++)
                 {
-
-                    string insert = "INSERT INTO " + sLayer.Name + "(id,renderer,geometry)) VALUES(" + ID.ToString()+",";
-
-                    
+                    GeoFeature sFeature = sLayer.Features.GetItem(ID);
+                    string insert_str = "INSERT INTO " + sLayer.Name + " VALUES(@id,@geometry,";
                     for (int j=0;j<sFields.Count;j++)
                     {
-                        GeoValueTypeConstant type= sFields.GetItem(j).ValueType;
+                        GeoValueTypeConstant type = sFields.GetItem(j).ValueType;
                         string name = sFields.GetItem(j).Name;
-
+                        insert_str += "@" + name;
+                        if (j == sFields.Count - 1) insert_str += ")";
+                        else insert_str += ",";
                     }
+                    cmd.Parameters.Clear();
+                    cmd.CommandText = insert_str;
+                    cmd.Parameters.Add("@id", System.Data.DbType.Int32).Value = ID;
+                    cmd.Parameters.Add("@geometry", System.Data.DbType.Binary).Value = 
+                        GeometryToByteArray(sFeature.Geometry);
+                    //为每个属性赋值
+                    for (int j = 0; j < sFields.Count; j++)
+                    {
+                        GeoValueTypeConstant type = sFields.GetItem(j).ValueType;
+                        switch (type)
+                        {
+                            case GeoValueTypeConstant.dDouble:
+                            case GeoValueTypeConstant.dSingle:
+                                cmd.Parameters.Add("@" + sFields.GetItem(j).Name,
+                                    System.Data.DbType.Double).Value = sFeature.Attributes.GetItem(j);
+                                break;
+                            case GeoValueTypeConstant.dText:
+                                cmd.Parameters.Add("@" + sFields.GetItem(j).Name,
+                                    System.Data.DbType.String).Value = sFeature.Attributes.GetItem(j);
+                                break;
+                            //其他全为int
+                            default:
+                                cmd.Parameters.Add("@" + sFields.GetItem(j).Name,
+                                    System.Data.DbType.Int32).Value = sFeature.Attributes.GetItem(j);
+                                break;
+                        }
+                    }
+                    try { cmd.ExecuteNonQuery(); } catch (Exception e) { MessageBox.Show(e.Message.ToString()); }
                 }
-                
-
-                byte[] sByteArray = CrsToByteArray(project.GetItem(i).Crs);
-
-               
             }
+            conn.Dispose();
             return true;
         }
+        #endregion
+        #region 数据库读取
 
-        public static bool LoadMeta(GeoLayers layers,SQLiteConnection conn)
+        internal static bool LoadGeoProject(GeoLayers project, string path)
+        {
+            string conn_str = "Data Source = ";
+            conn_str += path;
+            //如果不存在，则新建数据库
+            if (File.Exists(path) == false)
+            {
+                MessageBox.Show("no db file");
+                return false;
+            }
+            SQLiteConnection conn = new SQLiteConnection(conn_str);
+            conn.Open();
+            SQLiteCommand cmd = conn.CreateCommand();
+            if(LoadMeta(project, conn)==false)
+            {
+                MessageBox.Show("loadmeta fail");
+                return false;
+            }
+            if(LoadLayers(project,conn)==false)
+            {
+                MessageBox.Show("loadlayer fail");
+                return false;
+            }
+            conn.Close();
+            return true;
+        }
+        /// <summary>
+        /// 项目元数据读取
+        /// </summary>
+        /// <param name="layers"></param>
+        /// <param name="conn"></param>
+        /// <returns></returns>
+        private static bool LoadMeta(GeoLayers layers,SQLiteConnection conn)
         {
 
             SQLiteCommand cmd = conn.CreateCommand();
@@ -181,10 +309,20 @@ namespace DEETU.Source.IO
                         string name = reader[0].ToString();
                         GeoGeometryTypeConstant sShapeType = (GeoGeometryTypeConstant)reader.GetInt32(2);
                         GeoMapLayer sLayer = new GeoMapLayer(name,sShapeType);
+                        //crs读取
                         MemoryStream memstream = GetBytes(reader, 1);
+                        //MessageBox.Show(memstream.CanRead.ToString());
+                        memstream.Position = 0;
                         BinaryFormatter formatter = new BinaryFormatter();
                         sLayer.Crs = (GeoCoordinateReferenceSystem)formatter.Deserialize(memstream);
-                        memstream.Close();
+                        memstream.Dispose();
+                        //renderer读取
+                        memstream = GetBytes(reader, 3);
+                        memstream.Position = 0;
+                        formatter = new BinaryFormatter();
+                        sLayer.Renderer = (GeoRenderer)formatter.Deserialize(memstream);
+                        memstream.Dispose();
+                        //加入图层
                         layers.Add(sLayer);
                     }
                 }
@@ -196,6 +334,12 @@ namespace DEETU.Source.IO
             }
             return true;
         }
+        /// <summary>
+        /// 图层读取
+        /// </summary>
+        /// <param name="layers"></param>
+        /// <param name="conn"></param>
+        /// <returns></returns>
         public static bool LoadLayers(GeoLayers layers, SQLiteConnection conn)
         {
             SQLiteCommand cmd = conn.CreateCommand();
@@ -203,20 +347,42 @@ namespace DEETU.Source.IO
             for(int i=0;i<layers.Count;i++)
             {
                 GeoMapLayer sLayer = layers.GetItem(i);
-                string sql = "select * from " + layers.GetItem(i).Name;
+                string sql = "PRAGMA table_info("+sLayer.Name+")";
+                //MessageBox.Show(sql);
+                cmd.Parameters.Clear();
                 cmd.CommandText = sql;
                 //获取表头
-                using (SQLiteDataReader reader = cmd.ExecuteReader(System.Data.CommandBehavior.SchemaOnly))
+                using (SQLiteDataReader reader = cmd.ExecuteReader())
                 {
                     if (reader.HasRows)
                     {
+                        int count = 0;
+                        GeoFields sFields = sLayer.AttributeFields;
                         while (reader.Read())
                         {
-                            for(int j=0;i<reader.FieldCount;j++){
-                                MessageBox.Show(reader[j].ToString());
-                                
+                            if (count > 1)
+                            {
+                                GeoField sField = new GeoField(reader[1].ToString());
+                                switch (reader[2].ToString())
+                                {
+                                    case ("text"):
+                                        sField.ValueType = GeoValueTypeConstant.dText;
+                                        break;
+                                    case ("integer"):
+                                        sField.ValueType = GeoValueTypeConstant.dText;
+                                        break;
+                                    case ("BLOB"):
+                                        break;
+                                    case ("real"):
+                                        sField.ValueType = GeoValueTypeConstant.dDouble;
+                                        break;
+                                    default:
+                                        Debug.Assert(false);
+                                        break;
+                                }
+                                sFields.Append(sField);
                             }
-
+                            count += 1;
                         }
                     }
                     else
@@ -226,7 +392,9 @@ namespace DEETU.Source.IO
                     }
                 }
                 //建立属性
-
+                sql = "select * from " + sLayer.Name;
+                cmd.Parameters.Clear();
+                cmd.CommandText = sql;
                 using (SQLiteDataReader reader = cmd.ExecuteReader())
                 {
                     if (reader.HasRows)
@@ -234,32 +402,28 @@ namespace DEETU.Source.IO
                         while (reader.Read())
                         {
                             int id = Convert.ToInt32(reader[0]);
-                            MemoryStream memstream = GetBytes(reader, 2);
+                            MemoryStream memstream = GetBytes(reader, 1);
+                            memstream.Position = 0;
                             BinaryFormatter formatter = new BinaryFormatter();
                             GeoGeometry geoGeometry = (GeoGeometry)formatter.Deserialize(memstream);
                             memstream.Dispose();
                             GeoFeature sFeature = new GeoFeature(sLayer.ShapeType, geoGeometry);
                             GeoAttributes sAttributes = new GeoAttributes();
-                            for (int j=3;j< reader.FieldCount;j++)
+                            for (int j=2;j< reader.FieldCount;j++)
                             {
-
-
-
-                                memstream = GetBytes(reader, 1);
+                                sAttributes.Append(reader[j]);
                             }
-                            GeoGeometryTypeConstant sShapeType = (GeoGeometryTypeConstant)reader.GetInt32(2);
-
-
-
-                            layers.Add(sLayer);
+                            sFeature.Attributes = sAttributes;
+                            sLayer.Features.Add(sFeature);
                         }
                     }
                     else
                     {
-                        MessageBox.Show("no result!");
+                        MessageBox.Show("no result for attribute!");
                         return false;
                     }
                 }
+                sLayer.UpdateExtent();
             }
             return true;
         }
@@ -269,15 +433,15 @@ namespace DEETU.Source.IO
             byte[] buffer = new byte[CHUNK_SIZE];
             long bytesRead;
             long fieldOffset = 0;
-            using (MemoryStream stream = new MemoryStream())
+            MemoryStream stream = new MemoryStream();
+            
+            while ((bytesRead = reader.GetBytes(column, fieldOffset, buffer, 0, buffer.Length)) > 0)
             {
-                while ((bytesRead = reader.GetBytes(column, fieldOffset, buffer, 0, buffer.Length)) > 0)
-                {
-                    stream.Write(buffer, 0, (int)bytesRead);
-                    fieldOffset += bytesRead;
-                }
-                return stream;
+                stream.Write(buffer, 0, (int)bytesRead);
+                fieldOffset += bytesRead;
             }
+            return stream;
+            
         }
         #endregion
 
