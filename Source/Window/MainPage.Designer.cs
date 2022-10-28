@@ -30,10 +30,10 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainPage));
-            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("工程目录");
-            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("收藏夹");
-            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("C:\\");
-            DEETU.Map.GeoLayers geoLayers1 = new DEETU.Map.GeoLayers();
+            System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("工程目录");
+            System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("收藏夹");
+            System.Windows.Forms.TreeNode treeNode9 = new System.Windows.Forms.TreeNode("C:\\");
+            DEETU.Map.GeoLayers geoLayers3 = new DEETU.Map.GeoLayers();
             this.projectContextMenuStrip = new Sunny.UI.UIContextMenuStrip();
             this.设置工程目录ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.favoriteContextMenuStrip1 = new Sunny.UI.UIContextMenuStrip();
@@ -392,7 +392,7 @@
             this.toolStripSeparator3,
             this.退出DEETUToolStripMenuItem});
             this.文件ToolStripMenuItem.Name = "文件ToolStripMenuItem";
-            this.文件ToolStripMenuItem.Size = new System.Drawing.Size(62, 30);
+            this.文件ToolStripMenuItem.Size = new System.Drawing.Size(62, 28);
             this.文件ToolStripMenuItem.Text = "文件";
             // 
             // 新建ToolStripMenuItem
@@ -452,7 +452,7 @@
             this.toolStripSeparator5,
             this.选择ToolStripMenuItem});
             this.编辑ToolStripMenuItem.Name = "编辑ToolStripMenuItem";
-            this.编辑ToolStripMenuItem.Size = new System.Drawing.Size(62, 30);
+            this.编辑ToolStripMenuItem.Size = new System.Drawing.Size(62, 28);
             this.编辑ToolStripMenuItem.Text = "编辑";
             // 
             // 撤销操作ToolStripMenuItem
@@ -557,7 +557,7 @@
             this.显示所有图层ToolStripMenuItem,
             this.隐藏所有图层ToolStripMenuItem});
             this.视图ToolStripMenuItem.Name = "视图ToolStripMenuItem";
-            this.视图ToolStripMenuItem.Size = new System.Drawing.Size(62, 30);
+            this.视图ToolStripMenuItem.Size = new System.Drawing.Size(62, 28);
             this.视图ToolStripMenuItem.Text = "视图";
             // 
             // 平移ToolStripMenuItem
@@ -639,7 +639,7 @@
             this.图层ToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(917, 36);
+            this.menuStrip1.Size = new System.Drawing.Size(917, 32);
             this.menuStrip1.TabIndex = 53;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -648,7 +648,7 @@
             this.图层ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.打开图层ToolStripMenuItem});
             this.图层ToolStripMenuItem.Name = "图层ToolStripMenuItem";
-            this.图层ToolStripMenuItem.Size = new System.Drawing.Size(62, 30);
+            this.图层ToolStripMenuItem.Size = new System.Drawing.Size(62, 28);
             this.图层ToolStripMenuItem.Text = "图层";
             // 
             // 打开图层ToolStripMenuItem
@@ -681,7 +681,7 @@
             this.toolStrip1.Location = new System.Drawing.Point(4, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.toolStrip1.Size = new System.Drawing.Size(480, 38);
+            this.toolStrip1.Size = new System.Drawing.Size(480, 29);
             this.toolStrip1.TabIndex = 49;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -691,7 +691,7 @@
             this.newToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("newToolStripButton.Image")));
             this.newToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.newToolStripButton.Name = "newToolStripButton";
-            this.newToolStripButton.Size = new System.Drawing.Size(34, 33);
+            this.newToolStripButton.Size = new System.Drawing.Size(34, 24);
             this.newToolStripButton.Text = "新建工程";
             // 
             // openToolStripButton
@@ -700,7 +700,7 @@
             this.openToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("openToolStripButton.Image")));
             this.openToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.openToolStripButton.Name = "openToolStripButton";
-            this.openToolStripButton.Size = new System.Drawing.Size(34, 33);
+            this.openToolStripButton.Size = new System.Drawing.Size(34, 24);
             this.openToolStripButton.Text = "打开工程";
             // 
             // saveToolStripButton
@@ -709,13 +709,13 @@
             this.saveToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("saveToolStripButton.Image")));
             this.saveToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.saveToolStripButton.Name = "saveToolStripButton";
-            this.saveToolStripButton.Size = new System.Drawing.Size(34, 33);
+            this.saveToolStripButton.Size = new System.Drawing.Size(34, 24);
             this.saveToolStripButton.Text = "保存工程";
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 38);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 29);
             // 
             // panToolStripButton
             // 
@@ -723,7 +723,7 @@
             this.panToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("panToolStripButton.Image")));
             this.panToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.panToolStripButton.Name = "panToolStripButton";
-            this.panToolStripButton.Size = new System.Drawing.Size(34, 33);
+            this.panToolStripButton.Size = new System.Drawing.Size(34, 24);
             this.panToolStripButton.Text = "漫游";
             this.panToolStripButton.Click += new System.EventHandler(this.btnPan_Click);
             // 
@@ -733,7 +733,7 @@
             this.zoomInToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("zoomInToolStripButton.Image")));
             this.zoomInToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.zoomInToolStripButton.Name = "zoomInToolStripButton";
-            this.zoomInToolStripButton.Size = new System.Drawing.Size(34, 33);
+            this.zoomInToolStripButton.Size = new System.Drawing.Size(34, 24);
             this.zoomInToolStripButton.Text = "放大";
             this.zoomInToolStripButton.Click += new System.EventHandler(this.btnZoomIn_Click);
             // 
@@ -743,7 +743,7 @@
             this.zoomOutToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("zoomOutToolStripButton.Image")));
             this.zoomOutToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.zoomOutToolStripButton.Name = "zoomOutToolStripButton";
-            this.zoomOutToolStripButton.Size = new System.Drawing.Size(34, 33);
+            this.zoomOutToolStripButton.Size = new System.Drawing.Size(34, 24);
             this.zoomOutToolStripButton.Text = "缩小";
             this.zoomOutToolStripButton.Click += new System.EventHandler(this.btnZoomOut_Click);
             // 
@@ -753,7 +753,7 @@
             this.fullExtentToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("fullExtentToolStripButton.Image")));
             this.fullExtentToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.fullExtentToolStripButton.Name = "fullExtentToolStripButton";
-            this.fullExtentToolStripButton.Size = new System.Drawing.Size(34, 33);
+            this.fullExtentToolStripButton.Size = new System.Drawing.Size(34, 24);
             this.fullExtentToolStripButton.Text = "全图显示";
             this.fullExtentToolStripButton.Click += new System.EventHandler(this.btnFullExtent_Click);
             // 
@@ -763,7 +763,7 @@
             this.zoomToSelectionToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("zoomToSelectionToolStripButton.Image")));
             this.zoomToSelectionToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.zoomToSelectionToolStripButton.Name = "zoomToSelectionToolStripButton";
-            this.zoomToSelectionToolStripButton.Size = new System.Drawing.Size(34, 33);
+            this.zoomToSelectionToolStripButton.Size = new System.Drawing.Size(34, 24);
             this.zoomToSelectionToolStripButton.Text = "缩放到选中区域";
             // 
             // zoomToLayerToolStripButton
@@ -772,7 +772,7 @@
             this.zoomToLayerToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("zoomToLayerToolStripButton.Image")));
             this.zoomToLayerToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.zoomToLayerToolStripButton.Name = "zoomToLayerToolStripButton";
-            this.zoomToLayerToolStripButton.Size = new System.Drawing.Size(34, 33);
+            this.zoomToLayerToolStripButton.Size = new System.Drawing.Size(34, 24);
             this.zoomToLayerToolStripButton.Text = "缩放到图层";
             // 
             // refreshToolStripButton
@@ -781,13 +781,13 @@
             this.refreshToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("refreshToolStripButton.Image")));
             this.refreshToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.refreshToolStripButton.Name = "refreshToolStripButton";
-            this.refreshToolStripButton.Size = new System.Drawing.Size(34, 33);
+            this.refreshToolStripButton.Size = new System.Drawing.Size(34, 24);
             this.refreshToolStripButton.Text = "刷新";
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 38);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 29);
             // 
             // identifyToolStripButton
             // 
@@ -795,7 +795,7 @@
             this.identifyToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("identifyToolStripButton.Image")));
             this.identifyToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.identifyToolStripButton.Name = "identifyToolStripButton";
-            this.identifyToolStripButton.Size = new System.Drawing.Size(34, 33);
+            this.identifyToolStripButton.Size = new System.Drawing.Size(34, 24);
             this.identifyToolStripButton.Text = "识别";
             this.identifyToolStripButton.Click += new System.EventHandler(this.btnIdentify_Click);
             // 
@@ -808,7 +808,7 @@
             this.selectByValueToolStripDropDownButton.Image = ((System.Drawing.Image)(resources.GetObject("selectByValueToolStripDropDownButton.Image")));
             this.selectByValueToolStripDropDownButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.selectByValueToolStripDropDownButton.Name = "selectByValueToolStripDropDownButton";
-            this.selectByValueToolStripDropDownButton.Size = new System.Drawing.Size(38, 33);
+            this.selectByValueToolStripDropDownButton.Size = new System.Drawing.Size(38, 24);
             this.selectByValueToolStripDropDownButton.Text = "按照值选择";
             // 
             // 按属性选择ToolStripMenuItem
@@ -832,7 +832,7 @@
             this.selectByExtentToolStripDropDownButton.Image = ((System.Drawing.Image)(resources.GetObject("selectByExtentToolStripDropDownButton.Image")));
             this.selectByExtentToolStripDropDownButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.selectByExtentToolStripDropDownButton.Name = "selectByExtentToolStripDropDownButton";
-            this.selectByExtentToolStripDropDownButton.Size = new System.Drawing.Size(38, 33);
+            this.selectByExtentToolStripDropDownButton.Size = new System.Drawing.Size(38, 24);
             this.selectByExtentToolStripDropDownButton.Text = "按照范围选择";
             // 
             // 交叉选中ToolStripMenuItem
@@ -854,20 +854,20 @@
             // toolStripContainer1.ContentPanel
             // 
             this.toolStripContainer1.ContentPanel.Controls.Add(this.splitContainer1);
-            this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(917, 478);
+            this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(917, 500);
             this.toolStripContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.toolStripContainer1.LeftToolStripPanelVisible = false;
-            this.toolStripContainer1.Location = new System.Drawing.Point(0, 36);
+            this.toolStripContainer1.Location = new System.Drawing.Point(0, 32);
             this.toolStripContainer1.Name = "toolStripContainer1";
             this.toolStripContainer1.RightToolStripPanelVisible = false;
-            this.toolStripContainer1.Size = new System.Drawing.Size(917, 554);
+            this.toolStripContainer1.Size = new System.Drawing.Size(917, 558);
             this.toolStripContainer1.TabIndex = 54;
             this.toolStripContainer1.Text = "toolStripContainer1";
             // 
             // toolStripContainer1.TopToolStripPanel
             // 
-            this.toolStripContainer1.TopToolStripPanel.Controls.Add(this.toolStrip2);
             this.toolStripContainer1.TopToolStripPanel.Controls.Add(this.toolStrip1);
+            this.toolStripContainer1.TopToolStripPanel.Controls.Add(this.toolStrip2);
             // 
             // splitContainer1
             // 
@@ -882,7 +882,7 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.uiPanel3);
-            this.splitContainer1.Size = new System.Drawing.Size(917, 478);
+            this.splitContainer1.Size = new System.Drawing.Size(917, 500);
             this.splitContainer1.SplitterDistance = 276;
             this.splitContainer1.TabIndex = 51;
             // 
@@ -900,8 +900,8 @@
             // splitContainer2.Panel2
             // 
             this.splitContainer2.Panel2.Controls.Add(this.uiPanel2);
-            this.splitContainer2.Size = new System.Drawing.Size(276, 478);
-            this.splitContainer2.SplitterDistance = 205;
+            this.splitContainer2.Size = new System.Drawing.Size(276, 500);
+            this.splitContainer2.SplitterDistance = 214;
             this.splitContainer2.TabIndex = 0;
             // 
             // uiPanel1
@@ -915,7 +915,7 @@
             this.uiPanel1.MinimumSize = new System.Drawing.Size(1, 1);
             this.uiPanel1.Name = "uiPanel1";
             this.uiPanel1.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
-            this.uiPanel1.Size = new System.Drawing.Size(276, 205);
+            this.uiPanel1.Size = new System.Drawing.Size(276, 214);
             this.uiPanel1.Style = Sunny.UI.UIStyle.Office2010Black;
             this.uiPanel1.TabIndex = 0;
             this.uiPanel1.Text = "uiPanel1";
@@ -931,21 +931,21 @@
             this.uiTreeView2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.uiTreeView2.MinimumSize = new System.Drawing.Size(1, 1);
             this.uiTreeView2.Name = "uiTreeView2";
-            treeNode1.ContextMenuStrip = this.projectContextMenuStrip;
-            treeNode1.Name = "节点0";
-            treeNode1.Text = "工程目录";
-            treeNode2.ContextMenuStrip = this.favoriteContextMenuStrip1;
-            treeNode2.Name = "节点0";
-            treeNode2.Text = "收藏夹";
-            treeNode3.Name = "节点1";
-            treeNode3.Text = "C:\\";
+            treeNode7.ContextMenuStrip = this.projectContextMenuStrip;
+            treeNode7.Name = "节点0";
+            treeNode7.Text = "工程目录";
+            treeNode8.ContextMenuStrip = this.favoriteContextMenuStrip1;
+            treeNode8.Name = "节点0";
+            treeNode8.Text = "收藏夹";
+            treeNode9.Name = "节点1";
+            treeNode9.Text = "C:\\";
             this.uiTreeView2.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode1,
-            treeNode2,
-            treeNode3});
+            treeNode7,
+            treeNode8,
+            treeNode9});
             this.uiTreeView2.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
             this.uiTreeView2.SelectedNode = null;
-            this.uiTreeView2.Size = new System.Drawing.Size(276, 205);
+            this.uiTreeView2.Size = new System.Drawing.Size(276, 214);
             this.uiTreeView2.Style = Sunny.UI.UIStyle.Office2010Black;
             this.uiTreeView2.TabIndex = 0;
             this.uiTreeView2.Text = "uiTreeView2";
@@ -962,7 +962,7 @@
             this.uiPanel2.MinimumSize = new System.Drawing.Size(1, 1);
             this.uiPanel2.Name = "uiPanel2";
             this.uiPanel2.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
-            this.uiPanel2.Size = new System.Drawing.Size(276, 269);
+            this.uiPanel2.Size = new System.Drawing.Size(276, 282);
             this.uiPanel2.Style = Sunny.UI.UIStyle.Office2010Black;
             this.uiPanel2.TabIndex = 0;
             this.uiPanel2.Text = "uiPanel2";
@@ -970,6 +970,7 @@
             // 
             // layerTreeView
             // 
+            this.layerTreeView.AllowDrop = true;
             this.layerTreeView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.layerTreeView.FillColor = System.Drawing.Color.White;
             this.layerTreeView.Font = new System.Drawing.Font("微软雅黑", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
@@ -983,12 +984,15 @@
             this.layerTreeView.SelectedImageIndex = 0;
             this.layerTreeView.SelectedNode = null;
             this.layerTreeView.ShowNodeToolTips = true;
-            this.layerTreeView.Size = new System.Drawing.Size(276, 269);
+            this.layerTreeView.Size = new System.Drawing.Size(276, 282);
             this.layerTreeView.Style = Sunny.UI.UIStyle.Office2010Black;
             this.layerTreeView.TabIndex = 0;
             this.layerTreeView.Text = "layerTreeView";
             this.layerTreeView.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter;
+            this.layerTreeView.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.layerTreeView_ItemDrag);
             this.layerTreeView.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.layerTreeView_NodeMouseClick);
+            this.layerTreeView.DragDrop += new System.Windows.Forms.DragEventHandler(this.layerTreeView_DragDrop);
+            this.layerTreeView.DragEnter += new System.Windows.Forms.DragEventHandler(this.layerTreeView_DragEnter);
             // 
             // TreeImages
             // 
@@ -1008,7 +1012,7 @@
             this.uiPanel3.MinimumSize = new System.Drawing.Size(1, 1);
             this.uiPanel3.Name = "uiPanel3";
             this.uiPanel3.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
-            this.uiPanel3.Size = new System.Drawing.Size(637, 478);
+            this.uiPanel3.Size = new System.Drawing.Size(637, 500);
             this.uiPanel3.Style = Sunny.UI.UIStyle.Office2010Black;
             this.uiPanel3.TabIndex = 0;
             this.uiPanel3.Text = "MapControl";
@@ -1020,7 +1024,7 @@
             this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tssCoordinate,
             this.tssMapScale});
-            this.statusStrip.Location = new System.Drawing.Point(0, 447);
+            this.statusStrip.Location = new System.Drawing.Point(0, 469);
             this.statusStrip.Name = "statusStrip";
             this.statusStrip.Size = new System.Drawing.Size(637, 31);
             this.statusStrip.TabIndex = 1;
@@ -1044,12 +1048,12 @@
             this.geoMap.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.geoMap.Dock = System.Windows.Forms.DockStyle.Fill;
             this.geoMap.FlashColor = System.Drawing.Color.Green;
-            this.geoMap.Layers = geoLayers1;
+            this.geoMap.Layers = geoLayers3;
             this.geoMap.Location = new System.Drawing.Point(0, 0);
-            this.geoMap.Margin = new System.Windows.Forms.Padding(12068, 36687, 12068, 36687);
+            this.geoMap.Margin = new System.Windows.Forms.Padding(18772, 63183, 18772, 63183);
             this.geoMap.Name = "geoMap";
             this.geoMap.SelectionColor = System.Drawing.Color.Cyan;
-            this.geoMap.Size = new System.Drawing.Size(637, 478);
+            this.geoMap.Size = new System.Drawing.Size(637, 500);
             this.geoMap.TabIndex = 0;
             this.geoMap.MapScaleChanged += new DEETU.Map.GeoMapControl.MapScaleChangedHandle(this.geoMap_MapScaleChanged);
             this.geoMap.MouseClick += new System.Windows.Forms.MouseEventHandler(this.geoMap_MouseClick);
@@ -1074,9 +1078,9 @@
             this.toolStripSeparator14,
             this.撤销ToolStripButton,
             this.重做ToolStripButton});
-            this.toolStrip2.Location = new System.Drawing.Point(4, 38);
+            this.toolStrip2.Location = new System.Drawing.Point(4, 29);
             this.toolStrip2.Name = "toolStrip2";
-            this.toolStrip2.Size = new System.Drawing.Size(370, 38);
+            this.toolStrip2.Size = new System.Drawing.Size(370, 29);
             this.toolStrip2.TabIndex = 50;
             // 
             // 选择模式ToolStripButton
@@ -1085,7 +1089,7 @@
             this.选择模式ToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("选择模式ToolStripButton.Image")));
             this.选择模式ToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.选择模式ToolStripButton.Name = "选择模式ToolStripButton";
-            this.选择模式ToolStripButton.Size = new System.Drawing.Size(34, 33);
+            this.选择模式ToolStripButton.Size = new System.Drawing.Size(34, 24);
             this.选择模式ToolStripButton.Text = "toolStripButton1";
             // 
             // 编辑模式ToolStripButton
@@ -1094,7 +1098,7 @@
             this.编辑模式ToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("编辑模式ToolStripButton.Image")));
             this.编辑模式ToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.编辑模式ToolStripButton.Name = "编辑模式ToolStripButton";
-            this.编辑模式ToolStripButton.Size = new System.Drawing.Size(34, 33);
+            this.编辑模式ToolStripButton.Size = new System.Drawing.Size(34, 24);
             this.编辑模式ToolStripButton.Text = "编辑";
             this.编辑模式ToolStripButton.Click += new System.EventHandler(this.btnSelect_Click);
             // 
@@ -1104,7 +1108,7 @@
             this.取消当前编辑ToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("取消当前编辑ToolStripButton.Image")));
             this.取消当前编辑ToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.取消当前编辑ToolStripButton.Name = "取消当前编辑ToolStripButton";
-            this.取消当前编辑ToolStripButton.Size = new System.Drawing.Size(34, 33);
+            this.取消当前编辑ToolStripButton.Size = new System.Drawing.Size(34, 24);
             this.取消当前编辑ToolStripButton.Text = "取消当前编辑";
             // 
             // 保存当前编辑ToolStripButton
@@ -1113,13 +1117,13 @@
             this.保存当前编辑ToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("保存当前编辑ToolStripButton.Image")));
             this.保存当前编辑ToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.保存当前编辑ToolStripButton.Name = "保存当前编辑ToolStripButton";
-            this.保存当前编辑ToolStripButton.Size = new System.Drawing.Size(34, 33);
+            this.保存当前编辑ToolStripButton.Size = new System.Drawing.Size(34, 24);
             this.保存当前编辑ToolStripButton.Text = "保存当前编辑";
             // 
             // toolStripSeparator13
             // 
             this.toolStripSeparator13.Name = "toolStripSeparator13";
-            this.toolStripSeparator13.Size = new System.Drawing.Size(6, 38);
+            this.toolStripSeparator13.Size = new System.Drawing.Size(6, 29);
             // 
             // 删除所选要素ToolStripButton
             // 
@@ -1127,7 +1131,7 @@
             this.删除所选要素ToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("删除所选要素ToolStripButton.Image")));
             this.删除所选要素ToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.删除所选要素ToolStripButton.Name = "删除所选要素ToolStripButton";
-            this.删除所选要素ToolStripButton.Size = new System.Drawing.Size(34, 33);
+            this.删除所选要素ToolStripButton.Size = new System.Drawing.Size(34, 24);
             this.删除所选要素ToolStripButton.Text = "删除所选要素";
             // 
             // 剪切要素ToolStripButton
@@ -1136,7 +1140,7 @@
             this.剪切要素ToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("剪切要素ToolStripButton.Image")));
             this.剪切要素ToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.剪切要素ToolStripButton.Name = "剪切要素ToolStripButton";
-            this.剪切要素ToolStripButton.Size = new System.Drawing.Size(34, 33);
+            this.剪切要素ToolStripButton.Size = new System.Drawing.Size(34, 24);
             this.剪切要素ToolStripButton.Text = "剪切要素";
             // 
             // 复制要素ToolStripButton
@@ -1145,7 +1149,7 @@
             this.复制要素ToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("复制要素ToolStripButton.Image")));
             this.复制要素ToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.复制要素ToolStripButton.Name = "复制要素ToolStripButton";
-            this.复制要素ToolStripButton.Size = new System.Drawing.Size(34, 33);
+            this.复制要素ToolStripButton.Size = new System.Drawing.Size(34, 24);
             this.复制要素ToolStripButton.Text = "复制要素";
             // 
             // 粘贴要素ToolStripButton
@@ -1154,13 +1158,13 @@
             this.粘贴要素ToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("粘贴要素ToolStripButton.Image")));
             this.粘贴要素ToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.粘贴要素ToolStripButton.Name = "粘贴要素ToolStripButton";
-            this.粘贴要素ToolStripButton.Size = new System.Drawing.Size(34, 33);
+            this.粘贴要素ToolStripButton.Size = new System.Drawing.Size(34, 24);
             this.粘贴要素ToolStripButton.Text = "粘贴要素";
             // 
             // toolStripSeparator14
             // 
             this.toolStripSeparator14.Name = "toolStripSeparator14";
-            this.toolStripSeparator14.Size = new System.Drawing.Size(6, 38);
+            this.toolStripSeparator14.Size = new System.Drawing.Size(6, 29);
             // 
             // 撤销ToolStripButton
             // 
@@ -1168,7 +1172,7 @@
             this.撤销ToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("撤销ToolStripButton.Image")));
             this.撤销ToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.撤销ToolStripButton.Name = "撤销ToolStripButton";
-            this.撤销ToolStripButton.Size = new System.Drawing.Size(34, 33);
+            this.撤销ToolStripButton.Size = new System.Drawing.Size(34, 24);
             this.撤销ToolStripButton.Text = "撤销";
             // 
             // 重做ToolStripButton
@@ -1177,7 +1181,7 @@
             this.重做ToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("重做ToolStripButton.Image")));
             this.重做ToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.重做ToolStripButton.Name = "重做ToolStripButton";
-            this.重做ToolStripButton.Size = new System.Drawing.Size(34, 33);
+            this.重做ToolStripButton.Size = new System.Drawing.Size(34, 24);
             this.重做ToolStripButton.Text = "重做";
             // 
             // MainPage

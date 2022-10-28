@@ -111,7 +111,7 @@ namespace DEETU.Source.Window
                 sStream.Dispose();
                 sr.Dispose();
                 
-                UpdateTreeView(sLayer.Renderer, sFileName);
+                UpdateTreeView(sLayer);
             }
             catch (Exception error)
             {
@@ -121,16 +121,18 @@ namespace DEETU.Source.Window
 
         // 这个函数是为了显示图层渲染方式
         // 在加入图层和修改渲染方式时调用
-        private void UpdateTreeView(GeoRenderer renderer, string filename)
+        private void UpdateTreeView(GeoMapLayer layer)
         {
             // 按照renderer Type进行处理
-            GeoRenderer sRenderer = renderer;
+            GeoRenderer sRenderer = layer.Renderer;
+            layer.Name = layer.Name == "" ? layer.ShapeType.ToString() : layer.Name;
             if (sRenderer.RendererType == GeoRendererTypeConstant.Simple)
             {
                 TreeNode style = CreateSimpleStyleTreeNode((sRenderer as GeoSimpleRenderer).Symbol);
-                TreeNode layerNode = new TreeNode(filename, new TreeNode[] { style });
+                TreeNode layerNode = new TreeNode(layer.Name, new TreeNode[] { style });
                 layerNode.ContextMenuStrip = layerContextMenuStrip;
                 //layerTreeView.Nodes.Insert(0,layerNode);
+                layerNode.Tag = layer;
                 layerTreeView.Nodes.Add(layerNode);
             }
             else if (sRenderer.RendererType == GeoRendererTypeConstant.ClassBreaks)
@@ -138,15 +140,16 @@ namespace DEETU.Source.Window
                 GeoClassBreaksRenderer sClassBreaksRenderer = (GeoClassBreaksRenderer)sRenderer;
                 List<TreeNode> styles = new List<TreeNode>() { new TreeNode(sClassBreaksRenderer.Field) };
                 int BreakCount = sClassBreaksRenderer.BreakCount;
-                for(int i = 0; i < BreakCount + 1; ++i)
+                for(int i = 0; i < BreakCount; ++i)
                 {
                     string startValue = i == 0 ? "0" : sClassBreaksRenderer.GetBreakValue(i - 1).ToString();
                     string endValue = sClassBreaksRenderer.GetBreakValue(i).ToString();
                     styles.Add(CreateSimpleStyleTreeNode(sClassBreaksRenderer.GetSymbol(i), startValue + "~" + endValue));
                 }
-                TreeNode layerNode = new TreeNode(filename, styles.ToArray());
+                TreeNode layerNode = new TreeNode(layer.Name, styles.ToArray());
                 layerNode.ContextMenuStrip = layerContextMenuStrip;
                 //layerTreeView.Nodes.Insert(0,layerNode);
+                layerNode.Tag = layer;
                 layerTreeView.Nodes.Add(layerNode);
             }
             else if (sRenderer.RendererType == GeoRendererTypeConstant.UniqueValue)
@@ -158,9 +161,10 @@ namespace DEETU.Source.Window
                 {
                     styles.Add(CreateSimpleStyleTreeNode(sUniqueValueRenderer.GetSymbol(i), sUniqueValueRenderer.GetValue(i)));
                 }
-                TreeNode layerNode = new TreeNode(filename, styles.ToArray());
+                TreeNode layerNode = new TreeNode(layer.Name, styles.ToArray());
                 layerNode.ContextMenuStrip = layerContextMenuStrip;
                 //layerTreeView.Nodes.Insert(0,layerNode);
+                layerNode.Tag = layer;
                 layerTreeView.Nodes.Add(layerNode);
             }
             else
@@ -179,17 +183,17 @@ namespace DEETU.Source.Window
 
         private Bitmap CreateBitmapFromSymbol(GeoSymbol symbol)
         {
-            Bitmap styleImage = new Bitmap(50, 20);
+            Bitmap styleImage = new Bitmap(50,50);
             Graphics g = Graphics.FromImage(styleImage);
             if (symbol.SymbolType == GeoSymbolTypeConstant.SimpleMarkerSymbol)
             {
-                Rectangle sRect = new Rectangle(0, styleImage.Width, 0, styleImage.Height);
+                Rectangle sRect = new Rectangle(0, 0, styleImage.Width, styleImage.Height);
                 GeoMapDrawingTools.DrawSimpleMarker(g, sRect, 0, (symbol as GeoSimpleMarkerSymbol)); // dpm is useless in this function
             }
             else if (symbol.SymbolType == GeoSymbolTypeConstant.SimpleLineSymbol)
             {
                 GeoSimpleLineSymbol sLineSymbol = (symbol as GeoSimpleLineSymbol);
-                double dpm = 10; // I don't know the correct dpm here so I just randomly assigned a number
+                double dpm = 1000; // I don't know the correct dpm here so I just randomly assigned a number
                 Pen sPen = new Pen(sLineSymbol.Color, (float)(sLineSymbol.Size / 1000 * dpm));
                 sPen.DashStyle = (DashStyle)sLineSymbol.Style;
                 g.DrawLine(sPen, new Point(0, styleImage.Height / 2), new Point(styleImage.Width, styleImage.Height / 2));
@@ -1072,6 +1076,63 @@ OnZoomOut_MouseUp(e);
             DrawSketchingShapes(drawTool);
             DrawEditingShapes(drawTool);
         }
+
+        // 实现TreeView拖拽
+        private void layerTreeView_ItemDrag(object sender, ItemDragEventArgs e)
+        {
+            if ((e.Item as TreeNode).Nodes.Count != 0)
+            {
+                // 开始进行拖放操作，并将拖放的效果设置成移动。
+                this.DoDragDrop(e.Item, DragDropEffects.Move);
+            }
+        }
+
+        private void layerTreeView_DragDrop(object sender, DragEventArgs e)
+        {
+            // 定义一个中间变量
+            TreeNode treeNode;
+            //判断拖动的是否为TreeNode类型，不是的话不予处理
+            if (e.Data.GetDataPresent("System.Windows.Forms.TreeNode", false) && (e.Data.GetData("System.Windows.Forms.TreeNode") as TreeNode).Nodes.Count != 0)
+            {
+                // 拖放的目标节点
+                TreeNode targetTreeNode;
+                // 获取当前光标所处的坐标
+                // 定义一个位置点的变量，保存当前光标所处的坐标点
+                Point point = ((UITreeView)sender).PointToClient(new Point(e.X, e.Y));
+                if(((UITreeView)sender).Bounds.Contains(point))
+                {
+                    // 根据坐标点取得处于坐标点位置的节点
+                    targetTreeNode = ((UITreeView)sender).GetNodeAt(point);
+                    // 获取被拖动的节点
+                    treeNode = (TreeNode)e.Data.GetData("System.Windows.Forms.TreeNode");
+                    // 判断拖动的节点与目标节点是否是同一个,同一个不予处理
+                    if (treeNode != targetTreeNode)
+                    {
+                        // 获取目标位置的索引号
+                        int index = layerTreeView.Nodes.IndexOf(targetTreeNode);
+                        if (index == -1) index = layerTreeView.Nodes.Count;
+                        TreeNode newNode = (TreeNode)treeNode.Clone();
+                        newNode.Tag = treeNode.Tag;
+                        // 修改顺序
+                        layerTreeView.Nodes.Insert(index, newNode);
+                        geoMap.Layers.Insert(index, treeNode.Tag as GeoMapLayer);
+                        geoMap.Layers.Remove(treeNode.Tag as GeoMapLayer);
+                        // 将被拖动的节点移除
+                        treeNode.Remove();
+                    }
+                }
+            }
+        }
+
+        private void layerTreeView_DragEnter(object sender, DragEventArgs e)
+        {
+            // 拖动效果设成移动
+            e.Effect = DragDropEffects.Move;
+        }
+
+
+
+
         #endregion
 
         #region 私有函数
@@ -1303,6 +1364,8 @@ OnZoomOut_MouseUp(e);
         private void layerAttributes_FormClosed(object sender, FormClosedEventArgs e)
         {
             geoMap.RedrawMap();
+            UpdateTreeView(mCurrentLayerNode.Tag as GeoMapLayer);
+            mCurrentLayerNode.Remove();
         }
 
         private void layerTreeView_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
