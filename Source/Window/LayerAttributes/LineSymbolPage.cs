@@ -62,77 +62,18 @@ namespace DEETU.Source.Window
             // 对于不同的渲染模式进行配置
             if (mLayer.Renderer.RendererType == GeoRendererTypeConstant.Simple)
             {
-                initializeSimpleRenderer();
+                renderMethodCB.SelectedIndex = 0;
             }
             else if (mLayer.Renderer.RendererType == GeoRendererTypeConstant.UniqueValue)
             {
-                initializeUniqueValueRenderer();
-                uniqueFieldComboBox.SelectedIndex = mLayer.AttributeFields.FindField(mUniqueValueRenderer.Field);
- 
-                UniqueValueComboBoxEx.Items.AddRange(mUniqueValueRenderers.ToArray());
-                UniqueValueComboBoxEx.SelectedIndex = 0;
+                renderMethodCB.SelectedIndex = 1;
             }
             else
             {
-                initializeClassBreaksRenderer();
-                classFieldComboBox.SelectedIndex = mLayer.AttributeFields.FindField(mClassBreaksRenderer.Field);
-
-                ClassBreaksComboBoxEx.Items.AddRange(mClassBreaksRenderers.ToArray());
-                ClassBreaksComboBoxEx.SelectedIndex = 0;
+                renderMethodCB.SelectedIndex = 2;
             }
             
         }
-
-        private void initializeSimpleRenderer()
-        {
-            GeoSimpleRenderer simpleRenderer = (GeoSimpleRenderer)mLayer.Renderer;
-            mSimpleRenderer = simpleRenderer;
-            GeoSimpleLineSymbol lineSymbol = (GeoSimpleLineSymbol)simpleRenderer.Symbol;
-            lineColorPicker.Value = lineSymbol.Color;
-            sizeDoubleUpDown.Value = lineSymbol.Size;
-            styleComboBox.SelectedIndex = (int)lineSymbol.Style;
-        }
-
-        private void initializeUniqueValueRenderer()
-        {
-            GeoUniqueValueRenderer uniqueValueRenderer = (GeoUniqueValueRenderer)mLayer.Renderer;
-            mUniqueValueRenderer = uniqueValueRenderer;
-            mUniqueValueRenderers.Add(mUniqueValueRenderer);
-
-            if (mUniqueDefaultButton != null) uniqueTableLayoutPanel.Controls.Remove(mUniqueDefaultButton);
-            Button defaultSymbolButton = GetLineSymbolButton((GeoSimpleLineSymbol)uniqueValueRenderer.DefaultSymbol);
-            mUniqueDefaultButton = defaultSymbolButton;
-            uniqueTableLayoutPanel.Controls.Add(defaultSymbolButton, 1, 2);
-
-            for (int i = 0; i < uniqueValueRenderer.ValueCount; i++)
-            {
-                GeoSimpleLineSymbol lineSymbol = (GeoSimpleLineSymbol)uniqueValueRenderer.GetSymbol(i);
-                Bitmap symbolImage = CreateLineBitmapFromSymbol(lineSymbol);
-                uniqueDataGridView.AddRow(symbolImage, uniqueValueRenderer.GetValue(i));
-            }
-            CreateUniqueValueRenderers((mLayer.Renderer as GeoUniqueValueRenderer).Field);
-        }
-
-        private void initializeClassBreaksRenderer()
-        {
-            GeoClassBreaksRenderer classBreaksRenderer = (GeoClassBreaksRenderer)mLayer.Renderer;
-            mClassBreaksRenderer = classBreaksRenderer;
-            mClassBreaksRenderers.Add(mClassBreaksRenderer);
-
-            if (mClassBreaksRenderer != null) classTableLayoutPanel.Controls.Remove(mClassDefaultButton);
-            Button defaultSymbolButton = GetLineSymbolButton((GeoSimpleLineSymbol)classBreaksRenderer.DefaultSymbol);
-            mClassDefaultButton = defaultSymbolButton;
-            classTableLayoutPanel.Controls.Add(defaultSymbolButton, 1, 2);
-
-            for (int i = 0; i < classBreaksRenderer.BreakCount; i++)
-            {
-                GeoSimpleLineSymbol lineSymbol = (GeoSimpleLineSymbol)classBreaksRenderer.GetSymbol(i);
-                Bitmap symbolImage = CreateLineBitmapFromSymbol(lineSymbol);
-                classDataGridView.AddRow(symbolImage, classBreaksRenderer.GetBreakValue(i));
-            }
-            CreateClassBreaksRenderers((mLayer.Renderer as GeoUniqueValueRenderer).Field);
-        }
-
 
         private Button GetLineSymbolButton(GeoSimpleLineSymbol symbol)
         {
@@ -162,7 +103,7 @@ namespace DEETU.Source.Window
             return styleImage;
         }
 
-
+        #region event
         private void SymbolGridButton_MouseClick(Button button, GeoSimpleLineSymbol symbol)
         {
             EditSimpleSymbolForm SimpleForm = new EditSimpleSymbolForm(symbol);
@@ -288,6 +229,122 @@ namespace DEETU.Source.Window
             renderTabControl.SelectedIndex = renderMethodCB.SelectedIndex;
         }
 
+        private void UniqueValueComboBoxEx_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            mLayer.Renderer = mUniqueValueRenderers[UniqueValueComboBoxEx.SelectedIndex];
+            uniqueDataGridView.Rows.Clear();
+            GeoUniqueValueRenderer uniqueValueRenderer = mLayer.Renderer as GeoUniqueValueRenderer;
+            for (int i = 0; i < uniqueValueRenderer.ValueCount; i++)
+            {
+                GeoSimpleLineSymbol lineSymbol = (GeoSimpleLineSymbol)uniqueValueRenderer.GetSymbol(i);
+                Bitmap symbolImage = CreateLineBitmapFromSymbol(lineSymbol);
+                uniqueDataGridView.AddRow(symbolImage, uniqueValueRenderer.GetValue(i));
+            }
+            uniqueDataGridView.Refresh();
+        }
+
+        private void ClassBreaksComboBoxEx_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            mLayer.Renderer = mClassBreaksRenderers[ClassBreaksComboBoxEx.SelectedIndex];
+            classDataGridView.Rows.Clear();
+            GeoClassBreaksRenderer classBreaksRenderer = mLayer.Renderer as GeoClassBreaksRenderer;
+            for (int i = 0; i < classBreaksRenderer.BreakCount; i++)
+            {
+                GeoSimpleLineSymbol LineSymbol = (GeoSimpleLineSymbol)classBreaksRenderer.GetSymbol(i);
+                Bitmap symbolImage = CreateLineBitmapFromSymbol(LineSymbol);
+                classDataGridView.AddRow(symbolImage, classBreaksRenderer.GetBreakValue(i));
+            }
+            classDataGridView.Refresh();
+        }
+
+        private void uniqueDataGridView_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            if(e.ColumnIndex == 0)
+            {
+                EditSimpleSymbolForm SimpleForm = new EditSimpleSymbolForm((mLayer.Renderer as GeoUniqueValueRenderer).GetSymbol(e.RowIndex));
+                FormClosedEventHandler handle = (obj, eve) => DataGridView_FormClosed(e.RowIndex, GeoRendererTypeConstant.UniqueValue);
+                SimpleForm.FormClosed += handle;
+                SimpleForm.Show();
+            }
+        }
+
+        private void DataGridView_FormClosed(int index, GeoRendererTypeConstant type)
+        {
+            if(type == GeoRendererTypeConstant.ClassBreaks)
+            {
+                GeoSimpleLineSymbol symbol = (GeoSimpleLineSymbol)(mLayer.Renderer as GeoClassBreaksRenderer).GetSymbol(index);
+                classDataGridView.Rows[index].Cells[0].Value = CreateLineBitmapFromSymbol(symbol);
+                classDataGridView.Refresh();
+            }
+            else if(type == GeoRendererTypeConstant.UniqueValue)
+            {
+                GeoSimpleLineSymbol symbol = (GeoSimpleLineSymbol)(mLayer.Renderer as GeoUniqueValueRenderer).GetSymbol(index);
+                uniqueDataGridView.Rows[index].Cells[0].Value = CreateLineBitmapFromSymbol(symbol);
+                uniqueDataGridView.Refresh();
+            }
+        }
+
+        private void classDataGridView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex == 0)
+            {
+                EditSimpleSymbolForm SimpleForm = new EditSimpleSymbolForm((mLayer.Renderer as GeoClassBreaksRenderer).GetSymbol(e.RowIndex));
+                FormClosedEventHandler handle = (obj, eve) => DataGridView_FormClosed(e.RowIndex, GeoRendererTypeConstant.ClassBreaks);
+                SimpleForm.FormClosed += handle;
+                SimpleForm.Show();
+            }
+        }
+        #endregion
+
+        private void initializeSimpleRenderer()
+        {
+            GeoSimpleRenderer simpleRenderer = (GeoSimpleRenderer)mLayer.Renderer;
+            mSimpleRenderer = simpleRenderer;
+            GeoSimpleLineSymbol lineSymbol = (GeoSimpleLineSymbol)simpleRenderer.Symbol;
+            lineColorPicker.Value = lineSymbol.Color;
+            sizeDoubleUpDown.Value = lineSymbol.Size;
+            styleComboBox.SelectedIndex = (int)lineSymbol.Style;
+        }
+
+        private void initializeUniqueValueRenderer()
+        {
+            GeoUniqueValueRenderer uniqueValueRenderer = (GeoUniqueValueRenderer)mLayer.Renderer;
+            mUniqueValueRenderer = uniqueValueRenderer;
+            mUniqueValueRenderers.Add(mUniqueValueRenderer);
+
+            if (mUniqueDefaultButton != null) uniqueTableLayoutPanel.Controls.Remove(mUniqueDefaultButton);
+            Button defaultSymbolButton = GetLineSymbolButton((GeoSimpleLineSymbol)uniqueValueRenderer.DefaultSymbol);
+            mUniqueDefaultButton = defaultSymbolButton;
+            uniqueTableLayoutPanel.Controls.Add(defaultSymbolButton, 1, 2);
+
+            for (int i = 0; i < uniqueValueRenderer.ValueCount; i++)
+            {
+                GeoSimpleLineSymbol lineSymbol = (GeoSimpleLineSymbol)uniqueValueRenderer.GetSymbol(i);
+                Bitmap symbolImage = CreateLineBitmapFromSymbol(lineSymbol);
+                uniqueDataGridView.AddRow(symbolImage, uniqueValueRenderer.GetValue(i));
+            }
+            CreateUniqueValueRenderers((mLayer.Renderer as GeoUniqueValueRenderer).Field);
+        }
+
+        private void initializeClassBreaksRenderer()
+        {
+            GeoClassBreaksRenderer classBreaksRenderer = (GeoClassBreaksRenderer)mLayer.Renderer;
+            mClassBreaksRenderer = classBreaksRenderer;
+            mClassBreaksRenderers.Add(mClassBreaksRenderer);
+
+            if (mClassBreaksRenderer != null) classTableLayoutPanel.Controls.Remove(mClassDefaultButton);
+            Button defaultSymbolButton = GetLineSymbolButton((GeoSimpleLineSymbol)classBreaksRenderer.DefaultSymbol);
+            mClassDefaultButton = defaultSymbolButton;
+            classTableLayoutPanel.Controls.Add(defaultSymbolButton, 1, 2);
+
+            for (int i = 0; i < classBreaksRenderer.BreakCount; i++)
+            {
+                GeoSimpleLineSymbol lineSymbol = (GeoSimpleLineSymbol)classBreaksRenderer.GetSymbol(i);
+                Bitmap symbolImage = CreateLineBitmapFromSymbol(lineSymbol);
+                classDataGridView.AddRow(symbolImage, classBreaksRenderer.GetBreakValue(i));
+            }
+            CreateClassBreaksRenderers((mLayer.Renderer as GeoUniqueValueRenderer).Field);
+        }
         private GeoClassBreaksRenderer CreateClassBreaksRenderer(string field)
         {
             try
@@ -317,7 +374,7 @@ namespace DEETU.Source.Window
                 sRenderer.DefaultSymbol = new GeoSimpleLineSymbol();
                 return sRenderer;
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 MessageBox.Show("这个字段无法进行分级渲染！");
                 return null;
@@ -358,7 +415,7 @@ namespace DEETU.Source.Window
                 sRenderer.DefaultSymbol = new GeoSimpleLineSymbol();
                 return sRenderer;
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 MessageBox.Show("这个字段不能进行唯一值渲染");
 
@@ -382,34 +439,6 @@ namespace DEETU.Source.Window
             GeoSimpleLineSymbol sSymbol = new GeoSimpleLineSymbol();
             sRenderer.Symbol = sSymbol;
             return sRenderer;
-        }
-
-        private void UniqueValueComboBoxEx_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            mLayer.Renderer = mUniqueValueRenderers[UniqueValueComboBoxEx.SelectedIndex];
-            uniqueDataGridView.Rows.Clear();
-            GeoUniqueValueRenderer uniqueValueRenderer = mLayer.Renderer as GeoUniqueValueRenderer;
-            for (int i = 0; i < uniqueValueRenderer.ValueCount; i++)
-            {
-                GeoSimpleLineSymbol lineSymbol = (GeoSimpleLineSymbol)uniqueValueRenderer.GetSymbol(i);
-                Bitmap symbolImage = CreateLineBitmapFromSymbol(lineSymbol);
-                uniqueDataGridView.AddRow(symbolImage, uniqueValueRenderer.GetValue(i));
-            }
-            uniqueDataGridView.Refresh();
-        }
-
-        private void ClassBreaksComboBoxEx_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            mLayer.Renderer = mClassBreaksRenderers[ClassBreaksComboBoxEx.SelectedIndex];
-            classDataGridView.Rows.Clear();
-            GeoClassBreaksRenderer classBreaksRenderer = mLayer.Renderer as GeoClassBreaksRenderer;
-            for (int i = 0; i < classBreaksRenderer.BreakCount; i++)
-            {
-                GeoSimpleLineSymbol LineSymbol = (GeoSimpleLineSymbol)classBreaksRenderer.GetSymbol(i);
-                Bitmap symbolImage = CreateLineBitmapFromSymbol(LineSymbol);
-                classDataGridView.AddRow(symbolImage, classBreaksRenderer.GetBreakValue(i));
-            }
-            classDataGridView.Refresh();
         }
     }
 }

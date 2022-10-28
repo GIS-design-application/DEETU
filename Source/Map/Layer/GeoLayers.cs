@@ -103,7 +103,7 @@ namespace DEETU.Map
         /// <param name="layer"></param>
         public void Insert(int index, GeoMapLayer layer)
         {
-            if(index < _Layers.Count)
+            if(index <= _Layers.Count)
                 _Layers.Insert(index, layer);
         }
 

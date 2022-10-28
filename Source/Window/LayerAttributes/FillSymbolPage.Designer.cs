@@ -351,6 +351,7 @@ namespace DEETU.Source.Window
             this.uniqueDataGridView.Style = Sunny.UI.UIStyle.Office2010Black;
             this.uniqueDataGridView.StyleCustomMode = true;
             this.uniqueDataGridView.TabIndex = 6;
+            this.uniqueDataGridView.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.uniqueDataGridView_CellDoubleClick);
             // 
             // symbolCol
             // 
@@ -565,6 +566,7 @@ namespace DEETU.Source.Window
             this.classDataGridView.Style = Sunny.UI.UIStyle.Office2010Black;
             this.classDataGridView.StyleCustomMode = true;
             this.classDataGridView.TabIndex = 8;
+            this.classDataGridView.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.classDataGridView_CellDoubleClick);
             // 
             // dataGridViewButtonColumn1
             // 

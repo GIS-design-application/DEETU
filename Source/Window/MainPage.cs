@@ -111,7 +111,7 @@ namespace DEETU.Source.Window
                 sStream.Dispose();
                 sr.Dispose();
                 
-                UpdateTreeView(sLayer);
+                UpdateTreeView(sLayer, geoMap.Layers.Count);
             }
             catch (Exception error)
             {
@@ -121,7 +121,7 @@ namespace DEETU.Source.Window
 
         // 这个函数是为了显示图层渲染方式
         // 在加入图层和修改渲染方式时调用
-        private void UpdateTreeView(GeoMapLayer layer)
+        private void UpdateTreeView(GeoMapLayer layer, int index)
         {
             // 按照renderer Type进行处理
             GeoRenderer sRenderer = layer.Renderer;
@@ -133,7 +133,7 @@ namespace DEETU.Source.Window
                 layerNode.ContextMenuStrip = layerContextMenuStrip;
                 //layerTreeView.Nodes.Insert(0,layerNode);
                 layerNode.Tag = layer;
-                layerTreeView.Nodes.Add(layerNode);
+                layerTreeView.Nodes.Insert(index, layerNode);
             }
             else if (sRenderer.RendererType == GeoRendererTypeConstant.ClassBreaks)
             {
@@ -150,7 +150,7 @@ namespace DEETU.Source.Window
                 layerNode.ContextMenuStrip = layerContextMenuStrip;
                 //layerTreeView.Nodes.Insert(0,layerNode);
                 layerNode.Tag = layer;
-                layerTreeView.Nodes.Add(layerNode);
+                layerTreeView.Nodes.Insert(index, layerNode);
             }
             else if (sRenderer.RendererType == GeoRendererTypeConstant.UniqueValue)
             {
@@ -165,7 +165,7 @@ namespace DEETU.Source.Window
                 layerNode.ContextMenuStrip = layerContextMenuStrip;
                 //layerTreeView.Nodes.Insert(0,layerNode);
                 layerNode.Tag = layer;
-                layerTreeView.Nodes.Add(layerNode);
+                layerTreeView.Nodes.Insert(index, layerNode);
             }
             else
             {
@@ -1109,16 +1109,23 @@ OnZoomOut_MouseUp(e);
                     if (treeNode != targetTreeNode)
                     {
                         // 获取目标位置的索引号
-                        int index = layerTreeView.Nodes.IndexOf(targetTreeNode);
-                        if (index == -1) index = layerTreeView.Nodes.Count;
-                        TreeNode newNode = (TreeNode)treeNode.Clone();
-                        newNode.Tag = treeNode.Tag;
+                        int newIndex = layerTreeView.Nodes.IndexOf(targetTreeNode);
+                        if (newIndex == -1) newIndex = layerTreeView.Nodes.Count;
                         // 修改顺序
-                        layerTreeView.Nodes.Insert(index, newNode);
-                        geoMap.Layers.Insert(index, treeNode.Tag as GeoMapLayer);
-                        geoMap.Layers.Remove(treeNode.Tag as GeoMapLayer);
+                        if (treeNode.Index > newIndex)
+                        {
+                            geoMap.Layers.Insert(newIndex, treeNode.Tag as GeoMapLayer);
+                            geoMap.Layers.RemoveAt(treeNode.Index + 1);
+                        }
+                        else
+                        {
+                            geoMap.Layers.Insert(newIndex, treeNode.Tag as GeoMapLayer);
+                            geoMap.Layers.RemoveAt(treeNode.Index);
+                        }
+                        layerTreeView.Nodes.Insert(newIndex, (TreeNode)treeNode.Clone());
                         // 将被拖动的节点移除
                         treeNode.Remove();
+                        geoMap.RedrawMap();
                     }
                 }
             }
@@ -1363,9 +1370,9 @@ OnZoomOut_MouseUp(e);
 
         private void layerAttributes_FormClosed(object sender, FormClosedEventArgs e)
         {
-            geoMap.RedrawMap();
-            UpdateTreeView(mCurrentLayerNode.Tag as GeoMapLayer);
+            UpdateTreeView(mCurrentLayerNode.Tag as GeoMapLayer, mCurrentLayerNode.Index);
             mCurrentLayerNode.Remove();
+            geoMap.RedrawMap();
         }
 
         private void layerTreeView_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
