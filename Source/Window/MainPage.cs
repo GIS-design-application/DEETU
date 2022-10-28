@@ -1548,14 +1548,23 @@ OnZoomOut_MouseUp(e);
         {
             GeoMapLayer layer = mCurrentLayerNode.Tag as GeoMapLayer;
             AttributeTableForm attributeForm = new AttributeTableForm(layer);
+            attributeForm.MapRedraw += AttributeForm_MapRedraw;
             attributeForm.Show();
         }
+
         #endregion
 
+        #region
         private void layerAttributes_FormClosed(object sender, FormClosedEventArgs e)
         {
             geoMap.RedrawMap();
         }
+
+        private void AttributeForm_MapRedraw(object sender)
+        {
+            geoMap.RedrawMap();
+        }
+        #endregion
 
         /// <summary>
         /// 每当一个图层被选择时, 自动选择该图层作为编辑的对象
