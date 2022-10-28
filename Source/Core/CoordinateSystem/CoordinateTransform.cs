@@ -7,7 +7,7 @@ using DEETU.Geometry;
 using DEETU.Map;
 using DEETU.Tool;
 
-namespace DEETU.Source.Core.CoordinateSystem
+namespace DEETU.Core
 {
     public class CoordinateTransform
     {
