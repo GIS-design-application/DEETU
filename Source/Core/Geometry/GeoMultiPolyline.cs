@@ -5,6 +5,7 @@ using System.Text;
 
 namespace DEETU.Geometry
 {
+    [Serializable]
     public class GeoMultiPolyline : GeoGeometry
     {
         #region 字段

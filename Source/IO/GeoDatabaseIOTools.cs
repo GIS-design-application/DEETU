@@ -19,7 +19,48 @@ namespace DEETU.IO
     internal static class GeoDatabaseIOTools
     {
         #region 数据库保存
-        
+        internal static byte[] RendererToByteArray(GeoRenderer renderer)
+        {
+            byte[] byteArray;
+            MemoryStream fs = new MemoryStream();
+            BinaryFormatter formatter = new BinaryFormatter();
+            try
+            {
+                formatter.Serialize(fs, renderer);
+            }
+            catch (SerializationException e)
+            {
+                Console.WriteLine("Failed to serialize. Reason: " + e.Message);
+                throw new Exception("Failed to serialize. Reason: " + e.Message);
+            }
+            finally
+            {
+                byteArray = fs.ToArray();
+                fs.Close();
+            }
+            return byteArray;
+        }
+        internal static byte[] GeometryToByteArray(GeoGeometry geometry)
+        {
+            byte[] byteArray;
+            MemoryStream fs = new MemoryStream();
+            BinaryFormatter formatter = new BinaryFormatter();
+            try
+            {
+                formatter.Serialize(fs, geometry);
+            }
+            catch (SerializationException e)
+            {
+                Console.WriteLine("Failed to serialize. Reason: " + e.Message);
+                throw new Exception("Failed to serialize. Reason: " + e.Message);
+            }
+            finally
+            {
+                byteArray = fs.ToArray();
+                fs.Close();
+            }
+            return byteArray;
+        }
         internal static byte[] CrsToByteArray(GeoCoordinateReferenceSystem crs)
         {
             byte[] byteArray;
@@ -78,12 +119,12 @@ namespace DEETU.IO
             if (is_new)
             {
                 //新建表
-                cmd.CommandText = "CREATE TABLE project_metadata (name varchar,crs BLOB, geotype int)";
+                cmd.CommandText = "CREATE TABLE project_metadata (name varchar,crs BLOB, geotype int,renderer BLOB)";
                 try { cmd.ExecuteNonQuery(); } catch (Exception e) { MessageBox.Show(e.Message.ToString()); }
                 for (int i = 0; i < project.Count; i++)
                 {
                     GeoMapLayer sLayer = project.GetItem(i);
-                    string attribute_str = "CREATE TABLE " + sLayer.Name + " (id integer,renderer BLOB,geometry BLOB,";
+                    string attribute_str = "CREATE TABLE " + sLayer.Name + " (id integer,geometry BLOB,";
                     for (int j = 0; j < sLayer.AttributeFields.Count; j++)
                     {
                         attribute_str += sLayer.AttributeFields.GetItem(j).Name;
@@ -113,53 +154,83 @@ namespace DEETU.IO
             //存储project的元数据
             for(int i=0;i<project.Count;i++)
             {
-                string meta_str = "INSERT INTO project_metadata VALUES(";
-                meta_str += "\"" + project.GetItem(i).Name + "\",";
+                string meta_str = "INSERT INTO project_metadata VALUES(@name,@crs,@geotype,@renderer)";
+                //meta_str += "\"" + project.GetItem(i).Name + "\",";
 
                 byte[] sByteArray = CrsToByteArray(project.GetItem(i).Crs);
-                meta_str+= "@" + sByteArray + ""+",";
+                //meta_str+= "@" + sByteArray + ""+",";
+                cmd.CommandText = meta_str;
+                cmd.Parameters.Add("@name", System.Data.DbType.String).Value = project.GetItem(i).Name;
+                cmd.Parameters.Add("@crs", System.Data.DbType.Binary).Value = sByteArray;
 
                 switch (project.GetItem(i).ShapeType)
                 {
                     case GeoGeometryTypeConstant.Point:
-                        meta_str += "0)";
+                        cmd.Parameters.Add("@geotype", System.Data.DbType.Int32).Value = 0;
+                        //meta_str += "0)";
                         break;
                     case GeoGeometryTypeConstant.MultiPolyline:
-                        meta_str += "1)";
+                        cmd.Parameters.Add("@geotype", System.Data.DbType.Int32).Value = 1;
+                        //meta_str += "1)";
                         break;
                     default:
-                        meta_str += "2)";
+                        cmd.Parameters.Add("@geotype", System.Data.DbType.Int32).Value = 2;
+                        //meta_str += "2)";
                         break;
                 }
+                cmd.Parameters.Add("@renderer", System.Data.DbType.Binary).Value = 
+                    RendererToByteArray(project.GetItem(i).Renderer);
                 MessageBox.Show(meta_str);
-                cmd.CommandText = meta_str;
+
                 cmd.ExecuteNonQuery();
             }
 
-            //每个图层存储一张表
-            return true;
+            //为每个图层对应的要素赋值
             for (int i=0;i<project.Count;i++)
             {
                 GeoMapLayer sLayer = project.GetItem(i);
                 GeoFields sFields = project.GetItem(i).AttributeFields;
                 for(int ID=0;ID<sLayer.Features.Count; ID++)
                 {
-
-                    string insert = "INSERT INTO " + sLayer.Name + "(id,renderer,geometry)) VALUES(" + ID.ToString()+",";
-
-                    
+                    GeoFeature sFeature = sLayer.Features.GetItem(ID);
+                    string insert_str = "INSERT INTO " + sLayer.Name + " VALUES(@id,@geometry,";
                     for (int j=0;j<sFields.Count;j++)
                     {
-                        GeoValueTypeConstant type= sFields.GetItem(j).ValueType;
+                        GeoValueTypeConstant type = sFields.GetItem(j).ValueType;
                         string name = sFields.GetItem(j).Name;
-
+                        insert_str += "@" + name;
+                        if (j == sFields.Count - 1) insert_str += ")";
+                        else insert_str += ",";
                     }
+                    cmd.Parameters.Clear();
+                    cmd.CommandText = insert_str;
+                    cmd.Parameters.Add("@id", System.Data.DbType.Int32).Value = ID;
+                    cmd.Parameters.Add("@geometry", System.Data.DbType.Binary).Value = 
+                        GeometryToByteArray(sFeature.Geometry);
+                    //为每个属性赋值
+                    for (int j = 0; j < sFields.Count; j++)
+                    {
+                        GeoValueTypeConstant type = sFields.GetItem(j).ValueType;
+                        switch (type)
+                        {
+                            case GeoValueTypeConstant.dDouble:
+                            case GeoValueTypeConstant.dSingle:
+                                cmd.Parameters.Add("@" + sFields.GetItem(j).Name,
+                                    System.Data.DbType.Double).Value = sFeature.Attributes.GetItem(j);
+                                break;
+                            case GeoValueTypeConstant.dText:
+                                cmd.Parameters.Add("@" + sFields.GetItem(j).Name,
+                                    System.Data.DbType.String).Value = sFeature.Attributes.GetItem(j);
+                                break;
+                            //其他全为int
+                            default:
+                                cmd.Parameters.Add("@" + sFields.GetItem(j).Name,
+                                    System.Data.DbType.Int32).Value = sFeature.Attributes.GetItem(j);
+                                break;
+                        }
+                    }
+                    try { cmd.ExecuteNonQuery(); } catch (Exception e) { MessageBox.Show(e.Message.ToString()); }
                 }
-                
-
-                byte[] sByteArray = CrsToByteArray(project.GetItem(i).Crs);
-
-               
             }
             return true;
         }
@@ -248,9 +319,6 @@ namespace DEETU.IO
                                 memstream = GetBytes(reader, 1);
                             }
                             GeoGeometryTypeConstant sShapeType = (GeoGeometryTypeConstant)reader.GetInt32(2);
-
-
-
                             layers.Add(sLayer);
                         }
                     }

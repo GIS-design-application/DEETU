@@ -8,6 +8,7 @@ namespace DEETU.Geometry
     /// <summary>
     /// 点
     /// </summary>
+    [Serializable]
     public class GeoPoint : GeoGeometry
     {
         #region 字段
