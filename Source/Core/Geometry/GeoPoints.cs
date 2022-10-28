@@ -5,6 +5,7 @@ using System.Text;
 
 namespace DEETU.Geometry
 {
+    [Serializable]
     public class GeoPoints : GeoShape
     {
         #region 字段

@@ -6,6 +6,7 @@ using System.Text;
 
 namespace DEETU.Core
 {
+    [Serializable]
     public class GeoUniqueValueRenderer : GeoRenderer
     {
 
