@@ -1666,6 +1666,42 @@ OnZoomOut_MouseUp(e);
             GeoDatabaseIOTools.SaveGeoProject(geoMap.Layers, "C:\\Users\\zwy99\\Desktop\\test\\test1.db");
         }
 
+        private void 打开ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // 获取文件名
+            OpenFileDialog sDialog = new OpenFileDialog();
+            string sFileName = "";
+            if (sDialog.ShowDialog() == DialogResult.OK)
+            {
+                sFileName = sDialog.FileName;
+                sDialog.Dispose();
+            }
+            else
+            {
+                sDialog.Dispose();
+                return;
+            }
+
+            try
+            {
+                geoMap.Layers.Clear();
+                GeoDatabaseIOTools.LoadGeoProject(geoMap.Layers, sFileName);
+                if (geoMap.Layers.Count == 1)
+                {
+                    geoMap.FullExtent();
+                }
+                else
+                {
+                    geoMap.RedrawMap();
+                }
+
+            }
+            catch (Exception error)
+            {
+                MessageBox.Show(error.ToString());
+            }
+        }
+
 
 
 #endif

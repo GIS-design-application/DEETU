@@ -413,6 +413,7 @@
             this.打开ToolStripMenuItem.Name = "打开ToolStripMenuItem";
             this.打开ToolStripMenuItem.Size = new System.Drawing.Size(184, 26);
             this.打开ToolStripMenuItem.Text = "打开";
+            this.打开ToolStripMenuItem.Click += new System.EventHandler(this.打开ToolStripMenuItem_Click);
             // 
             // 保存ToolStripMenuItem
             // 
@@ -1056,7 +1057,7 @@
             this.geoMap.FlashColor = System.Drawing.Color.Green;
             this.geoMap.Layers = geoLayers3;
             this.geoMap.Location = new System.Drawing.Point(0, 0);
-            this.geoMap.Margin = new System.Windows.Forms.Padding(12467, 38962, 12467, 38962);
+            this.geoMap.Margin = new System.Windows.Forms.Padding(20778, 68184, 20778, 68184);
             this.geoMap.Name = "geoMap";
             this.geoMap.SelectionColor = System.Drawing.Color.Cyan;
             this.geoMap.Size = new System.Drawing.Size(637, 500);

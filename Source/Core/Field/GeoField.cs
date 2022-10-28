@@ -57,6 +57,7 @@ namespace DEETU.Core
         public GeoValueTypeConstant ValueType
         {
             get { return _ValueType; }
+            set { _ValueType = value; }
         }
         /// <summary>
         /// 获取字段长度
