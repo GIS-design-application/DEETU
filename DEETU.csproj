@@ -57,6 +57,7 @@
       <HintPath>packages\SunnyUI.Common.3.0.4\lib\net40\SunnyUI.Common.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Design" />
     <Reference Include="System.Web.Extensions" />
@@ -297,6 +298,7 @@
     <None Include=".gitignore" />
     <None Include=".vs\slnx.sqlite" />
     <None Include=".vs\VSWorkspaceState.json" />
+    <None Include="App.config" />
     <None Include="ClassDiagram1.cd" />
     <None Include="LICENSE" />
     <None Include="obj\Debug\DEETU.csproj.CoreCompileInputs.cache" />
