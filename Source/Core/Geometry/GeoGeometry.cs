@@ -5,7 +5,6 @@ using System.Text;
 
 namespace DEETU.Geometry
 {
-    [Serializable]
     public abstract class GeoGeometry : GeoShape
     {
         public virtual GeoGeometry Clone()

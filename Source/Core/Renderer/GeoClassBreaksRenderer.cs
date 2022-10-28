@@ -7,7 +7,6 @@ using DEETU.Tool;
 
 namespace DEETU.Core
 {
-    [Serializable]
     public class GeoClassBreaksRenderer : GeoRenderer
     {
         #region 字段

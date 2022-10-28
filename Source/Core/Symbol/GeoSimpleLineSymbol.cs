@@ -8,7 +8,6 @@ using DEETU.Tool;
 
 namespace DEETU.Core
 {
-    [Serializable]
     public class GeoSimpleLineSymbol : GeoSymbol
     {
         #region 字段

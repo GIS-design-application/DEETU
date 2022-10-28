@@ -8,7 +8,6 @@ namespace DEETU.Geometry
     /// <summary>
     /// 部分的类
     /// </summary>
-    [Serializable]
     public class GeoParts: GeoShape
     {
         #region 字段

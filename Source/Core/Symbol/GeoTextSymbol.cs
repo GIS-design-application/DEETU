@@ -1,10 +1,8 @@
 ﻿using DEETU.Tool;
-using System;
 using System.Drawing;
 
 namespace DEETU.Core
 {
-    [Serializable]
     public class GeoTextSymbol
     {
         #region 字段

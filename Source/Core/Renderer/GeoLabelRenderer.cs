@@ -1,9 +1,5 @@
-﻿using System;
-
-
-namespace DEETU.Core
+﻿namespace DEETU.Core
 {
-    [Serializable]
     public class GeoLabelRenderer
     {
 

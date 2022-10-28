@@ -6,7 +6,6 @@ using System.Text;
 
 namespace DEETU.Core
 {
-    [Serializable]
     public  abstract class GeoSymbol
     {
         /// <summary>

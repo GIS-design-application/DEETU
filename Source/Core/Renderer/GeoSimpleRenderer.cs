@@ -6,7 +6,6 @@ using System.Text;
 
 namespace DEETU.Core
 {
-    [Serializable]
     public class GeoSimpleRenderer : GeoRenderer
     {
         #region 字段

@@ -5,7 +5,6 @@ using System.Text;
 
 namespace DEETU.Geometry
 {
-    [Serializable]
     public class GeoMultiPolygon : GeoGeometry
     {
         #region 字段
