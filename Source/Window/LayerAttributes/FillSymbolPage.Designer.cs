@@ -752,13 +752,13 @@ namespace DEETU.Source.Window
 		private Sunny.UI.UILabel uiLabel6;
 		private Sunny.UI.UIDataGridView uniqueDataGridView;
 		private Sunny.UI.UIComboBox uniqueFieldComboBox;
-		private Sunny.UI.UIComboBox uniqueColorgradComboBox;
+		private System.Windows.Forms.ComboBox uniqueColorgradComboBox;
 		private Sunny.UI.UIDataGridView classDataGridView;
 		private System.Windows.Forms.TableLayoutPanel classTableLayoutPanel;
 		private Sunny.UI.UILabel uiLabel9;
 		private Sunny.UI.UILabel uiLabel10;
 		private Sunny.UI.UIComboBox classFieldComboBox;
-		private Sunny.UI.UIComboBox classColorgradComboBox;
+		private System.Windows.Forms.ComboBox classColorgradComboBox;
 		private Sunny.UI.UIIntegerUpDown uiIntegerUpDown1;
 		private Sunny.UI.UILabel uiLabel3;
 		private System.Windows.Forms.BindingSource geoUniqueValueRendererBindingSource;
