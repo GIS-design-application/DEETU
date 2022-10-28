@@ -1622,7 +1622,6 @@ OnZoomOut_MouseUp(e);
                 if (geoMap.Layers.Count == 1)
                 {
                     geoMap.FullExtent();
-                    geoMap.RedrawMap();
                 }
                 else
                 {

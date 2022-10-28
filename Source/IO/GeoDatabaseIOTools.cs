@@ -168,7 +168,7 @@ namespace DEETU.IO
                     }
                     attribute_str += ")";
                     cmd.CommandText = attribute_str;
-                    MessageBox.Show(attribute_str);
+                    //MessageBox.Show(attribute_str);
                     try { cmd.ExecuteNonQuery(); } catch (Exception e) { MessageBox.Show(e.Message.ToString()); }
                 }
             }
@@ -202,7 +202,7 @@ namespace DEETU.IO
                 }
                 cmd.Parameters.Add("@renderer", System.Data.DbType.Binary).Value = 
                     RendererToByteArray(project.GetItem(i).Renderer);
-                MessageBox.Show(meta_str);
+                //MessageBox.Show(meta_str);
 
                 cmd.ExecuteNonQuery();
             }
@@ -348,7 +348,7 @@ namespace DEETU.IO
             {
                 GeoMapLayer sLayer = layers.GetItem(i);
                 string sql = "PRAGMA table_info("+sLayer.Name+")";
-                MessageBox.Show(sql);
+                //MessageBox.Show(sql);
                 cmd.Parameters.Clear();
                 cmd.CommandText = sql;
                 //获取表头
@@ -423,6 +423,7 @@ namespace DEETU.IO
                         return false;
                     }
                 }
+                sLayer.UpdateExtent();
             }
             return true;
         }
