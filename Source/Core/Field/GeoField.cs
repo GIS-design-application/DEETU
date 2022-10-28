@@ -64,6 +64,7 @@ namespace DEETU.Core
         public int Length
         {
             get { return _Length; }
+            set { _Length = value; }
         }
         #endregion
 

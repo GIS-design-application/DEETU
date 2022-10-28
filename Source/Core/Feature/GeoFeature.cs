@@ -21,6 +21,11 @@ namespace DEETU.Core
         #endregion
 
         #region 构造函数
+        public GeoFeature(GeoGeometryTypeConstant shapeType, GeoGeometry geometry)
+        {
+            _ShapeType = shapeType;
+            _Geometry = geometry;
+        }
 
         public GeoFeature(GeoGeometryTypeConstant shapeType, GeoGeometry geometry, GeoAttributes attributes)
         {

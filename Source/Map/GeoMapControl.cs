@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -48,8 +48,8 @@ namespace DEETU.Map
         #region 构造函数
         public GeoMapControl()
         {
-            CreateMapDrawingReference();// 新建地图-屏幕坐标转换对象
             InitializeComponent();
+            CreateMapDrawingReference();// 新建地图-屏幕坐标转换对象
             InitializeSymbols(); // 初始化符号
             ResizeBufferMap(); // 调整缓冲位图尺寸
 

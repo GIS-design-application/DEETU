@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SQLite;
 using System.Linq;
 using System.Text;
 using System.Data;
@@ -12,7 +13,7 @@ namespace DEETU.IO
 
         #region 字段
         private DataTable _MapData; // 用于记录图层的元数据
-        private List<GeoDataTable> _LayersData; // 用于记录图层的元数据
+        private List<GeoDataTable> _LayersData; // 用于记录图层数据
         #endregion
 
 
