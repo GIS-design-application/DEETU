@@ -759,11 +759,7 @@ namespace DEETU.Source.Window
 		private Sunny.UI.UIDataGridView uniqueDataGridView;
 		private Sunny.UI.UIComboBox uniqueFieldComboBox;
 		private Sunny.UI.UIComboBox uniqueColorgradComboBox;
-		private System.Windows.Forms.DataGridViewButtonColumn symbolCol;
-		private System.Windows.Forms.DataGridViewTextBoxColumn valueCol;
-		private Sunny.UI.UIDataGridView uiDataGridView2;
-		private System.Windows.Forms.DataGridViewButtonColumn dataGridViewButtonColumn1;
-		private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
+		private Sunny.UI.UIDataGridView classDataGridView;
 		private System.Windows.Forms.TableLayoutPanel classTableLayoutPanel;
 		private Sunny.UI.UILabel uiLabel9;
 		private Sunny.UI.UILabel uiLabel10;
