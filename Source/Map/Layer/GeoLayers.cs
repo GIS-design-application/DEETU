@@ -97,6 +97,18 @@ namespace DEETU.Map
         }
 
         /// <summary>
+        /// 在指定位置插入图层
+        /// </summary>
+        /// <param name="index"></param>
+        /// <param name="layer"></param>
+        public void Insert(int index, GeoMapLayer layer)
+        {
+            if(index < _Layers.Count)
+                _Layers.Insert(index, layer);
+        }
+
+
+        /// <summary>
         /// 用于获得选择的图层, 整张地图只能有一个图层正在被选择
         /// </summary>
         /// <returns></returns>

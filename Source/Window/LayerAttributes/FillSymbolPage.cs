@@ -128,7 +128,7 @@ namespace DEETU.Source.Window
                 Bitmap symbolImage = CreateSimpleFillSymbolImage(fillSymbol);
                 classDataGridView.AddRow(symbolImage, classBreaksRenderer.GetBreakValue(i));
             }
-            CreateClassBreaksRenderers((mLayer.Renderer as GeoUniqueValueRenderer).Field);
+            CreateClassBreaksRenderers((mLayer.Renderer as GeoClassBreaksRenderer).Field);
         }
 
         private Bitmap CreateSimpleFillSymbolImage(GeoSimpleFillSymbol symbol)
