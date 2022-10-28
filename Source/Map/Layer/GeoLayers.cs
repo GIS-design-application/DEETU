@@ -102,6 +102,10 @@ namespace DEETU.Map
         /// <returns></returns>
         public GeoMapLayer getSelectableLayer()
         {
+            if (_Layers.Count == 1)
+            {
+                return _Layers[0];
+            }
             for(int i = 0; i < _Layers.Count; i++)
             {
                 if (_Layers[i].Selectable)
@@ -110,6 +114,14 @@ namespace DEETU.Map
                 }
             }
             throw new Exception("没有图层或没有可以选择的图层");
+        }
+
+        public void Deselect()
+        {
+            for (int i = 0; i < _Layers.Count; i++)
+            {
+                _Layers[i].Selectable = false;
+            }
         }
 
         #endregion

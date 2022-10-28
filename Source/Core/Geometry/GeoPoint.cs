@@ -54,7 +54,7 @@ namespace DEETU.Geometry
         /// 复制
         /// </summary>
         /// <returns></returns>
-        override public object Clone()
+        override public GeoGeometry Clone()
         {
             return new GeoPoint(this);
         }

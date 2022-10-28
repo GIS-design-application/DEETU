@@ -82,7 +82,7 @@ namespace DEETU.Geometry
         /// <summary>
         /// 更新坐标范围
         /// </summary>
-        public void UpdateExtent()
+        public override void UpdateExtent()
         {
             CalExtent();
         }
@@ -90,7 +90,7 @@ namespace DEETU.Geometry
         /// 复制
         /// </summary>
         /// <returns></returns>
-        public override object Clone()
+        public override GeoGeometry Clone()
         {
             GeoMultiPolygon sMultiPolygon = new GeoMultiPolygon();
             sMultiPolygon.Parts = _Parts.Clone() as GeoParts;

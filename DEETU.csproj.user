@@ -12,8 +12,8 @@
     <VerifyUploadedFiles>false</VerifyUploadedFiles>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
-    <StartWorkingDirectory>D:\OneDrive - pku.edu.cn\大三下\gis设计与应用\DEETU\</StartWorkingDirectory>
+    <StartWorkingDirectory>..\..\</StartWorkingDirectory>
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
-    <RemoteDebugEnabled>false</RemoteDebugEnabled>
+    <StartAction>Project</StartAction>
   </PropertyGroup>
 </Project>
