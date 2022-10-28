@@ -50,6 +50,9 @@ namespace DEETU.Source.Window
                 textBox.ReadOnly = false;
                 textBox.Dock = DockStyle.Fill;
 
+                detailTable.Controls.Add(label, 1, i);
+                detailTable.Controls.Add(textBox, 0, i);
+
             }
 
             // List View
@@ -58,7 +61,7 @@ namespace DEETU.Source.Window
             for (int i = 0; i < features.Count; i++)
             {
                 ListViewItem item = new ListViewItem(features.GetItem(i).Attributes.GetItem(0).ToString());
-                item.Tag = (object)features.GetItem(i);
+                item.Tag = features.GetItem(i);
                 item.ImageIndex = 0;
 
                 for (int j = 0; j < selectedFeatures.Count; j++)
@@ -69,19 +72,35 @@ namespace DEETU.Source.Window
                         break;
                     }
                 }
+                featureList.Items.Add(item);
             }
-
-            // image list
-            Bitmap rect1 = new Bitmap(30, 30);
-            Graphics g = rect1.Graphics();
-            g.DrawRectangle(Color.Black, 0, 0, 30, 30);
-            smallImageList.Images[0] = rect1;
-            
+            featureList.Items[0].Selected = true;
         }
 
         private void listView1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            
+            if (featureList.SelectedItems.IsNullOrEmpty())
+                return;
+            GeoFeature feature = featureList.SelectedItems[0].Tag as GeoFeature;
+            for (int i = 0; i < feature.Attributes.Count; i++)
+            {
+                UITextBox textBox = detailTable.GetControlFromPosition(0, i) as UITextBox;
+                textBox.Text = feature.Attributes.GetItem(i).ToString();
+            }
+            mLayer.SelectedFeatures.Clear();
+            foreach (ListViewItem item in featureList.Items)
+                item.ImageIndex = 0;
+            foreach(ListViewItem item in featureList.SelectedItems)
+            {
+                item.ImageIndex = 1;
+                mLayer.SelectedFeatures.Add(item.Tag as GeoFeature);
+            }
+        }
+
+        private void reloadToolStripButton_Click(object sender, EventArgs e)
+        {
+            InitializeFormPage();
+            //InitializeGridPage();
         }
     }
 }
