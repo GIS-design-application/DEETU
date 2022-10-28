@@ -142,8 +142,8 @@ namespace DEETU.Source.Window
                 textBox.ReadOnly = false;
                 textBox.Dock = DockStyle.Fill;
 
-                detailTable.Controls.Add(label, 1, i);
-                detailTable.Controls.Add(textBox, 0, i);
+                detailTable.Controls.Add(label, 0, i);
+                detailTable.Controls.Add(textBox, 1, i);
 
             }
 
@@ -184,7 +184,7 @@ namespace DEETU.Source.Window
         {
             for (int i = 0; i < feature.Attributes.Count; i++)
             {
-                UITextBox textBox = detailTable.GetControlFromPosition(0, i) as UITextBox;
+                UITextBox textBox = detailTable.GetControlFromPosition(1, i) as UITextBox;
                 textBox.Text = feature.Attributes.GetItem(i).ToString();
             }
         }

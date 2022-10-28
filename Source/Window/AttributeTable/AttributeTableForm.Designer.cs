@@ -30,12 +30,12 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AttributeTableForm));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle29 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle30 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle31 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle32 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("表单模式");
-            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("表格模式");
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("表单模式");
+            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("表格模式");
             this.uiTabControl1 = new Sunny.UI.UITabControl();
             this.formPage = new System.Windows.Forms.TabPage();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
@@ -44,20 +44,6 @@
             this.detailTable = new System.Windows.Forms.TableLayoutPanel();
             this.gridPage = new System.Windows.Forms.TabPage();
             this.uiDataGridView1 = new Sunny.UI.UIDataGridView();
-            this.shapeTypeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.nameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.visibleDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.selectableDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.descriptionDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.isDirtyDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.extentDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.featuresDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.selectedFeaturesDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.attributeFieldsDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.rendererDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.labelRendererDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.crsDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.geoMapLayerBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.Header = new Sunny.UI.UINavBar();
             this.navBarImageList = new System.Windows.Forms.ImageList(this.components);
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
@@ -76,6 +62,20 @@
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.selectAllToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.removeSelectToolStripButton = new System.Windows.Forms.ToolStripButton();
+            this.shapeTypeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.nameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.visibleDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.selectableDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.descriptionDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.isDirtyDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.extentDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.featuresDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.selectedFeaturesDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.attributeFieldsDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.rendererDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.labelRendererDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.crsDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.geoMapLayerBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.uiTabControl1.SuspendLayout();
             this.formPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -84,8 +84,8 @@
             this.splitContainer1.SuspendLayout();
             this.gridPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.uiDataGridView1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.geoMapLayerBindingSource)).BeginInit();
             this.toolStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.geoMapLayerBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // uiTabControl1
@@ -160,8 +160,8 @@
             // 
             this.detailTable.AutoScroll = true;
             this.detailTable.ColumnCount = 2;
-            this.detailTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.detailTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.detailTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.detailTable.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.detailTable.Dock = System.Windows.Forms.DockStyle.Fill;
             this.detailTable.Location = new System.Drawing.Point(0, 0);
@@ -184,19 +184,19 @@
             // 
             // uiDataGridView1
             // 
-            dataGridViewCellStyle29.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(235)))), ((int)(((byte)(243)))), ((int)(((byte)(255)))));
-            this.uiDataGridView1.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle29;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(235)))), ((int)(((byte)(243)))), ((int)(((byte)(255)))));
+            this.uiDataGridView1.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.uiDataGridView1.AutoGenerateColumns = false;
             this.uiDataGridView1.BackgroundColor = System.Drawing.Color.White;
             this.uiDataGridView1.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle30.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle30.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(160)))), ((int)(((byte)(255)))));
-            dataGridViewCellStyle30.Font = new System.Drawing.Font("微软雅黑", 12F);
-            dataGridViewCellStyle30.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle30.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle30.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle30.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.uiDataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle30;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(160)))), ((int)(((byte)(255)))));
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("微软雅黑", 12F);
+            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.uiDataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.uiDataGridView1.ColumnHeadersHeight = 32;
             this.uiDataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.uiDataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -220,106 +220,21 @@
             this.uiDataGridView1.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(160)))), ((int)(((byte)(255)))));
             this.uiDataGridView1.Location = new System.Drawing.Point(0, 0);
             this.uiDataGridView1.Name = "uiDataGridView1";
-            dataGridViewCellStyle31.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle31.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(235)))), ((int)(((byte)(243)))), ((int)(((byte)(255)))));
-            dataGridViewCellStyle31.Font = new System.Drawing.Font("微软雅黑", 12F);
-            dataGridViewCellStyle31.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
-            dataGridViewCellStyle31.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(160)))), ((int)(((byte)(255)))));
-            dataGridViewCellStyle31.SelectionForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle31.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.uiDataGridView1.RowHeadersDefaultCellStyle = dataGridViewCellStyle31;
-            dataGridViewCellStyle32.BackColor = System.Drawing.Color.White;
-            this.uiDataGridView1.RowsDefaultCellStyle = dataGridViewCellStyle32;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(235)))), ((int)(((byte)(243)))), ((int)(((byte)(255)))));
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("微软雅黑", 12F);
+            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(160)))), ((int)(((byte)(255)))));
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.uiDataGridView1.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle4.BackColor = System.Drawing.Color.White;
+            this.uiDataGridView1.RowsDefaultCellStyle = dataGridViewCellStyle4;
             this.uiDataGridView1.RowTemplate.Height = 29;
             this.uiDataGridView1.SelectedIndex = -1;
             this.uiDataGridView1.ShowGridLine = true;
             this.uiDataGridView1.Size = new System.Drawing.Size(796, 312);
             this.uiDataGridView1.TabIndex = 0;
-            // 
-            // shapeTypeDataGridViewTextBoxColumn
-            // 
-            this.shapeTypeDataGridViewTextBoxColumn.DataPropertyName = "ShapeType";
-            this.shapeTypeDataGridViewTextBoxColumn.HeaderText = "ShapeType";
-            this.shapeTypeDataGridViewTextBoxColumn.Name = "shapeTypeDataGridViewTextBoxColumn";
-            this.shapeTypeDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // nameDataGridViewTextBoxColumn
-            // 
-            this.nameDataGridViewTextBoxColumn.DataPropertyName = "Name";
-            this.nameDataGridViewTextBoxColumn.HeaderText = "Name";
-            this.nameDataGridViewTextBoxColumn.Name = "nameDataGridViewTextBoxColumn";
-            // 
-            // visibleDataGridViewCheckBoxColumn
-            // 
-            this.visibleDataGridViewCheckBoxColumn.DataPropertyName = "Visible";
-            this.visibleDataGridViewCheckBoxColumn.HeaderText = "Visible";
-            this.visibleDataGridViewCheckBoxColumn.Name = "visibleDataGridViewCheckBoxColumn";
-            // 
-            // selectableDataGridViewCheckBoxColumn
-            // 
-            this.selectableDataGridViewCheckBoxColumn.DataPropertyName = "Selectable";
-            this.selectableDataGridViewCheckBoxColumn.HeaderText = "Selectable";
-            this.selectableDataGridViewCheckBoxColumn.Name = "selectableDataGridViewCheckBoxColumn";
-            // 
-            // descriptionDataGridViewTextBoxColumn
-            // 
-            this.descriptionDataGridViewTextBoxColumn.DataPropertyName = "Description";
-            this.descriptionDataGridViewTextBoxColumn.HeaderText = "Description";
-            this.descriptionDataGridViewTextBoxColumn.Name = "descriptionDataGridViewTextBoxColumn";
-            // 
-            // isDirtyDataGridViewCheckBoxColumn
-            // 
-            this.isDirtyDataGridViewCheckBoxColumn.DataPropertyName = "IsDirty";
-            this.isDirtyDataGridViewCheckBoxColumn.HeaderText = "IsDirty";
-            this.isDirtyDataGridViewCheckBoxColumn.Name = "isDirtyDataGridViewCheckBoxColumn";
-            // 
-            // extentDataGridViewTextBoxColumn
-            // 
-            this.extentDataGridViewTextBoxColumn.DataPropertyName = "Extent";
-            this.extentDataGridViewTextBoxColumn.HeaderText = "Extent";
-            this.extentDataGridViewTextBoxColumn.Name = "extentDataGridViewTextBoxColumn";
-            this.extentDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // featuresDataGridViewTextBoxColumn
-            // 
-            this.featuresDataGridViewTextBoxColumn.DataPropertyName = "Features";
-            this.featuresDataGridViewTextBoxColumn.HeaderText = "Features";
-            this.featuresDataGridViewTextBoxColumn.Name = "featuresDataGridViewTextBoxColumn";
-            // 
-            // selectedFeaturesDataGridViewTextBoxColumn
-            // 
-            this.selectedFeaturesDataGridViewTextBoxColumn.DataPropertyName = "SelectedFeatures";
-            this.selectedFeaturesDataGridViewTextBoxColumn.HeaderText = "SelectedFeatures";
-            this.selectedFeaturesDataGridViewTextBoxColumn.Name = "selectedFeaturesDataGridViewTextBoxColumn";
-            // 
-            // attributeFieldsDataGridViewTextBoxColumn
-            // 
-            this.attributeFieldsDataGridViewTextBoxColumn.DataPropertyName = "AttributeFields";
-            this.attributeFieldsDataGridViewTextBoxColumn.HeaderText = "AttributeFields";
-            this.attributeFieldsDataGridViewTextBoxColumn.Name = "attributeFieldsDataGridViewTextBoxColumn";
-            this.attributeFieldsDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // rendererDataGridViewTextBoxColumn
-            // 
-            this.rendererDataGridViewTextBoxColumn.DataPropertyName = "Renderer";
-            this.rendererDataGridViewTextBoxColumn.HeaderText = "Renderer";
-            this.rendererDataGridViewTextBoxColumn.Name = "rendererDataGridViewTextBoxColumn";
-            // 
-            // labelRendererDataGridViewTextBoxColumn
-            // 
-            this.labelRendererDataGridViewTextBoxColumn.DataPropertyName = "LabelRenderer";
-            this.labelRendererDataGridViewTextBoxColumn.HeaderText = "LabelRenderer";
-            this.labelRendererDataGridViewTextBoxColumn.Name = "labelRendererDataGridViewTextBoxColumn";
-            // 
-            // crsDataGridViewTextBoxColumn
-            // 
-            this.crsDataGridViewTextBoxColumn.DataPropertyName = "Crs";
-            this.crsDataGridViewTextBoxColumn.HeaderText = "Crs";
-            this.crsDataGridViewTextBoxColumn.Name = "crsDataGridViewTextBoxColumn";
-            // 
-            // geoMapLayerBindingSource
-            // 
-            this.geoMapLayerBindingSource.DataSource = typeof(DEETU.Map.GeoMapLayer);
             // 
             // Header
             // 
@@ -329,15 +244,15 @@
             this.Header.Location = new System.Drawing.Point(2, 413);
             this.Header.Name = "Header";
             this.Header.NodeInterval = 20;
-            treeNode3.ImageIndex = 0;
-            treeNode3.Name = "formNode";
-            treeNode3.Text = "表单模式";
-            treeNode4.ImageIndex = 1;
-            treeNode4.Name = "gridNode";
-            treeNode4.Text = "表格模式";
+            treeNode1.ImageIndex = 0;
+            treeNode1.Name = "formNode";
+            treeNode1.Text = "表单模式";
+            treeNode2.ImageIndex = 1;
+            treeNode2.Name = "gridNode";
+            treeNode2.Text = "表格模式";
             this.Header.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode3,
-            treeNode4});
+            treeNode1,
+            treeNode2});
             this.Header.NodeSize = new System.Drawing.Size(80, 35);
             this.Header.Size = new System.Drawing.Size(796, 35);
             this.Header.TabControl = this.uiTabControl1;
@@ -509,6 +424,91 @@
             this.removeSelectToolStripButton.Text = "取消选中";
             this.removeSelectToolStripButton.Click += new System.EventHandler(this.removeSelectToolStripButton_Click);
             // 
+            // shapeTypeDataGridViewTextBoxColumn
+            // 
+            this.shapeTypeDataGridViewTextBoxColumn.DataPropertyName = "ShapeType";
+            this.shapeTypeDataGridViewTextBoxColumn.HeaderText = "ShapeType";
+            this.shapeTypeDataGridViewTextBoxColumn.Name = "shapeTypeDataGridViewTextBoxColumn";
+            this.shapeTypeDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // nameDataGridViewTextBoxColumn
+            // 
+            this.nameDataGridViewTextBoxColumn.DataPropertyName = "Name";
+            this.nameDataGridViewTextBoxColumn.HeaderText = "Name";
+            this.nameDataGridViewTextBoxColumn.Name = "nameDataGridViewTextBoxColumn";
+            // 
+            // visibleDataGridViewCheckBoxColumn
+            // 
+            this.visibleDataGridViewCheckBoxColumn.DataPropertyName = "Visible";
+            this.visibleDataGridViewCheckBoxColumn.HeaderText = "Visible";
+            this.visibleDataGridViewCheckBoxColumn.Name = "visibleDataGridViewCheckBoxColumn";
+            // 
+            // selectableDataGridViewCheckBoxColumn
+            // 
+            this.selectableDataGridViewCheckBoxColumn.DataPropertyName = "Selectable";
+            this.selectableDataGridViewCheckBoxColumn.HeaderText = "Selectable";
+            this.selectableDataGridViewCheckBoxColumn.Name = "selectableDataGridViewCheckBoxColumn";
+            // 
+            // descriptionDataGridViewTextBoxColumn
+            // 
+            this.descriptionDataGridViewTextBoxColumn.DataPropertyName = "Description";
+            this.descriptionDataGridViewTextBoxColumn.HeaderText = "Description";
+            this.descriptionDataGridViewTextBoxColumn.Name = "descriptionDataGridViewTextBoxColumn";
+            // 
+            // isDirtyDataGridViewCheckBoxColumn
+            // 
+            this.isDirtyDataGridViewCheckBoxColumn.DataPropertyName = "IsDirty";
+            this.isDirtyDataGridViewCheckBoxColumn.HeaderText = "IsDirty";
+            this.isDirtyDataGridViewCheckBoxColumn.Name = "isDirtyDataGridViewCheckBoxColumn";
+            // 
+            // extentDataGridViewTextBoxColumn
+            // 
+            this.extentDataGridViewTextBoxColumn.DataPropertyName = "Extent";
+            this.extentDataGridViewTextBoxColumn.HeaderText = "Extent";
+            this.extentDataGridViewTextBoxColumn.Name = "extentDataGridViewTextBoxColumn";
+            this.extentDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // featuresDataGridViewTextBoxColumn
+            // 
+            this.featuresDataGridViewTextBoxColumn.DataPropertyName = "Features";
+            this.featuresDataGridViewTextBoxColumn.HeaderText = "Features";
+            this.featuresDataGridViewTextBoxColumn.Name = "featuresDataGridViewTextBoxColumn";
+            // 
+            // selectedFeaturesDataGridViewTextBoxColumn
+            // 
+            this.selectedFeaturesDataGridViewTextBoxColumn.DataPropertyName = "SelectedFeatures";
+            this.selectedFeaturesDataGridViewTextBoxColumn.HeaderText = "SelectedFeatures";
+            this.selectedFeaturesDataGridViewTextBoxColumn.Name = "selectedFeaturesDataGridViewTextBoxColumn";
+            // 
+            // attributeFieldsDataGridViewTextBoxColumn
+            // 
+            this.attributeFieldsDataGridViewTextBoxColumn.DataPropertyName = "AttributeFields";
+            this.attributeFieldsDataGridViewTextBoxColumn.HeaderText = "AttributeFields";
+            this.attributeFieldsDataGridViewTextBoxColumn.Name = "attributeFieldsDataGridViewTextBoxColumn";
+            this.attributeFieldsDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // rendererDataGridViewTextBoxColumn
+            // 
+            this.rendererDataGridViewTextBoxColumn.DataPropertyName = "Renderer";
+            this.rendererDataGridViewTextBoxColumn.HeaderText = "Renderer";
+            this.rendererDataGridViewTextBoxColumn.Name = "rendererDataGridViewTextBoxColumn";
+            // 
+            // labelRendererDataGridViewTextBoxColumn
+            // 
+            this.labelRendererDataGridViewTextBoxColumn.DataPropertyName = "LabelRenderer";
+            this.labelRendererDataGridViewTextBoxColumn.HeaderText = "LabelRenderer";
+            this.labelRendererDataGridViewTextBoxColumn.Name = "labelRendererDataGridViewTextBoxColumn";
+            // 
+            // crsDataGridViewTextBoxColumn
+            // 
+            this.crsDataGridViewTextBoxColumn.DataPropertyName = "Crs";
+            this.crsDataGridViewTextBoxColumn.HeaderText = "Crs";
+            this.crsDataGridViewTextBoxColumn.Name = "crsDataGridViewTextBoxColumn";
+            // 
+            // geoMapLayerBindingSource
+            // 
+            this.geoMapLayerBindingSource.DataSource = typeof(DEETU.Map.GeoMapLayer);
+            // 
             // AttributeTableForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 21F);
@@ -530,9 +530,9 @@
             this.splitContainer1.ResumeLayout(false);
             this.gridPage.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.uiDataGridView1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.geoMapLayerBindingSource)).EndInit();
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.geoMapLayerBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
