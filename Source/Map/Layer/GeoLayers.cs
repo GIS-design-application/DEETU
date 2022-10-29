@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -42,6 +42,16 @@ namespace DEETU.Map
         public GeoMapLayer GetItem(Int32 index)
         {
             return _Layers[index];
+        }
+
+        /// <summary>
+        /// 设置指定索引号的图层
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        public void SetItem(Int32 index, GeoMapLayer mapLayer)
+        {
+            _Layers[index] = mapLayer;
         }
 
         /// <summary>

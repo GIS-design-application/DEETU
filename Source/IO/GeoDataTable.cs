@@ -1,9 +1,13 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Data;
 using DEETU.Map;
+using DEETU.Core;
+using DEETU.Geometry;
+using DEETU.Tool;
+using System.Windows.Forms;
 
 namespace DEETU.IO
 {
@@ -75,7 +79,64 @@ namespace DEETU.IO
         /// 读取地理要素数据并存入datatable
         /// </summary>
         /// <param name="layer"></param>
-        private void GenerateGeoData(GeoMapLayer layer) { }
+        private void GenerateGeoData(GeoMapLayer layer)
+        {
+            _GeoData = new DataTable();
+            GeoFields sFields = layer.AttributeFields;
+            int sFieldCount = sFields.Count;
+            string[] sFieldString = new string[sFieldCount];
+            for (int i = 0; i < sFieldCount; i++)
+            {
+                Type sType = typeof(string);
+                GeoValueTypeConstant sGeoValueType = sFields.GetItem(i).ValueType;
+                if (sGeoValueType == GeoValueTypeConstant.dInt16)
+                    sType = typeof(Int16);
+                else if (sGeoValueType == GeoValueTypeConstant.dInt32)
+                    sType = typeof(Int32);
+                else if (sGeoValueType == GeoValueTypeConstant.dInt64)
+                    sType = typeof(Int64);
+                else if (sGeoValueType == GeoValueTypeConstant.dSingle)
+                    sType = typeof(float);
+                else if (sGeoValueType == GeoValueTypeConstant.dDouble)
+                    sType = typeof(double);
+                else
+                    sType = typeof(string);
+
+                string sFieldName = sFields.GetItem(i).Name;
+                sFieldString[i] = sFieldName;
+                DataColumn sAttributeColumn = new DataColumn(sFieldName, sType);
+                _GeoData.Columns.Add(sAttributeColumn);
+            }
+            _GeoData.Columns.Add(new DataColumn("_GeoFeature", typeof(GeoFeature)));
+
+
+            GeoFeatures sFeatures = layer.Features;
+            int sSelFeatureCount = sFeatures.Count;
+            if (sSelFeatureCount > 0)
+            {
+                //GeoGeometry[] sGeometryies = new GeoGeometry[sSelFeatureCount];
+                GeoAttributes[] sGeoAttributes = new GeoAttributes[sSelFeatureCount];
+                for (int i = 0; i < sSelFeatureCount; i++)
+                {
+                    //sGeometryies[i] = sFeatures.GetItem(i).Geometry;
+                    sGeoAttributes[i] = sFeatures.GetItem(i).Attributes;
+                }
+
+                for (int i = 0; i < sSelFeatureCount; i++)
+                {
+                    DataRow dr = _GeoData.NewRow();
+
+                    int sAttributeCount = sGeoAttributes[i].Count;
+                    for (int j = 0; j < sAttributeCount; j++)
+                    {
+                        dr[sFieldString[j]] = sGeoAttributes[i].GetItem(j);
+                    }
+
+                    dr["_GeoFeature"] = sFeatures.GetItem(i);
+                    _GeoData.Rows.Add(dr);
+                }
+            }
+        }
         #endregion
     }
 }

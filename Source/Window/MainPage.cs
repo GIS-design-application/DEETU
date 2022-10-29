@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -306,6 +306,18 @@ namespace DEETU.Source.Window
                 this.Cursor = Cursors.Default;
                 mMapOpStyle = GeoMapOpStyleEnum.None;
             }
+        }
+
+        private void btnSelectByAttributes_Click(object sender, EventArgs e)
+        {
+            string expression = "F2 >= 100"; //"名称 = '青海省'"
+            QueryExpression(expression);
+        }
+
+        private void btnSelectByExpression_Click(object sender, EventArgs e)
+        {
+            string expression = "F2 >= 100"; //"名称 = '青海省'"
+            QueryExpression(expression);
         }
 
         #region 渲染部分代码(弃用)
@@ -1558,6 +1570,23 @@ OnZoomOut_MouseUp(e);
                 default:
                     break;
             }
+        }
+
+        private void QueryExpression(string expression)
+        {
+            GeoMapLayer sLayer = geoMap.Layers.GetItem(0);
+            GeoDataTable sDataTable = new GeoDataTable(sLayer);
+            DataRow[] sDataRows = sDataTable.GeoData.Select(expression);
+            int sDataRowCount = sDataRows.Length;
+            GeoFeature[] sSelGeoFeatures = new GeoFeature[sDataRowCount];
+            for (int i = 0; i < sDataRowCount; i++)
+            {
+                sSelGeoFeatures[i] = (GeoFeature)sDataRows[i]["_GeoFeature"];
+            }
+            sLayer.SelectedFeatures.Clear();
+            sLayer.SelectedFeatures.AddRange(sSelGeoFeatures);
+            geoMap.Layers.SetItem(0, sLayer);
+            geoMap.RedrawMap();
         }
 
         #endregion
