@@ -89,4 +89,11 @@ namespace DEETU.Tool
         BottomCenter = 7,
         BottomRight = 8
     }
+
+    public enum GeoSelectionModeConstant
+    {
+        NewSelection = 0,
+        AddSelection = 1,
+        RemoveSelection = 2
+    }
 }
