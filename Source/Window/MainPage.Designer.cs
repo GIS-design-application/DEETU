@@ -1,4 +1,4 @@
-﻿namespace DEETU.Source.Window
+namespace DEETU.Source.Window
 {
 	partial class MainPage
 	{
@@ -823,12 +823,14 @@
             this.按属性选择ToolStripMenuItem.Name = "按属性选择ToolStripMenuItem";
             this.按属性选择ToolStripMenuItem.Size = new System.Drawing.Size(218, 34);
             this.按属性选择ToolStripMenuItem.Text = "按属性选择";
+            this.按属性选择ToolStripMenuItem.Click += new System.EventHandler(this.btnSelectByAttributes_Click);
             // 
             // 按表达式选择ToolStripMenuItem
             // 
             this.按表达式选择ToolStripMenuItem.Name = "按表达式选择ToolStripMenuItem";
             this.按表达式选择ToolStripMenuItem.Size = new System.Drawing.Size(218, 34);
             this.按表达式选择ToolStripMenuItem.Text = "按表达式选择";
+            this.按表达式选择ToolStripMenuItem.Click += new System.EventHandler(this.btnSelectByExpression_Click);
             // 
             // selectByExtentToolStripDropDownButton
             // 

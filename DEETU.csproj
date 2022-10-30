@@ -325,6 +325,7 @@
     <None Include="obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
     <None Include="packages.config" />
     <None Include="Properties\DataSources\DEETU.Core.GeoUniqueValueRenderer.datasource" />
+    <None Include="Properties\DataSources\DEETU.IO.GeoDataTable.datasource" />
     <None Include="Properties\DataSources\DEETU.Map.GeoMapLayer.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -306,6 +306,18 @@ namespace DEETU.Source.Window
                 this.Cursor = Cursors.Default;
                 mMapOpStyle = GeoMapOpStyleEnum.None;
             }
+        }
+
+        private void btnSelectByAttributes_Click(object sender, EventArgs e)
+        {
+            string expression = "F2 >= 100"; //"名称 = '青海省'"
+            QueryExpression(expression);
+        }
+
+        private void btnSelectByExpression_Click(object sender, EventArgs e)
+        {
+            string expression = "F2 >= 100"; //"名称 = '青海省'"
+            QueryExpression(expression);
         }
 
         #region 渲染部分代码(弃用)
@@ -1560,6 +1572,23 @@ OnZoomOut_MouseUp(e);
             }
         }
 
+        private void QueryExpression(string expression)
+        {
+            GeoMapLayer sLayer = geoMap.Layers.GetItem(0);
+            GeoDataTable sDataTable = new GeoDataTable(sLayer);
+            DataRow[] sDataRows = sDataTable.GeoData.Select(expression);
+            int sDataRowCount = sDataRows.Length;
+            GeoFeature[] sSelGeoFeatures = new GeoFeature[sDataRowCount];
+            for (int i = 0; i < sDataRowCount; i++)
+            {
+                sSelGeoFeatures[i] = (GeoFeature)sDataRows[i]["_GeoFeature"];
+            }
+            sLayer.SelectedFeatures.Clear();
+            sLayer.SelectedFeatures.AddRange(sSelGeoFeatures);
+            geoMap.Layers.SetItem(0, sLayer);
+            geoMap.RedrawMap();
+        }
+
         #endregion
 
         #region 图层右键菜单
@@ -1616,16 +1645,25 @@ OnZoomOut_MouseUp(e);
         {
             GeoMapLayer layer = mCurrentLayerNode.Tag as GeoMapLayer;
             AttributeTableForm attributeForm = new AttributeTableForm(layer);
+            attributeForm.MapRedraw += AttributeForm_MapRedraw;
             attributeForm.Show();
         }
+
         #endregion
 
+        #region
         private void layerAttributes_FormClosed(object sender, FormClosedEventArgs e)
         {
             UpdateTreeView(mCurrentLayerNode.Tag as GeoMapLayer, mCurrentLayerNode.Index);
             mCurrentLayerNode.Remove();
             geoMap.RedrawMap();
         }
+
+        private void AttributeForm_MapRedraw(object sender)
+        {
+            geoMap.RedrawMap();
+        }
+        #endregion
 
         /// <summary>
         /// 每当一个图层被选择时, 自动选择该图层作为编辑的对象
