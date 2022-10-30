@@ -1601,13 +1601,17 @@ OnZoomOut_MouseUp(e);
                 layer.Crs = new GeoCoordinateReferenceSystem(GeographicCrsType.Beijing1954, ProjectedCrsType.Lambert2SP);
 #endif
             CrsTransferForm crsTransfer = new CrsTransferForm(layer);
-            crsTransfer.Show();
+            crsTransfer.ShowDialog();
             if (crsTransfer.IsOK)
             {
-                geoMap.RedrawMap();
+
                 geoMap.FullExtent();
+                geoMap.RedrawMap();
                 geoMap.Refresh();
             }
+            geoMap.FullExtent();
+            geoMap.RedrawMap();
+            geoMap.Refresh();
         }
 
         private void 打开属性表ToolStripMenuItem_Click(object sender, EventArgs e)

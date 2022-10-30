@@ -53,6 +53,7 @@ namespace DEETU.Source.Window
             transform.Transform();
             ShowSuccessNotifier("坐标系转换完成");
             this.btnOK_Click(sender, e);
+            
             this.Close();
         }
 
