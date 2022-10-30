@@ -1604,6 +1604,12 @@ OnZoomOut_MouseUp(e);
             layerAttributes.Show();
         }
 
+        private void 导出为shapefileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            GeoMapLayer layer = mCurrentLayerNode.Tag as GeoMapLayer;
+            GeoDataIOTools.SaveMapLayer(layer);
+        }
+
         private void 定义坐标参照系ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             GeoMapLayer layer = mCurrentLayerNode.Tag as GeoMapLayer;
@@ -1740,6 +1746,11 @@ OnZoomOut_MouseUp(e);
             {
                 MessageBox.Show(error.ToString());
             }
+        }
+
+        private void layerTreeView_Click(object sender, EventArgs e)
+        {
+
         }
 
 
