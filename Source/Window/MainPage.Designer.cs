@@ -127,6 +127,7 @@ namespace DEETU.Source.Window
             this.uiTreeView2 = new Sunny.UI.UITreeView();
             this.uiPanel2 = new Sunny.UI.UIPanel();
             this.layerTreeView = new Sunny.UI.UITreeView();
+            this.TreeImages = new System.Windows.Forms.ImageList(this.components);
             this.uiPanel3 = new Sunny.UI.UIPanel();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.tssCoordinate = new System.Windows.Forms.ToolStripStatusLabel();
@@ -1001,6 +1002,12 @@ namespace DEETU.Source.Window
             this.layerTreeView.Click += new System.EventHandler(this.layerTreeView_Click);
             this.layerTreeView.DragDrop += new System.Windows.Forms.DragEventHandler(this.layerTreeView_DragDrop);
             this.layerTreeView.DragEnter += new System.Windows.Forms.DragEventHandler(this.layerTreeView_DragEnter);
+            // 
+            // TreeImages
+            // 
+            this.TreeImages.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
+            this.TreeImages.ImageSize = new System.Drawing.Size(16, 16);
+            this.TreeImages.TransparentColor = System.Drawing.Color.Transparent;
             // 
             // uiPanel3
             // 
