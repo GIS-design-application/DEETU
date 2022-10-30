@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using Sunny.UI;
 using DEETU.Core;
 using DEETU.Map;
+using DEETU.IO;
 
 namespace DEETU.Source.Window
 {
@@ -24,6 +25,7 @@ namespace DEETU.Source.Window
             mLayer = layer;
 
             InitializeFormPage();
+            InitializeGridPage();
         }
 
         #region 事件处理函数
@@ -59,6 +61,19 @@ namespace DEETU.Source.Window
             featureList.Clear();
             InitializeFormPage();
             //InitializeGridPage();
+        }
+
+        private void featureDataGridView_SelectionChanged(object sender, EventArgs e)
+        {
+            // Clear all
+            mLayer.SelectedFeatures.Clear();
+
+            foreach (DataGridViewRow row in featureDataGridView.SelectedRows)
+            {
+                mLayer.SelectedFeatures.Add(mLayer.Features.GetItem(row.Index));
+            }
+            
+            MapRedraw?.Invoke(this);
         }
 
         private void editToolStripButton_Click(object sender, EventArgs e)
@@ -177,6 +192,43 @@ namespace DEETU.Source.Window
             
             // 复用选择改变事件 
             featureList.SelectedIndexChanged += featureList_SelectedIndexChanged;
+
+        }
+
+        private void InitializeGridPage()
+        {
+            GeoDataTable sDataTable = new GeoDataTable(mLayer);
+            // Columns
+            GeoFields fields = mLayer.AttributeFields;
+            for (int i = 0; i < fields.Count; i++)
+            {
+                featureDataGridView.AddColumn(fields.GetItem(i).AliaName, null);
+                featureDataGridView.Columns[i].DefaultCellStyle.Font = (new Font("微软雅黑", 10f));
+                featureDataGridView.Columns[i].ReadOnly = true;
+            }
+
+            GeoFeatures features = mLayer.Features;
+            GeoFeatures selectedFeatures = mLayer.SelectedFeatures;
+            for (int i = 0; i < features.Count; i++)
+            {
+                GeoFeature feature = features.GetItem(i);
+                object[] rowValue = new object[fields.Count];
+                for (int j = 0; j < feature.Attributes.Count; j++)
+                {
+                    rowValue[j] = feature.Attributes.GetItem(j);
+                }
+                featureDataGridView.AddRow(rowValue);
+
+                for (int j = 0; j < selectedFeatures.Count; j++)
+                {
+                    if (selectedFeatures.GetItem(j) == features.GetItem(i))
+                    {
+                        featureDataGridView.Rows[i].Selected = true;
+                        break;
+                    }
+                }
+            }
+
 
         }
 
