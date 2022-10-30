@@ -7,13 +7,30 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Windows.Forms;
 
 namespace DEETU.IO
 {
     internal static class GeoDataIOTools
     {
         #region 程序集方法
+        internal static bool SaveMapLayer(GeoMapLayer sLayer)
+        {
+            FileStream fileStream = new FileStream("C:\\Users\\zwy99\\Desktop\\test.lay", FileMode.Open, FileAccess.Write);
+            BinaryWriter bw = new BinaryWriter(fileStream);
+            bw.Write(1);//没有用
+            bw.Write(Convert.ToInt32(sLayer.ShapeType));
+            if(SaveFields(bw,sLayer.AttributeFields)==false)
+            {
+                return false;
+            }
+            if (SaveFeatures(bw,sLayer.Features,sLayer.AttributeFields,sLayer.ShapeType) == false)
+            {
+                return false;
+            }
 
+            return true;
+        }
         internal static GeoMapLayer LoadMapLayer(BinaryReader sr)
         {
             Int32 sTemp = sr.ReadInt32();   //不需要
@@ -27,7 +44,152 @@ namespace DEETU.IO
         #endregion
 
         #region 私有函数
+        /// <summary>
+        /// 存储字段集合
+        /// </summary>
+        /// <param name="bw"></param>
+        /// <returns>是否成功</returns>
 
+        private static bool SaveFields(BinaryWriter bw,GeoFields fields)
+        {
+            bw.Write(fields.Count); //字段数量
+            for (Int32 i = 0; i <= fields.Count - 1; i++)
+            {
+                try
+                {
+                    GeoField sField = fields.GetItem(i);
+                    bw.Write(sField.Name);
+                    bw.Write(Convert.ToInt32(sField.ValueType));
+                    bw.Write(1);//不需要
+                }
+                catch(Exception e)
+                {
+                    MessageBox.Show(e.ToString());
+                    return false;
+                }
+            }
+            return true;
+        }
+        private static bool SaveFeatures(BinaryWriter bw, GeoFeatures features,GeoFields fields, GeoGeometryTypeConstant geometryType)
+        {
+            Int32 sFeatureCount = features.Count;
+            for (int i = 0; i <= sFeatureCount - 1; i++)
+            {
+                try { SavaGeometry(bw,features.GetItem(i).Geometry, geometryType); }catch(Exception e) { MessageBox.Show(e.ToString()); return false; }
+                try { SaveAttributes(bw,fields, features.GetItem(i).Attributes); } catch (Exception e) { MessageBox.Show(e.ToString()); return false; }
+            }
+            return true;
+        }
+        private static bool SavaGeometry(BinaryWriter bw, GeoGeometry geometry, GeoGeometryTypeConstant geometryType)
+        {
+            if (geometryType == GeoGeometryTypeConstant.Point)
+            {
+                return(SavePoint(bw, geometry));
+            }
+            else if (geometryType == GeoGeometryTypeConstant.MultiPolyline)
+            {
+                return( SaveMultiPolyline(bw, geometry));
+            }
+            else if (geometryType == GeoGeometryTypeConstant.MultiPolygon)
+            {
+                return(SaveMultiPolygon(bw, geometry));
+            }
+            else
+            {
+                MessageBox.Show("no geometry type!");
+                return false;
+            }
+
+        }
+        private static bool SaveAttributes(BinaryWriter bw,GeoFields fields,GeoAttributes attributes)
+        {
+            Int32 sFieldCount = fields.Count;
+            for (Int32 i = 0; i <= sFieldCount - 1; i++)
+            {
+                GeoField sField = fields.GetItem(i);
+                SaveValue(bw,sField.ValueType, attributes.GetItem(i));
+            }
+            return true;
+        }
+        private static bool SaveValue(BinaryWriter bw, GeoValueTypeConstant valueType,object value)
+        {
+            if (valueType == GeoValueTypeConstant.dInt16)
+            {
+                bw.Write(Convert.ToInt16(value));
+                return true;
+            }
+            else if (valueType == GeoValueTypeConstant.dInt32)
+            {
+                bw.Write(Convert.ToInt32(value));
+                return true;
+            }
+            else if (valueType == GeoValueTypeConstant.dInt64)
+            {
+                bw.Write(Convert.ToInt64(value));
+                return true;
+            }
+            else if (valueType == GeoValueTypeConstant.dSingle)
+            {
+                bw.Write(Convert.ToSingle(value));
+                return true;
+            }
+            else if (valueType == GeoValueTypeConstant.dDouble)
+            {
+                bw.Write(Convert.ToDouble(value));
+                return true;
+            }
+            else if (valueType == GeoValueTypeConstant.dText)
+            {
+                bw.Write(Convert.ToString(value));
+                return true;
+            }
+            else
+            {
+                MessageBox.Show("wrong value type!");
+                return false;
+            }
+        }
+        private static bool SavePoint(BinaryWriter bw, GeoGeometry geometry)
+        {
+            //原数据支持多点，按照多点读取，然后返回多点的第一个点
+            bw.Write(1);//点数
+            bw.Write((geometry as GeoPoint).X);
+            bw.Write((geometry as GeoPoint).Y);
+            return true;
+        }
+        private static bool SaveMultiPolyline(BinaryWriter bw, GeoGeometry geometry)
+        {
+
+            Int32 sPartCount = (geometry as GeoMultiPolyline).Parts.Count;
+            bw.Write(sPartCount);
+            for (Int32 i = 0; i <= sPartCount - 1; i++)
+            {
+                Int32 sPointCount = (geometry as GeoMultiPolyline).Parts.GetItem(i).Count;
+                bw.Write(sPartCount);
+                for (Int32 j = 0; j <= sPointCount - 1; j++)
+                {
+                    bw.Write((geometry as GeoMultiPolyline).Parts.GetItem(i).GetItem(j).X);
+                    bw.Write((geometry as GeoMultiPolyline).Parts.GetItem(i).GetItem(j).Y);
+                }
+            }
+            return true;
+        }
+        private static bool SaveMultiPolygon(BinaryWriter bw, GeoGeometry geometry)
+        {
+            Int32 sPartCount = (geometry as GeoMultiPolygon).Parts.Count;
+            bw.Write(sPartCount);
+            for (Int32 i = 0; i <= sPartCount - 1; i++)
+            {
+                Int32 sPointCount = (geometry as GeoMultiPolygon).Parts.GetItem(i).Count;
+                bw.Write(sPartCount);
+                for (Int32 j = 0; j <= sPointCount - 1; j++)
+                {
+                    bw.Write((geometry as GeoMultiPolygon).Parts.GetItem(i).GetItem(j).X);
+                    bw.Write((geometry as GeoMultiPolygon).Parts.GetItem(i).GetItem(j).Y);
+                }
+            }
+            return true;
+        }
         //读取字段集合
         private static GeoFields LoadFields(BinaryReader sr)
         {
