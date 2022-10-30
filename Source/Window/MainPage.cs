@@ -308,19 +308,8 @@ namespace DEETU.Source.Window
             }
         }
 
-        private void btnSelectByAttributes_Click(object sender, EventArgs e)
-        {
-            string expression = "F2 >= 100"; //"名称 = '青海省'"
-            QueryExpression(expression);
-        }
-
-        private void btnSelectByExpression_Click(object sender, EventArgs e)
-        {
-            string expression = "F2 >= 100"; //"名称 = '青海省'"
-            QueryExpression(expression);
-        }
-
         #region 渲染部分代码(弃用)
+
         // 简单渲染
         private void btnSimpleRender_Click(object sender, EventArgs e)
         {
@@ -538,6 +527,121 @@ namespace DEETU.Source.Window
             // 重绘
             geoMap.RedrawMap();
         }
+
+        private void 另存为ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            GeoDatabaseIOTools.SaveGeoProject(geoMap.Layers, "C:\\Users\\zwy99\\Desktop\\test\\test1.db");
+        }
+
+        private void 打开ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // 获取文件名
+            OpenFileDialog sDialog = new OpenFileDialog();
+            string sFileName = "";
+            if (sDialog.ShowDialog() == DialogResult.OK)
+            {
+                sFileName = sDialog.FileName;
+                sDialog.Dispose();
+            }
+            else
+            {
+                sDialog.Dispose();
+                return;
+            }
+
+            try
+            {
+                geoMap.Layers.Clear();
+                GeoDatabaseIOTools.LoadGeoProject(geoMap.Layers, sFileName);
+                if (geoMap.Layers.Count == 1)
+                {
+                    geoMap.FullExtent();
+                }
+                else
+                {
+                    geoMap.RedrawMap();
+                }
+
+            }
+            catch (Exception error)
+            {
+                MessageBox.Show(error.ToString());
+            }
+        }
+
+        private void btnSelectByExpression_Click(object sender, EventArgs e)
+        {
+            if (mCurrentLayerNode == null)
+            {
+                UIMessageBox.ShowError("请先选择图层！");
+                return;
+            }
+            GeoMapLayer layer = mCurrentLayerNode.Tag as GeoMapLayer;
+            SelectedByExpressionForm expressionForm = new SelectedByExpressionForm(layer);
+            expressionForm.LayerQuery += ExpressionForm_LayerQuery;
+            expressionForm.ShowDialog();
+            
+            //string expression = "F2 >= 100"; //"名称 = '青海省'"
+            //QueryExpression(expression);
+        }
+
+        private void 全部选择ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (mCurrentLayerNode == null)
+            {
+                UIMessageBox.ShowError("请先选择图层！");
+                return;
+            }
+            GeoMapLayer layer = mCurrentLayerNode.Tag as GeoMapLayer;
+            for (int i = 0; i < layer.Features.Count; i++)// 实际上实现了一个对于layer.Features的浅复制
+            {
+                layer.SelectedFeatures.Add(layer.Features.GetItem(i));
+            }
+            //layer.SelectedFeatures = layer.Features;
+            geoMap.RedrawMap();
+        }
+
+        private void 取消选择ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (mCurrentLayerNode == null)
+            {
+                UIMessageBox.ShowError("请先选择图层！");
+                return;
+            }
+            GeoMapLayer layer = mCurrentLayerNode.Tag as GeoMapLayer;
+            layer.SelectedFeatures.Clear();
+            geoMap.RedrawMap();
+        }
+
+        private void 反向选择ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (mCurrentLayerNode == null)
+            {
+                UIMessageBox.ShowError("请先选择图层！");
+                return;
+            }
+            GeoMapLayer layer = mCurrentLayerNode.Tag as GeoMapLayer;
+            GeoFeatures unselectedFeatures = new GeoFeatures();
+
+            for (int i = 0; i < layer.Features.Count; i++) // shallow copy
+            {
+                unselectedFeatures.Add(layer.Features.GetItem(i));
+            }
+            
+            for (int i = 0; i < layer.SelectedFeatures.Count; i++)
+            {
+                unselectedFeatures.Remove(layer.SelectedFeatures.GetItem(i));
+            }
+            layer.SelectedFeatures = unselectedFeatures;
+            geoMap.RedrawMap();
+            
+        }
+
+        private void refreshToolStripButton_Click(object sender, EventArgs e)
+        {
+            geoMap.RedrawMap();
+        }
+
         #endregion
 
 
@@ -973,7 +1077,7 @@ OnZoomOut_MouseDown(e);
 
         }
 
-private void OnZoomOut_MouseMove(MouseEventArgs e)
+        private void OnZoomOut_MouseMove(MouseEventArgs e)
         {
             if (mIsInZoomOut == false)
             {
@@ -1541,7 +1645,6 @@ OnZoomOut_MouseUp(e);
         /// 标记toolstripbutton已经被点击
         /// </summary>
         /// <param name="mapOpStyle"></param>
-
         private void CheckToolStrip(GeoMapOpStyleEnum mapOpStyle)
         {
             switch (mapOpStyle)
@@ -1588,6 +1691,53 @@ OnZoomOut_MouseUp(e);
             geoMap.Layers.SetItem(0, sLayer);
             geoMap.RedrawMap();
         }
+
+        private void QueryExpressionLayer(GeoMapLayer layer, string expression, GeoSelectionModeConstant selectionMode)
+        {
+            GeoMapLayer sLayer = layer;
+            GeoDataTable sDataTable = new GeoDataTable(sLayer);
+            DataRow[] sDataRows;
+            try
+            {
+                sDataRows = sDataTable.GeoData.Select(expression);
+                int sDataRowCount = sDataRows.Length;
+                GeoFeature[] sSelGeoFeatures = new GeoFeature[sDataRowCount];
+                for (int i = 0; i < sDataRowCount; i++)
+                {
+                    sSelGeoFeatures[i] = (GeoFeature)sDataRows[i]["_GeoFeature"];
+                }
+                if (selectionMode == GeoSelectionModeConstant.NewSelection)
+                {
+                    sLayer.SelectedFeatures.Clear();
+                    sLayer.SelectedFeatures.AddRange(sSelGeoFeatures);
+                }
+                else if (selectionMode == GeoSelectionModeConstant.AddSelection)
+                {
+                    sLayer.SelectedFeatures.AddRange(sSelGeoFeatures);
+                }    
+                else
+                {
+                    try
+                    {
+                        foreach (GeoFeature feature in sSelGeoFeatures)
+                        {
+                            sLayer.SelectedFeatures.Remove(feature);
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        UIMessageBox.ShowError("图层删除错误！\n" + e.Message);
+                    }
+                }
+                //geoMap.Layers.SetItem(0, sLayer);
+                geoMap.RedrawMap();
+            }
+            catch (DataException e)
+            {
+                UIMessageBox.ShowError("查询表达式错误！\n" + e.Message);
+            }
+        }
+        
 
         #endregion
 
@@ -1649,7 +1799,7 @@ OnZoomOut_MouseUp(e);
 
         #endregion
 
-        #region
+        #region 子窗口事件处理
         private void layerAttributes_FormClosed(object sender, FormClosedEventArgs e)
         {
             UpdateTreeView(mCurrentLayerNode.Tag as GeoMapLayer, mCurrentLayerNode.Index);
@@ -1661,6 +1811,12 @@ OnZoomOut_MouseUp(e);
         {
             geoMap.RedrawMap();
         }
+
+        private void ExpressionForm_LayerQuery(object sender, GeoMapLayer layer, string expression, GeoSelectionModeConstant selectionMode)
+        {
+            QueryExpressionLayer(layer, expression, selectionMode);
+        }
+        
         #endregion
 
         /// <summary>
@@ -1698,49 +1854,6 @@ OnZoomOut_MouseUp(e);
         {
             _logging = form.logging;
         }
-
-        private void 另存为ToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            GeoDatabaseIOTools.SaveGeoProject(geoMap.Layers, "C:\\Users\\zwy99\\Desktop\\test\\test1.db");
-        }
-
-        private void 打开ToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            // 获取文件名
-            OpenFileDialog sDialog = new OpenFileDialog();
-            string sFileName = "";
-            if (sDialog.ShowDialog() == DialogResult.OK)
-            {
-                sFileName = sDialog.FileName;
-                sDialog.Dispose();
-            }
-            else
-            {
-                sDialog.Dispose();
-                return;
-            }
-
-            try
-            {
-                geoMap.Layers.Clear();
-                GeoDatabaseIOTools.LoadGeoProject(geoMap.Layers, sFileName);
-                if (geoMap.Layers.Count == 1)
-                {
-                    geoMap.FullExtent();
-                }
-                else
-                {
-                    geoMap.RedrawMap();
-                }
-
-            }
-            catch (Exception error)
-            {
-                MessageBox.Show(error.ToString());
-            }
-        }
-
-
 
 #endif
 

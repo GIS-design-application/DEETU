@@ -133,6 +133,12 @@
     <Compile Include="Source\Window\Crs\CrsTransferForm.Designer.cs">
       <DependentUpon>CrsTransferForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Source\Window\SelectedByExpressionForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Source\Window\SelectedByExpressionForm.Designer.cs">
+      <DependentUpon>SelectedByExpressionForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Source\Window\GeoFormEnum.cs" />
     <Compile Include="Source\Window\LayerAttributes\EditFillSymbolPage.cs">
       <SubType>Form</SubType>
@@ -257,6 +263,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Source\Window\Crs\CrsTransferForm.resx">
       <DependentUpon>CrsTransferForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Source\Window\SelectedByExpressionForm.resx">
+      <DependentUpon>SelectedByExpressionForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Source\Window\LayerAttributes\AnnotationPage.resx">
       <DependentUpon>AnnotationPage.cs</DependentUpon>
