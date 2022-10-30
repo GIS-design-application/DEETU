@@ -1583,7 +1583,7 @@ OnZoomOut_MouseUp(e);
                 layer.Crs = new GeoCoordinateReferenceSystem(GeographicCrsType.Beijing1954, ProjectedCrsType.Lambert2SP);
 #endif
             CrsDefineForm crsDefine = new CrsDefineForm(layer);
-            crsDefine.Show();
+            crsDefine.ShowDialog();
 
             if (crsDefine.IsOK)
             {
@@ -1609,9 +1609,7 @@ OnZoomOut_MouseUp(e);
                 geoMap.RedrawMap();
                 geoMap.Refresh();
             }
-            geoMap.FullExtent();
-            geoMap.RedrawMap();
-            geoMap.Refresh();
+
         }
 
         private void 打开属性表ToolStripMenuItem_Click(object sender, EventArgs e)
