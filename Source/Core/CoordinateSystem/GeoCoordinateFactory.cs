@@ -183,8 +183,8 @@ namespace DEETU.Core
                         Math.Pow((1 - e * Math.Sin(Math.PI / 180 * phi)) / (1 + e * Math.Sin(Math.PI / 180 * phi)), e / 2);
                     double rho = a * F * Math.Pow(t, n);
                     double gamma = n * (point.X-lamda0);
-                    point.X = E0 + rho * Math.Sin(gamma);
-                    point.Y = N0 + rho0 - rho * Math.Cos(gamma);
+                    point.X = E0 + rho * Math.Sin(gamma*Math.PI/180);
+                    point.Y = N0 + rho0 - rho * Math.Cos(gamma * Math.PI / 180);
                 }
 
         }
