@@ -2430,6 +2430,15 @@ namespace DEETU.Source.Window
             
         }
 
+        private void 移到顶层ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            layerTreeView.Nodes.Insert(0, (TreeNode)mCurrentLayerNode.Clone());
+            geoMap.Layers.Insert(0, mCurrentLayerNode.Tag as GeoMapLayer);
+            geoMap.Layers.RemoveAt(mCurrentLayerNode.Index);
+            mCurrentLayerNode.Remove();
+            geoMap.RedrawMap();
+        }
+
         private void 剪切要素ToolStripButton_Click(object sender, EventArgs e)
         {
             Cut();
