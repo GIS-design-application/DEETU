@@ -83,47 +83,6 @@ namespace DEETU.Source.Window
             ShowMapScale();
         }
 
-        private void btnLoadLayerFile_Click(object sender, EventArgs e)
-        {
-            // 获取文件名
-            OpenFileDialog sDialog = new OpenFileDialog();
-            string sFileName = "";
-            if (sDialog.ShowDialog() == DialogResult.OK)
-            {
-                sFileName = sDialog.FileName;
-                sDialog.Dispose();
-            }
-            else
-            {
-                sDialog.Dispose();
-                return;
-            }
-
-            try
-            {
-                FileStream sStream = new FileStream(sFileName, FileMode.Open);
-                BinaryReader sr = new BinaryReader(sStream);
-                GeoMapLayer sLayer = GeoDataIOTools.LoadMapLayer(sr);
-                sLayer.Name = sFileName.Split('\\').Last().Split('.').First();
-                geoMap.Layers.Add(sLayer);
-                if (geoMap.Layers.Count == 1)
-                {
-                    geoMap.FullExtent();
-                }
-                else
-                {
-                    geoMap.RedrawMap();
-                }
-                sStream.Dispose();
-                sr.Dispose();
-
-                InsertTreeNode(sLayer, geoMap.Layers.Count);
-            }
-            catch (Exception error)
-            {
-                MessageBox.Show(error.ToString());
-            }
-        }
 
         private void UpdateTreeView()
         {
@@ -666,12 +625,45 @@ namespace DEETU.Source.Window
             // 重绘
             geoMap.RedrawMap();
         }
-
-        private void 另存为ToolStripMenuItem_Click(object sender, EventArgs e)
+        private void SaveProjectToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            GeoDatabaseIOTools.SaveGeoProject(geoMap.Layers, "C:\\Users\\zwy99\\Desktop\\test\\test1.db");
+            if(geoMap.Layers.FilePath==null)
+                SaveNewProject();
+            else
+            {
+                GeoDatabaseIOTools.SaveGeoProject(geoMap.Layers, geoMap.Layers.FilePath);
+            }
         }
+        private void CreateToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            geoMap.Layers=new GeoLayers();
+            //TODO:更新图层树
+        }
+        private void SaveNewProject()
+        {
+            SaveFileDialog saveFileDialog1 = new SaveFileDialog();
 
+            saveFileDialog1.Filter = "SQLite Database (*.db)|*.db";
+            saveFileDialog1.FilterIndex = 1;
+            saveFileDialog1.RestoreDirectory = true;
+
+            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                MessageBox.Show(saveFileDialog1.FileName);
+                GeoDatabaseIOTools.SaveGeoProject(geoMap.Layers, saveFileDialog1.FileName);
+                saveFileDialog1.Dispose();
+
+            }
+        }
+        private void SaveNewProjectToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveNewProject();
+        }
+        private void CloseProjectToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            geoMap.Layers = new GeoLayers();
+            //TODO:UPdate treeview
+        }
         private void 打开ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             // 获取文件名
@@ -692,6 +684,7 @@ namespace DEETU.Source.Window
             {
                 geoMap.Layers.Clear();
                 GeoDatabaseIOTools.LoadGeoProject(geoMap.Layers, sFileName);
+                geoMap.Layers.FilePath = sFileName;
                 if (geoMap.Layers.Count == 1)
                 {
                     geoMap.FullExtent();
@@ -700,7 +693,10 @@ namespace DEETU.Source.Window
                 {
                     geoMap.RedrawMap();
                 }
-
+                for(int i=0;i< geoMap.Layers.Count;i++)
+                {
+                    UpdateTreeView(geoMap.Layers.GetItem(i), i);
+                }
             }
             catch (Exception error)
             {
@@ -1949,12 +1945,42 @@ namespace DEETU.Source.Window
             layerAttributes.Show();
         }
 
-        private void 导出为shapefileToolStripMenuItem_Click(object sender, EventArgs e)
+        private void SaveLyrToolStripMenuItem_Click(object sender, EventArgs e)
         {
             GeoMapLayer layer = mCurrentLayerNode.Tag as GeoMapLayer;
-            GeoDataIOTools.SaveMapLayer(layer);
-        }
+            SaveFileDialog saveFileDialog1 = new SaveFileDialog();
 
+            saveFileDialog1.Filter = "ShapeFile (*.shp)|*.shp";
+            saveFileDialog1.FilterIndex = 1;
+            saveFileDialog1.RestoreDirectory = true;
+
+            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                MessageBox.Show(saveFileDialog1.FileName);
+                GeoDataIOTools.SaveMapLayer(layer, saveFileDialog1.FileName);
+                saveFileDialog1.Dispose();
+            }
+
+        }
+        private void SaveSqliteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            GeoLayers sLayers = new GeoLayers();
+            GeoMapLayer layer = mCurrentLayerNode.Tag as GeoMapLayer;
+            sLayers.Add(layer);
+            SaveFileDialog saveFileDialog1 = new SaveFileDialog();
+
+            saveFileDialog1.Filter = "SQLite Database (*.db)|*.db";
+            saveFileDialog1.FilterIndex = 1;
+            saveFileDialog1.RestoreDirectory = true;
+
+            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                MessageBox.Show(saveFileDialog1.FileName);
+                GeoDatabaseIOTools.SaveGeoProject(sLayers, saveFileDialog1.FileName);
+                saveFileDialog1.Dispose();
+            }
+            
+        }
         private void 定义坐标参照系ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             GeoMapLayer layer = mCurrentLayerNode.Tag as GeoMapLayer;
@@ -2058,6 +2084,138 @@ namespace DEETU.Source.Window
             _logging = form.logging;
         }
 #endif
+        private void btnLoadLayerFile_Click(object sender, EventArgs e)
+        {
+            // 获取文件名
+            OpenFileDialog sDialog = new OpenFileDialog();
+            string sFileName = "";
+            if (sDialog.ShowDialog() == DialogResult.OK)
+            {
+                sFileName = sDialog.FileName;
+                sDialog.Dispose();
+            }
+            else
+            {
+                sDialog.Dispose();
+                return;
+            }
+
+            try
+            {
+                FileStream sStream = new FileStream(sFileName, FileMode.Open);
+                BinaryReader sr = new BinaryReader(sStream);
+                GeoMapLayer sLayer = GeoDataIOTools.LoadMapLayer(sr);
+                sLayer.Name = sFileName.Split('\\').Last().Split('.').First();
+                geoMap.Layers.Add(sLayer);
+                if (geoMap.Layers.Count == 1)
+                {
+                    geoMap.FullExtent();
+                }
+                else
+                {
+                    geoMap.RedrawMap();
+                }
+                sStream.Dispose();
+                sr.Dispose();
+
+                UpdateTreeView(sLayer, geoMap.Layers.Count);
+            }
+            catch (Exception error)
+            {
+                MessageBox.Show(error.ToString());
+            }
+        }
+        /// <summary>
+        /// 读取shp文件选择界面
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void 打开shp图层文件ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string sFileName = "";
+            OpenFileDialog sOpenFileDialog = new OpenFileDialog();
+            sOpenFileDialog.Filter = "shapefiles(*.shp)|*.shp|All files(*.*)|*.*";
+            sOpenFileDialog.FilterIndex = 1;
+            if (sOpenFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                sFileName = sOpenFileDialog.FileName;
+                sOpenFileDialog.Dispose();
+                try
+                {
+                    GeoMapLayer sLayer = GeoShpIOTools.ReadSHPFile(sFileName);
+                    sLayer.Name = sFileName.Split('\\').Last().Split('.').First();
+                    char[] path = sOpenFileDialog.FileName.ToCharArray();
+                    if (path.Length != 0)
+                    {
+                        path[path.Length - 1] = 'f';
+                        path[path.Length - 2] = 'b';
+                        path[path.Length - 3] = 'd';
+
+                        GeoShpIOTools.ReadDBFFile(new string(path), sLayer);
+                    }
+                    geoMap.Layers.Add(sLayer);
+                    if (geoMap.Layers.Count == 1)
+                    {
+                        geoMap.FullExtent();
+                    }
+                    else
+                    {
+                        geoMap.RedrawMap();
+                    }
+                    UpdateTreeView(sLayer, geoMap.Layers.Count);
+                }
+                catch (Exception error)
+                {
+                    MessageBox.Show(error.ToString());
+                }
+            }
+            else
+            {
+                sOpenFileDialog.Dispose();
+                return;
+            }
+
+        }
+
+        private void 打开数据库图层文件ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string sFileName = "";
+            OpenFileDialog sOpenFileDialog = new OpenFileDialog();
+            sOpenFileDialog.Filter = "database(*.db)|*.db|All files(*.*)|*.*";
+            sOpenFileDialog.FilterIndex = 1;
+            if (sOpenFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                sFileName = sOpenFileDialog.FileName;
+                sOpenFileDialog.Dispose();
+                try
+                {
+                    GeoLayers sLayers = new GeoLayers();
+                    GeoDatabaseIOTools.LoadGeoProject(sLayers, sFileName);
+                    GeoMapLayer sLayer = sLayers.GetItem(0);
+                    sLayer.Name = sFileName.Split('\\').Last().Split('.').First();
+                    geoMap.Layers.Add(sLayer);
+                    if (geoMap.Layers.Count == 1)
+                    {
+                        geoMap.FullExtent();
+                    }
+                    else
+                    {
+                        geoMap.RedrawMap();
+                    }
+                    UpdateTreeView(sLayer, geoMap.Layers.Count);
+                }
+                catch (Exception error)
+                {
+                    MessageBox.Show(error.ToString());
+                }
+            }
+            else
+            {
+                sOpenFileDialog.Dispose();
+                return;
+            }
+        }
+
 
         private void RemoveItemToolStripButton_Click(object sender, EventArgs e)
         {

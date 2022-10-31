@@ -10,7 +10,7 @@ namespace DEETU.Map
         #region 字段
 
         private List<GeoMapLayer> _Layers = new List<GeoMapLayer>();
-
+        private string _FilePath = null;
         #endregion
 
         #region 构造函数
@@ -30,6 +30,11 @@ namespace DEETU.Map
             get { return _Layers.Count; }
         }
 
+        public string FilePath
+        {
+            get { return _FilePath; }
+            set { _FilePath = value; }
+        }
         #endregion
 
         #region 方法

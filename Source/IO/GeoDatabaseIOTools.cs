@@ -117,6 +117,7 @@ namespace DEETU.IO
         /// <returns></returns>
         internal static bool SaveGeoProject(GeoLayers project,string path)
         {
+            if (project.Count == 0) return true;
             string conn_str = "Data Source = ";
             conn_str += path;
             //如果不存在，则新建数据库

@@ -39,28 +39,7 @@ namespace DEETU.IO
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private static void OpenSHPFileButton_Click(object sender, EventArgs e)
-        {
-            OpenFileDialog sOpenFileDialog = new OpenFileDialog();
-            sOpenFileDialog.Filter = "shapefiles(*.shp)|*.shp|All files(*.*)|*.*";
-            sOpenFileDialog.FilterIndex = 1;
-            if (sOpenFileDialog.ShowDialog() == DialogResult.OK)
-            {
-                GeoMapLayer sLayer=ReadSHPFile(sOpenFileDialog.FileName);
-                char[] path = sOpenFileDialog.FileName.ToCharArray();
-                if (path.Length != 0)
-                {
-                    path[path.Length - 1] = 'f';
-                    path[path.Length - 2] = 'b';
-                    path[path.Length - 3] = 'd';
-                    
-                    ReadDBFFile(new string(path),sLayer);
-                }
-                //TODO:layer加入layers
-                //TODO:刷新画布
 
-            }
-        }
         
         public static GeoMapLayer ReadSHPFile(string shpPath)
         {
