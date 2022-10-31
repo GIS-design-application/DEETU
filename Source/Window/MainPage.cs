@@ -618,8 +618,17 @@ namespace DEETU.Source.Window
         }
         private void SaveProjectToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            
-            SaveNewProject();
+            if(geoMap.Layers.FilePath==null)
+                SaveNewProject();
+            else
+            {
+                GeoDatabaseIOTools.SaveGeoProject(geoMap.Layers, geoMap.Layers.FilePath);
+            }
+        }
+        private void CreateToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            geoMap.Layers=new GeoLayers();
+            //TODO:更新图层树
         }
         private void SaveNewProject()
         {
@@ -641,7 +650,11 @@ namespace DEETU.Source.Window
         {
             SaveNewProject();
         }
-
+        private void CloseProjectToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            geoMap.Layers = new GeoLayers();
+            //TODO:UPdate treeview
+        }
         private void 打开ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             // 获取文件名
@@ -662,6 +675,7 @@ namespace DEETU.Source.Window
             {
                 geoMap.Layers.Clear();
                 GeoDatabaseIOTools.LoadGeoProject(geoMap.Layers, sFileName);
+                geoMap.Layers.FilePath = sFileName;
                 if (geoMap.Layers.Count == 1)
                 {
                     geoMap.FullExtent();
@@ -670,7 +684,10 @@ namespace DEETU.Source.Window
                 {
                     geoMap.RedrawMap();
                 }
-
+                for(int i=0;i< geoMap.Layers.Count;i++)
+                {
+                    UpdateTreeView(geoMap.Layers.GetItem(i), i);
+                }
             }
             catch (Exception error)
             {

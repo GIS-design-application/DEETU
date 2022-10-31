@@ -412,6 +412,7 @@ namespace DEETU.Source.Window
             this.新建ToolStripMenuItem.Name = "新建ToolStripMenuItem";
             this.新建ToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
             this.新建ToolStripMenuItem.Text = "新建";
+            this.新建ToolStripMenuItem.Click+= new System.EventHandler(this.CreateToolStripMenuItem_Click);
             // 
             // 打开ToolStripMenuItem
             // 
@@ -442,6 +443,7 @@ namespace DEETU.Source.Window
             this.关闭ToolStripMenuItem.Name = "关闭ToolStripMenuItem";
             this.关闭ToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
             this.关闭ToolStripMenuItem.Text = "关闭";
+            this.关闭ToolStripMenuItem.Click += new System.EventHandler(this.CloseProjectToolStripMenuItem_Click);
             // 
             // toolStripSeparator3
             // 
