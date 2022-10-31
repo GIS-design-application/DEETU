@@ -1946,7 +1946,7 @@ namespace DEETU.Source.Window
             GeoMapLayer layer = mCurrentLayerNode.Tag as GeoMapLayer;
             SaveFileDialog saveFileDialog1 = new SaveFileDialog();
 
-            saveFileDialog1.Filter = "ShapeFile (*.shp)|*.shp";
+            saveFileDialog1.Filter = "图层文件 (*.lay)|*.lay";
             saveFileDialog1.FilterIndex = 1;
             saveFileDialog1.RestoreDirectory = true;
 
