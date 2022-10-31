@@ -590,10 +590,7 @@ namespace DEETU.Source.Window
                 {
                     geoMap.RedrawMap();
                 }
-                for(int i=0;i< geoMap.Layers.Count;i++)
-                {
-                    UpdateTreeView(geoMap.Layers.GetItem(i), i);
-                }
+                UpdateTreeView();
             }
             catch (Exception error)
             {
@@ -2117,7 +2114,7 @@ namespace DEETU.Source.Window
                 sStream.Dispose();
                 sr.Dispose();
 
-                UpdateTreeView(sLayer, geoMap.Layers.Count);
+                UpdateTreeView();
             }
             catch (Exception error)
             {
@@ -2161,7 +2158,7 @@ namespace DEETU.Source.Window
                     {
                         geoMap.RedrawMap();
                     }
-                    UpdateTreeView(sLayer, geoMap.Layers.Count);
+                    UpdateTreeView();
                 }
                 catch (Exception error)
                 {
@@ -2201,7 +2198,7 @@ namespace DEETU.Source.Window
                     {
                         geoMap.RedrawMap();
                     }
-                    UpdateTreeView(sLayer, geoMap.Layers.Count);
+                    UpdateTreeView();
                 }
                 catch (Exception error)
                 {
