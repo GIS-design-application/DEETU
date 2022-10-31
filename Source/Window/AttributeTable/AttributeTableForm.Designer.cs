@@ -65,6 +65,7 @@ namespace DEETU.Source.Window
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.selectAllToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.removeSelectToolStripButton = new System.Windows.Forms.ToolStripButton();
+            this.selectByExpressionToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.uiTabControl1.SuspendLayout();
             this.formPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -197,6 +198,7 @@ namespace DEETU.Source.Window
             dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.featureDataGridView.DefaultCellStyle = dataGridViewCellStyle3;
             this.featureDataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.featureDataGridView.EnableHeadersVisualStyles = false;
             this.featureDataGridView.Font = new System.Drawing.Font("微软雅黑", 12F);
             this.featureDataGridView.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
             this.featureDataGridView.Location = new System.Drawing.Point(0, 0);
@@ -269,7 +271,8 @@ namespace DEETU.Source.Window
             this.removeToolStripButton,
             this.toolStripSeparator3,
             this.selectAllToolStripButton,
-            this.removeSelectToolStripButton});
+            this.removeSelectToolStripButton,
+            this.selectByExpressionToolStripButton});
             this.toolStrip1.Location = new System.Drawing.Point(2, 35);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(796, 25);
@@ -410,6 +413,16 @@ namespace DEETU.Source.Window
             this.removeSelectToolStripButton.Text = "取消选中";
             this.removeSelectToolStripButton.Click += new System.EventHandler(this.removeSelectToolStripButton_Click);
             // 
+            // selectByExpressionToolStripButton
+            // 
+            this.selectByExpressionToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.selectByExpressionToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("selectByExpressionToolStripButton.Image")));
+            this.selectByExpressionToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.selectByExpressionToolStripButton.Name = "selectByExpressionToolStripButton";
+            this.selectByExpressionToolStripButton.Size = new System.Drawing.Size(23, 22);
+            this.selectByExpressionToolStripButton.Text = "按表达式选择";
+            this.selectByExpressionToolStripButton.Click += new System.EventHandler(this.selectByExpressionToolStripButton_Click);
+            // 
             // AttributeTableForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 21F);
@@ -466,5 +479,6 @@ namespace DEETU.Source.Window
         private System.Windows.Forms.ToolStripButton addFeatureToolStripButton;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ImageList navBarImageList;
+        private System.Windows.Forms.ToolStripButton selectByExpressionToolStripButton;
     }
 }

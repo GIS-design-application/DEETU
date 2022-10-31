@@ -10,6 +10,7 @@ using Sunny.UI;
 using DEETU.Core;
 using DEETU.Map;
 using DEETU.IO;
+using DEETU.Tool;
 
 namespace DEETU.Source.Window
 {
@@ -58,11 +59,9 @@ namespace DEETU.Source.Window
         private void reloadToolStripButton_Click
             (object sender, EventArgs e)
         {
-            detailTable.Controls.Clear();
-            featureList.Clear();
-            InitializeFormPage();
-            //InitializeGridPage();
+            ReloadPages();
         }
+
 
         private void featureDataGridView_SelectionChanged(object sender, EventArgs e)
         {
@@ -105,6 +104,20 @@ namespace DEETU.Source.Window
         private void removeToolStripButton_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void selectByExpressionToolStripButton_Click(object sender, EventArgs e)
+        {
+
+            SelectedByExpressionForm expressionForm = new SelectedByExpressionForm(mLayer);
+            expressionForm.LayerQuery += ExpressionForm_LayerQuery;
+            expressionForm.ShowDialog();
+        }
+
+        private void ExpressionForm_LayerQuery(object sender, GeoMapLayer layer, string expression, GeoSelectionModeConstant selectionMode)
+        {
+            LayerQuery?.Invoke(this, mLayer, expression, selectionMode);
+            ReloadPages();           
         }
 
         private void selectAllToolStripButton_Click(object sender, EventArgs e)
@@ -198,6 +211,9 @@ namespace DEETU.Source.Window
 
         private void InitializeGridPage()
         {
+            // 复用DataGridViewChanged
+            featureDataGridView.SelectionChanged -= featureDataGridView_SelectionChanged;
+
             GeoDataTable sDataTable = new GeoDataTable(mLayer);
             // Columns
             GeoFields fields = mLayer.AttributeFields;
@@ -230,7 +246,17 @@ namespace DEETU.Source.Window
                 }
             }
 
+            // 复用DataGridViewChanged
+            featureDataGridView.SelectionChanged += featureDataGridView_SelectionChanged;
 
+        }
+
+        private void ReloadPages()
+        {
+            detailTable.Controls.Clear();
+            featureList.Clear();
+            InitializeFormPage();
+            InitializeGridPage();
         }
 
         private void ShowFeatureOnDetailTable(GeoFeature feature)
@@ -257,6 +283,8 @@ namespace DEETU.Source.Window
         /// </summary>
         public event MapEditStartHandle MapEditStart;
 
+        public delegate void LayerQueryHandler(object sender, GeoMapLayer layer, string expression, GeoSelectionModeConstant selectionMode);
+        public event LayerQueryHandler LayerQuery;
         #endregion
 
     }

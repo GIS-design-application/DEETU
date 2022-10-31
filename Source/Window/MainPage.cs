@@ -64,6 +64,7 @@ namespace DEETU.Source.Window
         private GeoPoint mEditingPoint, mEditingLeftPoint, mEditingRightPoint; // 正在编辑的图形中被鼠标碰到的点
         private List<GeoPoints> mSketchingShape; // 正在描绘的图形, 用一个多点集合存储
         private GeoGeometryTypeConstant mSketchingGeometryType; // 正在描绘的图形的类别
+        private bool mIsEditing = false; // 是否处在编辑状态
 
         // 与界面交互有关的变量
         private TreeNode mCurrentLayerNode;
@@ -84,6 +85,8 @@ namespace DEETU.Source.Window
             ShowMapScale();
             // 显示坐标系
             ShowCrs();
+            // 设置编辑状态
+            SetEditing();
         }
 
 
@@ -675,6 +678,22 @@ namespace DEETU.Source.Window
             geoMap.RedrawMap();
         }
 
+        private void startEditToolStripButton_Click(object sender, EventArgs e)
+        {
+            if (mCurrentLayerNode == null)
+            {
+                UIMessageBox.ShowError("请选择图层", false);
+            }
+            btnSelect_Click(sender, e);
+            mIsEditing = !mIsEditing;
+            SetEditing();
+
+            if (mIsEditing)
+                startEditToolStripButton.Image = new Bitmap("./icons/edit_off.png");
+            else
+                startEditToolStripButton.Image = new Bitmap("./icons/edit.png");
+
+        }
         #endregion
 
 
@@ -1442,6 +1461,7 @@ namespace DEETU.Source.Window
 
 
 
+
         #endregion
 
         #region 私有函数
@@ -1722,17 +1742,17 @@ namespace DEETU.Source.Window
                     identifyToolStripButton.Checked = false;
                     break;
                 case GeoMapOpStyleEnum.Select:
-                    startEditToolStripButton.Checked = false;
+                    交叉选中ToolStripMenuItem.Checked = false;
                     break;
                 case GeoMapOpStyleEnum.Move:
                     MoveItemToolStripButton.Checked = false;
                     break;
                 case GeoMapOpStyleEnum.Edit:
-                    EditToolStripButton.Checked = false;
+                    EditFeatureToolStripButton.Checked = false;
                     btnEndEdit_Click(null, null);
                     break;
                 case GeoMapOpStyleEnum.Sketch:
-                    AddItemToolStripButton.Checked = false;
+                    AddFeatureToolStripButton.Checked = false;
                     break;
                 default:
                     break;
@@ -1760,16 +1780,16 @@ namespace DEETU.Source.Window
                     identifyToolStripButton.Checked = true;
                     break;
                 case GeoMapOpStyleEnum.Select:
-                    startEditToolStripButton.Checked = true;
+                    交叉选中ToolStripMenuItem.Checked = true;
                     break;
                 case GeoMapOpStyleEnum.Move:
                     MoveItemToolStripButton.Checked = true;
                     break;
                 case GeoMapOpStyleEnum.Edit:
-                    EditToolStripButton.Checked = true;
+                    EditFeatureToolStripButton.Checked = true;
                     break;
                 case GeoMapOpStyleEnum.Sketch:
-                    AddItemToolStripButton.Checked = true;
+                    AddFeatureToolStripButton.Checked = true;
                     break;
                 default:
                     break;
@@ -1948,6 +1968,29 @@ namespace DEETU.Source.Window
             return styleImage;
         }
 
+        /// <summary>
+        /// 处理和开始编辑、结束编辑相关的button的可用性
+        /// </summary>
+        private void SetEditing()
+        {
+            startEditToolStripButton.Checked = mIsEditing;           
+
+            RemoveItemToolStripButton.Enabled = mIsEditing;
+            MoveItemToolStripButton.Enabled = mIsEditing;
+            EditFeatureToolStripButton.Enabled = mIsEditing;
+            AddFeatureToolStripButton.Enabled = mIsEditing;
+            剪切要素ToolStripButton.Enabled = mIsEditing;
+            复制要素ToolStripButton.Enabled = mIsEditing;
+            粘贴要素ToolStripButton.Enabled = mIsEditing;
+            撤销ToolStripButton.Enabled = mIsEditing;
+            重做ToolStripButton.Enabled = mIsEditing;
+
+            剪切要素ToolStripMenuItem.Enabled = mIsEditing;
+            复制要素ToolStripMenuItem.Enabled = mIsEditing;
+            粘贴要素ToolStripMenuItem.Enabled = mIsEditing;
+            撤销操作ToolStripMenuItem.Enabled = mIsEditing;
+            重做操作ToolStripMenuItem.Enabled = mIsEditing;
+        }
         #endregion
 
         #region 图层右键菜单
@@ -2044,6 +2087,7 @@ namespace DEETU.Source.Window
             GeoMapLayer layer = mCurrentLayerNode.Tag as GeoMapLayer;
             AttributeTableForm attributeForm = new AttributeTableForm(layer);
             attributeForm.MapRedraw += AttributeForm_MapRedraw;
+            attributeForm.LayerQuery += ExpressionForm_LayerQuery;
             attributeForm.Show();
         }
 
