@@ -52,7 +52,7 @@ namespace DEETU.Source.Window
 
         private void okButton_Click(object sender, EventArgs e)
         {
-            mLayer = mTemporaryLayer;
+            //mLayer = mTemporaryLayer;
             this.Close();
         }
 

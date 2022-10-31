@@ -34,6 +34,9 @@ namespace DEETU.Source.Window
             this.uiRichTextBox1 = new Sunny.UI.UIRichTextBox();
             this.uiTitlePanel1 = new Sunny.UI.UITitlePanel();
             this.fontTitlePanel = new Sunny.UI.UITitlePanel();
+            this.uiLabel8 = new Sunny.UI.UILabel();
+            this.fontColotPicker = new Sunny.UI.UIColorPicker();
+            this.uiLabel7 = new Sunny.UI.UILabel();
             this.fontButton = new Sunny.UI.UIButton();
             this.fontTextBox = new Sunny.UI.UITextBox();
             this.maskTitlePanel = new Sunny.UI.UITitlePanel();
@@ -67,7 +70,7 @@ namespace DEETU.Source.Window
             // 
             this.PagePanel.Controls.Add(this.enableCheckBox);
             this.PagePanel.Controls.Add(this.labelPanel);
-            this.PagePanel.Size = new System.Drawing.Size(480, 765);
+            this.PagePanel.Size = new System.Drawing.Size(480, 709);
             // 
             // fieldComboBox
             // 
@@ -75,17 +78,16 @@ namespace DEETU.Source.Window
             | System.Windows.Forms.AnchorStyles.Right)));
             this.fieldComboBox.FillColor = System.Drawing.Color.White;
             this.fieldComboBox.Font = new System.Drawing.Font("微软雅黑", 12F);
-            this.fieldComboBox.Location = new System.Drawing.Point(112, 9);
+            this.fieldComboBox.Location = new System.Drawing.Point(112, 57);
             this.fieldComboBox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.fieldComboBox.MinimumSize = new System.Drawing.Size(63, 0);
             this.fieldComboBox.Name = "fieldComboBox";
             this.fieldComboBox.Padding = new System.Windows.Forms.Padding(0, 0, 30, 2);
-            this.fieldComboBox.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
             this.fieldComboBox.Size = new System.Drawing.Size(364, 29);
-            this.fieldComboBox.Style = Sunny.UI.UIStyle.Office2010Black;
             this.fieldComboBox.TabIndex = 2;
             this.fieldComboBox.Text = "uiComboBox1";
             this.fieldComboBox.TextAlignment = System.Drawing.ContentAlignment.MiddleLeft;
+            this.fieldComboBox.SelectedIndexChanged += new System.EventHandler(this.fieldComboBox_SelectedIndexChanged);
             // 
             // uiLabel1
             // 
@@ -93,10 +95,9 @@ namespace DEETU.Source.Window
             | System.Windows.Forms.AnchorStyles.Right)));
             this.uiLabel1.BackColor = System.Drawing.Color.Transparent;
             this.uiLabel1.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.uiLabel1.Location = new System.Drawing.Point(5, 9);
+            this.uiLabel1.Location = new System.Drawing.Point(5, 57);
             this.uiLabel1.Name = "uiLabel1";
             this.uiLabel1.Size = new System.Drawing.Size(100, 29);
-            this.uiLabel1.Style = Sunny.UI.UIStyle.Office2010Black;
             this.uiLabel1.TabIndex = 3;
             this.uiLabel1.Text = "注记字段";
             this.uiLabel1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -127,7 +128,7 @@ namespace DEETU.Source.Window
             this.uiTitlePanel1.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(228)))), ((int)(((byte)(233)))));
             this.uiTitlePanel1.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.uiTitlePanel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(46)))), ((int)(((byte)(46)))));
-            this.uiTitlePanel1.Location = new System.Drawing.Point(4, 43);
+            this.uiTitlePanel1.Location = new System.Drawing.Point(4, 91);
             this.uiTitlePanel1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.uiTitlePanel1.MinimumSize = new System.Drawing.Size(1, 1);
             this.uiTitlePanel1.Name = "uiTitlePanel1";
@@ -148,19 +149,22 @@ namespace DEETU.Source.Window
             // 
             this.fontTitlePanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.fontTitlePanel.Controls.Add(this.uiLabel8);
+            this.fontTitlePanel.Controls.Add(this.fontColotPicker);
+            this.fontTitlePanel.Controls.Add(this.uiLabel7);
             this.fontTitlePanel.Controls.Add(this.fontButton);
             this.fontTitlePanel.Controls.Add(this.fontTextBox);
             this.fontTitlePanel.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(228)))), ((int)(((byte)(233)))));
             this.fontTitlePanel.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.fontTitlePanel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(46)))), ((int)(((byte)(46)))));
-            this.fontTitlePanel.Location = new System.Drawing.Point(4, 151);
+            this.fontTitlePanel.Location = new System.Drawing.Point(4, 199);
             this.fontTitlePanel.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.fontTitlePanel.MinimumSize = new System.Drawing.Size(1, 1);
             this.fontTitlePanel.Name = "fontTitlePanel";
             this.fontTitlePanel.Padding = new System.Windows.Forms.Padding(0, 25, 0, 0);
             this.fontTitlePanel.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(139)))), ((int)(((byte)(144)))), ((int)(((byte)(151)))));
             this.fontTitlePanel.ShowCollapse = true;
-            this.fontTitlePanel.Size = new System.Drawing.Size(472, 56);
+            this.fontTitlePanel.Size = new System.Drawing.Size(472, 97);
             this.fontTitlePanel.Style = Sunny.UI.UIStyle.Custom;
             this.fontTitlePanel.StyleCustomMode = true;
             this.fontTitlePanel.TabIndex = 6;
@@ -170,49 +174,82 @@ namespace DEETU.Source.Window
             this.fontTitlePanel.TitleColor = System.Drawing.Color.Silver;
             this.fontTitlePanel.TitleHeight = 25;
             // 
+            // uiLabel8
+            // 
+            this.uiLabel8.BackColor = System.Drawing.Color.Transparent;
+            this.uiLabel8.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.uiLabel8.Location = new System.Drawing.Point(3, 30);
+            this.uiLabel8.Name = "uiLabel8";
+            this.uiLabel8.Size = new System.Drawing.Size(90, 29);
+            this.uiLabel8.Style = Sunny.UI.UIStyle.Custom;
+            this.uiLabel8.TabIndex = 6;
+            this.uiLabel8.Text = "字体";
+            this.uiLabel8.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // fontColotPicker
+            // 
+            this.fontColotPicker.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.fontColotPicker.DropDownStyle = Sunny.UI.UIDropDownStyle.DropDownList;
+            this.fontColotPicker.FillColor = System.Drawing.Color.White;
+            this.fontColotPicker.Font = new System.Drawing.Font("微软雅黑", 12F);
+            this.fontColotPicker.Location = new System.Drawing.Point(96, 63);
+            this.fontColotPicker.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.fontColotPicker.MinimumSize = new System.Drawing.Size(63, 0);
+            this.fontColotPicker.Name = "fontColotPicker";
+            this.fontColotPicker.Padding = new System.Windows.Forms.Padding(0, 0, 30, 2);
+            this.fontColotPicker.Size = new System.Drawing.Size(336, 29);
+            this.fontColotPicker.Style = Sunny.UI.UIStyle.Custom;
+            this.fontColotPicker.TabIndex = 5;
+            this.fontColotPicker.Text = "fontColorPicker";
+            this.fontColotPicker.TextAlignment = System.Drawing.ContentAlignment.MiddleLeft;
+            this.fontColotPicker.Value = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(160)))), ((int)(((byte)(255)))));
+            this.fontColotPicker.ValueChanged += new Sunny.UI.UIColorPicker.OnColorChanged(this.fontColotPicker_ValueChanged);
+            // 
+            // uiLabel7
+            // 
+            this.uiLabel7.BackColor = System.Drawing.Color.Transparent;
+            this.uiLabel7.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.uiLabel7.Location = new System.Drawing.Point(4, 63);
+            this.uiLabel7.Name = "uiLabel7";
+            this.uiLabel7.Size = new System.Drawing.Size(90, 29);
+            this.uiLabel7.Style = Sunny.UI.UIStyle.Custom;
+            this.uiLabel7.TabIndex = 4;
+            this.uiLabel7.Text = "字体颜色";
+            this.uiLabel7.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
             // fontButton
             // 
+            this.fontButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.fontButton.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.fontButton.Dock = System.Windows.Forms.DockStyle.Right;
-            this.fontButton.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(247)))), ((int)(((byte)(248)))), ((int)(((byte)(249)))));
-            this.fontButton.FillHoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(226)))), ((int)(((byte)(137)))));
-            this.fontButton.FillPressColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(228)))), ((int)(((byte)(137)))));
-            this.fontButton.FillSelectedColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(228)))), ((int)(((byte)(137)))));
             this.fontButton.Font = new System.Drawing.Font("微软雅黑", 12F);
-            this.fontButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(46)))), ((int)(((byte)(46)))));
-            this.fontButton.ForeHoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(46)))), ((int)(((byte)(46)))));
-            this.fontButton.ForePressColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(46)))), ((int)(((byte)(46)))));
-            this.fontButton.ForeSelectedColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(46)))), ((int)(((byte)(46)))));
-            this.fontButton.Location = new System.Drawing.Point(433, 25);
+            this.fontButton.Location = new System.Drawing.Point(440, 30);
             this.fontButton.MinimumSize = new System.Drawing.Size(1, 1);
             this.fontButton.Name = "fontButton";
-            this.fontButton.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(139)))), ((int)(((byte)(144)))), ((int)(((byte)(151)))));
-            this.fontButton.RectHoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(238)))), ((int)(((byte)(201)))), ((int)(((byte)(88)))));
-            this.fontButton.RectPressColor = System.Drawing.Color.FromArgb(((int)(((byte)(194)))), ((int)(((byte)(118)))), ((int)(((byte)(43)))));
-            this.fontButton.RectSelectedColor = System.Drawing.Color.FromArgb(((int)(((byte)(194)))), ((int)(((byte)(118)))), ((int)(((byte)(43)))));
             this.fontButton.RectSides = ((System.Windows.Forms.ToolStripStatusLabelBorderSides)(((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left | System.Windows.Forms.ToolStripStatusLabelBorderSides.Top) 
             | System.Windows.Forms.ToolStripStatusLabelBorderSides.Bottom)));
-            this.fontButton.Size = new System.Drawing.Size(39, 31);
-            this.fontButton.Style = Sunny.UI.UIStyle.Office2010Silver;
+            this.fontButton.Size = new System.Drawing.Size(24, 26);
+            this.fontButton.Style = Sunny.UI.UIStyle.Custom;
             this.fontButton.TabIndex = 1;
             this.fontButton.Text = "...";
+            this.fontButton.Click += new System.EventHandler(this.fontButton_Click);
             // 
             // fontTextBox
             // 
+            this.fontTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.fontTextBox.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.fontTextBox.Dock = System.Windows.Forms.DockStyle.Left;
             this.fontTextBox.FillColor = System.Drawing.Color.White;
-            this.fontTextBox.Font = new System.Drawing.Font("微软雅黑", 12F);
-            this.fontTextBox.Location = new System.Drawing.Point(0, 25);
+            this.fontTextBox.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.fontTextBox.Location = new System.Drawing.Point(97, 30);
             this.fontTextBox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.fontTextBox.Maximum = 2147483647D;
             this.fontTextBox.Minimum = -2147483648D;
             this.fontTextBox.MinimumSize = new System.Drawing.Size(1, 1);
             this.fontTextBox.Name = "fontTextBox";
             this.fontTextBox.Padding = new System.Windows.Forms.Padding(5);
-            this.fontTextBox.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(139)))), ((int)(((byte)(144)))), ((int)(((byte)(151)))));
-            this.fontTextBox.Size = new System.Drawing.Size(422, 31);
-            this.fontTextBox.Style = Sunny.UI.UIStyle.Office2010Silver;
+            this.fontTextBox.Size = new System.Drawing.Size(336, 29);
+            this.fontTextBox.Style = Sunny.UI.UIStyle.Custom;
             this.fontTextBox.TabIndex = 0;
             this.fontTextBox.TextAlignment = System.Drawing.ContentAlignment.MiddleLeft;
             // 
@@ -225,7 +262,7 @@ namespace DEETU.Source.Window
             this.maskTitlePanel.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(228)))), ((int)(((byte)(233)))));
             this.maskTitlePanel.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.maskTitlePanel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(46)))), ((int)(((byte)(46)))));
-            this.maskTitlePanel.Location = new System.Drawing.Point(4, 217);
+            this.maskTitlePanel.Location = new System.Drawing.Point(4, 306);
             this.maskTitlePanel.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.maskTitlePanel.MinimumSize = new System.Drawing.Size(1, 1);
             this.maskTitlePanel.Name = "maskTitlePanel";
@@ -284,7 +321,7 @@ namespace DEETU.Source.Window
             this.uiLabel2.Location = new System.Drawing.Point(3, 0);
             this.uiLabel2.Name = "uiLabel2";
             this.uiLabel2.Size = new System.Drawing.Size(94, 39);
-            this.uiLabel2.Style = Sunny.UI.UIStyle.Office2010Silver;
+            this.uiLabel2.Style = Sunny.UI.UIStyle.Custom;
             this.uiLabel2.TabIndex = 1;
             this.uiLabel2.Text = "描边颜色";
             this.uiLabel2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -296,7 +333,7 @@ namespace DEETU.Source.Window
             this.uiLabel5.Location = new System.Drawing.Point(3, 39);
             this.uiLabel5.Name = "uiLabel5";
             this.uiLabel5.Size = new System.Drawing.Size(94, 43);
-            this.uiLabel5.Style = Sunny.UI.UIStyle.Office2010Silver;
+            this.uiLabel5.Style = Sunny.UI.UIStyle.Custom;
             this.uiLabel5.TabIndex = 5;
             this.uiLabel5.Text = "描边宽度";
             this.uiLabel5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -319,6 +356,7 @@ namespace DEETU.Source.Window
             this.maskColorPicker.Text = "uiColorPicker2";
             this.maskColorPicker.TextAlignment = System.Drawing.ContentAlignment.MiddleLeft;
             this.maskColorPicker.Value = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(160)))), ((int)(((byte)(255)))));
+            this.maskColorPicker.ValueChanged += new Sunny.UI.UIColorPicker.OnColorChanged(this.maskColorPicker_ValueChanged);
             // 
             // maskSizeDoubleUpDown
             // 
@@ -337,6 +375,7 @@ namespace DEETU.Source.Window
             this.maskSizeDoubleUpDown.Text = "uiDoubleUpDown1";
             this.maskSizeDoubleUpDown.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter;
             this.maskSizeDoubleUpDown.Value = 0D;
+            this.maskSizeDoubleUpDown.ValueChanged += new Sunny.UI.UIDoubleUpDown.OnValueChanged(this.maskSizeDoubleUpDown_ValueChanged);
             // 
             // posTitlePanel
             // 
@@ -348,14 +387,14 @@ namespace DEETU.Source.Window
             this.posTitlePanel.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(228)))), ((int)(((byte)(233)))));
             this.posTitlePanel.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.posTitlePanel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(46)))), ((int)(((byte)(46)))));
-            this.posTitlePanel.Location = new System.Drawing.Point(4, 375);
+            this.posTitlePanel.Location = new System.Drawing.Point(4, 464);
             this.posTitlePanel.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.posTitlePanel.MinimumSize = new System.Drawing.Size(1, 1);
             this.posTitlePanel.Name = "posTitlePanel";
             this.posTitlePanel.Padding = new System.Windows.Forms.Padding(0, 25, 0, 0);
             this.posTitlePanel.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(139)))), ((int)(((byte)(144)))), ((int)(((byte)(151)))));
             this.posTitlePanel.ShowCollapse = true;
-            this.posTitlePanel.Size = new System.Drawing.Size(472, 291);
+            this.posTitlePanel.Size = new System.Drawing.Size(472, 240);
             this.posTitlePanel.Style = Sunny.UI.UIStyle.Custom;
             this.posTitlePanel.StyleCustomMode = true;
             this.posTitlePanel.TabIndex = 8;
@@ -401,6 +440,7 @@ namespace DEETU.Source.Window
             this.xOffsetDoubleUpDown.Text = "xOffsetDoubleUpDown";
             this.xOffsetDoubleUpDown.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter;
             this.xOffsetDoubleUpDown.Value = 0D;
+            this.xOffsetDoubleUpDown.ValueChanged += new Sunny.UI.UIDoubleUpDown.OnValueChanged(this.xOffsetDoubleUpDown_ValueChanged);
             // 
             // uiLabel4
             // 
@@ -409,7 +449,7 @@ namespace DEETU.Source.Window
             this.uiLabel4.Location = new System.Drawing.Point(3, 0);
             this.uiLabel4.Name = "uiLabel4";
             this.uiLabel4.Size = new System.Drawing.Size(94, 30);
-            this.uiLabel4.Style = Sunny.UI.UIStyle.Office2010Silver;
+            this.uiLabel4.Style = Sunny.UI.UIStyle.Custom;
             this.uiLabel4.TabIndex = 1;
             this.uiLabel4.Text = "横坐标";
             this.uiLabel4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -421,7 +461,7 @@ namespace DEETU.Source.Window
             this.uiLabel6.Location = new System.Drawing.Point(3, 30);
             this.uiLabel6.Name = "uiLabel6";
             this.uiLabel6.Size = new System.Drawing.Size(94, 30);
-            this.uiLabel6.Style = Sunny.UI.UIStyle.Office2010Silver;
+            this.uiLabel6.Style = Sunny.UI.UIStyle.Custom;
             this.uiLabel6.TabIndex = 5;
             this.uiLabel6.Text = "纵坐标";
             this.uiLabel6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -444,6 +484,7 @@ namespace DEETU.Source.Window
             this.yOffsetDoubleUpDown.Text = "yOffsetDoubleUpDown1";
             this.yOffsetDoubleUpDown.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter;
             this.yOffsetDoubleUpDown.Value = 0D;
+            this.yOffsetDoubleUpDown.ValueChanged += new Sunny.UI.UIDoubleUpDown.OnValueChanged(this.yOffsetDoubleUpDown_ValueChanged);
             // 
             // uiLabel3
             // 
@@ -451,7 +492,7 @@ namespace DEETU.Source.Window
             this.uiLabel3.Location = new System.Drawing.Point(3, 35);
             this.uiLabel3.Name = "uiLabel3";
             this.uiLabel3.Size = new System.Drawing.Size(91, 23);
-            this.uiLabel3.Style = Sunny.UI.UIStyle.Office2010Silver;
+            this.uiLabel3.Style = Sunny.UI.UIStyle.Custom;
             this.uiLabel3.TabIndex = 1;
             this.uiLabel3.Text = "坐标偏移：";
             this.uiLabel3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -460,7 +501,6 @@ namespace DEETU.Source.Window
             // 
             this.alignmentRadioButtonGroup.ColumnCount = 3;
             this.alignmentRadioButtonGroup.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.alignmentRadioButtonGroup.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(228)))), ((int)(((byte)(233)))));
             this.alignmentRadioButtonGroup.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.alignmentRadioButtonGroup.Items.AddRange(new object[] {
             "TopLeft",
@@ -472,17 +512,17 @@ namespace DEETU.Source.Window
             "BottomLeft",
             "BottomCenter",
             "BottomRight"});
-            this.alignmentRadioButtonGroup.Location = new System.Drawing.Point(0, 105);
+            this.alignmentRadioButtonGroup.Location = new System.Drawing.Point(0, 97);
             this.alignmentRadioButtonGroup.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.alignmentRadioButtonGroup.MinimumSize = new System.Drawing.Size(1, 1);
             this.alignmentRadioButtonGroup.Name = "alignmentRadioButtonGroup";
             this.alignmentRadioButtonGroup.Padding = new System.Windows.Forms.Padding(0, 32, 0, 0);
-            this.alignmentRadioButtonGroup.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(139)))), ((int)(((byte)(144)))), ((int)(((byte)(151)))));
-            this.alignmentRadioButtonGroup.Size = new System.Drawing.Size(472, 186);
-            this.alignmentRadioButtonGroup.Style = Sunny.UI.UIStyle.Office2010Silver;
+            this.alignmentRadioButtonGroup.Size = new System.Drawing.Size(472, 143);
+            this.alignmentRadioButtonGroup.Style = Sunny.UI.UIStyle.Custom;
             this.alignmentRadioButtonGroup.TabIndex = 0;
             this.alignmentRadioButtonGroup.Text = "布局";
             this.alignmentRadioButtonGroup.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter;
+            this.alignmentRadioButtonGroup.ValueChanged += new Sunny.UI.UIRadioButtonGroup.OnValueChanged(this.alignmentRadioButtonGroup_ValueChanged);
             // 
             // labelPanel
             // 
@@ -493,15 +533,12 @@ namespace DEETU.Source.Window
             this.labelPanel.Controls.Add(this.fieldComboBox);
             this.labelPanel.Controls.Add(this.uiTitlePanel1);
             this.labelPanel.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.labelPanel.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(211)))), ((int)(((byte)(211)))), ((int)(((byte)(211)))));
             this.labelPanel.Font = new System.Drawing.Font("微软雅黑", 12F);
-            this.labelPanel.Location = new System.Drawing.Point(0, 37);
+            this.labelPanel.Location = new System.Drawing.Point(0, -19);
             this.labelPanel.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.labelPanel.MinimumSize = new System.Drawing.Size(1, 1);
             this.labelPanel.Name = "labelPanel";
-            this.labelPanel.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
             this.labelPanel.Size = new System.Drawing.Size(480, 728);
-            this.labelPanel.Style = Sunny.UI.UIStyle.Office2010Black;
             this.labelPanel.TabIndex = 9;
             this.labelPanel.Text = null;
             this.labelPanel.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter;
@@ -527,7 +564,7 @@ namespace DEETU.Source.Window
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(480, 800);
+            this.ClientSize = new System.Drawing.Size(480, 744);
             this.Name = "AnnotationPage";
             this.Text = "注记";
             this.PagePanel.ResumeLayout(false);
@@ -569,5 +606,8 @@ namespace DEETU.Source.Window
         private Sunny.UI.UILabel uiLabel4;
         private Sunny.UI.UILabel uiLabel6;
         private Sunny.UI.UIDoubleUpDown yOffsetDoubleUpDown;
+        private Sunny.UI.UILabel uiLabel8;
+        private Sunny.UI.UIColorPicker fontColotPicker;
+        private Sunny.UI.UILabel uiLabel7;
     }
 }
