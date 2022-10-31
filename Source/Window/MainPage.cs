@@ -117,7 +117,7 @@ namespace DEETU.Source.Window
                 sStream.Dispose();
                 sr.Dispose();
 
-                UpdateTreeView(sLayer, geoMap.Layers.Count);
+                InsertTreeNode(sLayer, geoMap.Layers.Count);
             }
             catch (Exception error)
             {
@@ -125,9 +125,18 @@ namespace DEETU.Source.Window
             }
         }
 
+        private void UpdateTreeView()
+        {
+            layerTreeView.Nodes.Clear();
+            for(int i = 0; i < geoMap.Layers.Count; ++i)
+            {
+                InsertTreeNode(geoMap.Layers.GetItem(i), i);
+            }
+        }
+
         // 这个函数是为了显示图层渲染方式
         // 在加入图层和修改渲染方式时调用
-        private void UpdateTreeView(GeoMapLayer layer, int index)
+        private void InsertTreeNode(GeoMapLayer layer, int index)
         {
             // 按照renderer Type进行处理
             GeoRenderer sRenderer = layer.Renderer;
@@ -1996,7 +2005,7 @@ namespace DEETU.Source.Window
         #region 子窗口事件处理
         private void layerAttributes_FormClosed(object sender, FormClosedEventArgs e)
         {
-            UpdateTreeView(mCurrentLayerNode.Tag as GeoMapLayer, mCurrentLayerNode.Index);
+            InsertTreeNode(mCurrentLayerNode.Tag as GeoMapLayer, mCurrentLayerNode.Index);
             mCurrentLayerNode.Remove();
             geoMap.RedrawMap();
         }
@@ -2246,6 +2255,18 @@ namespace DEETU.Source.Window
         private void 粘贴要素ToolStripButton_Click(object sender, EventArgs e)
         {
             Paste();
+        }
+
+        private void 移除图层ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DialogResult dr = MessageBox.Show("确定要删除图层吗？", "提示", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+            if(dr == DialogResult.OK)
+            {
+                geoMap.Layers.RemoveAt(mCurrentLayerNode.Index);
+                mCurrentLayerNode.Remove();
+                UpdateTreeView();
+                geoMap.RedrawMap();
+            }
         }
 
         private void 剪切要素ToolStripButton_Click(object sender, EventArgs e)

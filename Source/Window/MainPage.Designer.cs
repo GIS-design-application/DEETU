@@ -261,6 +261,7 @@ namespace DEETU.Source.Window
             this.移除图层ToolStripMenuItem.Name = "移除图层ToolStripMenuItem";
             this.移除图层ToolStripMenuItem.Size = new System.Drawing.Size(176, 24);
             this.移除图层ToolStripMenuItem.Text = "移除图层";
+            this.移除图层ToolStripMenuItem.Click += new System.EventHandler(this.移除图层ToolStripMenuItem_Click);
             // 
             // 移到顶层ToolStripMenuItem
             // 
