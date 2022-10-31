@@ -181,27 +181,20 @@ namespace DEETU.Core
             Int32 A1 = startColor.A, R1 = startColor.R, G1 = startColor.G, B1 = startColor.B;
             Int32 A2 = endColor.A, R2 = endColor.R, G2 = endColor.G, B2 = endColor.B;
             Int32 A, R, G, B;
-            double H, S, V;
             Color[] sColors = new Color[sBreakCount];
             if (sBreakCount == 1)
                 sColors[0] = startColor;
             else
             {
-                //将起始和终止颜色转换为HSV
-                double[] sStartHSV = RGBToHSV(startColor.R, startColor.G, startColor.B);
-                double[] sEndHSV = RGBToHSV(endColor.R, endColor.G, endColor.B);
                 sColors[0] = startColor;
                 sColors[sBreakCount - 1] = endColor;
                 for (Int32 i = 1; i <= sBreakCount - 2; i++)
                 {
-                    H = sStartHSV[0] + i * (sEndHSV[0] - sStartHSV[0]) / sBreakCount;
-                    S = sStartHSV[1] + i * (sEndHSV[1] - sStartHSV[1]) / sBreakCount;
-                    V = sStartHSV[2] + i * (sEndHSV[2] - sStartHSV[2]) / sBreakCount;
-                    byte[] sRGB = HSVToRGB(H, S, V);
+                    R = R1 + i * (R2 - R1) / sBreakCount;
+                    G = G1 + i * (G2 - G1) / sBreakCount;
+                    B = B1 + i * (B2 - B1) / sBreakCount;
                     A = A1 + i * (A2 - A1) / sBreakCount;
-                    R = sRGB[0];
-                    G = sRGB[1];
-                    B = sRGB[2];
+
                     sColors[i] = Color.FromArgb(A, R, G, B);
                 }
             }
@@ -247,6 +240,7 @@ namespace DEETU.Core
                 GeoSymbol sSymbol = null;
                 if (_Symbols[i] != null)
                     sSymbol = _Symbols[i].Clone();
+                sRenderer.AddBreakValue(sBreakValue, sSymbol);
                 //sRenderer.AddUniqueValue(sValue, sSymbol);
             }
             if (_DefaultSymbol != null)

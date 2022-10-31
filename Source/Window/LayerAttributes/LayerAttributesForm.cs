@@ -25,23 +25,23 @@ namespace DEETU.Source.Window
             mLayer = layer;
             mTemporaryLayer = layer.Clone();
 
-            AddPage(new InfoPage(layer), 1);
-            switch (layer.ShapeType)
+            AddPage(new InfoPage(mTemporaryLayer), 1);
+            switch (mTemporaryLayer.ShapeType)
             {
                 case GeoGeometryTypeConstant.Point:
-                    AddPage(new MarkerSymbolPage(layer), 2);
+                    AddPage(new MarkerSymbolPage(mTemporaryLayer), 2);
                     break;
                 case GeoGeometryTypeConstant.MultiPolyline:
-                    AddPage(new LineSymbolPage(layer), 2);
+                    AddPage(new LineSymbolPage(mTemporaryLayer), 2);
                     break;
                 case GeoGeometryTypeConstant.MultiPolygon:
-                    AddPage(new FillSymbolPage(layer), 2);
+                    AddPage(new FillSymbolPage(mTemporaryLayer), 2);
                     break;
                 default:
                     break;
             }
-            AddPage(new FieldPage(layer), 3);
-            AddPage(new AnnotationPage(layer), 4);
+            AddPage(new FieldPage(mTemporaryLayer), 3);
+            AddPage(new AnnotationPage(mTemporaryLayer), 4);
             
             Aside.CreateNode("信息", 61451, 24, 1); 
             Aside.CreateNode("符号化", 61452, 24, 2); 
@@ -51,7 +51,7 @@ namespace DEETU.Source.Window
 
         private void okButton_Click(object sender, EventArgs e)
         {
-            //mLayer = mTemporaryLayer;
+            mLayer.Renderer = mTemporaryLayer.Renderer;
             this.Close();
         }
 

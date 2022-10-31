@@ -12,6 +12,7 @@ using DEETU.Tool;
 using DEETU.Core;
 using DEETU.Source.Window.LayerAttributes;
 using System.Drawing.Drawing2D;
+using System.Security.Cryptography;
 
 namespace DEETU.Source.Window
 {
@@ -58,15 +59,24 @@ namespace DEETU.Source.Window
             // 对于不同的渲染模式进行配置
             if (mLayer.Renderer.RendererType == GeoRendererTypeConstant.Simple)
             {
+                mSimpleRenderer = mLayer.Renderer as GeoSimpleRenderer;
                 renderMethodCB.SelectedIndex = 0;
+                renderTabControl.SelectedIndex = 0;
+                initializeSimpleRenderer();
             }
             else if (mLayer.Renderer.RendererType == GeoRendererTypeConstant.UniqueValue)
             {
+                mUniqueValueRenderer = mLayer.Renderer as GeoUniqueValueRenderer;
                 renderMethodCB.SelectedIndex = 1;
+                renderTabControl.SelectedIndex = 1;
+                uniqueFieldComboBox.SelectedIndex = mLayer.AttributeFields.FindField(mUniqueValueRenderer.Field);
             }
             else
             {
+                mClassBreaksRenderer = mLayer.Renderer as GeoClassBreaksRenderer;
                 renderMethodCB.SelectedIndex = 2;
+                renderTabControl.SelectedIndex = 2;
+                classFieldComboBox.SelectedIndex = mLayer.AttributeFields.FindField(mClassBreaksRenderer.Field);
             }
             
         }
@@ -138,7 +148,11 @@ namespace DEETU.Source.Window
         private void uniqueFieldComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (uniqueFieldComboBox.SelectedIndex == -1) return;
-            mLayer.Renderer = CreateUniqueValueRenderer(uniqueFieldComboBox.SelectedItem.ToString());
+            if (mUniqueValueRenderer == null || mUniqueValueRenderer.Field != uniqueFieldComboBox.SelectedItem.ToString())
+            {
+                mLayer.Renderer = CreateUniqueValueRenderer(uniqueFieldComboBox.SelectedItem.ToString());
+                mUniqueValueRenderer = mLayer.Renderer as GeoUniqueValueRenderer;
+            }
             if(mLayer.Renderer != null)
             {
                 uniqueColorgradComboBox.Items.Clear();
@@ -155,7 +169,11 @@ namespace DEETU.Source.Window
         private void classFieldComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (classFieldComboBox.SelectedIndex == -1) return;
-            mLayer.Renderer = CreateClassBreaksRenderer(classFieldComboBox.SelectedItem.ToString());
+            if (mClassBreaksRenderer == null || mClassBreaksRenderer.Field != classFieldComboBox.SelectedItem.ToString())
+            { 
+                mLayer.Renderer = CreateClassBreaksRenderer(classFieldComboBox.SelectedItem.ToString());
+                mClassBreaksRenderer = mLayer.Renderer as GeoClassBreaksRenderer;
+            }
             if(mLayer.Renderer != null)
             {
                 classColorgradComboBox.Items.Clear();
@@ -254,7 +272,7 @@ namespace DEETU.Source.Window
                     sRenderer.AddBreakValue(sValue, sSymbol);
                 }
                 Color sStartColor = new GeoSimpleFillSymbol().Color;
-                Color sEndColor = new GeoSimpleFillSymbol().Color;
+                Color sEndColor = Color.FromArgb(sStartColor.R - 128, sStartColor.G - 128, sStartColor.B - 128);
                 sRenderer.RampColor(sStartColor, sEndColor);
                 sRenderer.DefaultSymbol = new GeoSimpleFillSymbol();
                 return sRenderer;
@@ -265,7 +283,7 @@ namespace DEETU.Source.Window
                 return null;
             }
         }
-
+        
         private void uniqueColorgradComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             mLayer.Renderer = mUniqueValueRenderers[uniqueColorgradComboBox.SelectedIndex];
