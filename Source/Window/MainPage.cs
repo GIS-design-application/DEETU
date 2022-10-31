@@ -504,6 +504,11 @@ namespace DEETU.Source.Window
 
         private void btnEndSketch_Click(object sender, EventArgs e)
         {
+            GeoMapLayer sLayer = GetSelectableLayer();
+            if(sLayer != null)
+            {
+                sLayer = NewUndo(sLayer);
+            }
             if (mSketchingGeometryType == GeoGeometryTypeConstant.MultiPolygon)
             {
                 // 结束描绘多边形
@@ -519,7 +524,6 @@ namespace DEETU.Source.Window
                 // 如果去掉没修改完的, 删掉空的, 用户至少还输入了一个多边形, 那么就加入多边形图层.
                 if (mSketchingShape.Count > 0)
                 {
-                    GeoMapLayer sLayer = GetSelectableLayer();
                     if (sLayer != null)
                     { // 定义一个复合多边形
                         GeoMultiPolygon sMultipolygon = new GeoMultiPolygon();
@@ -555,7 +559,7 @@ namespace DEETU.Source.Window
                 // 如果去掉没修改完的, 删掉空的, 用户至少还输入了一条曲线, 那么就加入曲线图层.
                 if (mSketchingShape.Count > 0)
                 {
-                    GeoMapLayer sLayer = GetSelectableLayer();
+                    
                     if (sLayer != null)
                     { // 定义一个复合多边形
                         GeoMultiPolyline sMultiPolyline = new GeoMultiPolyline();
@@ -581,7 +585,6 @@ namespace DEETU.Source.Window
                     return;
                 }
 
-                GeoMapLayer sLayer = GetSelectableLayer();
                 if (sLayer != null)
                 { // 定义一个复合多边形
 
@@ -618,13 +621,18 @@ namespace DEETU.Source.Window
             }
             this.Cursor = new Cursor("./icons/EditMoveVertex.ico");
             GeoMapLayer slayer = GetSelectableLayer();
+            
             if (slayer == null)
             {
                 return;
             }
+
             // 是否具有一个选择要素(不能没有, 不能有多个)
             if (slayer.SelectedFeatures.Count != 1)
                 return;
+
+            slayer = NewUndo(slayer);
+
             UncheckToolStrip(mMapOpStyle);
             mEditingGeometry = slayer.SelectedFeatures.GetItem(0).Geometry;
             mMapOpStyle = GeoMapOpStyleEnum.Edit;
@@ -1309,6 +1317,10 @@ namespace DEETU.Source.Window
                 return;
             mIsMovingShapes = false;
             GeoMapLayer selectLayer = geoMap.Layers.getSelectableLayer();
+            if(mMovingGeometries.Count>0)
+            {
+                selectLayer = NewUndo(selectLayer);
+            }
             // 做相应的修改数据操作, 不再编写
             for (int i = 0; i < mMovingGeometries.Count; i++)
             {
