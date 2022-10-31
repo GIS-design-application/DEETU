@@ -14,10 +14,10 @@ namespace DEETU.IO
     internal static class GeoDataIOTools
     {
         #region 程序集方法
-        internal static bool SaveMapLayer(GeoMapLayer sLayer)
+        internal static bool SaveMapLayer(GeoMapLayer sLayer,string path)
         {
 
-            FileStream fileStream = new FileStream("C:\\Users\\zwy99\\Desktop\\test.lay", FileMode.Create, FileAccess.Write);
+            FileStream fileStream = new FileStream(path, FileMode.Create, FileAccess.Write);
             BinaryWriter bw = new BinaryWriter(fileStream);
             bw.Write(1);//没有用
             bw.Write(Convert.ToInt32(sLayer.ShapeType));
@@ -146,7 +146,7 @@ namespace DEETU.IO
             bw.Write(sFeatureCount);
             for (int i = 0; i <= sFeatureCount - 1; i++)
             {
-                MessageBox.Show(i.ToString());
+                //MessageBox.Show(i.ToString());
                 try { SaveGeometry(bw, features.GetItem(i).Geometry, geometryType); } catch (Exception e) { MessageBox.Show(e.ToString()); return false; }
                 try { SaveAttributes(bw, fields, features.GetItem(i).Attributes); } catch (Exception e) { MessageBox.Show(e.ToString()); return false; }
             }

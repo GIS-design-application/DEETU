@@ -100,6 +100,8 @@ namespace DEETU.Source.Window
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.图层ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.打开图层ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.打开shp图层文件ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.打开数据库图层文件ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.newToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.openToolStripButton = new System.Windows.Forms.ToolStripButton();
@@ -134,6 +136,7 @@ namespace DEETU.Source.Window
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.tssCoordinate = new System.Windows.Forms.ToolStripStatusLabel();
             this.tssMapScale = new System.Windows.Forms.ToolStripStatusLabel();
+            this.geoMap = new DEETU.Map.GeoMapControl();
             this.toolStrip2 = new System.Windows.Forms.ToolStrip();
             this.startEditToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.保存当前编辑ToolStripButton = new System.Windows.Forms.ToolStripButton();
@@ -149,7 +152,6 @@ namespace DEETU.Source.Window
             this.PasteUndoToolStripSeparator14 = new System.Windows.Forms.ToolStripSeparator();
             this.撤销ToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.重做ToolStripButton = new System.Windows.Forms.ToolStripButton();
-            this.geoMap = new DEETU.Map.GeoMapControl();
             this.projectContextMenuStrip.SuspendLayout();
             this.favoriteContextMenuStrip1.SuspendLayout();
             this.layerContextMenuStrip.SuspendLayout();
@@ -334,13 +336,14 @@ namespace DEETU.Source.Window
             this.导出为SqliteToolStripMenuItem.Name = "导出为SqliteToolStripMenuItem";
             this.导出为SqliteToolStripMenuItem.Size = new System.Drawing.Size(181, 24);
             this.导出为SqliteToolStripMenuItem.Text = "导出为Sqlite";
+            this.导出为SqliteToolStripMenuItem.Click += new System.EventHandler(this.SaveSqliteToolStripMenuItem_Click);
             // 
             // 导出为shapefileToolStripMenuItem
             // 
             this.导出为shapefileToolStripMenuItem.Name = "导出为shapefileToolStripMenuItem";
             this.导出为shapefileToolStripMenuItem.Size = new System.Drawing.Size(181, 24);
             this.导出为shapefileToolStripMenuItem.Text = "导出为shapefile";
-            this.导出为shapefileToolStripMenuItem.Click += new System.EventHandler(this.导出为shapefileToolStripMenuItem_Click);
+            this.导出为shapefileToolStripMenuItem.Click += new System.EventHandler(this.SaveLyrToolStripMenuItem_Click);
             // 
             // toolStripSeparator10
             // 
@@ -408,14 +411,15 @@ namespace DEETU.Source.Window
             // 
             this.新建ToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("新建ToolStripMenuItem.Image")));
             this.新建ToolStripMenuItem.Name = "新建ToolStripMenuItem";
-            this.新建ToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
+            this.新建ToolStripMenuItem.Size = new System.Drawing.Size(184, 26);
             this.新建ToolStripMenuItem.Text = "新建";
+            this.新建ToolStripMenuItem.Click += new System.EventHandler(this.CreateToolStripMenuItem_Click);
             // 
             // 打开ToolStripMenuItem
             // 
             this.打开ToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("打开ToolStripMenuItem.Image")));
             this.打开ToolStripMenuItem.Name = "打开ToolStripMenuItem";
-            this.打开ToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
+            this.打开ToolStripMenuItem.Size = new System.Drawing.Size(184, 26);
             this.打开ToolStripMenuItem.Text = "打开";
             this.打开ToolStripMenuItem.Click += new System.EventHandler(this.打开ToolStripMenuItem_Click);
             // 
@@ -423,33 +427,36 @@ namespace DEETU.Source.Window
             // 
             this.保存ToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("保存ToolStripMenuItem.Image")));
             this.保存ToolStripMenuItem.Name = "保存ToolStripMenuItem";
-            this.保存ToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
+            this.保存ToolStripMenuItem.Size = new System.Drawing.Size(184, 26);
             this.保存ToolStripMenuItem.Text = "保存";
+            this.保存ToolStripMenuItem.Click += new System.EventHandler(this.SaveProjectToolStripMenuItem_Click);
             // 
             // 另存为ToolStripMenuItem
             // 
             this.另存为ToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("另存为ToolStripMenuItem.Image")));
             this.另存为ToolStripMenuItem.Name = "另存为ToolStripMenuItem";
-            this.另存为ToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
+            this.另存为ToolStripMenuItem.Size = new System.Drawing.Size(184, 26);
             this.另存为ToolStripMenuItem.Text = "另存为";
-            this.另存为ToolStripMenuItem.Click += new System.EventHandler(this.另存为ToolStripMenuItem_Click);
+            this.另存为ToolStripMenuItem.Click += new System.EventHandler(this.SaveNewProjectToolStripMenuItem_Click);
             // 
             // 关闭ToolStripMenuItem
             // 
             this.关闭ToolStripMenuItem.Name = "关闭ToolStripMenuItem";
-            this.关闭ToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
+            this.关闭ToolStripMenuItem.Size = new System.Drawing.Size(184, 26);
             this.关闭ToolStripMenuItem.Text = "关闭";
+            this.关闭ToolStripMenuItem.Click += new System.EventHandler(this.CloseProjectToolStripMenuItem_Click);
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(136, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(181, 6);
             // 
             // 退出DEETUToolStripMenuItem
             // 
             this.退出DEETUToolStripMenuItem.Name = "退出DEETUToolStripMenuItem";
-            this.退出DEETUToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
+            this.退出DEETUToolStripMenuItem.Size = new System.Drawing.Size(184, 26);
             this.退出DEETUToolStripMenuItem.Text = "退出DEETU";
+            this.退出DEETUToolStripMenuItem.Click += new System.EventHandler(this.退出DEETUToolStripMenuItem_Click);
             // 
             // 编辑ToolStripMenuItem
             // 
@@ -470,26 +477,26 @@ namespace DEETU.Source.Window
             // 
             this.撤销操作ToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("撤销操作ToolStripMenuItem.Image")));
             this.撤销操作ToolStripMenuItem.Name = "撤销操作ToolStripMenuItem";
-            this.撤销操作ToolStripMenuItem.Size = new System.Drawing.Size(184, 26);
+            this.撤销操作ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.撤销操作ToolStripMenuItem.Text = "撤销操作";
             // 
             // 重做操作ToolStripMenuItem
             // 
             this.重做操作ToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("重做操作ToolStripMenuItem.Image")));
             this.重做操作ToolStripMenuItem.Name = "重做操作ToolStripMenuItem";
-            this.重做操作ToolStripMenuItem.Size = new System.Drawing.Size(184, 26);
+            this.重做操作ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.重做操作ToolStripMenuItem.Text = "重做操作";
             // 
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(181, 6);
+            this.toolStripSeparator4.Size = new System.Drawing.Size(121, 6);
             // 
             // 剪切要素ToolStripMenuItem
             // 
             this.剪切要素ToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("剪切要素ToolStripMenuItem.Image")));
             this.剪切要素ToolStripMenuItem.Name = "剪切要素ToolStripMenuItem";
-            this.剪切要素ToolStripMenuItem.Size = new System.Drawing.Size(184, 26);
+            this.剪切要素ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.剪切要素ToolStripMenuItem.Text = "剪切要素";
             this.剪切要素ToolStripMenuItem.Click += new System.EventHandler(this.剪切要素ToolStripButton_Click);
             // 
@@ -497,7 +504,7 @@ namespace DEETU.Source.Window
             // 
             this.复制要素ToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("复制要素ToolStripMenuItem.Image")));
             this.复制要素ToolStripMenuItem.Name = "复制要素ToolStripMenuItem";
-            this.复制要素ToolStripMenuItem.Size = new System.Drawing.Size(184, 26);
+            this.复制要素ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.复制要素ToolStripMenuItem.Text = "复制要素";
             this.复制要素ToolStripMenuItem.Click += new System.EventHandler(this.复制要素ToolStripButton_Click);
             // 
@@ -505,14 +512,14 @@ namespace DEETU.Source.Window
             // 
             this.粘贴要素ToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("粘贴要素ToolStripMenuItem.Image")));
             this.粘贴要素ToolStripMenuItem.Name = "粘贴要素ToolStripMenuItem";
-            this.粘贴要素ToolStripMenuItem.Size = new System.Drawing.Size(184, 26);
+            this.粘贴要素ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.粘贴要素ToolStripMenuItem.Text = "粘贴要素";
             this.粘贴要素ToolStripMenuItem.Click += new System.EventHandler(this.粘贴要素ToolStripButton_Click);
             // 
             // toolStripSeparator5
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(181, 6);
+            this.toolStripSeparator5.Size = new System.Drawing.Size(121, 6);
             // 
             // 选择ToolStripMenuItem
             // 
@@ -521,7 +528,7 @@ namespace DEETU.Source.Window
             this.按表达式选择ToolStripMenuItem1,
             this.按矩形范围选择ToolStripMenuItem});
             this.选择ToolStripMenuItem.Name = "选择ToolStripMenuItem";
-            this.选择ToolStripMenuItem.Size = new System.Drawing.Size(184, 26);
+            this.选择ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.选择ToolStripMenuItem.Text = "选择";
             // 
             // 按属性值选择ToolStripMenuItem
@@ -659,7 +666,9 @@ namespace DEETU.Source.Window
             // 图层ToolStripMenuItem
             // 
             this.图层ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.打开图层ToolStripMenuItem});
+            this.打开图层ToolStripMenuItem,
+            this.打开shp图层文件ToolStripMenuItem,
+            this.打开数据库图层文件ToolStripMenuItem});
             this.图层ToolStripMenuItem.Name = "图层ToolStripMenuItem";
             this.图层ToolStripMenuItem.Size = new System.Drawing.Size(44, 21);
             this.图层ToolStripMenuItem.Text = "图层";
@@ -667,9 +676,23 @@ namespace DEETU.Source.Window
             // 打开图层ToolStripMenuItem
             // 
             this.打开图层ToolStripMenuItem.Name = "打开图层ToolStripMenuItem";
-            this.打开图层ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
-            this.打开图层ToolStripMenuItem.Text = "打开图层";
+            this.打开图层ToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
+            this.打开图层ToolStripMenuItem.Text = "添加lyr图层文件";
             this.打开图层ToolStripMenuItem.Click += new System.EventHandler(this.btnLoadLayerFile_Click);
+            // 
+            // 打开shp图层文件ToolStripMenuItem
+            // 
+            this.打开shp图层文件ToolStripMenuItem.Name = "打开shp图层文件ToolStripMenuItem";
+            this.打开shp图层文件ToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
+            this.打开shp图层文件ToolStripMenuItem.Text = "添加shp图层文件";
+            this.打开shp图层文件ToolStripMenuItem.Click += new System.EventHandler(this.打开shp图层文件ToolStripMenuItem_Click);
+            // 
+            // 打开数据库图层文件ToolStripMenuItem
+            // 
+            this.打开数据库图层文件ToolStripMenuItem.Name = "打开数据库图层文件ToolStripMenuItem";
+            this.打开数据库图层文件ToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
+            this.打开数据库图层文件ToolStripMenuItem.Text = "添加数据库图层文件";
+            this.打开数据库图层文件ToolStripMenuItem.Click += new System.EventHandler(this.打开数据库图层文件ToolStripMenuItem_Click);
             // 
             // toolStrip1
             // 
@@ -1075,6 +1098,28 @@ namespace DEETU.Source.Window
             this.tssMapScale.Size = new System.Drawing.Size(81, 17);
             this.tssMapScale.Text = "tssMapScale";
             // 
+            // geoMap
+            // 
+            this.geoMap.BackColor = System.Drawing.Color.White;
+            this.geoMap.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.geoMap.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.geoMap.FlashColor = System.Drawing.Color.Green;
+            geoLayers1.FilePath = null;
+            this.geoMap.Layers = geoLayers1;
+            this.geoMap.Location = new System.Drawing.Point(0, 0);
+            this.geoMap.Margin = new System.Windows.Forms.Padding(267208, 1119111, 267208, 1119111);
+            this.geoMap.Name = "geoMap";
+            this.geoMap.SelectionColor = System.Drawing.Color.Cyan;
+            this.geoMap.Size = new System.Drawing.Size(637, 511);
+            this.geoMap.TabIndex = 0;
+            this.geoMap.MapScaleChanged += new DEETU.Map.GeoMapControl.MapScaleChangedHandle(this.geoMap_MapScaleChanged);
+            this.geoMap.AfterTrackingLayerDraw += new DEETU.Map.GeoMapControl.AfterTrackingLayerDrawHandle(this.geoMap_AfterTrackingLayerDraw);
+            this.geoMap.DoubleClick += new System.EventHandler(this.geoMap_DoubleClick);
+            this.geoMap.MouseClick += new System.Windows.Forms.MouseEventHandler(this.geoMap_MouseClick);
+            this.geoMap.MouseDown += new System.Windows.Forms.MouseEventHandler(this.geoMap_MouseDown);
+            this.geoMap.MouseMove += new System.Windows.Forms.MouseEventHandler(this.geoMap_MouseMove);
+            this.geoMap.MouseUp += new System.Windows.Forms.MouseEventHandler(this.geoMap_MouseUp);
+            // 
             // toolStrip2
             // 
             this.toolStrip2.Dock = System.Windows.Forms.DockStyle.None;
@@ -1221,27 +1266,6 @@ namespace DEETU.Source.Window
             this.重做ToolStripButton.Size = new System.Drawing.Size(24, 24);
             this.重做ToolStripButton.Text = "重做";
             // 
-            // geoMap
-            // 
-            this.geoMap.BackColor = System.Drawing.Color.White;
-            this.geoMap.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.geoMap.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.geoMap.FlashColor = System.Drawing.Color.Green;
-            this.geoMap.Layers = geoLayers1;
-            this.geoMap.Location = new System.Drawing.Point(0, 0);
-            this.geoMap.Margin = new System.Windows.Forms.Padding(160325, 639492, 160325, 639492);
-            this.geoMap.Name = "geoMap";
-            this.geoMap.SelectionColor = System.Drawing.Color.Cyan;
-            this.geoMap.Size = new System.Drawing.Size(637, 511);
-            this.geoMap.TabIndex = 0;
-            this.geoMap.MapScaleChanged += new DEETU.Map.GeoMapControl.MapScaleChangedHandle(this.geoMap_MapScaleChanged);
-            this.geoMap.AfterTrackingLayerDraw += new DEETU.Map.GeoMapControl.AfterTrackingLayerDrawHandle(this.geoMap_AfterTrackingLayerDraw);
-            this.geoMap.DoubleClick += new System.EventHandler(this.geoMap_DoubleClick);
-            this.geoMap.MouseClick += new System.Windows.Forms.MouseEventHandler(this.geoMap_MouseClick);
-            this.geoMap.MouseDown += new System.Windows.Forms.MouseEventHandler(this.geoMap_MouseDown);
-            this.geoMap.MouseMove += new System.Windows.Forms.MouseEventHandler(this.geoMap_MouseMove);
-            this.geoMap.MouseUp += new System.Windows.Forms.MouseEventHandler(this.geoMap_MouseUp);
-            // 
             // MainPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 21F);
@@ -1332,7 +1356,7 @@ namespace DEETU.Source.Window
 		private System.Windows.Forms.ToolStripMenuItem 另存为ToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem 关闭ToolStripMenuItem;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
-		private System.Windows.Forms.ToolStripMenuItem 退出DEETUToolStripMenuItem;
+		public System.Windows.Forms.ToolStripMenuItem 退出DEETUToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem 撤销操作ToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem 重做操作ToolStripMenuItem;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
@@ -1406,6 +1430,8 @@ namespace DEETU.Source.Window
         private System.Windows.Forms.ToolStripMenuItem 全部选择ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 取消选择ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 反向选择ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 打开shp图层文件ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 打开数据库图层文件ToolStripMenuItem;
         private System.Windows.Forms.ToolStripButton AddItemToolStripButton;
     }
 }

@@ -22,6 +22,7 @@ namespace DEETU
             mainPage.SetDebugForm(debugForm);
 #endif
             AddPage(mainPage);
+            mainPage.ÍË³öDEETUToolStripMenuItem.Click += new EventHandler(this.Close);
             
             base.FormBorderStyle = FormBorderStyle.Sizable;
         }
@@ -29,6 +30,10 @@ namespace DEETU
         public void SetDebugForm(DebugForm debugForm)
         {
 
+        }
+        private void Close(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }
