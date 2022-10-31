@@ -1,4 +1,6 @@
-﻿namespace DEETU.Source.Window
+﻿using System;
+
+namespace DEETU.Source.Window
 {
     partial class AttributeTableForm
     {

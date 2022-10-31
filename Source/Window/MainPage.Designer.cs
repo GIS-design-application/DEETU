@@ -116,6 +116,9 @@ namespace DEETU.Source.Window
             this.identifyToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.selectByValueToolStripDropDownButton = new System.Windows.Forms.ToolStripDropDownButton();
             this.按表达式选择ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.全部选择ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.取消选择ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.反向选择ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.selectByExtentToolStripDropDownButton = new System.Windows.Forms.ToolStripDropDownButton();
             this.交叉选中ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.全包含选中ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -135,9 +138,10 @@ namespace DEETU.Source.Window
             this.startEditToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.保存当前编辑ToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.mouseEditToolStripSeparator = new System.Windows.Forms.ToolStripSeparator();
-            this.删除所选要素ToolStripButton = new System.Windows.Forms.ToolStripButton();
-            this.moveItemToolStripButton = new System.Windows.Forms.ToolStripButton();
-            this.editToolStripButton = new System.Windows.Forms.ToolStripButton();
+            this.RemoveItemToolStripButton = new System.Windows.Forms.ToolStripButton();
+            this.MoveItemToolStripButton = new System.Windows.Forms.ToolStripButton();
+            this.EditToolStripButton = new System.Windows.Forms.ToolStripButton();
+            this.AddItemToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.EditPasteToolStripSeparator = new System.Windows.Forms.ToolStripSeparator();
             this.剪切要素ToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.复制要素ToolStripButton = new System.Windows.Forms.ToolStripButton();
@@ -145,9 +149,6 @@ namespace DEETU.Source.Window
             this.PasteUndoToolStripSeparator14 = new System.Windows.Forms.ToolStripSeparator();
             this.撤销ToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.重做ToolStripButton = new System.Windows.Forms.ToolStripButton();
-            this.全部选择ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.取消选择ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.反向选择ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.geoMap = new DEETU.Map.GeoMapControl();
             this.projectContextMenuStrip.SuspendLayout();
             this.favoriteContextMenuStrip1.SuspendLayout();
@@ -338,7 +339,7 @@ namespace DEETU.Source.Window
             this.导出为shapefileToolStripMenuItem.Name = "导出为shapefileToolStripMenuItem";
             this.导出为shapefileToolStripMenuItem.Size = new System.Drawing.Size(181, 24);
             this.导出为shapefileToolStripMenuItem.Text = "导出为shapefile";
-            this.导出为shapefileToolStripMenuItem.Click+= new System.EventHandler(this.导出为shapefileToolStripMenuItem_Click);
+            this.导出为shapefileToolStripMenuItem.Click += new System.EventHandler(this.导出为shapefileToolStripMenuItem_Click);
             // 
             // toolStripSeparator10
             // 
@@ -689,7 +690,7 @@ namespace DEETU.Source.Window
             this.toolStrip1.Location = new System.Drawing.Point(3, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.toolStrip1.Size = new System.Drawing.Size(385, 27);
+            this.toolStrip1.Size = new System.Drawing.Size(354, 27);
             this.toolStrip1.TabIndex = 49;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -825,9 +826,30 @@ namespace DEETU.Source.Window
             // 按表达式选择ToolStripMenuItem
             // 
             this.按表达式选择ToolStripMenuItem.Name = "按表达式选择ToolStripMenuItem";
-            this.按表达式选择ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.按表达式选择ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.按表达式选择ToolStripMenuItem.Text = "按表达式选择";
             this.按表达式选择ToolStripMenuItem.Click += new System.EventHandler(this.btnSelectByExpression_Click);
+            // 
+            // 全部选择ToolStripMenuItem
+            // 
+            this.全部选择ToolStripMenuItem.Name = "全部选择ToolStripMenuItem";
+            this.全部选择ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.全部选择ToolStripMenuItem.Text = "全部选择";
+            this.全部选择ToolStripMenuItem.Click += new System.EventHandler(this.全部选择ToolStripMenuItem_Click);
+            // 
+            // 取消选择ToolStripMenuItem
+            // 
+            this.取消选择ToolStripMenuItem.Name = "取消选择ToolStripMenuItem";
+            this.取消选择ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.取消选择ToolStripMenuItem.Text = "取消选择";
+            this.取消选择ToolStripMenuItem.Click += new System.EventHandler(this.取消选择ToolStripMenuItem_Click);
+            // 
+            // 反向选择ToolStripMenuItem
+            // 
+            this.反向选择ToolStripMenuItem.Name = "反向选择ToolStripMenuItem";
+            this.反向选择ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.反向选择ToolStripMenuItem.Text = "反向选择";
+            this.反向选择ToolStripMenuItem.Click += new System.EventHandler(this.反向选择ToolStripMenuItem_Click);
             // 
             // selectByExtentToolStripDropDownButton
             // 
@@ -1023,6 +1045,7 @@ namespace DEETU.Source.Window
             this.uiPanel3.TabIndex = 0;
             this.uiPanel3.Text = "MapControl";
             this.uiPanel3.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter;
+            this.uiPanel3.DoubleClick += new System.EventHandler(this.uiPanel3_DoubleClick);
             // 
             // statusStrip
             // 
@@ -1056,9 +1079,10 @@ namespace DEETU.Source.Window
             this.startEditToolStripButton,
             this.保存当前编辑ToolStripButton,
             this.mouseEditToolStripSeparator,
-            this.删除所选要素ToolStripButton,
-            this.moveItemToolStripButton,
-            this.editToolStripButton,
+            this.RemoveItemToolStripButton,
+            this.MoveItemToolStripButton,
+            this.EditToolStripButton,
+            this.AddItemToolStripButton,
             this.EditPasteToolStripSeparator,
             this.剪切要素ToolStripButton,
             this.复制要素ToolStripButton,
@@ -1068,7 +1092,7 @@ namespace DEETU.Source.Window
             this.重做ToolStripButton});
             this.toolStrip2.Location = new System.Drawing.Point(3, 27);
             this.toolStrip2.Name = "toolStrip2";
-            this.toolStrip2.Size = new System.Drawing.Size(270, 27);
+            this.toolStrip2.Size = new System.Drawing.Size(325, 27);
             this.toolStrip2.TabIndex = 50;
             // 
             // startEditToolStripButton
@@ -1095,34 +1119,45 @@ namespace DEETU.Source.Window
             this.mouseEditToolStripSeparator.Name = "mouseEditToolStripSeparator";
             this.mouseEditToolStripSeparator.Size = new System.Drawing.Size(6, 27);
             // 
-            // 删除所选要素ToolStripButton
+            // RemoveItemToolStripButton
             // 
-            this.删除所选要素ToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.删除所选要素ToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("删除所选要素ToolStripButton.Image")));
-            this.删除所选要素ToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.删除所选要素ToolStripButton.Name = "删除所选要素ToolStripButton";
-            this.删除所选要素ToolStripButton.Size = new System.Drawing.Size(24, 24);
-            this.删除所选要素ToolStripButton.Text = "删除所选要素";
+            this.RemoveItemToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.RemoveItemToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("RemoveItemToolStripButton.Image")));
+            this.RemoveItemToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.RemoveItemToolStripButton.Name = "RemoveItemToolStripButton";
+            this.RemoveItemToolStripButton.Size = new System.Drawing.Size(24, 24);
+            this.RemoveItemToolStripButton.Text = "删除所选要素";
+            this.RemoveItemToolStripButton.Click += new System.EventHandler(this.RemoveItemToolStripButton_Click);
             // 
-            // moveItemToolStripButton
+            // MoveItemToolStripButton
             // 
-            this.moveItemToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.moveItemToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("moveItemToolStripButton.Image")));
-            this.moveItemToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.moveItemToolStripButton.Name = "moveItemToolStripButton";
-            this.moveItemToolStripButton.Size = new System.Drawing.Size(24, 24);
-            this.moveItemToolStripButton.Text = "移动";
-            this.moveItemToolStripButton.Click += new System.EventHandler(this.btnMovePolygon_Click);
+            this.MoveItemToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.MoveItemToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("MoveItemToolStripButton.Image")));
+            this.MoveItemToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.MoveItemToolStripButton.Name = "MoveItemToolStripButton";
+            this.MoveItemToolStripButton.Size = new System.Drawing.Size(24, 24);
+            this.MoveItemToolStripButton.Text = "移动";
+            this.MoveItemToolStripButton.Click += new System.EventHandler(this.btnMovePolygon_Click);
             // 
-            // editToolStripButton
+            // EditToolStripButton
             // 
-            this.editToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.editToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("editToolStripButton.Image")));
-            this.editToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.editToolStripButton.Name = "editToolStripButton";
-            this.editToolStripButton.Size = new System.Drawing.Size(24, 24);
-            this.editToolStripButton.Text = "编辑";
-            this.editToolStripButton.Click += new System.EventHandler(this.btnEditItem_Click);
+            this.EditToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.EditToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("EditToolStripButton.Image")));
+            this.EditToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.EditToolStripButton.Name = "EditToolStripButton";
+            this.EditToolStripButton.Size = new System.Drawing.Size(24, 24);
+            this.EditToolStripButton.Text = "编辑";
+            this.EditToolStripButton.Click += new System.EventHandler(this.btnEditItem_Click);
+            // 
+            // AddItemToolStripButton
+            // 
+            this.AddItemToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.AddItemToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("AddItemToolStripButton.Image")));
+            this.AddItemToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.AddItemToolStripButton.Name = "AddItemToolStripButton";
+            this.AddItemToolStripButton.Size = new System.Drawing.Size(24, 24);
+            this.AddItemToolStripButton.Text = "添加要素";
+            this.AddItemToolStripButton.Click += new System.EventHandler(this.AddItemToolStripButton_Click);
             // 
             // EditPasteToolStripSeparator
             // 
@@ -1179,27 +1214,6 @@ namespace DEETU.Source.Window
             this.重做ToolStripButton.Size = new System.Drawing.Size(24, 24);
             this.重做ToolStripButton.Text = "重做";
             // 
-            // 全部选择ToolStripMenuItem
-            // 
-            this.全部选择ToolStripMenuItem.Name = "全部选择ToolStripMenuItem";
-            this.全部选择ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.全部选择ToolStripMenuItem.Text = "全部选择";
-            this.全部选择ToolStripMenuItem.Click += new System.EventHandler(this.全部选择ToolStripMenuItem_Click);
-            // 
-            // 取消选择ToolStripMenuItem
-            // 
-            this.取消选择ToolStripMenuItem.Name = "取消选择ToolStripMenuItem";
-            this.取消选择ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.取消选择ToolStripMenuItem.Text = "取消选择";
-            this.取消选择ToolStripMenuItem.Click += new System.EventHandler(this.取消选择ToolStripMenuItem_Click);
-            // 
-            // 反向选择ToolStripMenuItem
-            // 
-            this.反向选择ToolStripMenuItem.Name = "反向选择ToolStripMenuItem";
-            this.反向选择ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.反向选择ToolStripMenuItem.Text = "反向选择";
-            this.反向选择ToolStripMenuItem.Click += new System.EventHandler(this.反向选择ToolStripMenuItem_Click);
-            // 
             // geoMap
             // 
             this.geoMap.BackColor = System.Drawing.Color.White;
@@ -1208,13 +1222,14 @@ namespace DEETU.Source.Window
             this.geoMap.FlashColor = System.Drawing.Color.Green;
             this.geoMap.Layers = geoLayers1;
             this.geoMap.Location = new System.Drawing.Point(0, 0);
-            this.geoMap.Margin = new System.Windows.Forms.Padding(34630, 119322, 34630, 119322);
+            this.geoMap.Margin = new System.Windows.Forms.Padding(96195, 365424, 96195, 365424);
             this.geoMap.Name = "geoMap";
             this.geoMap.SelectionColor = System.Drawing.Color.Cyan;
             this.geoMap.Size = new System.Drawing.Size(637, 511);
             this.geoMap.TabIndex = 0;
             this.geoMap.MapScaleChanged += new DEETU.Map.GeoMapControl.MapScaleChangedHandle(this.geoMap_MapScaleChanged);
             this.geoMap.AfterTrackingLayerDraw += new DEETU.Map.GeoMapControl.AfterTrackingLayerDrawHandle(this.geoMap_AfterTrackingLayerDraw);
+            this.geoMap.DoubleClick += new System.EventHandler(this.geoMap_DoubleClick);
             this.geoMap.MouseClick += new System.Windows.Forms.MouseEventHandler(this.geoMap_MouseClick);
             this.geoMap.MouseDown += new System.Windows.Forms.MouseEventHandler(this.geoMap_MouseDown);
             this.geoMap.MouseMove += new System.Windows.Forms.MouseEventHandler(this.geoMap_MouseMove);
@@ -1351,7 +1366,7 @@ namespace DEETU.Source.Window
 		private System.Windows.Forms.ToolStrip toolStrip2;
 		private System.Windows.Forms.ToolStripButton startEditToolStripButton;
 		private System.Windows.Forms.ToolStripButton 保存当前编辑ToolStripButton;
-		private System.Windows.Forms.ToolStripButton 删除所选要素ToolStripButton;
+		private System.Windows.Forms.ToolStripButton RemoveItemToolStripButton;
 		private System.Windows.Forms.ToolStripButton 剪切要素ToolStripButton;
 		private System.Windows.Forms.ToolStripButton 复制要素ToolStripButton;
 		private System.Windows.Forms.ToolStripButton 粘贴要素ToolStripButton;
@@ -1379,10 +1394,11 @@ namespace DEETU.Source.Window
 		private System.Windows.Forms.ToolStripSeparator mouseEditToolStripSeparator;
 		private System.Windows.Forms.ToolStripSeparator EditPasteToolStripSeparator;
 		private System.Windows.Forms.ToolStripSeparator PasteUndoToolStripSeparator14;
-		private System.Windows.Forms.ToolStripButton moveItemToolStripButton;
-		private System.Windows.Forms.ToolStripButton editToolStripButton;
+		private System.Windows.Forms.ToolStripButton MoveItemToolStripButton;
+		private System.Windows.Forms.ToolStripButton EditToolStripButton;
         private System.Windows.Forms.ToolStripMenuItem 全部选择ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 取消选择ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 反向选择ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripButton AddItemToolStripButton;
     }
 }

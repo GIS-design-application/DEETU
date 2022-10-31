@@ -76,6 +76,14 @@ namespace DEETU.Core
             _Features.Remove(feature);
         }
 
+        public void RemoveRange(GeoFeature[] features)
+        {
+            foreach(var feature in features)
+            {
+                Remove(feature);
+            }
+        }
+
 
         /// <summary>
         /// 添加一个点到末尾
