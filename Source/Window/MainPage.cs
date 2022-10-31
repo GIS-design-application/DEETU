@@ -84,109 +84,6 @@ namespace DEETU.Source.Window
         }
 
 
-        private void UpdateTreeView()
-        {
-            layerTreeView.Nodes.Clear();
-            for(int i = 0; i < geoMap.Layers.Count; ++i)
-            {
-                InsertTreeNode(geoMap.Layers.GetItem(i), i);
-            }
-        }
-
-        // 这个函数是为了显示图层渲染方式
-        // 在加入图层和修改渲染方式时调用
-        private void InsertTreeNode(GeoMapLayer layer, int index)
-        {
-            // 按照renderer Type进行处理
-            GeoRenderer sRenderer = layer.Renderer;
-            layer.Name = layer.Name == "" ? layer.ShapeType.ToString() : layer.Name;
-            if (sRenderer.RendererType == GeoRendererTypeConstant.Simple)
-            {
-                TreeNode style = CreateSimpleStyleTreeNode((sRenderer as GeoSimpleRenderer).Symbol);
-                TreeNode layerNode = new TreeNode(layer.Name, new TreeNode[] { style });
-                layerNode.ContextMenuStrip = layerContextMenuStrip;
-                //layerTreeView.Nodes.Insert(0,layerNode);
-                layerNode.Tag = layer;
-                layerTreeView.Nodes.Insert(index, layerNode);
-            }
-            else if (sRenderer.RendererType == GeoRendererTypeConstant.ClassBreaks)
-            {
-                GeoClassBreaksRenderer sClassBreaksRenderer = (GeoClassBreaksRenderer)sRenderer;
-                List<TreeNode> styles = new List<TreeNode>() { new TreeNode(sClassBreaksRenderer.Field) };
-                int BreakCount = sClassBreaksRenderer.BreakCount;
-                for (int i = 0; i < BreakCount; ++i)
-                {
-                    string startValue = i == 0 ? "0" : sClassBreaksRenderer.GetBreakValue(i - 1).ToString();
-                    string endValue = sClassBreaksRenderer.GetBreakValue(i).ToString();
-                    styles.Add(CreateSimpleStyleTreeNode(sClassBreaksRenderer.GetSymbol(i), startValue + "~" + endValue));
-                }
-                TreeNode layerNode = new TreeNode(layer.Name, styles.ToArray());
-                layerNode.ContextMenuStrip = layerContextMenuStrip;
-                //layerTreeView.Nodes.Insert(0,layerNode);
-                layerNode.Tag = layer;
-                layerTreeView.Nodes.Insert(index, layerNode);
-            }
-            else if (sRenderer.RendererType == GeoRendererTypeConstant.UniqueValue)
-            {
-                GeoUniqueValueRenderer sUniqueValueRenderer = (GeoUniqueValueRenderer)sRenderer;
-                List<TreeNode> styles = new List<TreeNode>() { new TreeNode(sUniqueValueRenderer.Field) };
-                int ValueCount = sUniqueValueRenderer.ValueCount;
-                for (int i = 0; i < ValueCount; ++i)
-                {
-                    styles.Add(CreateSimpleStyleTreeNode(sUniqueValueRenderer.GetSymbol(i), sUniqueValueRenderer.GetValue(i)));
-                }
-                TreeNode layerNode = new TreeNode(layer.Name, styles.ToArray());
-                layerNode.ContextMenuStrip = layerContextMenuStrip;
-                //layerTreeView.Nodes.Insert(0,layerNode);
-                layerNode.Tag = layer;
-                layerTreeView.Nodes.Insert(index, layerNode);
-            }
-            else
-            {
-                throw new Exception("Renderer Type Error!");
-            }
-        }
-
-        private TreeNode CreateSimpleStyleTreeNode(GeoSymbol symbol, string label = "")
-        {
-            TreeNode style = new TreeNode(label);
-            TreeImages.Images.Add(CreateBitmapFromSymbol(symbol));
-            style.ImageIndex = TreeImages.Images.Count - 1;
-            return style;
-        }
-
-        private Bitmap CreateBitmapFromSymbol(GeoSymbol symbol)
-        {
-            Bitmap styleImage = new Bitmap(50, 50);
-            Graphics g = Graphics.FromImage(styleImage);
-            if (symbol.SymbolType == GeoSymbolTypeConstant.SimpleMarkerSymbol)
-            {
-                Rectangle sRect = new Rectangle(0, 0, styleImage.Width, styleImage.Height);
-                GeoMapDrawingTools.DrawSimpleMarker(g, sRect, 0, (symbol as GeoSimpleMarkerSymbol)); // dpm is useless in this function
-            }
-            else if (symbol.SymbolType == GeoSymbolTypeConstant.SimpleLineSymbol)
-            {
-                GeoSimpleLineSymbol sLineSymbol = (symbol as GeoSimpleLineSymbol);
-                double dpm = 1000; // I don't know the correct dpm here so I just randomly assigned a number
-                Pen sPen = new Pen(sLineSymbol.Color, (float)(sLineSymbol.Size / 1000 * dpm));
-                sPen.DashStyle = (DashStyle)sLineSymbol.Style;
-                g.DrawLine(sPen, new Point(0, styleImage.Height / 2), new Point(styleImage.Width, styleImage.Height / 2));
-                sPen.Dispose();
-            }
-            else if (symbol.SymbolType == GeoSymbolTypeConstant.SimpleFillSymbol)
-            {
-                SolidBrush sBrush = new SolidBrush((symbol as GeoSimpleFillSymbol).Color);
-                g.FillRectangle(sBrush, new RectangleF(0, 0, styleImage.Width, styleImage.Height));
-                sBrush.Dispose();
-            }
-            else
-            {
-                throw new Exception("Symbol Type Error!");
-            }
-            g.Dispose();
-            return styleImage;
-        }
-
         private void btnFullExtent_Click(object sender, EventArgs e)
         {
             geoMap.FullExtent();
@@ -1929,6 +1826,108 @@ namespace DEETU.Source.Window
             }
         }
 
+        private void UpdateTreeView()
+        {
+            layerTreeView.Nodes.Clear();
+            for (int i = 0; i < geoMap.Layers.Count; ++i)
+            {
+                InsertTreeNode(geoMap.Layers.GetItem(i), i);
+            }
+        }
+
+        // 这个函数是为了显示图层渲染方式
+        // 在加入图层和修改渲染方式时调用
+        private void InsertTreeNode(GeoMapLayer layer, int index)
+        {
+            // 按照renderer Type进行处理
+            GeoRenderer sRenderer = layer.Renderer;
+            layer.Name = layer.Name == "" ? layer.ShapeType.ToString() : layer.Name;
+            if (sRenderer.RendererType == GeoRendererTypeConstant.Simple)
+            {
+                TreeNode style = CreateSimpleStyleTreeNode((sRenderer as GeoSimpleRenderer).Symbol);
+                TreeNode layerNode = new TreeNode(layer.Name, new TreeNode[] { style });
+                layerNode.ContextMenuStrip = layerContextMenuStrip;
+                //layerTreeView.Nodes.Insert(0,layerNode);
+                layerNode.Tag = layer;
+                layerTreeView.Nodes.Insert(index, layerNode);
+            }
+            else if (sRenderer.RendererType == GeoRendererTypeConstant.ClassBreaks)
+            {
+                GeoClassBreaksRenderer sClassBreaksRenderer = (GeoClassBreaksRenderer)sRenderer;
+                List<TreeNode> styles = new List<TreeNode>() { new TreeNode(sClassBreaksRenderer.Field) };
+                int BreakCount = sClassBreaksRenderer.BreakCount;
+                for (int i = 0; i < BreakCount; ++i)
+                {
+                    string startValue = i == 0 ? "0" : sClassBreaksRenderer.GetBreakValue(i - 1).ToString();
+                    string endValue = sClassBreaksRenderer.GetBreakValue(i).ToString();
+                    styles.Add(CreateSimpleStyleTreeNode(sClassBreaksRenderer.GetSymbol(i), startValue + "~" + endValue));
+                }
+                TreeNode layerNode = new TreeNode(layer.Name, styles.ToArray());
+                layerNode.ContextMenuStrip = layerContextMenuStrip;
+                //layerTreeView.Nodes.Insert(0,layerNode);
+                layerNode.Tag = layer;
+                layerTreeView.Nodes.Insert(index, layerNode);
+            }
+            else if (sRenderer.RendererType == GeoRendererTypeConstant.UniqueValue)
+            {
+                GeoUniqueValueRenderer sUniqueValueRenderer = (GeoUniqueValueRenderer)sRenderer;
+                List<TreeNode> styles = new List<TreeNode>() { new TreeNode(sUniqueValueRenderer.Field) };
+                int ValueCount = sUniqueValueRenderer.ValueCount;
+                for (int i = 0; i < ValueCount; ++i)
+                {
+                    styles.Add(CreateSimpleStyleTreeNode(sUniqueValueRenderer.GetSymbol(i), sUniqueValueRenderer.GetValue(i)));
+                }
+                TreeNode layerNode = new TreeNode(layer.Name, styles.ToArray());
+                layerNode.ContextMenuStrip = layerContextMenuStrip;
+                //layerTreeView.Nodes.Insert(0,layerNode);
+                layerNode.Tag = layer;
+                layerTreeView.Nodes.Insert(index, layerNode);
+            }
+            else
+            {
+                throw new Exception("Renderer Type Error!");
+            }
+        }
+
+        private TreeNode CreateSimpleStyleTreeNode(GeoSymbol symbol, string label = "")
+        {
+            TreeNode style = new TreeNode(label);
+            TreeImages.Images.Add(CreateBitmapFromSymbol(symbol));
+            style.ImageIndex = TreeImages.Images.Count - 1;
+            return style;
+        }
+
+        private Bitmap CreateBitmapFromSymbol(GeoSymbol symbol)
+        {
+            Bitmap styleImage = new Bitmap(50, 50);
+            Graphics g = Graphics.FromImage(styleImage);
+            if (symbol.SymbolType == GeoSymbolTypeConstant.SimpleMarkerSymbol)
+            {
+                Rectangle sRect = new Rectangle(0, 0, styleImage.Width, styleImage.Height);
+                GeoMapDrawingTools.DrawSimpleMarker(g, sRect, 0, (symbol as GeoSimpleMarkerSymbol)); // dpm is useless in this function
+            }
+            else if (symbol.SymbolType == GeoSymbolTypeConstant.SimpleLineSymbol)
+            {
+                GeoSimpleLineSymbol sLineSymbol = (symbol as GeoSimpleLineSymbol);
+                double dpm = 1000; // I don't know the correct dpm here so I just randomly assigned a number
+                Pen sPen = new Pen(sLineSymbol.Color, (float)(sLineSymbol.Size / 1000 * dpm));
+                sPen.DashStyle = (DashStyle)sLineSymbol.Style;
+                g.DrawLine(sPen, new Point(0, styleImage.Height / 2), new Point(styleImage.Width, styleImage.Height / 2));
+                sPen.Dispose();
+            }
+            else if (symbol.SymbolType == GeoSymbolTypeConstant.SimpleFillSymbol)
+            {
+                SolidBrush sBrush = new SolidBrush((symbol as GeoSimpleFillSymbol).Color);
+                g.FillRectangle(sBrush, new RectangleF(0, 0, styleImage.Width, styleImage.Height));
+                sBrush.Dispose();
+            }
+            else
+            {
+                throw new Exception("Symbol Type Error!");
+            }
+            g.Dispose();
+            return styleImage;
+        }
 
         #endregion
 
