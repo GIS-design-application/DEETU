@@ -24,13 +24,22 @@ namespace DEETU.Testing
 
         public MultiFormApplictionStart()
         {
-            
+
+
+#if DEBUG
             var debugform = new DebugForm();
             var mainform = new MainForm(debugform);
             //将要显示的窗体集合
             var formList = new List<Form>(){
                 mainform, debugform
             };
+#else
+            var mainform = new MainForm(null);
+            //将要显示的窗体集合
+            var formList = new List<Form>(){
+                mainform
+            };
+#endif
 
             foreach (var item in formList)
             {

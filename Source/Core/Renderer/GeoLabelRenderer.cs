@@ -44,6 +44,15 @@ namespace DEETU.Core
             set { _Field = value; }
         }
 
+        public GeoLabelRenderer Clone()
+        {
+            var newRenderer =  new GeoLabelRenderer();
+            newRenderer._LabelFeatures = _LabelFeatures;
+            newRenderer._TextSymbol = _TextSymbol;
+            newRenderer._Field = _Field;
+            return newRenderer;
+        }
+
         #endregion
     }
 }

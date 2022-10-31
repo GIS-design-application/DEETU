@@ -18,7 +18,9 @@ namespace DEETU
         {
             InitializeComponent();
             var mainPage = new MainPage();
+#if DEBUG
             mainPage.SetDebugForm(debugForm);
+#endif
             AddPage(mainPage);
             
             base.FormBorderStyle = FormBorderStyle.Sizable;

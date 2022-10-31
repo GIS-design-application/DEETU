@@ -119,6 +119,20 @@ namespace DEETU.Core
                 FieldRemoved(this, index, sField);
         }
 
+        public GeoFields Clone()
+        {
+            var newFields = new GeoFields();
+            newFields.PrimaryField = _PrimaryField;
+            newFields.ShowAlias = _ShowAlias;
+            foreach (var srcField in _Fields)
+            {
+                var desField = srcField.Clone();
+                newFields.Append(desField);
+            }
+
+            return newFields;
+        }
+
 
         #endregion
 

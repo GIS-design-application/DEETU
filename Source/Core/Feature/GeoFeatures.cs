@@ -47,6 +47,11 @@ namespace DEETU.Core
 
         #region 方法
 
+        public int IndexOf(GeoFeature feature)
+        {
+            return _Features.IndexOf(feature);
+        }
+
         /// <summary>
         /// 获取指定索引号的要素
         /// </summary>

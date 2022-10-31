@@ -117,106 +117,12 @@ namespace DEETU.Source.Window
                 sStream.Dispose();
                 sr.Dispose();
 
-                UpdateTreeView(sLayer, geoMap.Layers.Count);
+                InsertTreeNode(sLayer, geoMap.Layers.Count);
             }
             catch (Exception error)
             {
                 MessageBox.Show(error.ToString());
             }
-        }
-
-        // 这个函数是为了显示图层渲染方式
-        // 在加入图层和修改渲染方式时调用
-        private void UpdateTreeView(GeoMapLayer layer, int index)
-        {
-            // 按照renderer Type进行处理
-            GeoRenderer sRenderer = layer.Renderer;
-            layer.Name = layer.Name == "" ? layer.ShapeType.ToString() : layer.Name;
-            if (sRenderer.RendererType == GeoRendererTypeConstant.Simple)
-            {
-                TreeNode style = CreateSimpleStyleTreeNode((sRenderer as GeoSimpleRenderer).Symbol);
-                TreeNode layerNode = new TreeNode(layer.Name, new TreeNode[] { style });
-                layerNode.ContextMenuStrip = layerContextMenuStrip;
-                //layerTreeView.Nodes.Insert(0,layerNode);
-                layerNode.Tag = layer;
-                layerTreeView.Nodes.Insert(index, layerNode);
-            }
-            else if (sRenderer.RendererType == GeoRendererTypeConstant.ClassBreaks)
-            {
-                GeoClassBreaksRenderer sClassBreaksRenderer = (GeoClassBreaksRenderer)sRenderer;
-                List<TreeNode> styles = new List<TreeNode>() { new TreeNode(sClassBreaksRenderer.Field) };
-                int BreakCount = sClassBreaksRenderer.BreakCount;
-                for (int i = 0; i < BreakCount; ++i)
-                {
-                    string startValue = i == 0 ? "0" : sClassBreaksRenderer.GetBreakValue(i - 1).ToString();
-                    string endValue = sClassBreaksRenderer.GetBreakValue(i).ToString();
-                    styles.Add(CreateSimpleStyleTreeNode(sClassBreaksRenderer.GetSymbol(i), startValue + "~" + endValue));
-                }
-                TreeNode layerNode = new TreeNode(layer.Name, styles.ToArray());
-                layerNode.ContextMenuStrip = layerContextMenuStrip;
-                //layerTreeView.Nodes.Insert(0,layerNode);
-                layerNode.Tag = layer;
-                layerTreeView.Nodes.Insert(index, layerNode);
-            }
-            else if (sRenderer.RendererType == GeoRendererTypeConstant.UniqueValue)
-            {
-                GeoUniqueValueRenderer sUniqueValueRenderer = (GeoUniqueValueRenderer)sRenderer;
-                List<TreeNode> styles = new List<TreeNode>() { new TreeNode(sUniqueValueRenderer.Field) };
-                int ValueCount = sUniqueValueRenderer.ValueCount;
-                for (int i = 0; i < ValueCount; ++i)
-                {
-                    styles.Add(CreateSimpleStyleTreeNode(sUniqueValueRenderer.GetSymbol(i), sUniqueValueRenderer.GetValue(i)));
-                }
-                TreeNode layerNode = new TreeNode(layer.Name, styles.ToArray());
-                layerNode.ContextMenuStrip = layerContextMenuStrip;
-                //layerTreeView.Nodes.Insert(0,layerNode);
-                layerNode.Tag = layer;
-                layerTreeView.Nodes.Insert(index, layerNode);
-            }
-            else
-            {
-                throw new Exception("Renderer Type Error!");
-            }
-        }
-
-        private TreeNode CreateSimpleStyleTreeNode(GeoSymbol symbol, string label = "")
-        {
-            TreeNode style = new TreeNode(label);
-            TreeImages.Images.Add(CreateBitmapFromSymbol(symbol));
-            style.ImageIndex = TreeImages.Images.Count - 1;
-            return style;
-        }
-
-        private Bitmap CreateBitmapFromSymbol(GeoSymbol symbol)
-        {
-            Bitmap styleImage = new Bitmap(50, 50);
-            Graphics g = Graphics.FromImage(styleImage);
-            if (symbol.SymbolType == GeoSymbolTypeConstant.SimpleMarkerSymbol)
-            {
-                Rectangle sRect = new Rectangle(0, 0, styleImage.Width, styleImage.Height);
-                GeoMapDrawingTools.DrawSimpleMarker(g, sRect, 0, (symbol as GeoSimpleMarkerSymbol)); // dpm is useless in this function
-            }
-            else if (symbol.SymbolType == GeoSymbolTypeConstant.SimpleLineSymbol)
-            {
-                GeoSimpleLineSymbol sLineSymbol = (symbol as GeoSimpleLineSymbol);
-                double dpm = 1000; // I don't know the correct dpm here so I just randomly assigned a number
-                Pen sPen = new Pen(sLineSymbol.Color, (float)(sLineSymbol.Size / 1000 * dpm));
-                sPen.DashStyle = (DashStyle)sLineSymbol.Style;
-                g.DrawLine(sPen, new Point(0, styleImage.Height / 2), new Point(styleImage.Width, styleImage.Height / 2));
-                sPen.Dispose();
-            }
-            else if (symbol.SymbolType == GeoSymbolTypeConstant.SimpleFillSymbol)
-            {
-                SolidBrush sBrush = new SolidBrush((symbol as GeoSimpleFillSymbol).Color);
-                g.FillRectangle(sBrush, new RectangleF(0, 0, styleImage.Width, styleImage.Height));
-                sBrush.Dispose();
-            }
-            else
-            {
-                throw new Exception("Symbol Type Error!");
-            }
-            g.Dispose();
-            return styleImage;
         }
 
         private void btnFullExtent_Click(object sender, EventArgs e)
@@ -504,6 +410,11 @@ namespace DEETU.Source.Window
 
         private void btnEndSketch_Click(object sender, EventArgs e)
         {
+            GeoMapLayer sLayer = GetSelectableLayer();
+            if(sLayer != null)
+            {
+                sLayer = NewUndo(sLayer);
+            }
             if (mSketchingGeometryType == GeoGeometryTypeConstant.MultiPolygon)
             {
                 // 结束描绘多边形
@@ -519,7 +430,6 @@ namespace DEETU.Source.Window
                 // 如果去掉没修改完的, 删掉空的, 用户至少还输入了一个多边形, 那么就加入多边形图层.
                 if (mSketchingShape.Count > 0)
                 {
-                    GeoMapLayer sLayer = GetSelectableLayer();
                     if (sLayer != null)
                     { // 定义一个复合多边形
                         GeoMultiPolygon sMultipolygon = new GeoMultiPolygon();
@@ -555,7 +465,7 @@ namespace DEETU.Source.Window
                 // 如果去掉没修改完的, 删掉空的, 用户至少还输入了一条曲线, 那么就加入曲线图层.
                 if (mSketchingShape.Count > 0)
                 {
-                    GeoMapLayer sLayer = GetSelectableLayer();
+                    
                     if (sLayer != null)
                     { // 定义一个复合多边形
                         GeoMultiPolyline sMultiPolyline = new GeoMultiPolyline();
@@ -581,7 +491,6 @@ namespace DEETU.Source.Window
                     return;
                 }
 
-                GeoMapLayer sLayer = GetSelectableLayer();
                 if (sLayer != null)
                 { // 定义一个复合多边形
 
@@ -618,13 +527,18 @@ namespace DEETU.Source.Window
             }
             this.Cursor = new Cursor("./icons/EditMoveVertex.ico");
             GeoMapLayer slayer = GetSelectableLayer();
+            
             if (slayer == null)
             {
                 return;
             }
+
             // 是否具有一个选择要素(不能没有, 不能有多个)
             if (slayer.SelectedFeatures.Count != 1)
                 return;
+
+            slayer = NewUndo(slayer);
+
             UncheckToolStrip(mMapOpStyle);
             mEditingGeometry = slayer.SelectedFeatures.GetItem(0).Geometry;
             mMapOpStyle = GeoMapOpStyleEnum.Edit;
@@ -1309,6 +1223,10 @@ namespace DEETU.Source.Window
                 return;
             mIsMovingShapes = false;
             GeoMapLayer selectLayer = geoMap.Layers.getSelectableLayer();
+            if(mMovingGeometries.Count>0)
+            {
+                selectLayer = NewUndo(selectLayer);
+            }
             // 做相应的修改数据操作, 不再编写
             for (int i = 0; i < mMovingGeometries.Count; i++)
             {
@@ -1912,6 +1830,108 @@ namespace DEETU.Source.Window
             }
         }
 
+        private void UpdateTreeView()
+        {
+            layerTreeView.Nodes.Clear();
+            for (int i = 0; i < geoMap.Layers.Count; ++i)
+            {
+                InsertTreeNode(geoMap.Layers.GetItem(i), i);
+            }
+        }
+
+        // 这个函数是为了显示图层渲染方式
+        // 在加入图层和修改渲染方式时调用
+        private void InsertTreeNode(GeoMapLayer layer, int index)
+        {
+            // 按照renderer Type进行处理
+            GeoRenderer sRenderer = layer.Renderer;
+            layer.Name = layer.Name == "" ? layer.ShapeType.ToString() : layer.Name;
+            if (sRenderer.RendererType == GeoRendererTypeConstant.Simple)
+            {
+                TreeNode style = CreateSimpleStyleTreeNode((sRenderer as GeoSimpleRenderer).Symbol);
+                TreeNode layerNode = new TreeNode(layer.Name, new TreeNode[] { style });
+                layerNode.ContextMenuStrip = layerContextMenuStrip;
+                //layerTreeView.Nodes.Insert(0,layerNode);
+                layerNode.Tag = layer;
+                layerTreeView.Nodes.Insert(index, layerNode);
+            }
+            else if (sRenderer.RendererType == GeoRendererTypeConstant.ClassBreaks)
+            {
+                GeoClassBreaksRenderer sClassBreaksRenderer = (GeoClassBreaksRenderer)sRenderer;
+                List<TreeNode> styles = new List<TreeNode>() { new TreeNode(sClassBreaksRenderer.Field) };
+                int BreakCount = sClassBreaksRenderer.BreakCount;
+                for (int i = 0; i < BreakCount; ++i)
+                {
+                    string startValue = i == 0 ? "0" : sClassBreaksRenderer.GetBreakValue(i - 1).ToString();
+                    string endValue = sClassBreaksRenderer.GetBreakValue(i).ToString();
+                    styles.Add(CreateSimpleStyleTreeNode(sClassBreaksRenderer.GetSymbol(i), startValue + "~" + endValue));
+                }
+                TreeNode layerNode = new TreeNode(layer.Name, styles.ToArray());
+                layerNode.ContextMenuStrip = layerContextMenuStrip;
+                //layerTreeView.Nodes.Insert(0,layerNode);
+                layerNode.Tag = layer;
+                layerTreeView.Nodes.Insert(index, layerNode);
+            }
+            else if (sRenderer.RendererType == GeoRendererTypeConstant.UniqueValue)
+            {
+                GeoUniqueValueRenderer sUniqueValueRenderer = (GeoUniqueValueRenderer)sRenderer;
+                List<TreeNode> styles = new List<TreeNode>() { new TreeNode(sUniqueValueRenderer.Field) };
+                int ValueCount = sUniqueValueRenderer.ValueCount;
+                for (int i = 0; i < ValueCount; ++i)
+                {
+                    styles.Add(CreateSimpleStyleTreeNode(sUniqueValueRenderer.GetSymbol(i), sUniqueValueRenderer.GetValue(i)));
+                }
+                TreeNode layerNode = new TreeNode(layer.Name, styles.ToArray());
+                layerNode.ContextMenuStrip = layerContextMenuStrip;
+                //layerTreeView.Nodes.Insert(0,layerNode);
+                layerNode.Tag = layer;
+                layerTreeView.Nodes.Insert(index, layerNode);
+            }
+            else
+            {
+                throw new Exception("Renderer Type Error!");
+            }
+        }
+
+        private TreeNode CreateSimpleStyleTreeNode(GeoSymbol symbol, string label = "")
+        {
+            TreeNode style = new TreeNode(label);
+            TreeImages.Images.Add(CreateBitmapFromSymbol(symbol));
+            style.ImageIndex = TreeImages.Images.Count - 1;
+            return style;
+        }
+
+        private Bitmap CreateBitmapFromSymbol(GeoSymbol symbol)
+        {
+            Bitmap styleImage = new Bitmap(50, 50);
+            Graphics g = Graphics.FromImage(styleImage);
+            if (symbol.SymbolType == GeoSymbolTypeConstant.SimpleMarkerSymbol)
+            {
+                Rectangle sRect = new Rectangle(0, 0, styleImage.Width, styleImage.Height);
+                GeoMapDrawingTools.DrawSimpleMarker(g, sRect, 0, (symbol as GeoSimpleMarkerSymbol)); // dpm is useless in this function
+            }
+            else if (symbol.SymbolType == GeoSymbolTypeConstant.SimpleLineSymbol)
+            {
+                GeoSimpleLineSymbol sLineSymbol = (symbol as GeoSimpleLineSymbol);
+                double dpm = 1000; // I don't know the correct dpm here so I just randomly assigned a number
+                Pen sPen = new Pen(sLineSymbol.Color, (float)(sLineSymbol.Size / 1000 * dpm));
+                sPen.DashStyle = (DashStyle)sLineSymbol.Style;
+                g.DrawLine(sPen, new Point(0, styleImage.Height / 2), new Point(styleImage.Width, styleImage.Height / 2));
+                sPen.Dispose();
+            }
+            else if (symbol.SymbolType == GeoSymbolTypeConstant.SimpleFillSymbol)
+            {
+                SolidBrush sBrush = new SolidBrush((symbol as GeoSimpleFillSymbol).Color);
+                g.FillRectangle(sBrush, new RectangleF(0, 0, styleImage.Width, styleImage.Height));
+                sBrush.Dispose();
+            }
+            else
+            {
+                throw new Exception("Symbol Type Error!");
+            }
+            g.Dispose();
+            return styleImage;
+        }
 
         #endregion
 
@@ -1984,7 +2004,7 @@ namespace DEETU.Source.Window
         #region 子窗口事件处理
         private void layerAttributes_FormClosed(object sender, FormClosedEventArgs e)
         {
-            UpdateTreeView(mCurrentLayerNode.Tag as GeoMapLayer, mCurrentLayerNode.Index);
+            InsertTreeNode(mCurrentLayerNode.Tag as GeoMapLayer, mCurrentLayerNode.Index);
             mCurrentLayerNode.Remove();
             geoMap.RedrawMap();
         }
@@ -2036,10 +2056,16 @@ namespace DEETU.Source.Window
         {
             _logging = form.logging;
         }
+#endif
 
         private void RemoveItemToolStripButton_Click(object sender, EventArgs e)
         {
+
             var layer = GetSelectableLayer();
+            if (layer.SelectedFeatures.Count != 0)
+                layer = NewUndo(layer);
+
+
             var selectedFeatures = layer.SelectedFeatures;
             layer.Features.RemoveRange(selectedFeatures.ToArray());
             selectedFeatures.Clear();
@@ -2065,7 +2091,7 @@ namespace DEETU.Source.Window
 
 
 
-#endif
+
 
         private void MainPage_KeyDown(object sender, KeyEventArgs e)
         {
@@ -2175,9 +2201,49 @@ namespace DEETU.Source.Window
             }
         }
 
+        private List<(GeoMapLayer, GeoMapLayer)> undo_layers = new List<(GeoMapLayer, GeoMapLayer)>();
+        private int undo_index = -1;
+
         private void Undo()
         {
+            if (undo_layers.Count == 0 || undo_index == -1)
+            {
+                return;
+            }
+            geoMap.Layers.Replace(undo_layers[undo_index].Item2, undo_layers[undo_index].Item1);
+            undo_index--;
+            geoMap.RedrawMap();
+        }
 
+        private void Redo()
+        {
+            if (undo_layers.Count == 0 || undo_index == undo_layers.Count -1)
+            {
+                return;
+            }
+            undo_index++;
+            geoMap.Layers.Replace(undo_layers[undo_index].Item1, undo_layers[undo_index].Item2);
+            geoMap.RedrawMap();
+        }
+
+        private void ResetUndo()
+        {
+            while(undo_index + 1 != undo_layers.Count)
+            {
+                undo_layers.RemoveAt(undo_index + 1);
+            }
+        }
+
+        private GeoMapLayer NewUndo(GeoMapLayer srcLayer)
+        {
+            ResetUndo();
+            undo_index++;
+            var desLayer = srcLayer.Clone();
+            geoMap.Layers.Replace(srcLayer, desLayer);
+            desLayer.Selectable = true;
+           
+            undo_layers.Add((srcLayer, desLayer));
+            return desLayer;
         }
 
         private void 复制要素ToolStripButton_Click(object sender, EventArgs e)
@@ -2190,15 +2256,24 @@ namespace DEETU.Source.Window
             Paste();
         }
 
+        private void 移除图层ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DialogResult dr = MessageBox.Show("确定要删除图层吗？", "提示", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+            if(dr == DialogResult.OK)
+            {
+                geoMap.Layers.RemoveAt(mCurrentLayerNode.Index);
+                mCurrentLayerNode.Remove();
+                UpdateTreeView();
+                geoMap.RedrawMap();
+            }
+        }
+
         private void 剪切要素ToolStripButton_Click(object sender, EventArgs e)
         {
             Cut();
         }
 
-        private void Redo()
-        {
-
-        }
+     
 
         private void MainPage_KeyUp(object sender, KeyEventArgs e)
         {

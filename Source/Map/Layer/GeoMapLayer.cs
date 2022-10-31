@@ -261,7 +261,21 @@ namespace DEETU.Map
 
         public GeoMapLayer Clone()
         {
-            throw new NotImplementedException("服务于撤销, 重做, 属性修改等.");
+            var newLayer = new GeoMapLayer(Name, ShapeType, AttributeFields.Clone());
+            foreach (var feature in Features.ToArray())
+            {
+                newLayer.Features.Add(feature.Clone());
+            }
+            foreach(var selFeature in SelectedFeatures.ToArray())
+            {
+                newLayer.SelectedFeatures.Add(newLayer.Features.GetItem(Features.IndexOf(selFeature)));
+            }
+            if (_Renderer != null)
+                newLayer._Renderer = _Renderer.Clone(); 
+            if (_LabelRenderer != null)
+                newLayer._LabelRenderer = _LabelRenderer.Clone();
+
+            return newLayer;
         }
         #endregion
 
