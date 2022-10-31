@@ -2039,7 +2039,12 @@ namespace DEETU.Source.Window
 
         private void RemoveItemToolStripButton_Click(object sender, EventArgs e)
         {
+
             var layer = GetSelectableLayer();
+            if (layer.SelectedFeatures.Count != 0)
+                layer = NewUndo(layer);
+
+
             var selectedFeatures = layer.SelectedFeatures;
             layer.Features.RemoveRange(selectedFeatures.ToArray());
             selectedFeatures.Clear();
@@ -2175,9 +2180,49 @@ namespace DEETU.Source.Window
             }
         }
 
+        private List<(GeoMapLayer, GeoMapLayer)> undo_layers = new List<(GeoMapLayer, GeoMapLayer)>();
+        private int undo_index = -1;
+
         private void Undo()
         {
+            if (undo_layers.Count == 0 || undo_index == -1)
+            {
+                return;
+            }
+            geoMap.Layers.Replace(undo_layers[undo_index].Item2, undo_layers[undo_index].Item1);
+            undo_index--;
+            geoMap.RedrawMap();
+        }
 
+        private void Redo()
+        {
+            if (undo_layers.Count == 0 || undo_index == undo_layers.Count -1)
+            {
+                return;
+            }
+            undo_index++;
+            geoMap.Layers.Replace(undo_layers[undo_index].Item1, undo_layers[undo_index].Item2);
+            geoMap.RedrawMap();
+        }
+
+        private void ResetUndo()
+        {
+            while(undo_index + 1 != undo_layers.Count)
+            {
+                undo_layers.RemoveAt(undo_index + 1);
+            }
+        }
+
+        private GeoMapLayer NewUndo(GeoMapLayer srcLayer)
+        {
+            ResetUndo();
+            undo_index++;
+            var desLayer = srcLayer.Clone();
+            geoMap.Layers.Replace(srcLayer, desLayer);
+            desLayer.Selectable = true;
+           
+            undo_layers.Add((srcLayer, desLayer));
+            return desLayer;
         }
 
         private void 复制要素ToolStripButton_Click(object sender, EventArgs e)
@@ -2195,10 +2240,7 @@ namespace DEETU.Source.Window
             Cut();
         }
 
-        private void Redo()
-        {
-
-        }
+     
 
         private void MainPage_KeyUp(object sender, KeyEventArgs e)
         {

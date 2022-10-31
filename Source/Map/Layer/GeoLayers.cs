@@ -146,6 +146,19 @@ namespace DEETU.Map
             }
         }
 
+        public void Replace(GeoMapLayer srcLayer, GeoMapLayer desLayer)
+        {
+            foreach (var layer in _Layers)
+            {
+                if (layer == srcLayer)
+                {
+                    int index = _Layers.IndexOf(layer);
+                    _Layers[index] = desLayer;
+                    return;
+                }
+            }
+        }
+
         #endregion
     }
 }
