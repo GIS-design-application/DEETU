@@ -67,6 +67,7 @@ namespace DEETU.Source.Window
 
         // 与界面交互有关的变量
         private TreeNode mCurrentLayerNode;
+        private GeoCoordinateReferenceSystem mCrs = new GeoCoordinateReferenceSystem();
         #endregion
 
 
@@ -81,6 +82,8 @@ namespace DEETU.Source.Window
             InitializeSketchingShape();
             // (3) 显示比例尺
             ShowMapScale();
+            // 显示坐标系
+            ShowCrs();
         }
 
 
@@ -1504,6 +1507,18 @@ namespace DEETU.Source.Window
             tssMapScale.Text = "1 :" + geoMap.MapScale.ToString("0.00");
         }
 
+        // 显示坐标系
+        private void ShowCrs()
+        {
+            tssCrs.Text = "Crs:";
+            if (mCrs.Type == CrsType.None)
+                tssCrs.Text += "None";
+            else if (mCrs.Type == CrsType.Geographic)
+                tssCrs.Text += mCrs.GeographicCrs.ToString();
+            else
+                tssCrs.Text += mCrs.ProjectedCrs.ToString() + " " + mCrs.GeographicCrs.ToString();
+        }
+
         //根据屏幕上的两点获得一个地图坐标下的矩形
         private GeoRectangle GetMapRectByTwoPoints(PointF point1, PointF point2)
         {
@@ -1826,6 +1841,12 @@ namespace DEETU.Source.Window
 
         private void UpdateTreeView()
         {
+            // 加一个补丁代码显示坐标系
+            if (geoMap.Layers.Count > 0)
+            {
+                mCrs = geoMap.Layers.GetItem(0).Crs;
+                ShowCrs();
+            }
             layerTreeView.Nodes.Clear();
             for (int i = 0; i < geoMap.Layers.Count; ++i)
             {
@@ -1992,6 +2013,8 @@ namespace DEETU.Source.Window
             {
                 geoMap.RedrawMap();
                 geoMap.FullExtent();
+                mCrs = layer.Crs;
+                ShowCrs();
                 geoMap.Refresh();
             }
         }
@@ -2007,7 +2030,8 @@ namespace DEETU.Source.Window
             crsTransfer.ShowDialog();
             if (crsTransfer.IsOK)
             {
-
+                mCrs = layer.Crs;
+                ShowCrs();
                 geoMap.FullExtent();
                 geoMap.RedrawMap();
                 geoMap.Refresh();

@@ -47,6 +47,7 @@ namespace DEETU.Source.Window
         private void okButton_Click(object sender, EventArgs e)
         {
             mLayer.Crs = _TargetCrs;
+            btnOK_Click(sender, e);
             this.Close();
         }
 
