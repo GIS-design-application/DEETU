@@ -1170,7 +1170,7 @@ namespace DEETU.Source.Window
             // 修改移动图形的坐标
             double sDeltaX = geoMap.ToMapDistance(e.Location.X - mStartMouseLocation.X);
             double sDeltaY = geoMap.ToMapDistance(mStartMouseLocation.Y - e.Location.Y);
-            ModifyMovingGeometries(sDeltaX, sDeltaY);
+            MoveGeometries(mMovingGeometries, sDeltaX, sDeltaY);
 
             geoMap.Refresh();
             // 绘制移动图形
@@ -1622,7 +1622,7 @@ namespace DEETU.Source.Window
         }
 
         //修改移动图形的坐标
-        private void ModifyMovingGeometries(double deltaX, double deltaY)
+        private void MoveGeometries(List<GeoGeometry>mMovingGeometries, double deltaX, double deltaY)
         {
             Int32 sCount = mMovingGeometries.Count;
             for (Int32 i = 0; i <= sCount - 1; i++)
@@ -2073,22 +2073,32 @@ namespace DEETU.Source.Window
             if ((Control.ModifierKeys & Keys.Control) == Keys.Control)
             // Control被按下
             {
-                if ((Control.ModifierKeys & Keys.C) == Keys.C)
+#if DEBUG
+                logging = "Control 按下";
+#endif
+                if (e.KeyCode == Keys.C)
                 // Control-C, Copy
                 {
+#if DEBUG
+                    logging = "Control-C 按下";
+#endif
                     Copy();
                 }
-                else if ((Control.ModifierKeys & Keys.V) == Keys.V)
+                else if (e.KeyCode == Keys.X)
+                {
+                    Cut();
+                }
+                else if (e.KeyCode == Keys.V)
                 // Control-V, Paste
                 {
                     Paste();
                 }
-                else if ((Control.ModifierKeys & Keys.Z) == Keys.Z)
+                else if (e.KeyCode == Keys.Z)
                 // Control-Z, Undo
                 {
                     Undo();
                 }
-                else if ((Control.ModifierKeys & Keys.Y) == Keys.Y)
+                else if (e.KeyCode == Keys.Y)
                 // Control-Y, Redo
                 {
                     Redo();
@@ -2099,19 +2109,90 @@ namespace DEETU.Source.Window
 #endif
         }
 
+        private List<GeoGeometry> mItemsForCopy = new List<GeoGeometry>();
         private void Copy()
         {
-
+#if DEBUG
+            logging = "Copy";
+#endif
+            if (mMapOpStyle == GeoMapOpStyleEnum.Select)
+            {
+                var sLayer = GetSelectableLayer();
+                var features = sLayer.SelectedFeatures;
+                mItemsForCopy.Clear();
+                foreach(var feature in features.ToArray())
+                {
+                    mItemsForCopy.Add(feature.Geometry.Clone());
+                }
+            }
         }
 
         private void Paste()
         {
+#if DEBUG
+            logging = "Paste";
+#endif
+            if (mMapOpStyle == GeoMapOpStyleEnum.Select)
+            {
+                var sLayer = GetSelectableLayer();
+                sLayer.ClearSelection();
+                double sDeltaX = geoMap.ToMapDistance(20);
+                double sDeltaY = geoMap.ToMapDistance(20);
+                MoveGeometries(mItemsForCopy, sDeltaX, sDeltaY);
+                foreach (var geometry in mItemsForCopy)
+                {
+                    var sFeature = sLayer.GetNewFeature();
+                    
+                    sFeature.Geometry = geometry.Clone();
+                    sLayer.Features.Add(sFeature);
+                    sLayer.SelectedFeatures.Add(sFeature);
+                }
+                sLayer.UpdateExtent();
+                
+                geoMap.RedrawMap();
+            }
 
+
+        }
+
+        private void Cut()
+        {
+#if DEBUG
+            logging = "Cut";
+#endif
+            if (mMapOpStyle == GeoMapOpStyleEnum.Select)
+            {
+                var sLayer = GetSelectableLayer();
+                var features = sLayer.SelectedFeatures;
+                mItemsForCopy.Clear();
+                foreach (var feature in features.ToArray())
+                {
+                    mItemsForCopy.Add(feature.Geometry.Clone());
+                }
+
+                sLayer.Features.RemoveRange(features.ToArray());
+                geoMap.RedrawMap();
+            }
         }
 
         private void Undo()
         {
 
+        }
+
+        private void 复制要素ToolStripButton_Click(object sender, EventArgs e)
+        {
+            Copy();
+        }
+
+        private void 粘贴要素ToolStripButton_Click(object sender, EventArgs e)
+        {
+            Paste();
+        }
+
+        private void 剪切要素ToolStripButton_Click(object sender, EventArgs e)
+        {
+            Cut();
         }
 
         private void Redo()

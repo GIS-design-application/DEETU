@@ -469,46 +469,49 @@ namespace DEETU.Source.Window
             // 
             this.撤销操作ToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("撤销操作ToolStripMenuItem.Image")));
             this.撤销操作ToolStripMenuItem.Name = "撤销操作ToolStripMenuItem";
-            this.撤销操作ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.撤销操作ToolStripMenuItem.Size = new System.Drawing.Size(184, 26);
             this.撤销操作ToolStripMenuItem.Text = "撤销操作";
             // 
             // 重做操作ToolStripMenuItem
             // 
             this.重做操作ToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("重做操作ToolStripMenuItem.Image")));
             this.重做操作ToolStripMenuItem.Name = "重做操作ToolStripMenuItem";
-            this.重做操作ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.重做操作ToolStripMenuItem.Size = new System.Drawing.Size(184, 26);
             this.重做操作ToolStripMenuItem.Text = "重做操作";
             // 
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(121, 6);
+            this.toolStripSeparator4.Size = new System.Drawing.Size(181, 6);
             // 
             // 剪切要素ToolStripMenuItem
             // 
             this.剪切要素ToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("剪切要素ToolStripMenuItem.Image")));
             this.剪切要素ToolStripMenuItem.Name = "剪切要素ToolStripMenuItem";
-            this.剪切要素ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.剪切要素ToolStripMenuItem.Size = new System.Drawing.Size(184, 26);
             this.剪切要素ToolStripMenuItem.Text = "剪切要素";
+            this.剪切要素ToolStripMenuItem.Click += new System.EventHandler(this.剪切要素ToolStripButton_Click);
             // 
             // 复制要素ToolStripMenuItem
             // 
             this.复制要素ToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("复制要素ToolStripMenuItem.Image")));
             this.复制要素ToolStripMenuItem.Name = "复制要素ToolStripMenuItem";
-            this.复制要素ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.复制要素ToolStripMenuItem.Size = new System.Drawing.Size(184, 26);
             this.复制要素ToolStripMenuItem.Text = "复制要素";
+            this.复制要素ToolStripMenuItem.Click += new System.EventHandler(this.复制要素ToolStripButton_Click);
             // 
             // 粘贴要素ToolStripMenuItem
             // 
             this.粘贴要素ToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("粘贴要素ToolStripMenuItem.Image")));
             this.粘贴要素ToolStripMenuItem.Name = "粘贴要素ToolStripMenuItem";
-            this.粘贴要素ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.粘贴要素ToolStripMenuItem.Size = new System.Drawing.Size(184, 26);
             this.粘贴要素ToolStripMenuItem.Text = "粘贴要素";
+            this.粘贴要素ToolStripMenuItem.Click += new System.EventHandler(this.粘贴要素ToolStripButton_Click);
             // 
             // toolStripSeparator5
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(121, 6);
+            this.toolStripSeparator5.Size = new System.Drawing.Size(181, 6);
             // 
             // 选择ToolStripMenuItem
             // 
@@ -517,7 +520,7 @@ namespace DEETU.Source.Window
             this.按表达式选择ToolStripMenuItem1,
             this.按矩形范围选择ToolStripMenuItem});
             this.选择ToolStripMenuItem.Name = "选择ToolStripMenuItem";
-            this.选择ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.选择ToolStripMenuItem.Size = new System.Drawing.Size(184, 26);
             this.选择ToolStripMenuItem.Text = "选择";
             // 
             // 按属性值选择ToolStripMenuItem
@@ -1092,7 +1095,7 @@ namespace DEETU.Source.Window
             this.重做ToolStripButton});
             this.toolStrip2.Location = new System.Drawing.Point(3, 27);
             this.toolStrip2.Name = "toolStrip2";
-            this.toolStrip2.Size = new System.Drawing.Size(325, 27);
+            this.toolStrip2.Size = new System.Drawing.Size(294, 27);
             this.toolStrip2.TabIndex = 50;
             // 
             // startEditToolStripButton
@@ -1172,6 +1175,7 @@ namespace DEETU.Source.Window
             this.剪切要素ToolStripButton.Name = "剪切要素ToolStripButton";
             this.剪切要素ToolStripButton.Size = new System.Drawing.Size(24, 24);
             this.剪切要素ToolStripButton.Text = "剪切要素";
+            this.剪切要素ToolStripButton.Click += new System.EventHandler(this.剪切要素ToolStripButton_Click);
             // 
             // 复制要素ToolStripButton
             // 
@@ -1181,6 +1185,7 @@ namespace DEETU.Source.Window
             this.复制要素ToolStripButton.Name = "复制要素ToolStripButton";
             this.复制要素ToolStripButton.Size = new System.Drawing.Size(24, 24);
             this.复制要素ToolStripButton.Text = "复制要素";
+            this.复制要素ToolStripButton.Click += new System.EventHandler(this.复制要素ToolStripButton_Click);
             // 
             // 粘贴要素ToolStripButton
             // 
@@ -1190,6 +1195,7 @@ namespace DEETU.Source.Window
             this.粘贴要素ToolStripButton.Name = "粘贴要素ToolStripButton";
             this.粘贴要素ToolStripButton.Size = new System.Drawing.Size(24, 24);
             this.粘贴要素ToolStripButton.Text = "粘贴要素";
+            this.粘贴要素ToolStripButton.Click += new System.EventHandler(this.粘贴要素ToolStripButton_Click);
             // 
             // PasteUndoToolStripSeparator14
             // 
@@ -1222,7 +1228,7 @@ namespace DEETU.Source.Window
             this.geoMap.FlashColor = System.Drawing.Color.Green;
             this.geoMap.Layers = geoLayers1;
             this.geoMap.Location = new System.Drawing.Point(0, 0);
-            this.geoMap.Margin = new System.Windows.Forms.Padding(96195, 365424, 96195, 365424);
+            this.geoMap.Margin = new System.Windows.Forms.Padding(160325, 639492, 160325, 639492);
             this.geoMap.Name = "geoMap";
             this.geoMap.SelectionColor = System.Drawing.Color.Cyan;
             this.geoMap.Size = new System.Drawing.Size(637, 511);
