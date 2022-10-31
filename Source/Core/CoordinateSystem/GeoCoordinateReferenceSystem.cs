@@ -202,7 +202,6 @@ namespace DEETU.Core
                     _ProjectedParameters = GeoCoordinateFactory.DefaultWebMercatorParam;
                     break;
                 default:
-                    Debug.Assert(false);
                     break;
             }
         }

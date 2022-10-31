@@ -49,10 +49,22 @@
             this.okButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.okButton.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.okButton.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.okButton.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(211)))), ((int)(((byte)(211)))), ((int)(((byte)(211)))));
+            this.okButton.FillHoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(226)))), ((int)(((byte)(137)))));
+            this.okButton.FillPressColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(228)))), ((int)(((byte)(137)))));
+            this.okButton.FillSelectedColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(228)))), ((int)(((byte)(137)))));
             this.okButton.Font = new System.Drawing.Font("微软雅黑", 12F);
+            this.okButton.ForeColor = System.Drawing.Color.Black;
+            this.okButton.ForeHoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
+            this.okButton.ForePressColor = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
+            this.okButton.ForeSelectedColor = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
             this.okButton.Location = new System.Drawing.Point(328, 126);
             this.okButton.MinimumSize = new System.Drawing.Size(1, 1);
             this.okButton.Name = "okButton";
+            this.okButton.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
+            this.okButton.RectHoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(238)))), ((int)(((byte)(201)))), ((int)(((byte)(88)))));
+            this.okButton.RectPressColor = System.Drawing.Color.FromArgb(((int)(((byte)(194)))), ((int)(((byte)(118)))), ((int)(((byte)(43)))));
+            this.okButton.RectSelectedColor = System.Drawing.Color.FromArgb(((int)(((byte)(194)))), ((int)(((byte)(118)))), ((int)(((byte)(43)))));
             this.okButton.Size = new System.Drawing.Size(88, 35);
             this.okButton.Style = Sunny.UI.UIStyle.Custom;
             this.okButton.TabIndex = 0;
@@ -64,10 +76,22 @@
             this.cancelButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.cancelButton.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.cancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.cancelButton.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(211)))), ((int)(((byte)(211)))), ((int)(((byte)(211)))));
+            this.cancelButton.FillHoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(226)))), ((int)(((byte)(137)))));
+            this.cancelButton.FillPressColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(228)))), ((int)(((byte)(137)))));
+            this.cancelButton.FillSelectedColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(228)))), ((int)(((byte)(137)))));
             this.cancelButton.Font = new System.Drawing.Font("微软雅黑", 12F);
+            this.cancelButton.ForeColor = System.Drawing.Color.Black;
+            this.cancelButton.ForeHoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
+            this.cancelButton.ForePressColor = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
+            this.cancelButton.ForeSelectedColor = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
             this.cancelButton.Location = new System.Drawing.Point(422, 126);
             this.cancelButton.MinimumSize = new System.Drawing.Size(1, 1);
             this.cancelButton.Name = "cancelButton";
+            this.cancelButton.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
+            this.cancelButton.RectHoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(238)))), ((int)(((byte)(201)))), ((int)(((byte)(88)))));
+            this.cancelButton.RectPressColor = System.Drawing.Color.FromArgb(((int)(((byte)(194)))), ((int)(((byte)(118)))), ((int)(((byte)(43)))));
+            this.cancelButton.RectSelectedColor = System.Drawing.Color.FromArgb(((int)(((byte)(194)))), ((int)(((byte)(118)))), ((int)(((byte)(43)))));
             this.cancelButton.Size = new System.Drawing.Size(88, 35);
             this.cancelButton.Style = Sunny.UI.UIStyle.Custom;
             this.cancelButton.TabIndex = 1;
@@ -103,7 +127,8 @@
             this.targetCrsTest.MinimumSize = new System.Drawing.Size(1, 1);
             this.targetCrsTest.Name = "targetCrsTest";
             this.targetCrsTest.Padding = new System.Windows.Forms.Padding(5);
-            this.targetCrsTest.Size = new System.Drawing.Size(459, 29);
+            this.targetCrsTest.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
+            this.targetCrsTest.Size = new System.Drawing.Size(459, 60);
             this.targetCrsTest.Style = Sunny.UI.UIStyle.Custom;
             this.targetCrsTest.TabIndex = 2;
             this.targetCrsTest.TextAlignment = System.Drawing.ContentAlignment.MiddleLeft;
@@ -121,7 +146,8 @@
             this.sourceCrsText.MinimumSize = new System.Drawing.Size(1, 1);
             this.sourceCrsText.Name = "sourceCrsText";
             this.sourceCrsText.Padding = new System.Windows.Forms.Padding(5);
-            this.sourceCrsText.Size = new System.Drawing.Size(459, 29);
+            this.sourceCrsText.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
+            this.sourceCrsText.Size = new System.Drawing.Size(459, 60);
             this.sourceCrsText.Style = Sunny.UI.UIStyle.Custom;
             this.sourceCrsText.TabIndex = 0;
             this.sourceCrsText.TextAlignment = System.Drawing.ContentAlignment.MiddleLeft;
@@ -130,10 +156,22 @@
             // 
             this.chooseCrsButton.Cursor = System.Windows.Forms.Cursors.Hand;
             this.chooseCrsButton.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.chooseCrsButton.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(211)))), ((int)(((byte)(211)))), ((int)(((byte)(211)))));
+            this.chooseCrsButton.FillHoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(226)))), ((int)(((byte)(137)))));
+            this.chooseCrsButton.FillPressColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(228)))), ((int)(((byte)(137)))));
+            this.chooseCrsButton.FillSelectedColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(228)))), ((int)(((byte)(137)))));
             this.chooseCrsButton.Font = new System.Drawing.Font("微软雅黑", 12F);
+            this.chooseCrsButton.ForeColor = System.Drawing.Color.Black;
+            this.chooseCrsButton.ForeHoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
+            this.chooseCrsButton.ForePressColor = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
+            this.chooseCrsButton.ForeSelectedColor = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
             this.chooseCrsButton.Location = new System.Drawing.Point(470, 38);
             this.chooseCrsButton.MinimumSize = new System.Drawing.Size(1, 1);
             this.chooseCrsButton.Name = "chooseCrsButton";
+            this.chooseCrsButton.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
+            this.chooseCrsButton.RectHoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(238)))), ((int)(((byte)(201)))), ((int)(((byte)(88)))));
+            this.chooseCrsButton.RectPressColor = System.Drawing.Color.FromArgb(((int)(((byte)(194)))), ((int)(((byte)(118)))), ((int)(((byte)(43)))));
+            this.chooseCrsButton.RectSelectedColor = System.Drawing.Color.FromArgb(((int)(((byte)(194)))), ((int)(((byte)(118)))), ((int)(((byte)(43)))));
             this.chooseCrsButton.Size = new System.Drawing.Size(30, 30);
             this.chooseCrsButton.Style = Sunny.UI.UIStyle.Custom;
             this.chooseCrsButton.Symbol = 61761;
@@ -142,7 +180,7 @@
             // 
             // CrsTransferForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 21F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(24F, 52F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(513, 164);
             this.Controls.Add(this.tableLayoutPanel1);
@@ -150,13 +188,10 @@
             this.Controls.Add(this.okButton);
             this.Name = "CrsTransferForm";
             this.Padding = new System.Windows.Forms.Padding(2, 35, 2, 2);
-            this.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
             this.ShowDragStretch = true;
             this.ShowRadius = false;
             this.Style = Sunny.UI.UIStyle.Custom;
             this.Text = "坐标参照系转换";
-            this.TitleColor = System.Drawing.Color.FromArgb(((int)(((byte)(118)))), ((int)(((byte)(118)))), ((int)(((byte)(118)))));
-            this.TitleForeColor = System.Drawing.Color.Black;
             this.Controls.SetChildIndex(this.okButton, 0);
             this.Controls.SetChildIndex(this.cancelButton, 0);
             this.Controls.SetChildIndex(this.tableLayoutPanel1, 0);

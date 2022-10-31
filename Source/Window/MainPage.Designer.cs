@@ -338,6 +338,7 @@ namespace DEETU.Source.Window
             this.导出为shapefileToolStripMenuItem.Name = "导出为shapefileToolStripMenuItem";
             this.导出为shapefileToolStripMenuItem.Size = new System.Drawing.Size(181, 24);
             this.导出为shapefileToolStripMenuItem.Text = "导出为shapefile";
+            this.导出为shapefileToolStripMenuItem.Click+= new System.EventHandler(this.导出为shapefileToolStripMenuItem_Click);
             // 
             // toolStripSeparator10
             // 

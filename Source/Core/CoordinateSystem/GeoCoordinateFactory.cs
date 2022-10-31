@@ -110,18 +110,19 @@ namespace DEETU.Core
             double E0 = Convert.ToDouble(lambertParam["False Easting"]);
             double N0 = Convert.ToDouble(lambertParam["False Northing"]);
 
-            double m1 = Math.Cos(Math.PI / 180 * phi1) /
-                Math.Sqrt(1 - Math.Pow(Math.E * Math.Sin(Math.PI / 180 * phi1), 2));
-            double m2 = Math.Cos(Math.PI / 180 * phi2) /
-                Math.Sqrt(1 - Math.Pow(Math.E * Math.Sin(Math.PI / 180 * phi2), 2));
-            double t0 = Math.Tan((Math.PI / 4) - (phi0 * Math.PI / 2 / 180)) /
-                Math.Pow((1 - Math.Sin(Math.PI / 180 * phi0)) / (1 + Math.Sin(Math.PI / 180 * phi0)), Math.E / 2);
-            double t1 = Math.Tan((Math.PI / 4) - (phi1 * Math.PI / 2 / 180)) /
-                Math.Pow((1 - Math.Sin(Math.PI / 180 * phi1)) / (1 + Math.Sin(Math.PI / 180 * phi1)), Math.E / 2);
-            double t2 = Math.Tan((Math.PI / 4) - (phi2 * Math.PI / 2 / 180)) /
-                Math.Pow((1 - Math.Sin(Math.PI / 180 * phi2)) / (1 + Math.Sin(Math.PI / 180 * phi2)), Math.E / 2);
-
             double e = Math.Sqrt(2 * f - f * f);
+            double m1 = Math.Cos(Math.PI / 180 * phi1);
+            m1=m1/Math.Sqrt(1 - Math.Pow(e * Math.Sin(Math.PI / 180 * phi1), 2));
+            double m2 = Math.Cos(Math.PI / 180 * phi2) /
+                Math.Sqrt(1 - Math.Pow(e * Math.Sin(Math.PI / 180 * phi2), 2));
+            double t0 = Math.Tan((Math.PI / 4) - (phi0 * Math.PI / 2 / 180)) /
+                Math.Pow((1 - e * Math.Sin(Math.PI / 180 * phi0)) / (1 + e * Math.Sin(Math.PI / 180 * phi0)), e / 2);
+            double t1 = Math.Tan((Math.PI / 4) - (phi1 * Math.PI / 2 / 180)) /
+                Math.Pow((1 - e * Math.Sin(Math.PI / 180 * phi1)) / (1 + e * Math.Sin(Math.PI / 180 * phi1)), e / 2);
+            double t2 = Math.Tan((Math.PI / 4) - (phi2 * Math.PI / 2 / 180)) /
+                Math.Pow((1 - e * Math.Sin(Math.PI / 180 * phi2)) / (1 + e * Math.Sin(Math.PI / 180 * phi2)), e / 2);
+
+
             double n = (Math.Log(m1) - Math.Log(m2)) / (Math.Log(t1) - Math.Log(t2));
             double F = m1 / (n * Math.Pow(t1, n));
             double rho0 = a * F * Math.Pow(t0, n);
@@ -137,10 +138,10 @@ namespace DEETU.Core
 
                     double phi = Math.PI / 2 - 2 * Math.Atan(deltaT);
                     phi = Math.PI / 2 - 2 * Math.Atan(deltaT *
-                        (Math.Pow((1 - Math.Sin(Math.PI / 180 * phi)) / (1 + Math.Sin(Math.PI / 180 * phi)), Math.E / 2)));
+                        (Math.Pow((1 - e * Math.Sin(Math.PI / 180 * phi)) / (1 + e * Math.Sin(Math.PI / 180 * phi)), e / 2)));
 
-                    point.X = phi;
-                    point.Y = deltaGamma/n+lamda0;
+                    point.Y = phi*180/Math.PI;
+                    point.X = (deltaGamma/ n )* (180 / Math.PI )+ lamda0;
                 }
 
         }
@@ -158,18 +159,19 @@ namespace DEETU.Core
             double E0= Convert.ToDouble(lambertParam["False Easting"]);
             double N0 = Convert.ToDouble(lambertParam["False Northing"]);
 
-            double m1 = Math.Cos(Math.PI / 180 * phi1) /
-                Math.Sqrt(1 - Math.Pow(Math.E * Math.Sin(Math.PI / 180 * phi1), 2));
-            double m2 = Math.Cos(Math.PI / 180 * phi2) /
-                Math.Sqrt(1 - Math.Pow(Math.E * Math.Sin(Math.PI / 180 * phi2), 2));
-            double t0 = Math.Tan((Math.PI / 4) - (phi0 * Math.PI / 2 / 180)) /
-                Math.Pow((1 - Math.Sin(Math.PI / 180 * phi0)) / (1 + Math.Sin(Math.PI / 180 * phi0)), Math.E / 2);
-            double t1 = Math.Tan((Math.PI / 4) - (phi1 * Math.PI / 2 / 180)) /
-                Math.Pow((1 - Math.Sin(Math.PI / 180 * phi1)) / (1 + Math.Sin(Math.PI / 180 * phi1)), Math.E / 2);
-            double t2 = Math.Tan((Math.PI / 4) - (phi2 * Math.PI / 2 / 180)) /
-                Math.Pow((1 - Math.Sin(Math.PI / 180 * phi2)) / (1 + Math.Sin(Math.PI / 180 * phi2)), Math.E / 2);
-
             double e = Math.Sqrt(2 * f - f * f);
+            double m1 = Math.Cos(Math.PI / 180 * phi1) /
+                Math.Sqrt(1 - Math.Pow(e * Math.Sin(Math.PI / 180 * phi1), 2));
+            double m2 = Math.Cos(Math.PI / 180 * phi2) /
+                Math.Sqrt(1 - Math.Pow(e * Math.Sin(Math.PI / 180 * phi2), 2));
+            double t0 = Math.Tan((Math.PI / 4) - (phi0 * Math.PI / 2 / 180)) /
+                Math.Pow((1 - e*Math.Sin(Math.PI / 180 * phi0)) / (1 + e * Math.Sin(Math.PI / 180 * phi0)), e / 2);
+            double t1 = Math.Tan((Math.PI / 4) - (phi1 * Math.PI / 2 / 180)) /
+                Math.Pow((1 - e * Math.Sin(Math.PI / 180 * phi1)) / (1 + e * Math.Sin(Math.PI / 180 * phi1)), e / 2);
+            double t2 = Math.Tan((Math.PI / 4) - (phi2 * Math.PI / 2 / 180)) /
+                Math.Pow((1 - e * Math.Sin(Math.PI / 180 * phi2)) / (1 + e * Math.Sin(Math.PI / 180 * phi2)), e / 2);
+
+     
             double n = (Math.Log(m1) - Math.Log(m2)) / (Math.Log(t1) - Math.Log(t2));
             double F = m1 / (n * Math.Pow(t1, n));
             double rho0 = a * F * Math.Pow(t0, n);
@@ -178,11 +180,11 @@ namespace DEETU.Core
                 {
                     double phi = point.Y;
                     double t= Math.Tan((Math.PI / 4) - (phi * Math.PI / 2 / 180)) /
-                        Math.Pow((1 - Math.Sin(Math.PI / 180 * phi)) / (1 + Math.Sin(Math.PI / 180 * phi)), Math.E / 2);
+                        Math.Pow((1 - e * Math.Sin(Math.PI / 180 * phi)) / (1 + e * Math.Sin(Math.PI / 180 * phi)), e / 2);
                     double rho = a * F * Math.Pow(t, n);
                     double gamma = n * (point.X-lamda0);
-                    point.X = E0 + rho * Math.Sin(gamma);
-                    point.Y = N0 + rho0 - rho * Math.Cos(gamma);
+                    point.X = E0 + rho * Math.Sin(gamma*Math.PI/180);
+                    point.Y = N0 + rho0 - rho * Math.Cos(gamma * Math.PI / 180);
                 }
 
         }

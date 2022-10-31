@@ -74,6 +74,7 @@ namespace DEETU.Core
                                 _SrcCrs.ProjectedParameters,
                                 _SrcCrs.GeographicParameters
                                 );
+                            layer.Features.GetItem(i).Geometry.UpdateExtent();
                         }
                 }
                 else
@@ -131,6 +132,7 @@ namespace DEETU.Core
                                 _DstCrs.ProjectedParameters
                                 );
                         }
+                    
                 }
                 else
                 {
@@ -143,14 +145,26 @@ namespace DEETU.Core
                                 _DstCrs.GeographicParameters,
                                 _DstCrs.ProjectedParameters
                                 );
+                            layer.Features.GetItem(i).Geometry.UpdateExtent();
                         }
                 }
+
             }
+            foreach (GeoMapLayer layer in _Layers)
+                for (int i = 0; i < layer.Features.Count; i++)
+                {
+                    layer.Features.GetItem(i).Geometry.UpdateExtent();
+                }
+
             //更改图层坐标系
+            //重新计算图层范围
             foreach (GeoMapLayer layer in _Layers)
             {
                 layer.Crs = _DstCrs;
+                layer.UpdateExtent();
             }
+            
+
         }
         #endregion
     }

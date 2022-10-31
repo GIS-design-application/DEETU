@@ -1754,6 +1754,12 @@ OnZoomOut_MouseUp(e);
             layerAttributes.Show();
         }
 
+        private void 导出为shapefileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            GeoMapLayer layer = mCurrentLayerNode.Tag as GeoMapLayer;
+            GeoDataIOTools.SaveMapLayer(layer);
+        }
+
         private void 定义坐标参照系ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             GeoMapLayer layer = mCurrentLayerNode.Tag as GeoMapLayer;
@@ -1762,7 +1768,7 @@ OnZoomOut_MouseUp(e);
                 layer.Crs = new GeoCoordinateReferenceSystem(GeographicCrsType.Beijing1954, ProjectedCrsType.Lambert2SP);
 #endif
             CrsDefineForm crsDefine = new CrsDefineForm(layer);
-            crsDefine.Show();
+            crsDefine.ShowDialog();
 
             if (crsDefine.IsOK)
             {
@@ -1780,13 +1786,15 @@ OnZoomOut_MouseUp(e);
                 layer.Crs = new GeoCoordinateReferenceSystem(GeographicCrsType.Beijing1954, ProjectedCrsType.Lambert2SP);
 #endif
             CrsTransferForm crsTransfer = new CrsTransferForm(layer);
-            crsTransfer.Show();
+            crsTransfer.ShowDialog();
             if (crsTransfer.IsOK)
             {
-                geoMap.RedrawMap();
+
                 geoMap.FullExtent();
+                geoMap.RedrawMap();
                 geoMap.Refresh();
             }
+
         }
 
         private void 打开属性表ToolStripMenuItem_Click(object sender, EventArgs e)
