@@ -356,8 +356,6 @@
     <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="bin\Debug\DEETU.exe" />
-    <Content Include="bin\Debug\DEETU.pdb" />
     <Content Include="icons\baseline_add_black_48.png" />
     <Content Include="icons\baseline_clear_black_48.png" />
     <Content Include="icons\baseline_content_copy_black_48.png" />
@@ -404,6 +402,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include=".vs\DEETU\v16\" />
+    <Folder Include="bin\Debug\" />
     <Folder Include="bin\Release\" />
     <Folder Include="obj\Debug\TempPE\" />
     <Folder Include="packages\" />

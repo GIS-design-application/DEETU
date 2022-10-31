@@ -2048,6 +2048,7 @@ namespace DEETU.Source.Window
         {
             _logging = form.logging;
         }
+#endif
 
         private void RemoveItemToolStripButton_Click(object sender, EventArgs e)
         {
@@ -2082,7 +2083,7 @@ namespace DEETU.Source.Window
 
 
 
-#endif
+
 
         private void MainPage_KeyDown(object sender, KeyEventArgs e)
         {
