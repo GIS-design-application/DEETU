@@ -47,6 +47,11 @@ namespace DEETU.Core
 
         #region 方法
 
+        public int IndexOf(GeoFeature feature)
+        {
+            return _Features.IndexOf(feature);
+        }
+
         /// <summary>
         /// 获取指定索引号的要素
         /// </summary>
@@ -74,6 +79,14 @@ namespace DEETU.Core
         public void Remove(GeoFeature feature)
         {
             _Features.Remove(feature);
+        }
+
+        public void RemoveRange(GeoFeature[] features)
+        {
+            foreach(var feature in features)
+            {
+                Remove(feature);
+            }
         }
 
 

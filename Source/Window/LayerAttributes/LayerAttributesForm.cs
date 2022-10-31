@@ -23,8 +23,7 @@ namespace DEETU.Source.Window
         {
             InitializeComponent();
             mLayer = layer;
-            //mTemporaryLayer = layer.Clone();
-            // !为什么layer竟然没有clone函数
+            mTemporaryLayer = layer.Clone();
 
             AddPage(new InfoPage(layer), 1);
             switch (layer.ShapeType)

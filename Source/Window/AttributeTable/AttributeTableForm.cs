@@ -55,7 +55,8 @@ namespace DEETU.Source.Window
             MapRedraw?.Invoke(this);
         }
 
-        private void reloadToolStripButton_Click(object sender, EventArgs e)
+        private void reloadToolStripButton_Click
+            (object sender, EventArgs e)
         {
             detailTable.Controls.Clear();
             featureList.Clear();
