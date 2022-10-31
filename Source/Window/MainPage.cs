@@ -534,7 +534,7 @@ namespace DEETU.Source.Window
         private void CreateToolStripMenuItem_Click(object sender, EventArgs e)
         {
             geoMap.Layers=new GeoLayers();
-            //TODO:更新图层树
+            UpdateTreeView();
         }
         private void SaveNewProject()
         {
@@ -559,7 +559,8 @@ namespace DEETU.Source.Window
         private void CloseProjectToolStripMenuItem_Click(object sender, EventArgs e)
         {
             geoMap.Layers = new GeoLayers();
-            //TODO:UPdate treeview
+            UpdateTreeView();
+
         }
         private void 打开ToolStripMenuItem_Click(object sender, EventArgs e)
         {
