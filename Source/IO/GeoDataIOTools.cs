@@ -160,7 +160,7 @@ namespace DEETU.IO
             Int32 sFeatureCount = sr.ReadInt32();
             for (int i = 0; i <= sFeatureCount - 1; i++)
             {
-                MessageBox.Show(i.ToString());
+                //MessageBox.Show(i.ToString());
                 GeoGeometry sGeometry = LoadGeometry(geometryType, sr);
                 GeoAttributes sAttributes = LoadAttributes(fields, sr);
                 GeoFeature sFeature = new GeoFeature(geometryType, sGeometry, sAttributes);
