@@ -2423,6 +2423,12 @@ namespace DEETU.Source.Window
             }
         }
 
+        private void 退出DEETUToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Close();
+            
+        }
+
         private void 剪切要素ToolStripButton_Click(object sender, EventArgs e)
         {
             Cut();
