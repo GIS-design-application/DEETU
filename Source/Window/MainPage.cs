@@ -2039,6 +2039,14 @@ namespace DEETU.Source.Window
             // ** 现在用code的Tag data 的形式实现了；
             GeoMapLayer layer = mCurrentLayerNode.Tag as GeoMapLayer;
 
+            FormCollection collection = Application.OpenForms;
+
+            foreach (Form form in collection)
+            {
+                if (form.GetType() == typeof(LayerAttributesForm))
+                { form.TopMost = true; return; }
+            }
+
             //GeoMapLayer layer = new GeoMapLayer(mCurrentLayerNode.Text, GeoGeometryTypeConstant.Point);
             LayerAttributesForm layerAttributes = new LayerAttributesForm(layer);
             layerAttributes.FormClosed += layerAttributes_FormClosed;
