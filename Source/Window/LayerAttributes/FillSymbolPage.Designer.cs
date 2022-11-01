@@ -74,12 +74,12 @@ namespace DEETU.Source.Window
             this.uiLabel10 = new Sunny.UI.UILabel();
             this.classFieldComboBox = new Sunny.UI.UIComboBox();
             this.classColorgradComboBox = new System.Windows.Forms.ComboBox();
+            this.uiLabel12 = new Sunny.UI.UILabel();
+            this.uiIntegerUpDown2 = new Sunny.UI.UIIntegerUpDown();
             this.renderMethodCB = new Sunny.UI.UIComboBox();
             this.dataGridViewImageColumn1 = new System.Windows.Forms.DataGridViewImageColumn();
             this.dataGridViewImageColumn2 = new System.Windows.Forms.DataGridViewImageColumn();
             this.geoUniqueValueRendererBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.uiLabel12 = new Sunny.UI.UILabel();
-            this.uiIntegerUpDown2 = new Sunny.UI.UIIntegerUpDown();
             this.PagePanel.SuspendLayout();
             this.renderTabControl.SuspendLayout();
             this.simpleTab.SuspendLayout();
@@ -687,6 +687,34 @@ namespace DEETU.Source.Window
             this.classColorgradComboBox.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.ClassColorgradComboBox_DrawItem);
             this.classColorgradComboBox.SelectedIndexChanged += new System.EventHandler(this.classColorgradComboBox_SelectedIndexChanged);
             // 
+            // uiLabel12
+            // 
+            this.uiLabel12.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Bold);
+            this.uiLabel12.Location = new System.Drawing.Point(3, 139);
+            this.uiLabel12.Name = "uiLabel12";
+            this.uiLabel12.Size = new System.Drawing.Size(100, 41);
+            this.uiLabel12.Style = Sunny.UI.UIStyle.Office2010Black;
+            this.uiLabel12.TabIndex = 16;
+            this.uiLabel12.Text = "分级数";
+            this.uiLabel12.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // uiIntegerUpDown2
+            // 
+            this.uiIntegerUpDown2.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(211)))), ((int)(((byte)(211)))), ((int)(((byte)(211)))));
+            this.uiIntegerUpDown2.Font = new System.Drawing.Font("微软雅黑", 12F);
+            this.uiIntegerUpDown2.Location = new System.Drawing.Point(110, 144);
+            this.uiIntegerUpDown2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.uiIntegerUpDown2.MinimumSize = new System.Drawing.Size(100, 0);
+            this.uiIntegerUpDown2.Name = "uiIntegerUpDown2";
+            this.uiIntegerUpDown2.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
+            this.uiIntegerUpDown2.Size = new System.Drawing.Size(160, 29);
+            this.uiIntegerUpDown2.Style = Sunny.UI.UIStyle.Office2010Black;
+            this.uiIntegerUpDown2.TabIndex = 17;
+            this.uiIntegerUpDown2.Text = "uiIntegerUpDown2";
+            this.uiIntegerUpDown2.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter;
+            this.uiIntegerUpDown2.Value = 5;
+            this.uiIntegerUpDown2.ValueChanged += new Sunny.UI.UIIntegerUpDown.OnValueChanged(this.uiIntegerUpDown2_ValueChanged);
+            // 
             // renderMethodCB
             // 
             this.renderMethodCB.Dock = System.Windows.Forms.DockStyle.Top;
@@ -733,33 +761,6 @@ namespace DEETU.Source.Window
             // geoUniqueValueRendererBindingSource
             // 
             this.geoUniqueValueRendererBindingSource.DataSource = typeof(DEETU.Core.GeoUniqueValueRenderer);
-            // 
-            // uiLabel12
-            // 
-            this.uiLabel12.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Bold);
-            this.uiLabel12.Location = new System.Drawing.Point(3, 139);
-            this.uiLabel12.Name = "uiLabel12";
-            this.uiLabel12.Size = new System.Drawing.Size(100, 41);
-            this.uiLabel12.TabIndex = 16;
-            this.uiLabel12.Text = "分级数";
-            this.uiLabel12.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // uiIntegerUpDown2
-            // 
-            this.uiIntegerUpDown2.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(211)))), ((int)(((byte)(211)))), ((int)(((byte)(211)))));
-            this.uiIntegerUpDown2.Font = new System.Drawing.Font("微软雅黑", 12F);
-            this.uiIntegerUpDown2.Location = new System.Drawing.Point(110, 144);
-            this.uiIntegerUpDown2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.uiIntegerUpDown2.MinimumSize = new System.Drawing.Size(100, 0);
-            this.uiIntegerUpDown2.Name = "uiIntegerUpDown2";
-            this.uiIntegerUpDown2.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
-            this.uiIntegerUpDown2.Size = new System.Drawing.Size(160, 29);
-            this.uiIntegerUpDown2.Style = Sunny.UI.UIStyle.Office2010Black;
-            this.uiIntegerUpDown2.TabIndex = 17;
-            this.uiIntegerUpDown2.Text = "uiIntegerUpDown2";
-            this.uiIntegerUpDown2.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter;
-            this.uiIntegerUpDown2.Value = 5;
-            this.uiIntegerUpDown2.ValueChanged += new Sunny.UI.UIIntegerUpDown.OnValueChanged(this.uiIntegerUpDown2_ValueChanged);
             // 
             // FillSymbolPage
             // 

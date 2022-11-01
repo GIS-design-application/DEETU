@@ -30,16 +30,16 @@ namespace DEETU.Source.Window
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle26 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle27 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle28 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle29 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle30 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle21 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle22 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle23 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle24 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle25 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle36 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle37 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle38 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle39 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle40 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle31 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle32 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle33 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle34 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle35 = new System.Windows.Forms.DataGridViewCellStyle();
             this.renderTabControl = new Sunny.UI.UITabControl();
             this.simpleTab = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
@@ -71,10 +71,14 @@ namespace DEETU.Source.Window
             this.uiLabel10 = new Sunny.UI.UILabel();
             this.classFieldComboBox = new Sunny.UI.UIComboBox();
             this.classColorgradComboBox = new System.Windows.Forms.ComboBox();
-            this.renderMethodCB = new Sunny.UI.UIComboBox();
-            this.geoUniqueValueRendererBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.uiLabel1 = new Sunny.UI.UILabel();
             this.uiIntegerUpDown2 = new Sunny.UI.UIIntegerUpDown();
+            this.renderMethodCB = new Sunny.UI.UIComboBox();
+            this.geoUniqueValueRendererBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.uiPanel1 = new Sunny.UI.UIPanel();
+            this.uiLabel12 = new Sunny.UI.UILabel();
+            this.uiDoubleUpDown1 = new Sunny.UI.UIDoubleUpDown();
+            this.uiDoubleUpDown2 = new Sunny.UI.UIDoubleUpDown();
             this.PagePanel.SuspendLayout();
             this.renderTabControl.SuspendLayout();
             this.simpleTab.SuspendLayout();
@@ -86,6 +90,7 @@ namespace DEETU.Source.Window
             ((System.ComponentModel.ISupportInitialize)(this.classDataGridView)).BeginInit();
             this.classTableLayoutPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.geoUniqueValueRendererBindingSource)).BeginInit();
+            this.uiPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // PagePanel
@@ -258,32 +263,32 @@ namespace DEETU.Source.Window
             // uniqueDataGridView
             // 
             this.uniqueDataGridView.AllowUserToAddRows = false;
-            dataGridViewCellStyle26.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(211)))), ((int)(((byte)(211)))), ((int)(((byte)(211)))));
-            this.uniqueDataGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle26;
+            dataGridViewCellStyle36.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(211)))), ((int)(((byte)(211)))), ((int)(((byte)(211)))));
+            this.uniqueDataGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle36;
             this.uniqueDataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.uniqueDataGridView.BackgroundColor = System.Drawing.Color.White;
             this.uniqueDataGridView.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle27.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle27.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(118)))), ((int)(((byte)(118)))), ((int)(((byte)(118)))));
-            dataGridViewCellStyle27.Font = new System.Drawing.Font("微软雅黑", 12F);
-            dataGridViewCellStyle27.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle27.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(118)))), ((int)(((byte)(118)))), ((int)(((byte)(118)))));
-            dataGridViewCellStyle27.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle27.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.uniqueDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle27;
+            dataGridViewCellStyle37.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle37.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(118)))), ((int)(((byte)(118)))), ((int)(((byte)(118)))));
+            dataGridViewCellStyle37.Font = new System.Drawing.Font("微软雅黑", 12F);
+            dataGridViewCellStyle37.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle37.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(118)))), ((int)(((byte)(118)))), ((int)(((byte)(118)))));
+            dataGridViewCellStyle37.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle37.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.uniqueDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle37;
             this.uniqueDataGridView.ColumnHeadersHeight = 32;
             this.uniqueDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.uniqueDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.symbolCol,
             this.valueCol});
-            dataGridViewCellStyle28.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle28.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle28.Font = new System.Drawing.Font("微软雅黑", 12F);
-            dataGridViewCellStyle28.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
-            dataGridViewCellStyle28.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(155)))), ((int)(((byte)(200)))), ((int)(((byte)(255)))));
-            dataGridViewCellStyle28.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
-            dataGridViewCellStyle28.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.uniqueDataGridView.DefaultCellStyle = dataGridViewCellStyle28;
+            dataGridViewCellStyle38.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle38.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle38.Font = new System.Drawing.Font("微软雅黑", 12F);
+            dataGridViewCellStyle38.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
+            dataGridViewCellStyle38.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(155)))), ((int)(((byte)(200)))), ((int)(((byte)(255)))));
+            dataGridViewCellStyle38.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
+            dataGridViewCellStyle38.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.uniqueDataGridView.DefaultCellStyle = dataGridViewCellStyle38;
             this.uniqueDataGridView.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.uniqueDataGridView.EnableHeadersVisualStyles = false;
             this.uniqueDataGridView.Font = new System.Drawing.Font("微软雅黑", 12F);
@@ -291,18 +296,18 @@ namespace DEETU.Source.Window
             this.uniqueDataGridView.Location = new System.Drawing.Point(0, 160);
             this.uniqueDataGridView.Name = "uniqueDataGridView";
             this.uniqueDataGridView.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
-            dataGridViewCellStyle29.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle29.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(211)))), ((int)(((byte)(211)))), ((int)(((byte)(211)))));
-            dataGridViewCellStyle29.Font = new System.Drawing.Font("微软雅黑", 12F);
-            dataGridViewCellStyle29.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
-            dataGridViewCellStyle29.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
-            dataGridViewCellStyle29.SelectionForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle29.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.uniqueDataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle29;
+            dataGridViewCellStyle39.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle39.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(211)))), ((int)(((byte)(211)))), ((int)(((byte)(211)))));
+            dataGridViewCellStyle39.Font = new System.Drawing.Font("微软雅黑", 12F);
+            dataGridViewCellStyle39.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
+            dataGridViewCellStyle39.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
+            dataGridViewCellStyle39.SelectionForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle39.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.uniqueDataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle39;
             this.uniqueDataGridView.RowHeadersVisible = false;
             this.uniqueDataGridView.RowHeadersWidth = 62;
-            dataGridViewCellStyle30.BackColor = System.Drawing.Color.White;
-            this.uniqueDataGridView.RowsDefaultCellStyle = dataGridViewCellStyle30;
+            dataGridViewCellStyle40.BackColor = System.Drawing.Color.White;
+            this.uniqueDataGridView.RowsDefaultCellStyle = dataGridViewCellStyle40;
             this.uniqueDataGridView.RowTemplate.Height = 29;
             this.uniqueDataGridView.SelectedIndex = -1;
             this.uniqueDataGridView.ShowGridLine = true;
@@ -348,7 +353,7 @@ namespace DEETU.Source.Window
             this.uniqueTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.uniqueTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.uniqueTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.uniqueTableLayoutPanel.Size = new System.Drawing.Size(456, 139);
+            this.uniqueTableLayoutPanel.Size = new System.Drawing.Size(426, 139);
             this.uniqueTableLayoutPanel.TabIndex = 5;
             // 
             // uiLabel8
@@ -398,7 +403,7 @@ namespace DEETU.Source.Window
             this.uniqueFieldComboBox.Name = "uniqueFieldComboBox";
             this.uniqueFieldComboBox.Padding = new System.Windows.Forms.Padding(0, 0, 30, 2);
             this.uniqueFieldComboBox.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
-            this.uniqueFieldComboBox.Size = new System.Drawing.Size(348, 39);
+            this.uniqueFieldComboBox.Size = new System.Drawing.Size(318, 39);
             this.uniqueFieldComboBox.Style = Sunny.UI.UIStyle.Office2010Black;
             this.uniqueFieldComboBox.StyleCustomMode = true;
             this.uniqueFieldComboBox.TabIndex = 13;
@@ -417,7 +422,7 @@ namespace DEETU.Source.Window
             this.uniqueColorgradComboBox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.uniqueColorgradComboBox.MinimumSize = new System.Drawing.Size(63, 0);
             this.uniqueColorgradComboBox.Name = "uniqueColorgradComboBox";
-            this.uniqueColorgradComboBox.Size = new System.Drawing.Size(348, 40);
+            this.uniqueColorgradComboBox.Size = new System.Drawing.Size(318, 40);
             this.uniqueColorgradComboBox.TabIndex = 14;
             this.uniqueColorgradComboBox.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.UniqueColorComboboxEx_DrawItem);
             this.uniqueColorgradComboBox.SelectedIndexChanged += new System.EventHandler(this.uniqueColorgradComboBox_SelectedIndexChanged);
@@ -473,55 +478,55 @@ namespace DEETU.Source.Window
             // classDataGridView
             // 
             this.classDataGridView.AllowUserToAddRows = false;
-            dataGridViewCellStyle21.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(211)))), ((int)(((byte)(211)))), ((int)(((byte)(211)))));
-            this.classDataGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle21;
+            dataGridViewCellStyle31.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(211)))), ((int)(((byte)(211)))), ((int)(((byte)(211)))));
+            this.classDataGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle31;
             this.classDataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.classDataGridView.BackgroundColor = System.Drawing.Color.White;
             this.classDataGridView.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle22.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle22.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(118)))), ((int)(((byte)(118)))), ((int)(((byte)(118)))));
-            dataGridViewCellStyle22.Font = new System.Drawing.Font("微软雅黑", 12F);
-            dataGridViewCellStyle22.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle22.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(118)))), ((int)(((byte)(118)))), ((int)(((byte)(118)))));
-            dataGridViewCellStyle22.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle22.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.classDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle22;
+            dataGridViewCellStyle32.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle32.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(118)))), ((int)(((byte)(118)))), ((int)(((byte)(118)))));
+            dataGridViewCellStyle32.Font = new System.Drawing.Font("微软雅黑", 12F);
+            dataGridViewCellStyle32.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle32.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(118)))), ((int)(((byte)(118)))), ((int)(((byte)(118)))));
+            dataGridViewCellStyle32.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle32.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.classDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle32;
             this.classDataGridView.ColumnHeadersHeight = 32;
             this.classDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.classDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.dataGridViewButtonColumn1,
             this.dataGridViewTextBoxColumn1});
-            dataGridViewCellStyle23.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle23.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle23.Font = new System.Drawing.Font("微软雅黑", 12F);
-            dataGridViewCellStyle23.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
-            dataGridViewCellStyle23.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(155)))), ((int)(((byte)(200)))), ((int)(((byte)(255)))));
-            dataGridViewCellStyle23.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
-            dataGridViewCellStyle23.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.classDataGridView.DefaultCellStyle = dataGridViewCellStyle23;
+            dataGridViewCellStyle33.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle33.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle33.Font = new System.Drawing.Font("微软雅黑", 12F);
+            dataGridViewCellStyle33.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
+            dataGridViewCellStyle33.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(155)))), ((int)(((byte)(200)))), ((int)(((byte)(255)))));
+            dataGridViewCellStyle33.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
+            dataGridViewCellStyle33.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.classDataGridView.DefaultCellStyle = dataGridViewCellStyle33;
             this.classDataGridView.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.classDataGridView.EnableHeadersVisualStyles = false;
             this.classDataGridView.Font = new System.Drawing.Font("微软雅黑", 12F);
             this.classDataGridView.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
-            this.classDataGridView.Location = new System.Drawing.Point(0, 191);
+            this.classDataGridView.Location = new System.Drawing.Point(0, 225);
             this.classDataGridView.Name = "classDataGridView";
             this.classDataGridView.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
-            dataGridViewCellStyle24.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle24.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(211)))), ((int)(((byte)(211)))), ((int)(((byte)(211)))));
-            dataGridViewCellStyle24.Font = new System.Drawing.Font("微软雅黑", 12F);
-            dataGridViewCellStyle24.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
-            dataGridViewCellStyle24.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
-            dataGridViewCellStyle24.SelectionForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle24.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.classDataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle24;
+            dataGridViewCellStyle34.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle34.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(211)))), ((int)(((byte)(211)))), ((int)(((byte)(211)))));
+            dataGridViewCellStyle34.Font = new System.Drawing.Font("微软雅黑", 12F);
+            dataGridViewCellStyle34.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
+            dataGridViewCellStyle34.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
+            dataGridViewCellStyle34.SelectionForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle34.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.classDataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle34;
             this.classDataGridView.RowHeadersVisible = false;
             this.classDataGridView.RowHeadersWidth = 62;
-            dataGridViewCellStyle25.BackColor = System.Drawing.Color.White;
-            this.classDataGridView.RowsDefaultCellStyle = dataGridViewCellStyle25;
+            dataGridViewCellStyle35.BackColor = System.Drawing.Color.White;
+            this.classDataGridView.RowsDefaultCellStyle = dataGridViewCellStyle35;
             this.classDataGridView.RowTemplate.Height = 29;
             this.classDataGridView.SelectedIndex = -1;
             this.classDataGridView.ShowGridLine = true;
-            this.classDataGridView.Size = new System.Drawing.Size(480, 297);
+            this.classDataGridView.Size = new System.Drawing.Size(480, 263);
             this.classDataGridView.StripeOddColor = System.Drawing.Color.FromArgb(((int)(((byte)(211)))), ((int)(((byte)(211)))), ((int)(((byte)(211)))));
             this.classDataGridView.Style = Sunny.UI.UIStyle.Office2010Black;
             this.classDataGridView.StyleCustomMode = true;
@@ -559,14 +564,17 @@ namespace DEETU.Source.Window
             this.classTableLayoutPanel.Controls.Add(this.classColorgradComboBox, 1, 1);
             this.classTableLayoutPanel.Controls.Add(this.uiLabel1, 0, 3);
             this.classTableLayoutPanel.Controls.Add(this.uiIntegerUpDown2, 1, 3);
+            this.classTableLayoutPanel.Controls.Add(this.uiPanel1, 1, 4);
+            this.classTableLayoutPanel.Controls.Add(this.uiLabel12, 0, 4);
             this.classTableLayoutPanel.Location = new System.Drawing.Point(12, 8);
             this.classTableLayoutPanel.Name = "classTableLayoutPanel";
-            this.classTableLayoutPanel.RowCount = 4;
+            this.classTableLayoutPanel.RowCount = 5;
             this.classTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.classTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.classTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.classTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.classTableLayoutPanel.Size = new System.Drawing.Size(456, 177);
+            this.classTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 38F));
+            this.classTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 29F));
+            this.classTableLayoutPanel.Size = new System.Drawing.Size(426, 211);
             this.classTableLayoutPanel.TabIndex = 7;
             // 
             // uiLabel11
@@ -616,7 +624,7 @@ namespace DEETU.Source.Window
             this.classFieldComboBox.Name = "classFieldComboBox";
             this.classFieldComboBox.Padding = new System.Windows.Forms.Padding(0, 0, 30, 2);
             this.classFieldComboBox.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
-            this.classFieldComboBox.Size = new System.Drawing.Size(342, 39);
+            this.classFieldComboBox.Size = new System.Drawing.Size(312, 39);
             this.classFieldComboBox.Style = Sunny.UI.UIStyle.Custom;
             this.classFieldComboBox.StyleCustomMode = true;
             this.classFieldComboBox.TabIndex = 13;
@@ -635,10 +643,38 @@ namespace DEETU.Source.Window
             this.classColorgradComboBox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.classColorgradComboBox.MinimumSize = new System.Drawing.Size(63, 0);
             this.classColorgradComboBox.Name = "classColorgradComboBox";
-            this.classColorgradComboBox.Size = new System.Drawing.Size(342, 40);
+            this.classColorgradComboBox.Size = new System.Drawing.Size(312, 40);
             this.classColorgradComboBox.TabIndex = 14;
             this.classColorgradComboBox.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.ClassBreaksComboboxEx_DrawItem);
             this.classColorgradComboBox.SelectedIndexChanged += new System.EventHandler(this.classColorgradComboBox_SelectedIndexChanged);
+            // 
+            // uiLabel1
+            // 
+            this.uiLabel1.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Bold);
+            this.uiLabel1.Location = new System.Drawing.Point(3, 139);
+            this.uiLabel1.Name = "uiLabel1";
+            this.uiLabel1.Size = new System.Drawing.Size(100, 38);
+            this.uiLabel1.Style = Sunny.UI.UIStyle.Custom;
+            this.uiLabel1.TabIndex = 16;
+            this.uiLabel1.Text = "分级数";
+            this.uiLabel1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // uiIntegerUpDown2
+            // 
+            this.uiIntegerUpDown2.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(211)))), ((int)(((byte)(211)))), ((int)(((byte)(211)))));
+            this.uiIntegerUpDown2.Font = new System.Drawing.Font("微软雅黑", 12F);
+            this.uiIntegerUpDown2.Location = new System.Drawing.Point(110, 144);
+            this.uiIntegerUpDown2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.uiIntegerUpDown2.MinimumSize = new System.Drawing.Size(100, 0);
+            this.uiIntegerUpDown2.Name = "uiIntegerUpDown2";
+            this.uiIntegerUpDown2.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
+            this.uiIntegerUpDown2.Size = new System.Drawing.Size(171, 28);
+            this.uiIntegerUpDown2.Style = Sunny.UI.UIStyle.Office2010Black;
+            this.uiIntegerUpDown2.TabIndex = 17;
+            this.uiIntegerUpDown2.Text = "uiIntegerUpDown2";
+            this.uiIntegerUpDown2.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter;
+            this.uiIntegerUpDown2.Value = 5;
+            this.uiIntegerUpDown2.ValueChanged += new Sunny.UI.UIIntegerUpDown.OnValueChanged(this.uiIntegerUpDown2_ValueChanged);
             // 
             // renderMethodCB
             // 
@@ -663,32 +699,66 @@ namespace DEETU.Source.Window
             // 
             this.geoUniqueValueRendererBindingSource.DataSource = typeof(DEETU.Core.GeoUniqueValueRenderer);
             // 
-            // uiLabel1
+            // uiPanel1
             // 
-            this.uiLabel1.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Bold);
-            this.uiLabel1.Location = new System.Drawing.Point(3, 139);
-            this.uiLabel1.Name = "uiLabel1";
-            this.uiLabel1.Size = new System.Drawing.Size(100, 38);
-            this.uiLabel1.TabIndex = 16;
-            this.uiLabel1.Text = "分级数";
-            this.uiLabel1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.uiPanel1.Controls.Add(this.uiDoubleUpDown2);
+            this.uiPanel1.Controls.Add(this.uiDoubleUpDown1);
+            this.uiPanel1.FillColor = System.Drawing.Color.Transparent;
+            this.uiPanel1.Font = new System.Drawing.Font("微软雅黑", 12F);
+            this.uiPanel1.Location = new System.Drawing.Point(110, 182);
+            this.uiPanel1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.uiPanel1.MinimumSize = new System.Drawing.Size(1, 1);
+            this.uiPanel1.Name = "uiPanel1";
+            this.uiPanel1.RectColor = System.Drawing.Color.Transparent;
+            this.uiPanel1.Size = new System.Drawing.Size(312, 24);
+            this.uiPanel1.Style = Sunny.UI.UIStyle.Custom;
+            this.uiPanel1.TabIndex = 18;
+            this.uiPanel1.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // uiIntegerUpDown2
+            // uiLabel12
             // 
-            this.uiIntegerUpDown2.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(211)))), ((int)(((byte)(211)))), ((int)(((byte)(211)))));
-            this.uiIntegerUpDown2.Font = new System.Drawing.Font("微软雅黑", 12F);
-            this.uiIntegerUpDown2.Location = new System.Drawing.Point(110, 144);
-            this.uiIntegerUpDown2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.uiIntegerUpDown2.MinimumSize = new System.Drawing.Size(100, 0);
-            this.uiIntegerUpDown2.Name = "uiIntegerUpDown2";
-            this.uiIntegerUpDown2.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
-            this.uiIntegerUpDown2.Size = new System.Drawing.Size(171, 28);
-            this.uiIntegerUpDown2.Style = Sunny.UI.UIStyle.Office2010Black;
-            this.uiIntegerUpDown2.TabIndex = 17;
-            this.uiIntegerUpDown2.Text = "uiIntegerUpDown2";
-            this.uiIntegerUpDown2.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter;
-            this.uiIntegerUpDown2.Value = 5;
-            this.uiIntegerUpDown2.ValueChanged += new Sunny.UI.UIIntegerUpDown.OnValueChanged(this.uiIntegerUpDown2_ValueChanged);
+            this.uiLabel12.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Bold);
+            this.uiLabel12.Location = new System.Drawing.Point(3, 177);
+            this.uiLabel12.Name = "uiLabel12";
+            this.uiLabel12.Size = new System.Drawing.Size(100, 34);
+            this.uiLabel12.Style = Sunny.UI.UIStyle.Custom;
+            this.uiLabel12.TabIndex = 19;
+            this.uiLabel12.Text = "分级大小";
+            this.uiLabel12.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // uiDoubleUpDown1
+            // 
+            this.uiDoubleUpDown1.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(211)))), ((int)(((byte)(211)))), ((int)(((byte)(211)))));
+            this.uiDoubleUpDown1.Font = new System.Drawing.Font("微软雅黑", 12F);
+            this.uiDoubleUpDown1.Location = new System.Drawing.Point(0, 0);
+            this.uiDoubleUpDown1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.uiDoubleUpDown1.MinimumSize = new System.Drawing.Size(100, 0);
+            this.uiDoubleUpDown1.Name = "uiDoubleUpDown1";
+            this.uiDoubleUpDown1.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
+            this.uiDoubleUpDown1.Size = new System.Drawing.Size(140, 29);
+            this.uiDoubleUpDown1.Style = Sunny.UI.UIStyle.Office2010Black;
+            this.uiDoubleUpDown1.TabIndex = 0;
+            this.uiDoubleUpDown1.Text = "uiDoubleUpDown1";
+            this.uiDoubleUpDown1.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter;
+            this.uiDoubleUpDown1.Value = 3.5D;
+            this.uiDoubleUpDown1.ValueChanged += new Sunny.UI.UIDoubleUpDown.OnValueChanged(this.uiDoubleUpDown1_ValueChanged);
+            // 
+            // uiDoubleUpDown2
+            // 
+            this.uiDoubleUpDown2.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(211)))), ((int)(((byte)(211)))), ((int)(((byte)(211)))));
+            this.uiDoubleUpDown2.Font = new System.Drawing.Font("微软雅黑", 12F);
+            this.uiDoubleUpDown2.Location = new System.Drawing.Point(172, 0);
+            this.uiDoubleUpDown2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.uiDoubleUpDown2.MinimumSize = new System.Drawing.Size(100, 0);
+            this.uiDoubleUpDown2.Name = "uiDoubleUpDown2";
+            this.uiDoubleUpDown2.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
+            this.uiDoubleUpDown2.Size = new System.Drawing.Size(140, 29);
+            this.uiDoubleUpDown2.Style = Sunny.UI.UIStyle.Office2010Black;
+            this.uiDoubleUpDown2.TabIndex = 1;
+            this.uiDoubleUpDown2.Text = "uiDoubleUpDown2";
+            this.uiDoubleUpDown2.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter;
+            this.uiDoubleUpDown2.Value = 3.5D;
+            this.uiDoubleUpDown2.ValueChanged += new Sunny.UI.UIDoubleUpDown.OnValueChanged(this.uiDoubleUpDown2_ValueChanged);
             // 
             // MarkerSymbolPage
             // 
@@ -712,6 +782,7 @@ namespace DEETU.Source.Window
             ((System.ComponentModel.ISupportInitialize)(this.classDataGridView)).EndInit();
             this.classTableLayoutPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.geoUniqueValueRendererBindingSource)).EndInit();
+            this.uiPanel1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -753,5 +824,9 @@ namespace DEETU.Source.Window
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
         private Sunny.UI.UILabel uiLabel1;
         private Sunny.UI.UIIntegerUpDown uiIntegerUpDown2;
+        private Sunny.UI.UIPanel uiPanel1;
+        private Sunny.UI.UILabel uiLabel12;
+        private Sunny.UI.UIDoubleUpDown uiDoubleUpDown2;
+        private Sunny.UI.UIDoubleUpDown uiDoubleUpDown1;
     }
 }
