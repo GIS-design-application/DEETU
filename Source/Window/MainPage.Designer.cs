@@ -509,7 +509,7 @@ namespace DEETU.Source.Window
             this.复制要素ToolStripMenuItem.Name = "复制要素ToolStripMenuItem";
             this.复制要素ToolStripMenuItem.Size = new System.Drawing.Size(184, 26);
             this.复制要素ToolStripMenuItem.Text = "复制要素";
-            this.复制要素ToolStripMenuItem.Click += new System.EventHandler(this.复制要素ToolStripButton_Click);
+            this.复制要素ToolStripMenuItem.Click += new System.EventHandler(this.复制要素_Click);
             // 
             // 粘贴要素ToolStripMenuItem
             // 
@@ -517,7 +517,7 @@ namespace DEETU.Source.Window
             this.粘贴要素ToolStripMenuItem.Name = "粘贴要素ToolStripMenuItem";
             this.粘贴要素ToolStripMenuItem.Size = new System.Drawing.Size(184, 26);
             this.粘贴要素ToolStripMenuItem.Text = "粘贴要素";
-            this.粘贴要素ToolStripMenuItem.Click += new System.EventHandler(this.粘贴要素ToolStripButton_Click);
+            this.粘贴要素ToolStripMenuItem.Click += new System.EventHandler(this.粘贴要素_Click);
             // 
             // toolStripSeparator5
             // 
@@ -1259,7 +1259,7 @@ namespace DEETU.Source.Window
             this.复制要素ToolStripButton.Name = "复制要素ToolStripButton";
             this.复制要素ToolStripButton.Size = new System.Drawing.Size(24, 24);
             this.复制要素ToolStripButton.Text = "复制要素";
-            this.复制要素ToolStripButton.Click += new System.EventHandler(this.复制要素ToolStripButton_Click);
+            this.复制要素ToolStripButton.Click += new System.EventHandler(this.复制要素_Click);
             // 
             // 粘贴要素ToolStripButton
             // 
@@ -1269,7 +1269,7 @@ namespace DEETU.Source.Window
             this.粘贴要素ToolStripButton.Name = "粘贴要素ToolStripButton";
             this.粘贴要素ToolStripButton.Size = new System.Drawing.Size(24, 24);
             this.粘贴要素ToolStripButton.Text = "粘贴要素";
-            this.粘贴要素ToolStripButton.Click += new System.EventHandler(this.粘贴要素ToolStripButton_Click);
+            this.粘贴要素ToolStripButton.Click += new System.EventHandler(this.粘贴要素_Click);
             // 
             // PasteUndoToolStripSeparator14
             // 
