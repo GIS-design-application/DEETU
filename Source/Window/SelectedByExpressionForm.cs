@@ -51,19 +51,48 @@ namespace DEETU.Source.Window
         private void getUniqueValueButton_Click(object sender, EventArgs e)
         {
             int fieldIdx = fieldsListBox.SelectedIndex;
+            if (fieldIdx == -1)
+            {
+                UIMessageBox.ShowError("请选择字段", false);
+                return;
+            }
             GeoValueTypeConstant valueType = mLayer.AttributeFields.GetItem(fieldIdx).ValueType;
             valueListBox.Items.Clear();
             GeoFeatures features = mLayer.Features;
             List<object> valueList = new List<object>();
             for (int i = 0; i < features.Count; i++)
             {
-                valueList.Add(features.GetItem(i).Attributes.GetItem(fieldIdx).ToString());
+                object value = features.GetItem(i).Attributes.GetItem(fieldIdx);
+                switch (valueType)
+                {
+                    case GeoValueTypeConstant.dInt16:
+                        valueList.Add((Int16)value);
+                        break;
+                    case GeoValueTypeConstant.dInt32:
+                        valueList.Add((Int32)value);
+                        break;
+                    case GeoValueTypeConstant.dInt64:
+                        valueList.Add((Int64)value);
+                        break;
+                    case GeoValueTypeConstant.dSingle:
+                        valueList.Add((Single)value);
+                        break;
+                    case GeoValueTypeConstant.dDouble:
+                        valueList.Add((double)value);
+                        break;
+                    case GeoValueTypeConstant.dText:
+                        valueList.Add((string)value);
+                        break;
+                    default:
+                        valueList.Add(value.ToString());
+                        break;
+                }
             }
 
             valueList.Sort();
             for (int i = 0; i < features.Count; i++)
             {
-                valueListBox.Items.Add(valueList[i]);
+                valueListBox.Items.Add(valueList[i].ToString());
             }
         }
 
@@ -83,12 +112,31 @@ namespace DEETU.Source.Window
 
         private void searchValueButton_Click(object sender, EventArgs e)
         {
+            int fieldIdx = fieldsListBox.SelectedIndex;
+            if (fieldIdx == -1)
+            {
+                UIMessageBox.ShowError("请选择字段", false);
+                return;
+            }
+            GeoValueTypeConstant valueType = mLayer.AttributeFields.GetItem(fieldIdx).ValueType;
+
             if (searchTextBox.Text.IsNullOrWhiteSpace())
                 return;
             else
             {
                 List<string> itemList = valueListBox.Items.Cast<string>().ToList();
-                valueListBox.SelectedIndex = itemList.FindIndex((string s) => s.Contains(searchTextBox.Text));
+                if (valueType == GeoValueTypeConstant.dText)
+                {
+                    valueListBox.SelectedIndex = itemList.FindIndex((string s) => s.Contains(searchTextBox.Text));
+                }
+                else
+                {
+                    List<double> doubleList = itemList.ConvertAll(s => Convert.ToDouble(s)) ;
+                    int frontIndex= doubleList.FindIndex((double d) => d > Convert.ToDouble(searchTextBox.Text)) ;
+                    valueListBox.SelectedIndex = frontIndex > -1 ? frontIndex - 1 : -1;
+                }
+                if (valueListBox.SelectedIndex < 0)
+                    UIMessageBox.ShowInfo("未找到符合要求的值", false);
             }
         }
 

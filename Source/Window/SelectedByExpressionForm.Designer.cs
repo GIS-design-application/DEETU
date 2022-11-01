@@ -64,6 +64,7 @@
             this.uiLabel5 = new Sunny.UI.UILabel();
             this.layerNameText = new Sunny.UI.UITextBox();
             this.uiComboboxEx1 = new Sunny.UI.UIComboboxEx();
+            this.quoteButton = new Sunny.UI.UIButton();
             this.uiFlowLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -122,12 +123,10 @@
             // 
             // uiLabel2
             // 
-            this.uiLabel2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.uiLabel2.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.uiLabel2.Location = new System.Drawing.Point(236, 202);
             this.uiLabel2.Name = "uiLabel2";
-            this.uiLabel2.Size = new System.Drawing.Size(77, 23);
+            this.uiLabel2.Size = new System.Drawing.Size(88, 26);
             this.uiLabel2.Style = Sunny.UI.UIStyle.Office2010Black;
             this.uiLabel2.TabIndex = 4;
             this.uiLabel2.Text = "唯一值列表";
@@ -202,6 +201,7 @@
             // 
             // uiFlowLayoutPanel1
             // 
+            this.uiFlowLayoutPanel1.Controls.Add(this.quoteButton);
             this.uiFlowLayoutPanel1.Controls.Add(this.nullButton);
             this.uiFlowLayoutPanel1.Controls.Add(this.inButton);
             this.uiFlowLayoutPanel1.Controls.Add(this.isButton);
@@ -249,7 +249,7 @@
             this.nullButton.ForeHoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
             this.nullButton.ForePressColor = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
             this.nullButton.ForeSelectedColor = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
-            this.nullButton.Location = new System.Drawing.Point(77, 109);
+            this.nullButton.Location = new System.Drawing.Point(113, 111);
             this.nullButton.MinimumSize = new System.Drawing.Size(1, 1);
             this.nullButton.Name = "nullButton";
             this.nullButton.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
@@ -274,7 +274,7 @@
             this.inButton.ForeHoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
             this.inButton.ForePressColor = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
             this.inButton.ForeSelectedColor = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
-            this.inButton.Location = new System.Drawing.Point(41, 109);
+            this.inButton.Location = new System.Drawing.Point(77, 111);
             this.inButton.MinimumSize = new System.Drawing.Size(1, 1);
             this.inButton.Name = "inButton";
             this.inButton.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
@@ -299,7 +299,7 @@
             this.isButton.ForeHoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
             this.isButton.ForePressColor = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
             this.isButton.ForeSelectedColor = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
-            this.isButton.Location = new System.Drawing.Point(5, 109);
+            this.isButton.Location = new System.Drawing.Point(41, 111);
             this.isButton.MinimumSize = new System.Drawing.Size(1, 1);
             this.isButton.Name = "isButton";
             this.isButton.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
@@ -324,7 +324,7 @@
             this.likeButton.ForeHoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
             this.likeButton.ForePressColor = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
             this.likeButton.ForeSelectedColor = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
-            this.likeButton.Location = new System.Drawing.Point(185, 77);
+            this.likeButton.Location = new System.Drawing.Point(6, 111);
             this.likeButton.MinimumSize = new System.Drawing.Size(1, 1);
             this.likeButton.Name = "likeButton";
             this.likeButton.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
@@ -350,7 +350,7 @@
             this.notButton.ForeHoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
             this.notButton.ForePressColor = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
             this.notButton.ForeSelectedColor = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
-            this.notButton.Location = new System.Drawing.Point(149, 77);
+            this.notButton.Location = new System.Drawing.Point(185, 77);
             this.notButton.MinimumSize = new System.Drawing.Size(1, 1);
             this.notButton.Name = "notButton";
             this.notButton.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
@@ -375,7 +375,7 @@
             this.orButton.ForeHoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
             this.orButton.ForePressColor = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
             this.orButton.ForeSelectedColor = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
-            this.orButton.Location = new System.Drawing.Point(113, 77);
+            this.orButton.Location = new System.Drawing.Point(149, 77);
             this.orButton.MinimumSize = new System.Drawing.Size(1, 1);
             this.orButton.Name = "orButton";
             this.orButton.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
@@ -401,7 +401,7 @@
             this.andButton.ForeHoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
             this.andButton.ForePressColor = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
             this.andButton.ForeSelectedColor = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
-            this.andButton.Location = new System.Drawing.Point(77, 77);
+            this.andButton.Location = new System.Drawing.Point(113, 77);
             this.andButton.MinimumSize = new System.Drawing.Size(1, 1);
             this.andButton.Name = "andButton";
             this.andButton.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
@@ -766,10 +766,12 @@
             // 
             // searchTextBox
             // 
+            this.searchTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.searchTextBox.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.searchTextBox.FillColor = System.Drawing.Color.White;
             this.searchTextBox.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.searchTextBox.Location = new System.Drawing.Point(313, 202);
+            this.searchTextBox.Location = new System.Drawing.Point(331, 202);
             this.searchTextBox.Margin = new System.Windows.Forms.Padding(4, 5, 0, 5);
             this.searchTextBox.Maximum = 2147483647D;
             this.searchTextBox.Minimum = -2147483648D;
@@ -777,7 +779,7 @@
             this.searchTextBox.Name = "searchTextBox";
             this.searchTextBox.Padding = new System.Windows.Forms.Padding(5);
             this.searchTextBox.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
-            this.searchTextBox.Size = new System.Drawing.Size(156, 26);
+            this.searchTextBox.Size = new System.Drawing.Size(138, 26);
             this.searchTextBox.Style = Sunny.UI.UIStyle.Office2010Black;
             this.searchTextBox.TabIndex = 11;
             this.searchTextBox.TextAlignment = System.Drawing.ContentAlignment.MiddleLeft;
@@ -785,6 +787,7 @@
             // 
             // searchValueButton
             // 
+            this.searchValueButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.searchValueButton.Cursor = System.Windows.Forms.Cursors.Hand;
             this.searchValueButton.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(211)))), ((int)(((byte)(211)))), ((int)(((byte)(211)))));
             this.searchValueButton.FillHoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(226)))), ((int)(((byte)(137)))));
@@ -883,6 +886,31 @@
             this.uiComboboxEx1.Style = Sunny.UI.UIStyle.Office2010Black;
             this.uiComboboxEx1.TabIndex = 17;
             // 
+            // quoteButton
+            // 
+            this.quoteButton.Cursor = System.Windows.Forms.Cursors.Arrow;
+            this.quoteButton.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(211)))), ((int)(((byte)(211)))), ((int)(((byte)(211)))));
+            this.quoteButton.FillHoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(226)))), ((int)(((byte)(137)))));
+            this.quoteButton.FillPressColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(228)))), ((int)(((byte)(137)))));
+            this.quoteButton.FillSelectedColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(228)))), ((int)(((byte)(137)))));
+            this.quoteButton.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.quoteButton.ForeColor = System.Drawing.Color.Black;
+            this.quoteButton.ForeHoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
+            this.quoteButton.ForePressColor = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
+            this.quoteButton.ForeSelectedColor = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
+            this.quoteButton.Location = new System.Drawing.Point(78, 77);
+            this.quoteButton.MinimumSize = new System.Drawing.Size(1, 1);
+            this.quoteButton.Name = "quoteButton";
+            this.quoteButton.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
+            this.quoteButton.RectHoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(238)))), ((int)(((byte)(201)))), ((int)(((byte)(88)))));
+            this.quoteButton.RectPressColor = System.Drawing.Color.FromArgb(((int)(((byte)(194)))), ((int)(((byte)(118)))), ((int)(((byte)(43)))));
+            this.quoteButton.RectSelectedColor = System.Drawing.Color.FromArgb(((int)(((byte)(194)))), ((int)(((byte)(118)))), ((int)(((byte)(43)))));
+            this.quoteButton.Size = new System.Drawing.Size(30, 30);
+            this.quoteButton.Style = Sunny.UI.UIStyle.Office2010Black;
+            this.quoteButton.TabIndex = 16;
+            this.quoteButton.Text = "\'";
+            this.quoteButton.Click += new System.EventHandler(this.OperatorButtons_Click);
+            // 
             // SelectedByExpressionForm
             // 
             this.AcceptButton = this.okButton;
@@ -910,7 +938,7 @@
             this.ShowDragStretch = true;
             this.ShowRadius = false;
             this.ShowShadow = true;
-            this.Style = Sunny.UI.UIStyle.Office2010Black;
+            this.Style = Sunny.UI.UIStyle.Custom;
             this.Text = "按表达式选择";
             this.TitleColor = System.Drawing.Color.FromArgb(((int)(((byte)(118)))), ((int)(((byte)(118)))), ((int)(((byte)(118)))));
             this.TitleForeColor = System.Drawing.Color.Black;
@@ -957,5 +985,6 @@
         private Sunny.UI.UILabel uiLabel5;
         private Sunny.UI.UITextBox layerNameText;
         private Sunny.UI.UIComboboxEx uiComboboxEx1;
+        private Sunny.UI.UIButton quoteButton;
     }
 }
