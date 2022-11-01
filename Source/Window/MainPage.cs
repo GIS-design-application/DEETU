@@ -2174,6 +2174,8 @@ namespace DEETU.Source.Window
 #endif
         private void btnLoadLayerFile_Click(object sender, EventArgs e)
         {
+            var crs = new GeoCoordinateReferenceSystem(GeographicCrsType.Beijing1954,ProjectedCrsType.Lambert2SP);
+            
             // 获取文件名
             OpenFileDialog sDialog = new OpenFileDialog();
             string sFileName = "";
@@ -2193,6 +2195,7 @@ namespace DEETU.Source.Window
                 FileStream sStream = new FileStream(sFileName, FileMode.Open);
                 BinaryReader sr = new BinaryReader(sStream);
                 GeoMapLayer sLayer = GeoDataIOTools.LoadMapLayer(sr);
+                sLayer.Crs = crs;
                 sLayer.Name = sFileName.Split('\\').Last().Split('.').First();
                 geoMap.Layers.Add(sLayer);
                 if (geoMap.Layers.Count == 1)
@@ -2488,8 +2491,9 @@ namespace DEETU.Source.Window
             var desLayer = srcLayer.Clone();
             geoMap.Layers.Replace(srcLayer, desLayer);
             desLayer.Selectable = true;
-           
+            
             undo_layers.Add((srcLayer, desLayer));
+            UpdateTreeView();
             return desLayer;
         }
 
