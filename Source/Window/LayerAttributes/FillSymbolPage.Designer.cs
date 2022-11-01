@@ -75,6 +75,8 @@ namespace DEETU.Source.Window
             this.classFieldComboBox = new Sunny.UI.UIComboBox();
             this.classColorgradComboBox = new System.Windows.Forms.ComboBox();
             this.renderMethodCB = new Sunny.UI.UIComboBox();
+            this.dataGridViewImageColumn1 = new System.Windows.Forms.DataGridViewImageColumn();
+            this.dataGridViewImageColumn2 = new System.Windows.Forms.DataGridViewImageColumn();
             this.geoUniqueValueRendererBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.PagePanel.SuspendLayout();
             this.renderTabControl.SuspendLayout();
@@ -298,6 +300,7 @@ namespace DEETU.Source.Window
             // 
             // uniqueDataGridView
             // 
+            this.uniqueDataGridView.AllowUserToAddRows = false;
             dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(211)))), ((int)(((byte)(211)))), ((int)(((byte)(211)))));
             this.uniqueDataGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.uniqueDataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
@@ -513,6 +516,7 @@ namespace DEETU.Source.Window
             // 
             // classDataGridView
             // 
+            this.classDataGridView.AllowUserToAddRows = false;
             dataGridViewCellStyle6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(211)))), ((int)(((byte)(211)))), ((int)(((byte)(211)))));
             this.classDataGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle6;
             this.classDataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
@@ -573,7 +577,7 @@ namespace DEETU.Source.Window
             this.dataGridViewButtonColumn1.DividerWidth = 1;
             this.dataGridViewButtonColumn1.FillWeight = 30.45685F;
             this.dataGridViewButtonColumn1.HeaderText = "符号";
-            this.dataGridViewButtonColumn1.Image = ((System.Drawing.Image)(resources.GetObject("dataGridViewButtonColumn1.Image")));
+            this.dataGridViewButtonColumn1.Image = global::DEETU.Properties.Resources.添加要素;
             this.dataGridViewButtonColumn1.MinimumWidth = 8;
             this.dataGridViewButtonColumn1.Name = "dataGridViewButtonColumn1";
             this.dataGridViewButtonColumn1.Resizable = System.Windows.Forms.DataGridViewTriState.True;
@@ -699,6 +703,28 @@ namespace DEETU.Source.Window
             this.renderMethodCB.TabIndex = 1;
             this.renderMethodCB.TextAlignment = System.Drawing.ContentAlignment.MiddleLeft;
             // 
+            // dataGridViewImageColumn1
+            // 
+            this.dataGridViewImageColumn1.DividerWidth = 1;
+            this.dataGridViewImageColumn1.FillWeight = 30.45685F;
+            this.dataGridViewImageColumn1.HeaderText = "符号";
+            this.dataGridViewImageColumn1.Image = ((System.Drawing.Image)(resources.GetObject("dataGridViewImageColumn1.Image")));
+            this.dataGridViewImageColumn1.MinimumWidth = 8;
+            this.dataGridViewImageColumn1.Name = "dataGridViewImageColumn1";
+            this.dataGridViewImageColumn1.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridViewImageColumn1.Width = 73;
+            // 
+            // dataGridViewImageColumn2
+            // 
+            this.dataGridViewImageColumn2.DividerWidth = 1;
+            this.dataGridViewImageColumn2.FillWeight = 30.45685F;
+            this.dataGridViewImageColumn2.HeaderText = "符号";
+            this.dataGridViewImageColumn2.Image = global::DEETU.Properties.Resources.baseline_table_rows_black_48;
+            this.dataGridViewImageColumn2.MinimumWidth = 8;
+            this.dataGridViewImageColumn2.Name = "dataGridViewImageColumn2";
+            this.dataGridViewImageColumn2.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridViewImageColumn2.Width = 73;
+            // 
             // geoUniqueValueRendererBindingSource
             // 
             this.geoUniqueValueRendererBindingSource.DataSource = typeof(DEETU.Core.GeoUniqueValueRenderer);
@@ -764,9 +790,11 @@ namespace DEETU.Source.Window
 		private System.Windows.Forms.BindingSource geoUniqueValueRendererBindingSource;
 		private Sunny.UI.UILabel uiLabel8;
 		private Sunny.UI.UILabel uiLabel11;
-		private System.Windows.Forms.DataGridViewImageColumn symbolCol;
-		private System.Windows.Forms.DataGridViewTextBoxColumn valueCol;
-		private System.Windows.Forms.DataGridViewImageColumn dataGridViewButtonColumn1;
-		private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
-	}
+        private System.Windows.Forms.DataGridViewImageColumn symbolCol;
+        private System.Windows.Forms.DataGridViewTextBoxColumn valueCol;
+        private System.Windows.Forms.DataGridViewImageColumn dataGridViewButtonColumn1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
+        private System.Windows.Forms.DataGridViewImageColumn dataGridViewImageColumn1;
+        private System.Windows.Forms.DataGridViewImageColumn dataGridViewImageColumn2;
+    }
 }
