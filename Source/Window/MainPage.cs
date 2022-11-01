@@ -1994,8 +1994,8 @@ namespace DEETU.Source.Window
             else if (symbol.SymbolType == GeoSymbolTypeConstant.SimpleLineSymbol)
             {
                 GeoSimpleLineSymbol sLineSymbol = (symbol as GeoSimpleLineSymbol);
-                double dpm = 1000; // I don't know the correct dpm here so I just randomly assigned a number
-                Pen sPen = new Pen(sLineSymbol.Color, (float)(sLineSymbol.Size / 1000 * dpm));
+                double dpm = 10000; // I don't know the correct dpm here so I just randomly assigned a number
+                Pen sPen = new Pen(sLineSymbol.Color, (float)(sLineSymbol.Size * dpm / 1000));
                 sPen.DashStyle = (DashStyle)sLineSymbol.Style;
                 g.DrawLine(sPen, new Point(0, styleImage.Height / 2), new Point(styleImage.Width, styleImage.Height / 2));
                 sPen.Dispose();
