@@ -274,8 +274,9 @@ namespace DEETU.Map
                 newLayer._Renderer = _Renderer.Clone(); 
             if (_LabelRenderer != null)
                 newLayer._LabelRenderer = _LabelRenderer.Clone();
-            //if (Crs != null)
-            //    newLayer.Crs = Crs.Clone();
+            if (Crs != null)
+                newLayer.Crs = Crs.Clone();
+
             return newLayer;
         }
         #endregion
