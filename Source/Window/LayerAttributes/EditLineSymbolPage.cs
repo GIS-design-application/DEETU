@@ -49,7 +49,9 @@ namespace DEETU.Source.Window.LayerAttributes
 
         private void ConformButton_Click(object sender, EventArgs e)
         {
-            mLineSymbol = mTempLineSymbol;
+            mLineSymbol.Style = mTempLineSymbol.Style;
+            mLineSymbol.Size = mTempLineSymbol.Size;
+            mLineSymbol.Color = mTempLineSymbol.Color;
             (this.Parent.Parent.Parent as EditSimpleSymbolForm).Close();
         }
 
