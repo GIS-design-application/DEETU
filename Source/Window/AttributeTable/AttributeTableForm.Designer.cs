@@ -32,11 +32,11 @@ namespace DEETU.Source.Window
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AttributeTableForm));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("表单模式");
             System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("表格模式");
             this.uiTabControl1 = new Sunny.UI.UITabControl();
@@ -50,18 +50,18 @@ namespace DEETU.Source.Window
             this.Header = new Sunny.UI.UINavBar();
             this.navBarImageList = new System.Windows.Forms.ImageList(this.components);
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.editToolStripButton = new System.Windows.Forms.ToolStripButton();
+            this.startEditToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.saveEditToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.reloadToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.CutToolStripButton4 = new System.Windows.Forms.ToolStripButton();
+            this.cutToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.copyStripButton = new System.Windows.Forms.ToolStripButton();
             this.pasteToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.addFeatureToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.removeFeatureToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.addFieldStripButton = new System.Windows.Forms.ToolStripButton();
-            this.removeToolStripButton = new System.Windows.Forms.ToolStripButton();
+            this.removeFieldToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.selectAllToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.removeSelectToolStripButton = new System.Windows.Forms.ToolStripButton();
@@ -175,28 +175,28 @@ namespace DEETU.Source.Window
             // 
             this.featureDataGridView.AllowUserToAddRows = false;
             this.featureDataGridView.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(211)))), ((int)(((byte)(211)))), ((int)(((byte)(211)))));
-            this.featureDataGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle11.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(211)))), ((int)(((byte)(211)))), ((int)(((byte)(211)))));
+            this.featureDataGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle11;
             this.featureDataGridView.BackgroundColor = System.Drawing.Color.White;
             this.featureDataGridView.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(118)))), ((int)(((byte)(118)))), ((int)(((byte)(118)))));
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(118)))), ((int)(((byte)(118)))), ((int)(((byte)(118)))));
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.featureDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle12.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(118)))), ((int)(((byte)(118)))), ((int)(((byte)(118)))));
+            dataGridViewCellStyle12.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle12.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle12.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(118)))), ((int)(((byte)(118)))), ((int)(((byte)(118)))));
+            dataGridViewCellStyle12.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.featureDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle12;
             this.featureDataGridView.ColumnHeadersHeight = 32;
             this.featureDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(155)))), ((int)(((byte)(200)))), ((int)(((byte)(255)))));
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.featureDataGridView.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle13.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle13.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle13.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
+            dataGridViewCellStyle13.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(155)))), ((int)(((byte)(200)))), ((int)(((byte)(255)))));
+            dataGridViewCellStyle13.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
+            dataGridViewCellStyle13.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.featureDataGridView.DefaultCellStyle = dataGridViewCellStyle13;
             this.featureDataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.featureDataGridView.EnableHeadersVisualStyles = false;
             this.featureDataGridView.Font = new System.Drawing.Font("微软雅黑", 12F);
@@ -205,16 +205,17 @@ namespace DEETU.Source.Window
             this.featureDataGridView.Name = "featureDataGridView";
             this.featureDataGridView.ReadOnly = true;
             this.featureDataGridView.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(211)))), ((int)(((byte)(211)))), ((int)(((byte)(211)))));
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("微软雅黑", 12F);
-            dataGridViewCellStyle4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.featureDataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
-            dataGridViewCellStyle5.BackColor = System.Drawing.Color.White;
-            this.featureDataGridView.RowsDefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle14.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(211)))), ((int)(((byte)(211)))), ((int)(((byte)(211)))));
+            dataGridViewCellStyle14.Font = new System.Drawing.Font("微软雅黑", 12F);
+            dataGridViewCellStyle14.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
+            dataGridViewCellStyle14.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
+            dataGridViewCellStyle14.SelectionForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle14.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.featureDataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle14;
+            this.featureDataGridView.RowHeadersWidth = 51;
+            dataGridViewCellStyle15.BackColor = System.Drawing.Color.White;
+            this.featureDataGridView.RowsDefaultCellStyle = dataGridViewCellStyle15;
             this.featureDataGridView.RowTemplate.Height = 29;
             this.featureDataGridView.SelectedIndex = -1;
             this.featureDataGridView.ShowGridLine = true;
@@ -256,38 +257,39 @@ namespace DEETU.Source.Window
             // 
             // toolStrip1
             // 
+            this.toolStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.editToolStripButton,
+            this.startEditToolStripButton,
             this.saveEditToolStripButton,
             this.reloadToolStripButton,
             this.toolStripSeparator1,
-            this.CutToolStripButton4,
+            this.cutToolStripButton,
             this.copyStripButton,
             this.pasteToolStripButton,
             this.addFeatureToolStripButton,
             this.removeFeatureToolStripButton,
             this.toolStripSeparator2,
             this.addFieldStripButton,
-            this.removeToolStripButton,
+            this.removeFieldToolStripButton,
             this.toolStripSeparator3,
             this.selectAllToolStripButton,
             this.removeSelectToolStripButton,
             this.selectByExpressionToolStripButton});
             this.toolStrip1.Location = new System.Drawing.Point(2, 35);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(796, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(796, 27);
             this.toolStrip1.TabIndex = 2;
             this.toolStrip1.Text = "toolStrip1";
             // 
-            // editToolStripButton
+            // startEditToolStripButton
             // 
-            this.editToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.editToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("editToolStripButton.Image")));
-            this.editToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.editToolStripButton.Name = "editToolStripButton";
-            this.editToolStripButton.Size = new System.Drawing.Size(23, 22);
-            this.editToolStripButton.Text = "开始编辑";
-            this.editToolStripButton.Click += new System.EventHandler(this.editToolStripButton_Click);
+            this.startEditToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.startEditToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("startEditToolStripButton.Image")));
+            this.startEditToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.startEditToolStripButton.Name = "startEditToolStripButton";
+            this.startEditToolStripButton.Size = new System.Drawing.Size(29, 24);
+            this.startEditToolStripButton.Text = "开始编辑";
+            this.startEditToolStripButton.Click += new System.EventHandler(this.editToolStripButton_Click);
             // 
             // saveEditToolStripButton
             // 
@@ -295,7 +297,7 @@ namespace DEETU.Source.Window
             this.saveEditToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("saveEditToolStripButton.Image")));
             this.saveEditToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.saveEditToolStripButton.Name = "saveEditToolStripButton";
-            this.saveEditToolStripButton.Size = new System.Drawing.Size(23, 22);
+            this.saveEditToolStripButton.Size = new System.Drawing.Size(29, 24);
             this.saveEditToolStripButton.Text = "保存编辑";
             this.saveEditToolStripButton.ToolTipText = "保存编辑";
             this.saveEditToolStripButton.Click += new System.EventHandler(this.saveEditToolStripButton_Click);
@@ -306,7 +308,7 @@ namespace DEETU.Source.Window
             this.reloadToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("reloadToolStripButton.Image")));
             this.reloadToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.reloadToolStripButton.Name = "reloadToolStripButton";
-            this.reloadToolStripButton.Size = new System.Drawing.Size(23, 22);
+            this.reloadToolStripButton.Size = new System.Drawing.Size(29, 24);
             this.reloadToolStripButton.Text = "重新加载";
             this.reloadToolStripButton.ToolTipText = "重新加载";
             this.reloadToolStripButton.Click += new System.EventHandler(this.reloadToolStripButton_Click);
@@ -314,16 +316,17 @@ namespace DEETU.Source.Window
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 27);
             // 
-            // CutToolStripButton4
+            // cutToolStripButton
             // 
-            this.CutToolStripButton4.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.CutToolStripButton4.Image = ((System.Drawing.Image)(resources.GetObject("CutToolStripButton4.Image")));
-            this.CutToolStripButton4.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.CutToolStripButton4.Name = "CutToolStripButton4";
-            this.CutToolStripButton4.Size = new System.Drawing.Size(23, 22);
-            this.CutToolStripButton4.Text = "剪切选中行";
+            this.cutToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.cutToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("cutToolStripButton.Image")));
+            this.cutToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.cutToolStripButton.Name = "cutToolStripButton";
+            this.cutToolStripButton.Size = new System.Drawing.Size(29, 24);
+            this.cutToolStripButton.Text = "剪切选中行";
+            this.cutToolStripButton.Click += new System.EventHandler(this.cutToolStripButton_Click);
             // 
             // copyStripButton
             // 
@@ -331,8 +334,9 @@ namespace DEETU.Source.Window
             this.copyStripButton.Image = ((System.Drawing.Image)(resources.GetObject("copyStripButton.Image")));
             this.copyStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.copyStripButton.Name = "copyStripButton";
-            this.copyStripButton.Size = new System.Drawing.Size(23, 22);
+            this.copyStripButton.Size = new System.Drawing.Size(29, 24);
             this.copyStripButton.Text = "复制选中行";
+            this.copyStripButton.Click += new System.EventHandler(this.copyStripButton_Click);
             // 
             // pasteToolStripButton
             // 
@@ -340,8 +344,9 @@ namespace DEETU.Source.Window
             this.pasteToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("pasteToolStripButton.Image")));
             this.pasteToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.pasteToolStripButton.Name = "pasteToolStripButton";
-            this.pasteToolStripButton.Size = new System.Drawing.Size(23, 22);
+            this.pasteToolStripButton.Size = new System.Drawing.Size(29, 24);
             this.pasteToolStripButton.Text = "粘贴";
+            this.pasteToolStripButton.Click += new System.EventHandler(this.pasteToolStripButton_Click);
             // 
             // addFeatureToolStripButton
             // 
@@ -349,7 +354,7 @@ namespace DEETU.Source.Window
             this.addFeatureToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("addFeatureToolStripButton.Image")));
             this.addFeatureToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.addFeatureToolStripButton.Name = "addFeatureToolStripButton";
-            this.addFeatureToolStripButton.Size = new System.Drawing.Size(23, 22);
+            this.addFeatureToolStripButton.Size = new System.Drawing.Size(29, 24);
             this.addFeatureToolStripButton.Text = "添加要素";
             this.addFeatureToolStripButton.Click += new System.EventHandler(this.addFeatureToolStripButton_Click);
             // 
@@ -359,14 +364,14 @@ namespace DEETU.Source.Window
             this.removeFeatureToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("removeFeatureToolStripButton.Image")));
             this.removeFeatureToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.removeFeatureToolStripButton.Name = "removeFeatureToolStripButton";
-            this.removeFeatureToolStripButton.Size = new System.Drawing.Size(23, 22);
+            this.removeFeatureToolStripButton.Size = new System.Drawing.Size(29, 24);
             this.removeFeatureToolStripButton.Text = "删除要素";
             this.removeFeatureToolStripButton.Click += new System.EventHandler(this.removeFeatureToolStripButton_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 27);
             // 
             // addFieldStripButton
             // 
@@ -374,24 +379,24 @@ namespace DEETU.Source.Window
             this.addFieldStripButton.Image = ((System.Drawing.Image)(resources.GetObject("addFieldStripButton.Image")));
             this.addFieldStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.addFieldStripButton.Name = "addFieldStripButton";
-            this.addFieldStripButton.Size = new System.Drawing.Size(23, 22);
+            this.addFieldStripButton.Size = new System.Drawing.Size(29, 24);
             this.addFieldStripButton.Text = "添加字段";
             this.addFieldStripButton.Click += new System.EventHandler(this.addFieldStripButton_Click);
             // 
-            // removeToolStripButton
+            // removeFieldToolStripButton
             // 
-            this.removeToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.removeToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("removeToolStripButton.Image")));
-            this.removeToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.removeToolStripButton.Name = "removeToolStripButton";
-            this.removeToolStripButton.Size = new System.Drawing.Size(23, 22);
-            this.removeToolStripButton.Text = "删除字段";
-            this.removeToolStripButton.Click += new System.EventHandler(this.removeToolStripButton_Click);
+            this.removeFieldToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.removeFieldToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("removeFieldToolStripButton.Image")));
+            this.removeFieldToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.removeFieldToolStripButton.Name = "removeFieldToolStripButton";
+            this.removeFieldToolStripButton.Size = new System.Drawing.Size(29, 24);
+            this.removeFieldToolStripButton.Text = "删除字段";
+            this.removeFieldToolStripButton.Click += new System.EventHandler(this.removeToolStripButton_Click);
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 25);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 27);
             // 
             // selectAllToolStripButton
             // 
@@ -399,7 +404,7 @@ namespace DEETU.Source.Window
             this.selectAllToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("selectAllToolStripButton.Image")));
             this.selectAllToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.selectAllToolStripButton.Name = "selectAllToolStripButton";
-            this.selectAllToolStripButton.Size = new System.Drawing.Size(23, 22);
+            this.selectAllToolStripButton.Size = new System.Drawing.Size(29, 24);
             this.selectAllToolStripButton.Text = "全选";
             this.selectAllToolStripButton.Click += new System.EventHandler(this.selectAllToolStripButton_Click);
             // 
@@ -409,7 +414,7 @@ namespace DEETU.Source.Window
             this.removeSelectToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("removeSelectToolStripButton.Image")));
             this.removeSelectToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.removeSelectToolStripButton.Name = "removeSelectToolStripButton";
-            this.removeSelectToolStripButton.Size = new System.Drawing.Size(23, 22);
+            this.removeSelectToolStripButton.Size = new System.Drawing.Size(29, 24);
             this.removeSelectToolStripButton.Text = "取消选中";
             this.removeSelectToolStripButton.Click += new System.EventHandler(this.removeSelectToolStripButton_Click);
             // 
@@ -419,13 +424,13 @@ namespace DEETU.Source.Window
             this.selectByExpressionToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("selectByExpressionToolStripButton.Image")));
             this.selectByExpressionToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.selectByExpressionToolStripButton.Name = "selectByExpressionToolStripButton";
-            this.selectByExpressionToolStripButton.Size = new System.Drawing.Size(23, 22);
+            this.selectByExpressionToolStripButton.Size = new System.Drawing.Size(29, 24);
             this.selectByExpressionToolStripButton.Text = "按表达式选择";
             this.selectByExpressionToolStripButton.Click += new System.EventHandler(this.selectByExpressionToolStripButton_Click);
             // 
             // AttributeTableForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 21F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 27F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.toolStrip1);
@@ -463,16 +468,16 @@ namespace DEETU.Source.Window
         private System.Windows.Forms.TableLayoutPanel detailTable;
         private System.Windows.Forms.ListView featureList;
         private System.Windows.Forms.ToolStrip toolStrip1;
-        private System.Windows.Forms.ToolStripButton editToolStripButton;
+        private System.Windows.Forms.ToolStripButton startEditToolStripButton;
         private System.Windows.Forms.ToolStripButton saveEditToolStripButton;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-        private System.Windows.Forms.ToolStripButton CutToolStripButton4;
+        private System.Windows.Forms.ToolStripButton cutToolStripButton;
         private System.Windows.Forms.ToolStripButton copyStripButton;
         private System.Windows.Forms.ToolStripButton pasteToolStripButton;
         private System.Windows.Forms.ToolStripButton removeFeatureToolStripButton;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripButton addFieldStripButton;
-        private System.Windows.Forms.ToolStripButton removeToolStripButton;
+        private System.Windows.Forms.ToolStripButton removeFieldToolStripButton;
         private System.Windows.Forms.ToolStripButton selectAllToolStripButton;
         private System.Windows.Forms.ToolStripButton removeSelectToolStripButton;
         private System.Windows.Forms.ToolStripButton reloadToolStripButton;

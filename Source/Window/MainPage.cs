@@ -15,6 +15,9 @@ using DEETU.IO;
 using System.IO;
 using System.Drawing.Drawing2D;
 using DEETU.Testing;
+using System.Diagnostics;
+using System.Reflection.Emit;
+using System.Threading.Tasks;
 
 namespace DEETU.Source.Window
 {
@@ -24,6 +27,7 @@ namespace DEETU.Source.Window
         {
             InitializeComponent();
             geoMap.MouseWheel += geoMap_MouseWheel;
+            LoadRecentUsedFiles();
         }
 
         #region 字段
@@ -106,9 +110,9 @@ namespace DEETU.Source.Window
             }
             else
             {
-                UncheckToolStrip(mMapOpStyle);
                 this.Cursor = Cursors.Default;
                 mMapOpStyle = GeoMapOpStyleEnum.None;
+                UncheckToolStrip(mMapOpStyle);
             }
         }
 
@@ -123,9 +127,9 @@ namespace DEETU.Source.Window
             }
             else
             {
-                UncheckToolStrip(mMapOpStyle);
                 this.Cursor = Cursors.Default;
                 mMapOpStyle = GeoMapOpStyleEnum.None;
+                UncheckToolStrip(mMapOpStyle);
             }
         }
 
@@ -140,15 +144,19 @@ namespace DEETU.Source.Window
             }
             else
             {
-                UncheckToolStrip(mMapOpStyle);
                 this.Cursor = Cursors.Default;
                 mMapOpStyle = GeoMapOpStyleEnum.None;
+                UncheckToolStrip(mMapOpStyle);
             }
         }
 
         private void btnSelect_Click(object sender, EventArgs e)
         {
-            if (mMapOpStyle != GeoMapOpStyleEnum.Select)
+#if DEBUG
+            logging = sender.Equals(交叉选择).ToString();
+#endif
+
+            if (mIsEditing)
             {
                 UncheckToolStrip(mMapOpStyle);
                 this.Cursor = new Cursor("./icons/EditSelect.ico");
@@ -157,9 +165,10 @@ namespace DEETU.Source.Window
             }
             else
             {
-                UncheckToolStrip(mMapOpStyle);
+                //btnEndEdit_Click(sender, e);
                 this.Cursor = Cursors.Default;
                 mMapOpStyle = GeoMapOpStyleEnum.None;
+                UncheckToolStrip(mMapOpStyle);
             }
         }
 
@@ -174,9 +183,9 @@ namespace DEETU.Source.Window
             }
             else
             {
-                UncheckToolStrip(mMapOpStyle);
                 this.Cursor = Cursors.Default;
                 mMapOpStyle = GeoMapOpStyleEnum.None;
+                UncheckToolStrip(mMapOpStyle);
             }
         }
 
@@ -293,9 +302,9 @@ namespace DEETU.Source.Window
             }
             else
             {
+                mMapOpStyle = GeoMapOpStyleEnum.Select;
+                this.Cursor = new Cursor("./icons/EditSelect.ico");
                 UncheckToolStrip(mMapOpStyle);
-                mMapOpStyle = GeoMapOpStyleEnum.None;
-                this.Cursor = Cursors.Default;
             }
 
         }
@@ -327,10 +336,10 @@ namespace DEETU.Source.Window
              else
              // 停止描绘地理要素
             {
-                UncheckToolStrip(mMapOpStyle);
                 btnEndSketch_Click(sender, e);
-                mMapOpStyle = GeoMapOpStyleEnum.None;
-                this.Cursor = Cursors.Default;
+                mMapOpStyle = GeoMapOpStyleEnum.Select;
+                this.Cursor = new Cursor("./icons/EditSelect.ico");
+                UncheckToolStrip(mMapOpStyle);
             }
 
         }
@@ -484,34 +493,36 @@ namespace DEETU.Source.Window
         private void btnEditItem_Click(object sender, EventArgs e)
         {
             if (mMapOpStyle == GeoMapOpStyleEnum.Edit)
+                // 如果正在编辑那么直接取消编辑
+            {
+                geoMap.RedrawMap();
+                UncheckToolStrip(mMapOpStyle);
+            }
+            else
             {
                 UncheckToolStrip(mMapOpStyle);
-                this.Cursor = Cursors.Default;
-                mMapOpStyle = GeoMapOpStyleEnum.None;
-                return;
+
+                GeoMapLayer slayer = GetSelectableLayer();
+                if (slayer == null)
+                {
+                    return;
+                }
+
+                // 是否具有一个选择要素(不能没有, 不能有多个)
+                if (slayer.SelectedFeatures.Count != 1)
+                    return;
+
+                // 为撤销重做做准备
+                slayer = NewUndo(slayer);
+
+                
+                this.Cursor = new Cursor("./icons/EditMoveVertex.ico");
+                mEditingGeometry = slayer.SelectedFeatures.GetItem(0).Geometry;
+                mMapOpStyle = GeoMapOpStyleEnum.Edit;
+                geoMap.RedrawTrackingShapes();
+                
+                CheckToolStrip(mMapOpStyle);
             }
-            this.Cursor = new Cursor("./icons/EditMoveVertex.ico");
-            GeoMapLayer slayer = GetSelectableLayer();
-            
-            if (slayer == null)
-            {
-                return;
-            }
-
-            // 是否具有一个选择要素(不能没有, 不能有多个)
-            if (slayer.SelectedFeatures.Count != 1)
-                return;
-
-            slayer = NewUndo(slayer);
-
-            UncheckToolStrip(mMapOpStyle);
-            mEditingGeometry = slayer.SelectedFeatures.GetItem(0).Geometry;
-            mMapOpStyle = GeoMapOpStyleEnum.Edit;
-            geoMap.RedrawTrackingShapes();
-#if DEBUG
-
-#endif
-            CheckToolStrip(mMapOpStyle);
         }
 
         private void btnEndEdit_Click(object sender, EventArgs e)
@@ -523,7 +534,7 @@ namespace DEETU.Source.Window
             // 取消编辑多边形
             mEditingGeometry = null;
 
-            mMapOpStyle = GeoMapOpStyleEnum.None;
+            mMapOpStyle = GeoMapOpStyleEnum.Select;
 
             // 重绘
             geoMap.RedrawMap();
@@ -678,21 +689,19 @@ namespace DEETU.Source.Window
             geoMap.RedrawMap();
         }
 
-        private void startEditToolStripButton_Click(object sender, EventArgs e)
+        private void 开始编辑_Click(object sender, EventArgs e)
         {
+
             if (mCurrentLayerNode == null)
             {
                 UIMessageBox.ShowError("请选择图层", false);
+                return;
             }
-            btnSelect_Click(sender, e);
+
             mIsEditing = !mIsEditing;
+
+            btnSelect_Click(sender, e);
             SetEditing();
-
-            if (mIsEditing)
-                startEditToolStripButton.Image = new Bitmap("./icons/edit_off.png");
-            else
-                startEditToolStripButton.Image = new Bitmap("./icons/edit.png");
-
         }
         #endregion
 
@@ -1139,12 +1148,7 @@ namespace DEETU.Source.Window
             {
                 return;
             }
-            geoMap.Refresh();
-            GeoPoint point1 = geoMap.ToMapPoint(e.Location.X, e.Location.Y);
-            GeoPoint point2 = geoMap.ToMapPoint(mStartMouseLocation.X, mStartMouseLocation.Y);
-
-            GeoUserDrawingTool drawingTool = geoMap.GetDrawingTool();
-            drawingTool.DrawLine(point1, point2, mElasticSymbol);
+            geoMap.PanMapImageTo(e.Location.X - mStartMouseLocation.X, e.Location.Y - mStartMouseLocation.Y);
         }
 
         private void OnZoomIn_MouseMove(MouseEventArgs e)
@@ -1259,59 +1263,89 @@ namespace DEETU.Source.Window
             mMovingGeometries.Clear();
         }
 
-        private void OnIdentify_MouseUp(MouseEventArgs e)
+        private async void OnIdentify_MouseUp(MouseEventArgs e)
         {
             if (mIsInIdentify == false)
                 return;
             mIsInIdentify = false;
             geoMap.Refresh();
-            GeoRectangle sBox = GetMapRectByTwoPoints(mStartMouseLocation, e.Location);
-            double tolerance = geoMap.ToMapDistance(mSelectingTolerance);
+            
             if (geoMap.Layers.Count == 0)
             {
                 return;
             }
-            else
+
+            GeoRectangle sBox = GetMapRectByTwoPoints(mStartMouseLocation, e.Location);
+            double tolerance = geoMap.ToMapDistance(mSelectingTolerance);
+            GeoMapLayer sLayer = GetSelectableLayer();
+            if(sLayer == null)
             {
-                GeoMapLayer sLayer = geoMap.Layers.GetItem(0);
+                return;
+            }
 
-                GeoFields sFields = sLayer.AttributeFields;
-                int sFieldCount = sFields.Count;
-                string[] sFieldString = new string[sFieldCount];
-                for (int i = 0; i < sFieldCount; i++)
+            GeoFeatures sFeatures = sLayer.SearchByBox(sBox, tolerance, 全包含选择.Checked);
+            sLayer.SelectedFeatures.Clear();
+            sLayer.SelectedFeatures.AddRange(sFeatures.ToArray());
+
+            DrawIdentifyFlash(sFeatures);
+            ShowIdentifyMessage(sFeatures, sLayer);
+        }
+
+        private void DrawIdentifyFlash(GeoFeatures sFeatures)
+        {
+            int sSelFeatureCount = sFeatures.Count;
+            if (sSelFeatureCount > 0)
+            {
+                GeoGeometry[] sGeometryies = new GeoGeometry[sSelFeatureCount];
+                for (int i = 0; i < sSelFeatureCount; i++)
                 {
-                    sFieldString[i] = sFields.GetItem(i).Name;
+                    sGeometryies[i] = sFeatures.GetItem(i).Geometry;
                 }
-
-                GeoFeatures sFeatures = sLayer.SearchByBox(sBox, tolerance);
-                // 弹出窗体
-                int sSelFeatureCount = sFeatures.Count;
-                if (sSelFeatureCount > 0)
-                {
-                    GeoGeometry[] sGeometryies = new GeoGeometry[sSelFeatureCount];
-                    GeoAttributes[] sGeoAttributes = new GeoAttributes[sSelFeatureCount];
-                    for (int i = 0; i < sSelFeatureCount; i++)
-                    {
-                        sGeometryies[i] = sFeatures.GetItem(i).Geometry;
-                        sGeoAttributes[i] = sFeatures.GetItem(i).Attributes;
-                    }
-
-                    string info = "";
-                    for (int i = 0; i < sSelFeatureCount; i++)
-                    {
-                        int sAttributeCount = sGeoAttributes[i].Count;
-                        for (int j = 0; j < sAttributeCount; j++)
-                        {
-                            info += sFieldString[j] + "：" + sGeoAttributes[i].GetItem(j).ToString() + '\n';
-                        }
-                        info += "\n";
-                    }
-                    MessageBox.Show(info, "属性信息", MessageBoxButtons.OK);
-
-                    // geoMap.FlashShapes(sGeometryies, 3, 800);
-                }
+                geoMap.FlashShapes(sGeometryies, 1, 800);
             }
         }
+
+        /// <summary>
+        /// 显示属性信息窗口
+        /// </summary>
+        /// <param name="sFeatures"></param>
+        private void ShowIdentifyMessage(GeoFeatures sFeatures, GeoMapLayer sLayer)
+        {
+            GeoFields sFields = sLayer.AttributeFields;
+            int sFieldCount = sFields.Count;
+            string[] sFieldString = new string[sFieldCount];
+            for (int i = 0; i < sFieldCount; i++)
+            {
+                sFieldString[i] = sFields.GetItem(i).Name;
+            }
+            // 弹出窗体
+            int sSelFeatureCount = sFeatures.Count;
+            if (sSelFeatureCount > 0)
+            {
+                GeoGeometry[] sGeometryies = new GeoGeometry[sSelFeatureCount];
+                GeoAttributes[] sGeoAttributes = new GeoAttributes[sSelFeatureCount];
+                for (int i = 0; i < sSelFeatureCount; i++)
+                {
+                    sGeometryies[i] = sFeatures.GetItem(i).Geometry;
+                    sGeoAttributes[i] = sFeatures.GetItem(i).Attributes;
+                }
+
+                string info = "";
+                for (int i = 0; i < sSelFeatureCount; i++)
+                {
+                    int sAttributeCount = sGeoAttributes[i].Count;
+                    for (int j = 0; j < sAttributeCount; j++)
+                    {
+                        info += sFieldString[j] + "：" + sGeoAttributes[i].GetItem(j).ToString() + '\n';
+                    }
+                    info += "\n";
+                }
+                MessageBox.Show(info, "属性信息", MessageBoxButtons.OK);
+
+                // geoMap.FlashShapes(sGeometryies, 3, 800);
+            }
+        }
+
         private void OnSelect_MouseUp(MouseEventArgs e)
         {
             if (mIsInSelect == false)
@@ -1319,7 +1353,7 @@ namespace DEETU.Source.Window
             mIsInSelect = false;
             GeoRectangle sBox = GetMapRectByTwoPoints(mStartMouseLocation, e.Location);
             double tolerance = geoMap.ToMapDistance(mSelectingTolerance);
-            geoMap.SelectByBox(sBox, tolerance, 0);
+            geoMap.SelectByBox(sBox, tolerance, 全包含选择.Checked);
             geoMap.RedrawTrackingShapes();
         }
 
@@ -1458,13 +1492,31 @@ namespace DEETU.Source.Window
             e.Effect = DragDropEffects.Move;
         }
 
-
-
-
-
         #endregion
 
         #region 私有函数
+
+        private void LoadRecentUsedFiles()
+        {
+            try
+            {
+                using (StreamReader sr = new StreamReader("./recent_used_files.txt"))
+                {
+                    while (sr.EndOfStream == false)
+                    {
+                        TreeNode sNode = new TreeNode();
+                        sNode.Text = sr.ReadLine();
+                        sNode.Tag = sr.ReadLine();
+                        FileTreeView.Nodes[0].Nodes.Add(sNode);
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+
+            }
+
+        }
         //初始化符号
         private void InitializeSymbols()
         {
@@ -1696,6 +1748,8 @@ namespace DEETU.Source.Window
         {
             if (mEditingGeometry == null)
                 return;
+            if (mMapOpStyle != GeoMapOpStyleEnum.Edit)
+                return;
             if (mEditingGeometry.GetType() == typeof(GeoMultiPolygon))
             {
                 GeoMultiPolygon sMultiPolygon = (GeoMultiPolygon)mEditingGeometry;
@@ -1727,36 +1781,15 @@ namespace DEETU.Source.Window
         // 取消工具栏对应按钮的选中状态
         private void UncheckToolStrip(GeoMapOpStyleEnum mapOpStyle)
         {
-            switch (mapOpStyle)
-            {
-                case GeoMapOpStyleEnum.ZoomIn:
-                    zoomInToolStripButton.Checked = false;
-                    break;
-                case GeoMapOpStyleEnum.ZoomOut:
-                    zoomOutToolStripButton.Checked = false;
-                    break;
-                case GeoMapOpStyleEnum.Pan:
-                    panToolStripButton.Checked = false;
-                    break;
-                case GeoMapOpStyleEnum.Identify:
-                    identifyToolStripButton.Checked = false;
-                    break;
-                case GeoMapOpStyleEnum.Select:
-                    交叉选中ToolStripMenuItem.Checked = false;
-                    break;
-                case GeoMapOpStyleEnum.Move:
-                    MoveItemToolStripButton.Checked = false;
-                    break;
-                case GeoMapOpStyleEnum.Edit:
-                    EditFeatureToolStripButton.Checked = false;
-                    btnEndEdit_Click(null, null);
-                    break;
-                case GeoMapOpStyleEnum.Sketch:
-                    AddFeatureToolStripButton.Checked = false;
-                    break;
-                default:
-                    break;
-            }
+            SetEditing();
+
+            zoomInToolStripButton.Checked = false;
+            zoomOutToolStripButton.Checked = false;
+            panToolStripButton.Checked = false;
+            identifyToolStripButton.Checked = false;
+            MoveItemToolStripButton.Checked = false;
+            EditFeatureToolStripButton.Checked = false;
+            AddFeatureToolStripButton.Checked = false;
         }
 
         /// <summary>
@@ -1780,7 +1813,7 @@ namespace DEETU.Source.Window
                     identifyToolStripButton.Checked = true;
                     break;
                 case GeoMapOpStyleEnum.Select:
-                    交叉选中ToolStripMenuItem.Checked = true;
+                    //交叉选中ToolStripMenuItem.Checked = true;
                     break;
                 case GeoMapOpStyleEnum.Move:
                     MoveItemToolStripButton.Checked = true;
@@ -1872,6 +1905,9 @@ namespace DEETU.Source.Window
             {
                 InsertTreeNode(geoMap.Layers.GetItem(i), i);
             }
+            // 在更新树的同时更新选中的节点
+            if (mCurrentLayerNode != null)
+                mCurrentLayerNode = layerTreeView.Nodes[mCurrentLayerNode.Index];
         }
 
         // 这个函数是为了显示图层渲染方式
@@ -2029,6 +2065,21 @@ namespace DEETU.Source.Window
             粘贴要素ToolStripMenuItem.Enabled = mIsEditing;
             撤销操作ToolStripMenuItem.Enabled = mIsEditing;
             重做操作ToolStripMenuItem.Enabled = mIsEditing;
+
+            if (mIsEditing)
+            {
+                mMapOpStyle = GeoMapOpStyleEnum.Select;
+                this.Cursor = new Cursor("./icons/EditSelect.ico");
+                startEditToolStripButton.Image = new Bitmap("./icons/edit_off.png");
+                startEditToolStripButton.ToolTipText = "结束编辑";
+            }
+            else
+            {
+                startEditToolStripButton.Image = new Bitmap("./icons/edit.png");
+                startEditToolStripButton.ToolTipText = "开始编辑";
+            }
+
+
         }
         #endregion
 
@@ -2132,11 +2183,13 @@ namespace DEETU.Source.Window
         private void 打开属性表ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             GeoMapLayer layer = mCurrentLayerNode.Tag as GeoMapLayer;
-            AttributeTableForm attributeForm = new AttributeTableForm(layer);
+            AttributeTableForm attributeForm = new AttributeTableForm(layer, mIsEditing);
             attributeForm.MapRedraw += AttributeForm_MapRedraw;
             attributeForm.LayerQuery += ExpressionForm_LayerQuery;
+            attributeForm.MapEditStatusChanged += AttributeForm_MapEditStatusChanged;
             attributeForm.Show();
         }
+
 
         #endregion
 
@@ -2156,6 +2209,13 @@ namespace DEETU.Source.Window
         private void ExpressionForm_LayerQuery(object sender, GeoMapLayer layer, string expression, GeoSelectionModeConstant selectionMode)
         {
             QueryExpressionLayer(layer, expression, selectionMode);
+        }
+
+        private void AttributeForm_MapEditStatusChanged(object sender, bool status)
+        {
+            btnSelect_Click(sender, new EventArgs());
+            mIsEditing = status;
+            SetEditing();
         }
 
         #endregion
@@ -2197,8 +2257,159 @@ namespace DEETU.Source.Window
             _logging = form.logging;
         }
 #endif
+        private void LoadLayerFile(string sFileName)
+        {
+            string suffix = sFileName.Split('.')[1];
+#if DEBUG
+            logging = suffix;
+#endif
+            switch (suffix)
+            {
+                case "lay":
+                    {
+                        try
+                        {
+                            FileStream sStream = new FileStream(sFileName, FileMode.Open);
+                            BinaryReader sr = new BinaryReader(sStream);
+                            GeoMapLayer sLayer = GeoDataIOTools.LoadMapLayer(sr);
+                            sLayer.Name = sFileName.Split('\\').Last().Split('.').First();
+                            geoMap.Layers.Add(sLayer);
+                            if (geoMap.Layers.Count == 1)
+                            {
+                                geoMap.FullExtent();
+                            }
+                            else
+                            {
+                                geoMap.RedrawMap();
+                            }
+                            sStream.Dispose();
+                            sr.Dispose();
+
+                            UpdateTreeView();
+                            TreeNodeCollection sCollection = FileTreeView.Nodes[0].Nodes;
+                            for (int j = 0; j < sCollection.Count; j++)
+                            {
+                                if (sCollection[j].Text == sFileName.Split('\\').Last())
+                                    return;
+                            }
+                            TreeNode sTreeNode = new TreeNode();
+                            sTreeNode.Text = sFileName.Split('\\').Last();
+                            sTreeNode.Tag = sFileName;
+                            //MessageBox.Show(sTreeNode.Tag.ToString());
+                            FileTreeView.Nodes[0].Nodes.Insert(0, sTreeNode);
+                            if (FileTreeView.Nodes[0].Nodes.Count >= 8)
+                                FileTreeView.Nodes[0].Nodes.RemoveAt(7);
+                            FileTreeView.Update();
+                        }
+                        catch (Exception error)
+                        {
+                            MessageBox.Show(error.ToString());
+                        }
+                        break;
+                    }
+                case "db":
+                    {
+                        try
+                        {
+                            GeoLayers sLayers = new GeoLayers();
+                            GeoDatabaseIOTools.LoadGeoProject(sLayers, sFileName);
+                            GeoMapLayer sLayer = sLayers.GetItem(0);
+                            sLayer.Name = sFileName.Split('\\').Last().Split('.').First();
+                            geoMap.Layers.Add(sLayer);
+                            if (geoMap.Layers.Count == 1)
+                            {
+                                geoMap.FullExtent();
+                            }
+                            else
+                            {
+                                geoMap.RedrawMap();
+                            }
+                            UpdateTreeView();
+                            TreeNodeCollection sCollection = FileTreeView.Nodes[0].Nodes;
+                            for (int j = 0; j < sCollection.Count; j++)
+                            {
+                                if (sCollection[j].Text == sFileName.Split('\\').Last())
+                                    return;
+                            }
+                            TreeNode sTreeNode = new TreeNode();
+                            sTreeNode.Text = sFileName.Split('\\').Last();
+                            sTreeNode.Tag = sFileName;
+                            //MessageBox.Show(sTreeNode.Tag.ToString());
+                            FileTreeView.Nodes[0].Nodes.Insert(0, sTreeNode);
+                            if (FileTreeView.Nodes[0].Nodes.Count >= 8)
+                                FileTreeView.Nodes[0].Nodes.RemoveAt(7);
+                            FileTreeView.Update();
+                        }
+                        catch (Exception error)
+                        {
+                            MessageBox.Show(error.ToString());
+                        }
+                        break;
+                    }
+                case "shp":
+                    {
+                        try
+                        {
+                            GeoMapLayer sLayer = GeoShpIOTools.ReadSHPFile(sFileName);
+                            sLayer.Name = sFileName.Split('\\').Last().Split('.').First();
+                            char[] path = sFileName.ToCharArray();
+                            if (path.Length != 0)
+                            {
+                                path[path.Length - 1] = 'f';
+                                path[path.Length - 2] = 'b';
+                                path[path.Length - 3] = 'd';
+
+                                GeoShpIOTools.ReadDBFFile(new string(path), sLayer);
+                            }
+                            geoMap.Layers.Add(sLayer);
+                            if (geoMap.Layers.Count == 1)
+                            {
+                                geoMap.FullExtent();
+                            }
+                            else
+                            {
+                                geoMap.RedrawMap();
+                            }
+                            UpdateTreeView();
+                            TreeNodeCollection sCollection = FileTreeView.Nodes[0].Nodes;
+                            for (int j = 0; j < sCollection.Count; j++)
+                            {
+                                if (sCollection[j].Text == sFileName.Split('\\').Last())
+                                    return;
+                            }
+                            TreeNode sTreeNode = new TreeNode();
+                            sTreeNode.Text = sFileName.Split('\\').Last();
+                            sTreeNode.Tag = sFileName;
+                            //MessageBox.Show(sTreeNode.Tag.ToString());
+                            FileTreeView.Nodes[0].Nodes.Insert(0,sTreeNode);
+                            if (FileTreeView.Nodes[0].Nodes.Count >= 8)
+                                FileTreeView.Nodes[0].Nodes.RemoveAt(7);
+                            FileTreeView.Update();
+                        }
+                        catch (Exception error)
+                        {
+                            MessageBox.Show(error.ToString());
+                        }
+                        break; 
+                    }
+                default:
+                    Debug.Assert(false);
+                    break;
+            }
+            
+            using (System.IO.StreamWriter file = new System.IO.StreamWriter("./recent_used_files.txt"))
+            {
+                foreach (TreeNode sNode in FileTreeView.Nodes[0].Nodes)
+                {
+                    file.WriteLine(sNode.Text);
+                    file.WriteLine(sNode.Tag.ToString());
+                }
+            }
+        }
         private void btnLoadLayerFile_Click(object sender, EventArgs e)
         {
+            var crs = new GeoCoordinateReferenceSystem(GeographicCrsType.Beijing1954,ProjectedCrsType.Lambert2SP);
+            
             // 获取文件名
             OpenFileDialog sDialog = new OpenFileDialog();
             string sFileName = "";
@@ -2212,31 +2423,8 @@ namespace DEETU.Source.Window
                 sDialog.Dispose();
                 return;
             }
-
-            try
-            {
-                FileStream sStream = new FileStream(sFileName, FileMode.Open);
-                BinaryReader sr = new BinaryReader(sStream);
-                GeoMapLayer sLayer = GeoDataIOTools.LoadMapLayer(sr);
-                sLayer.Name = sFileName.Split('\\').Last().Split('.').First();
-                geoMap.Layers.Add(sLayer);
-                if (geoMap.Layers.Count == 1)
-                {
-                    geoMap.FullExtent();
-                }
-                else
-                {
-                    geoMap.RedrawMap();
-                }
-                sStream.Dispose();
-                sr.Dispose();
-
-                UpdateTreeView();
-            }
-            catch (Exception error)
-            {
-                MessageBox.Show(error.ToString());
-            }
+            LoadLayerFile(sFileName);
+            
         }
         /// <summary>
         /// 读取shp文件选择界面
@@ -2253,34 +2441,7 @@ namespace DEETU.Source.Window
             {
                 sFileName = sOpenFileDialog.FileName;
                 sOpenFileDialog.Dispose();
-                try
-                {
-                    GeoMapLayer sLayer = GeoShpIOTools.ReadSHPFile(sFileName);
-                    sLayer.Name = sFileName.Split('\\').Last().Split('.').First();
-                    char[] path = sOpenFileDialog.FileName.ToCharArray();
-                    if (path.Length != 0)
-                    {
-                        path[path.Length - 1] = 'f';
-                        path[path.Length - 2] = 'b';
-                        path[path.Length - 3] = 'd';
-
-                        GeoShpIOTools.ReadDBFFile(new string(path), sLayer);
-                    }
-                    geoMap.Layers.Add(sLayer);
-                    if (geoMap.Layers.Count == 1)
-                    {
-                        geoMap.FullExtent();
-                    }
-                    else
-                    {
-                        geoMap.RedrawMap();
-                    }
-                    UpdateTreeView();
-                }
-                catch (Exception error)
-                {
-                    MessageBox.Show(error.ToString());
-                }
+                LoadLayerFile(sFileName);
             }
             else
             {
@@ -2300,27 +2461,7 @@ namespace DEETU.Source.Window
             {
                 sFileName = sOpenFileDialog.FileName;
                 sOpenFileDialog.Dispose();
-                try
-                {
-                    GeoLayers sLayers = new GeoLayers();
-                    GeoDatabaseIOTools.LoadGeoProject(sLayers, sFileName);
-                    GeoMapLayer sLayer = sLayers.GetItem(0);
-                    sLayer.Name = sFileName.Split('\\').Last().Split('.').First();
-                    geoMap.Layers.Add(sLayer);
-                    if (geoMap.Layers.Count == 1)
-                    {
-                        geoMap.FullExtent();
-                    }
-                    else
-                    {
-                        geoMap.RedrawMap();
-                    }
-                    UpdateTreeView();
-                }
-                catch (Exception error)
-                {
-                    MessageBox.Show(error.ToString());
-                }
+                LoadLayerFile(sFileName);
             }
             else
             {
@@ -2332,7 +2473,10 @@ namespace DEETU.Source.Window
 
         private void RemoveItemToolStripButton_Click(object sender, EventArgs e)
         {
-
+            if (mIsEditing == false)
+            {
+                return;
+            }
             var layer = GetSelectableLayer();
             if (layer.SelectedFeatures.Count != 0)
                 layer = NewUndo(layer);
@@ -2342,7 +2486,7 @@ namespace DEETU.Source.Window
             layer.Features.RemoveRange(selectedFeatures.ToArray());
             selectedFeatures.Clear();
             geoMap.RedrawMap();
-            this.Cursor = Cursors.Default;
+            this.Cursor = new Cursor("./icons/EditSelect.ico");
         }
 
         private void uiPanel3_DoubleClick(object sender, EventArgs e)
@@ -2358,6 +2502,10 @@ namespace DEETU.Source.Window
             if (mMapOpStyle == GeoMapOpStyleEnum.Sketch)
             {
                 btnEndPart_Click(sender, e);
+            }
+            else if (mMapOpStyle == GeoMapOpStyleEnum.Select)
+            {
+
             }
         }
 
@@ -2416,6 +2564,7 @@ namespace DEETU.Source.Window
             if (mMapOpStyle == GeoMapOpStyleEnum.Select)
             {
                 var sLayer = GetSelectableLayer();
+                sLayer = NewUndo(sLayer);
                 var features = sLayer.SelectedFeatures;
                 mItemsForCopy.Clear();
                 foreach(var feature in features.ToArray())
@@ -2433,6 +2582,7 @@ namespace DEETU.Source.Window
             if (mMapOpStyle == GeoMapOpStyleEnum.Select)
             {
                 var sLayer = GetSelectableLayer();
+                sLayer = NewUndo(sLayer);
                 sLayer.ClearSelection();
                 double sDeltaX = geoMap.ToMapDistance(20);
                 double sDeltaY = geoMap.ToMapDistance(20);
@@ -2484,6 +2634,17 @@ namespace DEETU.Source.Window
             }
             geoMap.Layers.Replace(undo_layers[undo_index].Item2, undo_layers[undo_index].Item1);
             undo_index--;
+
+            if (undo_index == -1)
+            {
+                // 此时无法进行撤销
+                撤销ToolStripButton.Enabled = false;
+                撤销操作ToolStripMenuItem.Enabled = false;
+            }
+
+            重做ToolStripButton.Enabled = true;
+            重做操作ToolStripMenuItem.Enabled = true;
+            
             geoMap.RedrawMap();
         }
 
@@ -2513,17 +2674,18 @@ namespace DEETU.Source.Window
             var desLayer = srcLayer.Clone();
             geoMap.Layers.Replace(srcLayer, desLayer);
             desLayer.Selectable = true;
-           
+            
             undo_layers.Add((srcLayer, desLayer));
+            UpdateTreeView();
             return desLayer;
         }
 
-        private void 复制要素ToolStripButton_Click(object sender, EventArgs e)
+        private void 复制要素_Click(object sender, EventArgs e)
         {
             Copy();
         }
 
-        private void 粘贴要素ToolStripButton_Click(object sender, EventArgs e)
+        private void 粘贴要素_Click(object sender, EventArgs e)
         {
             Paste();
         }
@@ -2607,13 +2769,55 @@ namespace DEETU.Source.Window
             }
         }
 
-        private void 剪切要素ToolStripButton_Click(object sender, EventArgs e)
+        private void FileTreeView_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
+        {
+            if (e.Node.Level == 0) return;//双击父节点返回
+            string path = e.Node.Tag.ToString();
+#if DEBUG
+            logging = path;
+#endif
+            if (File.Exists(path))
+            {
+                LoadLayerFile(path);
+            }
+        }
+
+        private void 撤销_Click(object sender, EventArgs e)
+        {
+            Undo();
+        }
+
+        private void 重做_Click(object sender, EventArgs e)
+        {
+            Redo();
+        }
+
+        private void 选择模式更改_Click(object sender, EventArgs e)
+        {
+            if (sender == 交叉选择 || sender == 交叉选择菜单)
+            {
+                全包含选择菜单.Checked = false;
+                全包含选择.Checked = false;
+                交叉选择.Checked = true;
+                交叉选择菜单.Checked = true;
+                return;
+            }
+            else if (sender == 全包含选择 || sender == 全包含选择菜单)
+            {
+                全包含选择菜单.Checked = true;
+                全包含选择.Checked = true;
+                交叉选择.Checked = false;
+                交叉选择菜单.Checked = false;
+                return;
+            }
+        }
+
+        private void 剪切要素_Click(object sender, EventArgs e)
         {
             Cut();
         }
 
      
-
         private void MainPage_KeyUp(object sender, KeyEventArgs e)
         {
 #if DEBUG

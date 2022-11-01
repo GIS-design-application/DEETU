@@ -11,22 +11,27 @@ using DEETU.Core;
 using DEETU.Map;
 using DEETU.IO;
 using DEETU.Tool;
+using DEETU.Geometry;
 
 namespace DEETU.Source.Window
 {
     public partial class AttributeTableForm : UIForm
     {
         #region 字段
-        private GeoMapLayer mLayer;       
+        private GeoMapLayer mLayer;
+        bool mIsEditing = false;
 
         #endregion
-        public AttributeTableForm(GeoMapLayer layer)
+        public AttributeTableForm(GeoMapLayer layer, bool isEditing)
         {
             InitializeComponent();
             mLayer = layer;
+            mIsEditing = isEditing;
 
             InitializeFormPage();
             InitializeGridPage();
+
+            SetEdit();
         }
 
         #region 事件处理函数
@@ -78,7 +83,10 @@ namespace DEETU.Source.Window
 
         private void editToolStripButton_Click(object sender, EventArgs e)
         {
-
+            mIsEditing = !mIsEditing;
+            startEditToolStripButton.Checked = mIsEditing;
+            MapEditStatusChanged?.Invoke(this, mIsEditing);
+            SetEdit();
         }
 
         private void saveEditToolStripButton_Click(object sender, EventArgs e)
@@ -88,12 +96,24 @@ namespace DEETU.Source.Window
 
         private void addFeatureToolStripButton_Click(object sender, EventArgs e)
         {
-
+            GeoFeature newFeature = mLayer.GetNewFeature();
+            mLayer.Features.Add(newFeature);
+            ReloadPages();
         }
 
         private void removeFeatureToolStripButton_Click(object sender, EventArgs e)
         {
+            if (mLayer.SelectedFeatures.Count < 0)
+            {
+                UIMessageBox.ShowError("请选择图层", false);
+            }
 
+            for (int i = 0; i < mLayer.SelectedFeatures.Count; i++)
+            {
+                mLayer.Features.Remove(mLayer.SelectedFeatures.GetItem(i));
+            }
+            ReloadPages();
+            MapRedraw?.Invoke(this);
         }
 
         private void addFieldStripButton_Click(object sender, EventArgs e)
@@ -131,12 +151,13 @@ namespace DEETU.Source.Window
             // recover selectedChanged
             featureList.SelectedIndexChanged += featureList_SelectedIndexChanged;
             featureList.Items[0].Selected = true;
+            MapRedraw?.Invoke(this);
         }
 
         private void removeSelectToolStripButton_Click(object sender, EventArgs e)
         {
             // ban selectedChanged
-            featureList.SelectedIndexChanged -= featureList_SelectedIndexChanged;
+            //featureList.SelectedIndexChanged -= featureList_SelectedIndexChanged;
             for (int i = 1; i < featureList.Items.Count; i++)
             {
                 featureList.Items[i].Selected = false;
@@ -182,6 +203,10 @@ namespace DEETU.Source.Window
             for (int i = 0; i < features.Count; i++)
             {
                 ListViewItem item = new ListViewItem(features.GetItem(i).Attributes.GetItem(0).ToString());
+                if (item.Text.IsNullOrEmpty())
+                {
+                    item.Text = "Untitled";
+                }
                 item.Tag = features.GetItem(i);
                 item.ImageIndex = 0;
 
@@ -221,7 +246,8 @@ namespace DEETU.Source.Window
             {
                 featureDataGridView.AddColumn(fields.GetItem(i).AliaName, null);
                 featureDataGridView.Columns[i].DefaultCellStyle.Font = (new Font("微软雅黑", 10f));
-                featureDataGridView.Columns[i].ReadOnly = true;
+                //featureDataGridView.Columns[i].ReadOnly = true;
+                featureDataGridView.Columns[i].SortMode = DataGridViewColumnSortMode.Automatic;
             }
 
             GeoFeatures features = mLayer.Features;
@@ -267,6 +293,24 @@ namespace DEETU.Source.Window
                 textBox.Text = feature.Attributes.GetItem(i).ToString();
             }
         }
+
+        private void SetEdit()
+        {
+            cutToolStripButton.Enabled = mIsEditing;
+            pasteToolStripButton.Enabled = mIsEditing;
+            copyStripButton.Enabled = mIsEditing;
+            addFeatureToolStripButton.Enabled = mIsEditing;
+            removeFeatureToolStripButton.Enabled = mIsEditing;
+            addFieldStripButton.Enabled = mIsEditing;
+            removeFieldToolStripButton.Enabled = mIsEditing;
+
+            featureDataGridView.ReadOnly = !mIsEditing;
+            for (int i = 0; i < detailTable.RowCount; i++)
+            {
+                UITextBox textBox = detailTable.GetControlFromPosition(1, i) as UITextBox;
+                textBox.ReadOnly = !mIsEditing;
+            }
+        }
         #endregion
 
         #region 事件
@@ -277,15 +321,29 @@ namespace DEETU.Source.Window
         /// <param name="sender"></param>
         public event MapRedrawHandle MapRedraw;
 
-        public delegate void MapEditStartHandle(object sender);
+        public delegate void MapEditStatusChangedHandle(object sender, bool status);
         /// <summary>
         /// Set MainPage MapControl Start editding;
         /// </summary>
-        public event MapEditStartHandle MapEditStart;
+        public event MapEditStatusChangedHandle MapEditStatusChanged;
 
         public delegate void LayerQueryHandler(object sender, GeoMapLayer layer, string expression, GeoSelectionModeConstant selectionMode);
         public event LayerQueryHandler LayerQuery;
         #endregion
 
+        private void cutToolStripButton_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void copyStripButton_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void pasteToolStripButton_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

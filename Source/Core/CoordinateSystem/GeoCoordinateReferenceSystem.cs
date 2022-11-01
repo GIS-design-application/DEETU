@@ -49,6 +49,10 @@ namespace DEETU.Core
         }
         public static bool operator !=(GeoCoordinateReferenceSystem crs1, GeoCoordinateReferenceSystem crs2)
         {
+            if ((object)crs2 == null)
+            {
+                return true;
+            }
             if (crs1.GeographicCrs == crs2.GeographicCrs && crs1.ProjectedCrs == crs2.ProjectedCrs)
                 return false;
             return true;
@@ -100,6 +104,19 @@ namespace DEETU.Core
         #endregion
 
         #region 方法
+
+
+        public GeoCoordinateReferenceSystem Clone ()
+        {
+
+            var desCrs = new GeoCoordinateReferenceSystem();
+            desCrs._ProjectedCrs = ProjectedCrs;
+            desCrs._GeographicCrs = GeographicCrs;
+            desCrs._GeographicParameters = new Dictionary<string, string>(_GeographicParameters);
+            desCrs._ProjectedParameters = new Dictionary<string, string>(_ProjectedParameters);
+            desCrs._Unit = _Unit;
+            return desCrs;
+        }
         /// <summary>
         /// 设置自定义参数
         /// </summary>

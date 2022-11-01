@@ -210,8 +210,9 @@ namespace DEETU.Map
         /// </summary>
         /// <param name="selectingBox"></param>
         /// <param name="tolerance"></param>
+        /// <param name="containSelect">是否为包含选择</param>
         /// <returns></returns>
-        public GeoFeatures SearchByBox(GeoRectangle selectingBox, double tolerance)
+        public GeoFeatures SearchByBox(GeoRectangle selectingBox, double tolerance, bool containSelect)
         {
             // 说明，仅考虑一种选择模式
             GeoFeatures sSelection = null;
@@ -224,7 +225,7 @@ namespace DEETU.Map
             else
             {
                 // 按框选，忽略容限
-                sSelection = SearchFeaturesByBox(selectingBox);
+                sSelection = SearchFeaturesByBox(selectingBox, containSelect);
             }
             return sSelection;
         }
@@ -274,8 +275,10 @@ namespace DEETU.Map
                 newLayer._Renderer = _Renderer.Clone(); 
             if (_LabelRenderer != null)
                 newLayer._LabelRenderer = _LabelRenderer.Clone();
-            //if (Crs != null)
-            //    newLayer.Crs = Crs.Clone();
+            if (Crs != null)
+                newLayer.Crs = Crs.Clone();
+            newLayer._Extent = _Extent;
+
             return newLayer;
         }
         #endregion
@@ -588,7 +591,7 @@ namespace DEETU.Map
         }
 
         //根据矩形盒搜索要素
-        private GeoFeatures SearchFeaturesByBox(GeoRectangle selectingBox)
+        private GeoFeatures SearchFeaturesByBox(GeoRectangle selectingBox, bool containSelect)
         {
             GeoFeatures sSelectedFeatures = new GeoFeatures();
             Int32 sFeatureCount = _Features.Count;
@@ -605,17 +608,38 @@ namespace DEETU.Map
                 else if (_ShapeType == GeoGeometryTypeConstant.MultiPolyline)
                 {
                     GeoMultiPolyline sMultiPolyline = (GeoMultiPolyline)_Features.GetItem(i).Geometry;
-                    if (GeoMapTools.IsMultiPolylinePartiallyWithinBox(sMultiPolyline, selectingBox) == true)
+                    if (containSelect)
                     {
-                        sSelectedFeatures.Add(_Features.GetItem(i));
+                        if(GeoMapTools.IsMultiPolylineWithinBox(sMultiPolyline, selectingBox))
+                        {
+                            sSelectedFeatures.Add(_Features.GetItem(i));
+                        }
                     }
+                    else
+                    {
+                        if (GeoMapTools.IsMultiPolylinePartiallyWithinBox(sMultiPolyline, selectingBox) == true)
+                        {
+                            sSelectedFeatures.Add(_Features.GetItem(i));
+                        }
+                    }
+
                 }
                 else if (_ShapeType == GeoGeometryTypeConstant.MultiPolygon)
                 {
                     GeoMultiPolygon sMultiPolygon = (GeoMultiPolygon)_Features.GetItem(i).Geometry;
-                    if (GeoMapTools.IsMultiPolygonPartiallyWithinBox(sMultiPolygon, selectingBox) == true)
+                    if (containSelect)
                     {
-                        sSelectedFeatures.Add(_Features.GetItem(i));
+                        if (GeoMapTools.IsMultiPolygonWithinBox(sMultiPolygon, selectingBox))
+                        {
+                            sSelectedFeatures.Add(_Features.GetItem(i));
+                        }
+                    }
+                    else
+                    {
+                        if (GeoMapTools.IsMultiPolygonPartiallyWithinBox(sMultiPolygon, selectingBox) == true)
+                        {
+                            sSelectedFeatures.Add(_Features.GetItem(i));
+                        }
                     }
                 }
             }
@@ -665,7 +689,22 @@ namespace DEETU.Map
                     throw new Exception("Invalid value type!");
                 }
             }
-            GeoFeature sFeature = new GeoFeature(_ShapeType, null, sAttributes);
+            GeoGeometry sGeomerty = null;
+            switch (_ShapeType)
+            {
+                case GeoGeometryTypeConstant.Point:
+                    sGeomerty = new GeoPoint();
+                    break;
+                case GeoGeometryTypeConstant.MultiPolyline:
+                    sGeomerty = new GeoMultiPolyline();
+                    break;
+                case GeoGeometryTypeConstant.MultiPolygon:
+                    sGeomerty = new GeoMultiPolygon();
+                    break;
+                default:
+                    break;
+            }
+            GeoFeature sFeature = new GeoFeature(_ShapeType, sGeomerty, sAttributes);
             return sFeature;
         }
 
