@@ -49,7 +49,9 @@ namespace DEETU.Source.Window.LayerAttributes
 
         private void ConformButton_Click(object sender, EventArgs e)
         {
-            mMarkerSymbol = mTempMarkerSymbol;
+            mMarkerSymbol.Size = mTempMarkerSymbol.Size;
+            mMarkerSymbol.Color = mTempMarkerSymbol.Color;
+            mMarkerSymbol.Style = mTempMarkerSymbol.Style;
             (this.Parent.Parent.Parent as EditSimpleSymbolForm).Close();
         }
 

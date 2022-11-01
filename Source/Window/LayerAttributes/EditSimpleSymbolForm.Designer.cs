@@ -35,7 +35,7 @@ namespace DEETU.Source.Window.LayerAttributes
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(14F, 31F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(464, 497);
+            this.ClientSize = new System.Drawing.Size(455, 485);
             this.Name = "EditSimpleSymbolForm";
             this.Style = Sunny.UI.UIStyle.Custom;
             this.Text = "EditSimpleSymbolForm";

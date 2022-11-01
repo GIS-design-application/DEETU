@@ -128,7 +128,7 @@ namespace DEETU.Source.Window
             this.uiPanel1 = new Sunny.UI.UIPanel();
             this.FileTreeView = new Sunny.UI.UITreeView();
             this.uiPanel2 = new Sunny.UI.UIPanel();
-            this.layerTreeView = new Sunny.UI.UITreeView();
+            this.layerTreeView = new System.Windows.Forms.TreeView();
             this.TreeImages = new System.Windows.Forms.ImageList(this.components);
             this.uiPanel3 = new Sunny.UI.UIPanel();
             this.geoMap = new DEETU.Map.GeoMapControl();
@@ -501,7 +501,6 @@ namespace DEETU.Source.Window
             this.剪切要素ToolStripMenuItem.Name = "剪切要素ToolStripMenuItem";
             this.剪切要素ToolStripMenuItem.Size = new System.Drawing.Size(184, 26);
             this.剪切要素ToolStripMenuItem.Text = "剪切要素";
-            this.剪切要素ToolStripMenuItem.Click += new System.EventHandler(this.剪切要素_Click);
             // 
             // 复制要素ToolStripMenuItem
             // 
@@ -658,6 +657,7 @@ namespace DEETU.Source.Window
             // 
             // menuStrip1
             // 
+            this.menuStrip1.GripMargin = new System.Windows.Forms.Padding(2, 2, 0, 2);
             this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.文件ToolStripMenuItem,
@@ -1005,17 +1005,7 @@ namespace DEETU.Source.Window
             this.FileTreeView.Name = "FileTreeView";
             treeNode1.ContextMenuStrip = this.projectContextMenuStrip;
             treeNode1.Name = "节点0";
-            treeNode1.Text = "最近使用的图层";
-            this.FileTreeView.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode1});
-            this.FileTreeView.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
-            this.FileTreeView.SelectedNode = null;
-            this.FileTreeView.Size = new System.Drawing.Size(276, 217);
-            this.FileTreeView.Style = Sunny.UI.UIStyle.Office2010Black;
-            this.FileTreeView.TabIndex = 0;
-            this.FileTreeView.Text = "uiTreeView2";
-            this.FileTreeView.TextAlignment = System.Drawing.ContentAlignment.BottomRight;
-            this.FileTreeView.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.FileTreeView_NodeMouseDoubleClick);
+            treeNode1.Text = "工程目录";
             // 
             // uiPanel2
             // 
@@ -1037,8 +1027,8 @@ namespace DEETU.Source.Window
             // layerTreeView
             // 
             this.layerTreeView.AllowDrop = true;
+            this.layerTreeView.CheckBoxes = true;
             this.layerTreeView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.layerTreeView.FillColor = System.Drawing.Color.White;
             this.layerTreeView.Font = new System.Drawing.Font("微软雅黑", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.layerTreeView.ImageIndex = 0;
             this.layerTreeView.ImageList = this.TreeImages;
@@ -1046,20 +1036,18 @@ namespace DEETU.Source.Window
             this.layerTreeView.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.layerTreeView.MinimumSize = new System.Drawing.Size(1, 1);
             this.layerTreeView.Name = "layerTreeView";
-            this.layerTreeView.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
             this.layerTreeView.SelectedImageIndex = 0;
-            this.layerTreeView.SelectedNode = null;
-            this.layerTreeView.ShowLines = true;
+            this.layerTreeView.ShowLines = false;
             this.layerTreeView.ShowNodeToolTips = true;
-            this.layerTreeView.Size = new System.Drawing.Size(276, 290);
-            this.layerTreeView.Style = Sunny.UI.UIStyle.Office2010Black;
+            this.layerTreeView.Size = new System.Drawing.Size(276, 285);
             this.layerTreeView.TabIndex = 0;
             this.layerTreeView.Text = "layerTreeView";
-            this.layerTreeView.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter;
+            this.layerTreeView.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.layerTreeView_AfterCheck);
             this.layerTreeView.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.layerTreeView_ItemDrag);
             this.layerTreeView.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.layerTreeView_NodeMouseClick);
             this.layerTreeView.DragDrop += new System.Windows.Forms.DragEventHandler(this.layerTreeView_DragDrop);
             this.layerTreeView.DragEnter += new System.Windows.Forms.DragEventHandler(this.layerTreeView_DragEnter);
+            this.layerTreeView.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.layerTreeView_MouseDoubleClick);
             // 
             // TreeImages
             // 
@@ -1249,7 +1237,6 @@ namespace DEETU.Source.Window
             this.剪切要素ToolStripButton.Name = "剪切要素ToolStripButton";
             this.剪切要素ToolStripButton.Size = new System.Drawing.Size(24, 24);
             this.剪切要素ToolStripButton.Text = "剪切要素";
-            this.剪切要素ToolStripButton.Click += new System.EventHandler(this.剪切要素_Click);
             // 
             // 复制要素ToolStripButton
             // 
@@ -1359,7 +1346,7 @@ namespace DEETU.Source.Window
 		private System.Windows.Forms.SplitContainer splitContainer2;
 		private Sunny.UI.UIPanel uiPanel1;
 		private Sunny.UI.UIPanel uiPanel2;
-		private Sunny.UI.UITreeView layerTreeView;
+		private System.Windows.Forms.TreeView layerTreeView;
 		private Sunny.UI.UIPanel uiPanel3;
 		private Sunny.UI.UITreeView FileTreeView;
 		private System.Windows.Forms.ToolStripButton newToolStripButton;
