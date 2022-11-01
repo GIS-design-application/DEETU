@@ -43,7 +43,7 @@ namespace DEETU.Source.Window
         {
             nameRichTextBox.Text = mLayer.Name;
             descriptionRichTextBox.Text = mLayer.Description;
-
+            
             if (mLayer.ShapeType == GeoGeometryTypeConstant.Point)           
                 geometryRichTextBox.Text = "Point";
             if (mLayer.ShapeType == GeoGeometryTypeConstant.MultiPolyline)           
@@ -52,13 +52,20 @@ namespace DEETU.Source.Window
                 geometryRichTextBox.Text = "MultiPolygon";
 
             countRichTextBox.Text = mLayer.Features.Count.ToString();
+            if (mLayer.Crs.Type == CrsType.None)
+                crsRichTextBox.Text = "None";
+            if (mLayer.Crs.Type == CrsType.Geographic)
+                crsRichTextBox.Text = mLayer.Crs.GeographicCrs.ToString();
+            if (mLayer.Crs.Type == CrsType.Projected)
+                crsRichTextBox.Text = mLayer.Crs.ProjectedCrs.ToString() + " " + mLayer.Crs.ProjectedCrs.ToString();
 
             double MaxX = mLayer.Extent.MaxX;
             double MaxY = mLayer.Extent.MaxY;
             double MinX = mLayer.Extent.MinX;
             double MinY = mLayer.Extent.MinY;
-            if (MaxX*MaxY*MinX*MinY != 0)
+            if (!(MaxX == 0 && MaxY == 0 && MinX == 0 && MinY == 0)) 
                 extentRichTextBox.Text = String.Format("{0},{1};\n{2},{3}", MinX, MaxX, MinY, MaxY);
+            unitRichTextBox.Text = mLayer.Crs.Unit;
 
             GeoFields fields = mLayer.AttributeFields;
             fieldRichTextBox.Text = fields.Count.ToString();

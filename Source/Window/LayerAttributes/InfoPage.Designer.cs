@@ -75,7 +75,7 @@ namespace DEETU.Source.Window
             this.PagePanel.Controls.Add(this.SourceLine);
             this.PagePanel.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(211)))), ((int)(((byte)(211)))), ((int)(((byte)(211)))));
             this.PagePanel.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
-            this.PagePanel.Size = new System.Drawing.Size(480, 565);
+            this.PagePanel.Size = new System.Drawing.Size(480, 665);
             this.PagePanel.Style = Sunny.UI.UIStyle.Office2010Black;
             // 
             // SourceLine
@@ -151,7 +151,7 @@ namespace DEETU.Source.Window
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(403, 257);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(403, 297);
             this.tableLayoutPanel1.TabIndex = 3;
             // 
             // countRichTextBox
@@ -159,11 +159,11 @@ namespace DEETU.Source.Window
             this.countRichTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.countRichTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.countRichTextBox.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.countRichTextBox.Location = new System.Drawing.Point(103, 234);
+            this.countRichTextBox.Location = new System.Drawing.Point(103, 267);
             this.countRichTextBox.Name = "countRichTextBox";
             this.countRichTextBox.ReadOnly = true;
             this.countRichTextBox.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
-            this.countRichTextBox.Size = new System.Drawing.Size(297, 20);
+            this.countRichTextBox.Size = new System.Drawing.Size(297, 27);
             this.countRichTextBox.TabIndex = 20;
             this.countRichTextBox.Text = "";
             // 
@@ -172,7 +172,7 @@ namespace DEETU.Source.Window
             this.unitRichTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.unitRichTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.unitRichTextBox.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.unitRichTextBox.Location = new System.Drawing.Point(103, 201);
+            this.unitRichTextBox.Location = new System.Drawing.Point(103, 234);
             this.unitRichTextBox.Name = "unitRichTextBox";
             this.unitRichTextBox.ReadOnly = true;
             this.unitRichTextBox.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
@@ -184,9 +184,9 @@ namespace DEETU.Source.Window
             // 
             this.uiLabel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.uiLabel3.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.uiLabel3.Location = new System.Drawing.Point(3, 231);
+            this.uiLabel3.Location = new System.Drawing.Point(3, 264);
             this.uiLabel3.Name = "uiLabel3";
-            this.uiLabel3.Size = new System.Drawing.Size(94, 26);
+            this.uiLabel3.Size = new System.Drawing.Size(94, 33);
             this.uiLabel3.Style = Sunny.UI.UIStyle.Office2010Black;
             this.uiLabel3.TabIndex = 19;
             this.uiLabel3.Text = "要素数目";
@@ -200,8 +200,7 @@ namespace DEETU.Source.Window
             this.extentRichTextBox.Location = new System.Drawing.Point(103, 168);
             this.extentRichTextBox.Name = "extentRichTextBox";
             this.extentRichTextBox.ReadOnly = true;
-            this.extentRichTextBox.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
-            this.extentRichTextBox.Size = new System.Drawing.Size(297, 27);
+            this.extentRichTextBox.Size = new System.Drawing.Size(297, 60);
             this.extentRichTextBox.TabIndex = 17;
             this.extentRichTextBox.Text = "";
             // 
@@ -274,7 +273,7 @@ namespace DEETU.Source.Window
             // 
             this.uiLabel13.Dock = System.Windows.Forms.DockStyle.Fill;
             this.uiLabel13.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.uiLabel13.Location = new System.Drawing.Point(3, 198);
+            this.uiLabel13.Location = new System.Drawing.Point(3, 231);
             this.uiLabel13.Name = "uiLabel13";
             this.uiLabel13.Size = new System.Drawing.Size(94, 33);
             this.uiLabel13.Style = Sunny.UI.UIStyle.Office2010Black;
@@ -324,7 +323,7 @@ namespace DEETU.Source.Window
             this.uiLabel11.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.uiLabel11.Location = new System.Drawing.Point(3, 165);
             this.uiLabel11.Name = "uiLabel11";
-            this.uiLabel11.Size = new System.Drawing.Size(94, 33);
+            this.uiLabel11.Size = new System.Drawing.Size(94, 66);
             this.uiLabel11.Style = Sunny.UI.UIStyle.Office2010Black;
             this.uiLabel11.TabIndex = 11;
             this.uiLabel11.Text = "范围";
@@ -335,10 +334,10 @@ namespace DEETU.Source.Window
             this.uiLine1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.uiLine1.Font = new System.Drawing.Font("微软雅黑", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.uiLine1.Location = new System.Drawing.Point(0, 313);
+            this.uiLine1.Location = new System.Drawing.Point(0, 354);
             this.uiLine1.MinimumSize = new System.Drawing.Size(2, 2);
             this.uiLine1.Name = "uiLine1";
-            this.uiLine1.Size = new System.Drawing.Size(480, 67);
+            this.uiLine1.Size = new System.Drawing.Size(480, 63);
             this.uiLine1.Style = Sunny.UI.UIStyle.Custom;
             this.uiLine1.StyleCustomMode = true;
             this.uiLine1.TabIndex = 4;
@@ -379,7 +378,7 @@ namespace DEETU.Source.Window
             this.fieldDataGridView.EnableHeadersVisualStyles = false;
             this.fieldDataGridView.Font = new System.Drawing.Font("微软雅黑", 12F);
             this.fieldDataGridView.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(140)))), ((int)(((byte)(140)))), ((int)(((byte)(140)))));
-            this.fieldDataGridView.Location = new System.Drawing.Point(3, 386);
+            this.fieldDataGridView.Location = new System.Drawing.Point(3, 423);
             this.fieldDataGridView.Name = "fieldDataGridView";
             this.fieldDataGridView.ReadOnly = true;
             this.fieldDataGridView.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(140)))), ((int)(((byte)(140)))), ((int)(((byte)(140)))));
@@ -399,7 +398,7 @@ namespace DEETU.Source.Window
             this.fieldDataGridView.RowTemplate.Height = 29;
             this.fieldDataGridView.SelectedIndex = -1;
             this.fieldDataGridView.ShowGridLine = true;
-            this.fieldDataGridView.Size = new System.Drawing.Size(474, 150);
+            this.fieldDataGridView.Size = new System.Drawing.Size(474, 230);
             this.fieldDataGridView.StripeOddColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(244)))));
             this.fieldDataGridView.Style = Sunny.UI.UIStyle.Custom;
             this.fieldDataGridView.StyleCustomMode = true;
@@ -408,18 +407,21 @@ namespace DEETU.Source.Window
             // fieldName
             // 
             this.fieldName.HeaderText = "字段名";
+            this.fieldName.MinimumWidth = 6;
             this.fieldName.Name = "fieldName";
             this.fieldName.ReadOnly = true;
             // 
             // fieldAlias
             // 
             this.fieldAlias.HeaderText = "别名";
+            this.fieldAlias.MinimumWidth = 6;
             this.fieldAlias.Name = "fieldAlias";
             this.fieldAlias.ReadOnly = true;
             // 
             // fieldType
             // 
             this.fieldType.HeaderText = "类型";
+            this.fieldType.MinimumWidth = 6;
             this.fieldType.Name = "fieldType";
             this.fieldType.ReadOnly = true;
             // 
@@ -430,7 +432,7 @@ namespace DEETU.Source.Window
             this.fieldRichTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.fieldRichTextBox.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.fieldRichTextBox.ImeMode = System.Windows.Forms.ImeMode.Disable;
-            this.fieldRichTextBox.Location = new System.Drawing.Point(112, 354);
+            this.fieldRichTextBox.Location = new System.Drawing.Point(112, 391);
             this.fieldRichTextBox.Name = "fieldRichTextBox";
             this.fieldRichTextBox.ReadOnly = true;
             this.fieldRichTextBox.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
@@ -443,7 +445,7 @@ namespace DEETU.Source.Window
             this.uiLabel4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.uiLabel4.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.uiLabel4.Location = new System.Drawing.Point(12, 354);
+            this.uiLabel4.Location = new System.Drawing.Point(12, 391);
             this.uiLabel4.Name = "uiLabel4";
             this.uiLabel4.Size = new System.Drawing.Size(102, 26);
             this.uiLabel4.Style = Sunny.UI.UIStyle.Office2010Black;
@@ -453,9 +455,9 @@ namespace DEETU.Source.Window
             // 
             // InfoPage
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 21F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 27F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(480, 600);
+            this.ClientSize = new System.Drawing.Size(480, 700);
             this.Name = "InfoPage";
             this.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
             this.Style = Sunny.UI.UIStyle.Office2010Black;
