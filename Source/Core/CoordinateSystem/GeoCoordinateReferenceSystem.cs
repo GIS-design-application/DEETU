@@ -108,7 +108,10 @@ namespace DEETU.Core
 
         public GeoCoordinateReferenceSystem Clone ()
         {
-            var desCrs = new GeoCoordinateReferenceSystem(_GeographicCrs, _ProjectedCrs);
+
+            var desCrs = new GeoCoordinateReferenceSystem();
+            desCrs._ProjectedCrs = ProjectedCrs;
+            desCrs._GeographicCrs = GeographicCrs;
             desCrs._GeographicParameters = new Dictionary<string, string>(_GeographicParameters);
             desCrs._ProjectedParameters = new Dictionary<string, string>(_ProjectedParameters);
             desCrs._Unit = _Unit;

@@ -122,25 +122,11 @@ namespace DEETU.Geometry
         //计算坐标范围
         private void CalExtent()
         {
-            double sMinX = double.MaxValue, sMaxX = double.MinValue;
-            double sMinY = double.MaxValue, sMaxY = double.MinValue;
-            Int32 sPartCount = _Parts.Count;
-            for (Int32 i = 0; i <= sPartCount - 1; i++)
-            {
-                _Parts.GetItem(i).UpdateExtent();
-                if (_Parts.GetItem(i).MinX < sMinX)
-                    sMinX = _Parts.GetItem(i).MinX;
-                if (_Parts.GetItem(i).MaxX > sMaxX)
-                    sMaxX = _Parts.GetItem(i).MaxX;
-                if (_Parts.GetItem(i).MinY < sMinY)
-                    sMinY = _Parts.GetItem(i).MinY;
-                if (_Parts.GetItem(i).MaxY > sMaxY)
-                    sMaxY = _Parts.GetItem(i).MaxY;
-            }
-            _MinX = sMinX;
-            _MaxX = sMaxX;
-            _MinY = sMinY;
-            _MaxY = sMaxY;
+            _Parts.CalExtent();
+            _MinX = _Parts.MinX;
+            _MaxX = _Parts.MaxX;
+            _MinY = _Parts.MinY;
+            _MaxY = _Parts.MaxY;
         }
 
         #endregion

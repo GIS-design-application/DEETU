@@ -1,3 +1,5 @@
+省会城市.lay
+C:\Users\tian\Desktop\DEETU\图层文件\省会城市.lay
 主要铁路.lay
 C:\Users\zwy99\source\repos\图层文件\主要铁路.lay
 test.db
@@ -10,5 +12,3 @@ C:\Users\zwy99\source\repos\图层文件\国界线Beijing1954.lay
 C:\Users\zwy99\source\repos\图层文件\省会城市Beijing1954.lay
 国界线.lay
 C:\Users\zwy99\source\repos\图层文件\国界线.lay
-省界_region.shp
-C:\Users\zwy99\source\repos\图层文件\省界_region.shp

@@ -151,6 +151,25 @@ namespace DEETU.Source.Window
 
         private void btnSelect_Click(object sender, EventArgs e)
         {
+#if DEBUG
+            logging = sender.Equals(交叉选择).ToString();
+#endif
+            if (sender == 交叉选择 || sender == 交叉选择菜单)
+            {
+                全包含选择菜单.Checked = false;
+                全包含选择.Checked = false;
+                交叉选择.Checked = true;
+                交叉选择菜单.Checked = true;
+                return;
+            } 
+            else if (sender == 全包含选择 || sender == 全包含选择菜单)
+            {
+                全包含选择菜单.Checked = true;
+                全包含选择.Checked = true;
+                交叉选择.Checked = false;
+                交叉选择菜单.Checked = false;
+                return;
+            }
             if (mMapOpStyle != GeoMapOpStyleEnum.Select)
             {
                 UncheckToolStrip(mMapOpStyle);
@@ -161,6 +180,7 @@ namespace DEETU.Source.Window
             else
             {
                 UncheckToolStrip(mMapOpStyle);
+                //btnEndEdit_Click(sender, e);
                 this.Cursor = Cursors.Default;
                 mMapOpStyle = GeoMapOpStyleEnum.None;
             }
@@ -297,8 +317,8 @@ namespace DEETU.Source.Window
             else
             {
                 UncheckToolStrip(mMapOpStyle);
-                mMapOpStyle = GeoMapOpStyleEnum.None;
-                this.Cursor = Cursors.Default;
+                mMapOpStyle = GeoMapOpStyleEnum.Select;
+                this.Cursor = new Cursor("./icons/EditSelect.ico");
             }
 
         }
@@ -332,8 +352,8 @@ namespace DEETU.Source.Window
             {
                 UncheckToolStrip(mMapOpStyle);
                 btnEndSketch_Click(sender, e);
-                mMapOpStyle = GeoMapOpStyleEnum.None;
-                this.Cursor = Cursors.Default;
+                mMapOpStyle = GeoMapOpStyleEnum.Select;
+                this.Cursor = new Cursor("./icons/EditSelect.ico");
             }
 
         }
@@ -489,8 +509,9 @@ namespace DEETU.Source.Window
             if (mMapOpStyle == GeoMapOpStyleEnum.Edit)
             {
                 UncheckToolStrip(mMapOpStyle);
-                this.Cursor = Cursors.Default;
-                mMapOpStyle = GeoMapOpStyleEnum.None;
+                this.Cursor = new Cursor("./icons/EditSelect.ico");
+                mMapOpStyle = GeoMapOpStyleEnum.Select;
+                geoMap.RedrawMap();
                 return;
             }
             this.Cursor = new Cursor("./icons/EditMoveVertex.ico");
@@ -526,7 +547,7 @@ namespace DEETU.Source.Window
             // 取消编辑多边形
             mEditingGeometry = null;
 
-            mMapOpStyle = GeoMapOpStyleEnum.None;
+            mMapOpStyle = GeoMapOpStyleEnum.Select;
 
             // 重绘
             geoMap.RedrawMap();
@@ -683,11 +704,13 @@ namespace DEETU.Source.Window
 
         private void startEditToolStripButton_Click(object sender, EventArgs e)
         {
+
             if (mCurrentLayerNode == null)
             {
                 UIMessageBox.ShowError("请选择图层", false);
                 return;
             }
+
             btnSelect_Click(sender, e);
             mIsEditing = !mIsEditing;
             SetEditing();
@@ -1294,7 +1317,7 @@ namespace DEETU.Source.Window
                     sFieldString[i] = sFields.GetItem(i).Name;
                 }
 
-                GeoFeatures sFeatures = sLayer.SearchByBox(sBox, tolerance);
+                GeoFeatures sFeatures = sLayer.SearchByBox(sBox, tolerance, 全包含选择.Checked);
                 // 弹出窗体
                 int sSelFeatureCount = sFeatures.Count;
                 if (sSelFeatureCount > 0)
@@ -1330,7 +1353,7 @@ namespace DEETU.Source.Window
             mIsInSelect = false;
             GeoRectangle sBox = GetMapRectByTwoPoints(mStartMouseLocation, e.Location);
             double tolerance = geoMap.ToMapDistance(mSelectingTolerance);
-            geoMap.SelectByBox(sBox, tolerance, 0);
+            geoMap.SelectByBox(sBox, tolerance, 全包含选择.Checked);
             geoMap.RedrawTrackingShapes();
         }
 
@@ -1717,6 +1740,8 @@ namespace DEETU.Source.Window
         {
             if (mEditingGeometry == null)
                 return;
+            if (mMapOpStyle != GeoMapOpStyleEnum.Edit)
+                return;
             if (mEditingGeometry.GetType() == typeof(GeoMultiPolygon))
             {
                 GeoMultiPolygon sMultiPolygon = (GeoMultiPolygon)mEditingGeometry;
@@ -1763,14 +1788,13 @@ namespace DEETU.Source.Window
                     identifyToolStripButton.Checked = false;
                     break;
                 case GeoMapOpStyleEnum.Select:
-                    交叉选中ToolStripMenuItem.Checked = false;
+                    //交叉选中ToolStripMenuItem.Checked = false;
                     break;
                 case GeoMapOpStyleEnum.Move:
                     MoveItemToolStripButton.Checked = false;
                     break;
                 case GeoMapOpStyleEnum.Edit:
                     EditFeatureToolStripButton.Checked = false;
-                    btnEndEdit_Click(null, null);
                     break;
                 case GeoMapOpStyleEnum.Sketch:
                     AddFeatureToolStripButton.Checked = false;
@@ -1801,7 +1825,7 @@ namespace DEETU.Source.Window
                     identifyToolStripButton.Checked = true;
                     break;
                 case GeoMapOpStyleEnum.Select:
-                    交叉选中ToolStripMenuItem.Checked = true;
+                    //交叉选中ToolStripMenuItem.Checked = true;
                     break;
                 case GeoMapOpStyleEnum.Move:
                     MoveItemToolStripButton.Checked = true;
@@ -2409,7 +2433,10 @@ namespace DEETU.Source.Window
 
         private void RemoveItemToolStripButton_Click(object sender, EventArgs e)
         {
-
+            if (mIsEditing == false)
+            {
+                return;
+            }
             var layer = GetSelectableLayer();
             if (layer.SelectedFeatures.Count != 0)
                 layer = NewUndo(layer);
@@ -2419,7 +2446,7 @@ namespace DEETU.Source.Window
             layer.Features.RemoveRange(selectedFeatures.ToArray());
             selectedFeatures.Clear();
             geoMap.RedrawMap();
-            this.Cursor = Cursors.Default;
+            this.Cursor = new Cursor("./icons/EditSelect.ico");
         }
 
         private void uiPanel3_DoubleClick(object sender, EventArgs e)
@@ -2561,6 +2588,17 @@ namespace DEETU.Source.Window
             }
             geoMap.Layers.Replace(undo_layers[undo_index].Item2, undo_layers[undo_index].Item1);
             undo_index--;
+
+            if (undo_index == -1)
+            {
+                // 此时无法进行撤销
+                撤销ToolStripButton.Enabled = false;
+                撤销操作ToolStripMenuItem.Enabled = false;
+            }
+
+            重做ToolStripButton.Enabled = true;
+            重做操作ToolStripMenuItem.Enabled = true;
+            
             geoMap.RedrawMap();
         }
 
@@ -2644,6 +2682,16 @@ namespace DEETU.Source.Window
             {
                 LoadLayerFile(path);
             }
+        }
+
+        private void 撤销ToolStripButton_Click(object sender, EventArgs e)
+        {
+            Undo();
+        }
+
+        private void 重做ToolStripButton_Click(object sender, EventArgs e)
+        {
+            Redo();
         }
 
         private void 剪切要素ToolStripButton_Click(object sender, EventArgs e)

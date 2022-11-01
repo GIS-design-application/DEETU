@@ -13,6 +13,8 @@ namespace DEETU.Geometry
     {
         #region 字段
         private List<GeoPoints> _Parts;
+        double _MinX = double.MaxValue, _MaxX = double.MinValue;
+        double _MinY = double.MaxValue, _MaxY = double.MinValue;
         #endregion
 
         #region 构造函数
@@ -38,6 +40,38 @@ namespace DEETU.Geometry
         public List<GeoPoints> Parts
         {
             get { return _Parts; }
+        }
+
+        /// <summary>
+        /// 获取最小X坐标
+        /// </summary>
+        public double MinX
+        {
+            get { return _MinX; }
+        }
+
+        /// <summary>
+        /// 获取最大X坐标
+        /// </summary>
+        public double MaxX
+        {
+            get { return _MaxX; }
+        }
+
+        /// <summary>
+        /// 获取最小Y坐标
+        /// </summary>
+        public double MinY
+        {
+            get { return _MinY; }
+        }
+
+        /// <summary>
+        /// 获取最大Y坐标
+        /// </summary>
+        public double MaxY
+        {
+            get { return _MaxY; }
         }
         #endregion
 
@@ -125,7 +159,37 @@ namespace DEETU.Geometry
             return sParts;
         }
 
+        public GeoRectangle GetEnvelope()
+        {
+            return new GeoRectangle(_MinX, _MaxX, _MinY, _MaxY);
+        }
 
+
+        #endregion
+
+        #region 私有函数
+        public void CalExtent()
+        {
+            double sMinX = double.MaxValue, sMaxX = double.MinValue;
+            double sMinY = double.MaxValue, sMaxY = double.MinValue;
+            Int32 sPartCount = _Parts.Count;
+            for (Int32 i = 0; i <= sPartCount - 1; i++)
+            {
+                _Parts[i].UpdateExtent();
+                if (_Parts[i].MinX < sMinX)
+                    sMinX = _Parts[i].MinX;
+                if (_Parts[i].MaxX > sMaxX)
+                    sMaxX = _Parts[i].MaxX;
+                if (_Parts[i].MinY < sMinY)
+                    sMinY = _Parts[i].MinY;
+                if (_Parts[i].MaxY > sMaxY)
+                    sMaxY = _Parts[i].MaxY;
+            }
+            _MinX = sMinX;
+            _MaxX = sMaxX;
+            _MinY = sMinY;
+            _MaxY = sMaxY;
+        }
         #endregion
     }
 }
