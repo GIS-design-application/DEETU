@@ -665,7 +665,22 @@ namespace DEETU.Map
                     throw new Exception("Invalid value type!");
                 }
             }
-            GeoFeature sFeature = new GeoFeature(_ShapeType, null, sAttributes);
+            GeoGeometry sGeomerty = null;
+            switch (_ShapeType)
+            {
+                case GeoGeometryTypeConstant.Point:
+                    sGeomerty = new GeoPoint();
+                    break;
+                case GeoGeometryTypeConstant.MultiPolyline:
+                    sGeomerty = new GeoMultiPolyline();
+                    break;
+                case GeoGeometryTypeConstant.MultiPolygon:
+                    sGeomerty = new GeoMultiPolygon();
+                    break;
+                default:
+                    break;
+            }
+            GeoFeature sFeature = new GeoFeature(_ShapeType, sGeomerty, sAttributes);
             return sFeature;
         }
 

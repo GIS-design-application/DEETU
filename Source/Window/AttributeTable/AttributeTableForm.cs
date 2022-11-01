@@ -11,6 +11,7 @@ using DEETU.Core;
 using DEETU.Map;
 using DEETU.IO;
 using DEETU.Tool;
+using DEETU.Geometry;
 
 namespace DEETU.Source.Window
 {
@@ -107,12 +108,24 @@ namespace DEETU.Source.Window
 
         private void addFeatureToolStripButton_Click(object sender, EventArgs e)
         {
-
+            GeoFeature newFeature = mLayer.GetNewFeature();
+            mLayer.Features.Add(newFeature);
+            ReloadPages();
         }
 
         private void removeFeatureToolStripButton_Click(object sender, EventArgs e)
         {
+            if (mLayer.SelectedFeatures.Count < 0)
+            {
+                UIMessageBox.ShowError("请选择图层", false);
+            }
 
+            for (int i = 0; i < mLayer.SelectedFeatures.Count; i++)
+            {
+                mLayer.Features.Remove(mLayer.SelectedFeatures.GetItem(i));
+            }
+            ReloadPages();
+            MapRedraw?.Invoke(this);
         }
 
         private void addFieldStripButton_Click(object sender, EventArgs e)
@@ -201,6 +214,10 @@ namespace DEETU.Source.Window
             for (int i = 0; i < features.Count; i++)
             {
                 ListViewItem item = new ListViewItem(features.GetItem(i).Attributes.GetItem(0).ToString());
+                if (item.Text.IsNullOrEmpty())
+                {
+                    item.Text = "Untitled";
+                }
                 item.Tag = features.GetItem(i);
                 item.ImageIndex = 0;
 
@@ -324,5 +341,19 @@ namespace DEETU.Source.Window
         public event LayerQueryHandler LayerQuery;
         #endregion
 
+        private void cutToolStripButton_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void copyStripButton_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void pasteToolStripButton_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
