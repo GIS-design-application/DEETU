@@ -154,22 +154,7 @@ namespace DEETU.Source.Window
 #if DEBUG
             logging = sender.Equals(交叉选择).ToString();
 #endif
-            if (sender == 交叉选择 || sender == 交叉选择菜单)
-            {
-                全包含选择菜单.Checked = false;
-                全包含选择.Checked = false;
-                交叉选择.Checked = true;
-                交叉选择菜单.Checked = true;
-                return;
-            } 
-            else if (sender == 全包含选择 || sender == 全包含选择菜单)
-            {
-                全包含选择菜单.Checked = true;
-                全包含选择.Checked = true;
-                交叉选择.Checked = false;
-                交叉选择菜单.Checked = false;
-                return;
-            }
+
             if (mMapOpStyle != GeoMapOpStyleEnum.Select)
             {
                 UncheckToolStrip(mMapOpStyle);
@@ -702,7 +687,7 @@ namespace DEETU.Source.Window
             geoMap.RedrawMap();
         }
 
-        private void startEditToolStripButton_Click(object sender, EventArgs e)
+        private void 开始编辑_Click(object sender, EventArgs e)
         {
 
             if (mCurrentLayerNode == null)
@@ -711,22 +696,10 @@ namespace DEETU.Source.Window
                 return;
             }
 
-            btnSelect_Click(sender, e);
             mIsEditing = !mIsEditing;
+
+            btnSelect_Click(sender, e);
             SetEditing();
-
-            if (mIsEditing)
-            {
-                startEditToolStripButton.Image = new Bitmap("./icons/edit_off.png");
-                startEditToolStripButton.ToolTipText = "结束编辑";
-            }
-            else
-            {
-                startEditToolStripButton.Image = new Bitmap("./icons/edit.png");
-                startEditToolStripButton.ToolTipText = "开始编辑";
-            }
-
-
         }
         #endregion
 
@@ -1299,53 +1272,63 @@ namespace DEETU.Source.Window
                 return;
             mIsInIdentify = false;
             geoMap.Refresh();
-            GeoRectangle sBox = GetMapRectByTwoPoints(mStartMouseLocation, e.Location);
-            double tolerance = geoMap.ToMapDistance(mSelectingTolerance);
+            
             if (geoMap.Layers.Count == 0)
             {
                 return;
             }
-            else
+
+            GeoRectangle sBox = GetMapRectByTwoPoints(mStartMouseLocation, e.Location);
+            double tolerance = geoMap.ToMapDistance(mSelectingTolerance);
+            GeoMapLayer sLayer = GetSelectableLayer();
+
+            GeoFeatures sFeatures = sLayer.SearchByBox(sBox, tolerance, 全包含选择.Checked);
+            sLayer.SelectedFeatures.Clear();
+            sLayer.SelectedFeatures.AddRange(sFeatures.ToArray());
+            ShowIdentifyMessage(sFeatures, sLayer);
+        }
+
+        /// <summary>
+        /// 显示属性信息窗口
+        /// </summary>
+        /// <param name="sFeatures"></param>
+        private void ShowIdentifyMessage(GeoFeatures sFeatures, GeoMapLayer sLayer)
+        {
+            GeoFields sFields = sLayer.AttributeFields;
+            int sFieldCount = sFields.Count;
+            string[] sFieldString = new string[sFieldCount];
+            for (int i = 0; i < sFieldCount; i++)
             {
-                GeoMapLayer sLayer = geoMap.Layers.GetItem(0);
-
-                GeoFields sFields = sLayer.AttributeFields;
-                int sFieldCount = sFields.Count;
-                string[] sFieldString = new string[sFieldCount];
-                for (int i = 0; i < sFieldCount; i++)
+                sFieldString[i] = sFields.GetItem(i).Name;
+            }
+            // 弹出窗体
+            int sSelFeatureCount = sFeatures.Count;
+            if (sSelFeatureCount > 0)
+            {
+                GeoGeometry[] sGeometryies = new GeoGeometry[sSelFeatureCount];
+                GeoAttributes[] sGeoAttributes = new GeoAttributes[sSelFeatureCount];
+                for (int i = 0; i < sSelFeatureCount; i++)
                 {
-                    sFieldString[i] = sFields.GetItem(i).Name;
+                    sGeometryies[i] = sFeatures.GetItem(i).Geometry;
+                    sGeoAttributes[i] = sFeatures.GetItem(i).Attributes;
                 }
 
-                GeoFeatures sFeatures = sLayer.SearchByBox(sBox, tolerance, 全包含选择.Checked);
-                // 弹出窗体
-                int sSelFeatureCount = sFeatures.Count;
-                if (sSelFeatureCount > 0)
+                string info = "";
+                for (int i = 0; i < sSelFeatureCount; i++)
                 {
-                    GeoGeometry[] sGeometryies = new GeoGeometry[sSelFeatureCount];
-                    GeoAttributes[] sGeoAttributes = new GeoAttributes[sSelFeatureCount];
-                    for (int i = 0; i < sSelFeatureCount; i++)
+                    int sAttributeCount = sGeoAttributes[i].Count;
+                    for (int j = 0; j < sAttributeCount; j++)
                     {
-                        sGeometryies[i] = sFeatures.GetItem(i).Geometry;
-                        sGeoAttributes[i] = sFeatures.GetItem(i).Attributes;
+                        info += sFieldString[j] + "：" + sGeoAttributes[i].GetItem(j).ToString() + '\n';
                     }
-
-                    string info = "";
-                    for (int i = 0; i < sSelFeatureCount; i++)
-                    {
-                        int sAttributeCount = sGeoAttributes[i].Count;
-                        for (int j = 0; j < sAttributeCount; j++)
-                        {
-                            info += sFieldString[j] + "：" + sGeoAttributes[i].GetItem(j).ToString() + '\n';
-                        }
-                        info += "\n";
-                    }
-                    MessageBox.Show(info, "属性信息", MessageBoxButtons.OK);
-
-                    // geoMap.FlashShapes(sGeometryies, 3, 800);
+                    info += "\n";
                 }
+                MessageBox.Show(info, "属性信息", MessageBoxButtons.OK);
+
+                // geoMap.FlashShapes(sGeometryies, 3, 800);
             }
         }
+
         private void OnSelect_MouseUp(MouseEventArgs e)
         {
             if (mIsInSelect == false)
@@ -2038,6 +2021,17 @@ namespace DEETU.Source.Window
             粘贴要素ToolStripMenuItem.Enabled = mIsEditing;
             撤销操作ToolStripMenuItem.Enabled = mIsEditing;
             重做操作ToolStripMenuItem.Enabled = mIsEditing;
+
+            if (mIsEditing)
+            {
+                startEditToolStripButton.Image = new Bitmap("./icons/edit_off.png");
+                startEditToolStripButton.ToolTipText = "结束编辑";
+            }
+            else
+            {
+                startEditToolStripButton.Image = new Bitmap("./icons/edit.png");
+                startEditToolStripButton.ToolTipText = "开始编辑";
+            }
         }
         #endregion
 
@@ -2166,17 +2160,6 @@ namespace DEETU.Source.Window
             btnSelect_Click(sender, new EventArgs());
             mIsEditing = status;
             SetEditing();
-
-            if (mIsEditing)
-            {
-                startEditToolStripButton.Image = new Bitmap("./icons/edit_off.png");
-                startEditToolStripButton.ToolTipText = "结束编辑";
-            }
-            else
-            {
-                startEditToolStripButton.Image = new Bitmap("./icons/edit.png");
-                startEditToolStripButton.ToolTipText = "开始编辑";
-            }
         }
 
         #endregion
@@ -2463,6 +2446,10 @@ namespace DEETU.Source.Window
             {
                 btnEndPart_Click(sender, e);
             }
+            else if (mMapOpStyle == GeoMapOpStyleEnum.Select)
+            {
+
+            }
         }
 
 
@@ -2684,17 +2671,37 @@ namespace DEETU.Source.Window
             }
         }
 
-        private void 撤销ToolStripButton_Click(object sender, EventArgs e)
+        private void 撤销_Click(object sender, EventArgs e)
         {
             Undo();
         }
 
-        private void 重做ToolStripButton_Click(object sender, EventArgs e)
+        private void 重做_Click(object sender, EventArgs e)
         {
             Redo();
         }
 
-        private void 剪切要素ToolStripButton_Click(object sender, EventArgs e)
+        private void 选择模式更改_Click(object sender, EventArgs e)
+        {
+            if (sender == 交叉选择 || sender == 交叉选择菜单)
+            {
+                全包含选择菜单.Checked = false;
+                全包含选择.Checked = false;
+                交叉选择.Checked = true;
+                交叉选择菜单.Checked = true;
+                return;
+            }
+            else if (sender == 全包含选择 || sender == 全包含选择菜单)
+            {
+                全包含选择菜单.Checked = true;
+                全包含选择.Checked = true;
+                交叉选择.Checked = false;
+                交叉选择菜单.Checked = false;
+                return;
+            }
+        }
+
+        private void 剪切要素_Click(object sender, EventArgs e)
         {
             Cut();
         }

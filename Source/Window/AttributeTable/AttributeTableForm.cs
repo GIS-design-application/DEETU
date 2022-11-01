@@ -87,18 +87,6 @@ namespace DEETU.Source.Window
             startEditToolStripButton.Checked = mIsEditing;
             MapEditStatusChanged?.Invoke(this, mIsEditing);
             SetEdit();
-
-            if (mIsEditing)
-            {
-                startEditToolStripButton.Image = new Bitmap("./icons/edit_off.png");
-                startEditToolStripButton.ToolTipText = "结束编辑";
-            }
-            else
-            {
-                startEditToolStripButton.Image = new Bitmap("./icons/edit.png");
-                startEditToolStripButton.ToolTipText = "开始编辑";
-            }
-
         }
 
         private void saveEditToolStripButton_Click(object sender, EventArgs e)
