@@ -17,6 +17,7 @@ using System.Drawing.Drawing2D;
 using DEETU.Testing;
 using System.Diagnostics;
 using System.Reflection.Emit;
+using System.Threading.Tasks;
 
 namespace DEETU.Source.Window
 {
@@ -155,7 +156,7 @@ namespace DEETU.Source.Window
             logging = sender.Equals(交叉选择).ToString();
 #endif
 
-            if (mMapOpStyle != GeoMapOpStyleEnum.Select)
+            if (mIsEditing)
             {
                 UncheckToolStrip(mMapOpStyle);
                 this.Cursor = new Cursor("./icons/EditSelect.ico");
@@ -1262,7 +1263,7 @@ namespace DEETU.Source.Window
             mMovingGeometries.Clear();
         }
 
-        private void OnIdentify_MouseUp(MouseEventArgs e)
+        private async void OnIdentify_MouseUp(MouseEventArgs e)
         {
             if (mIsInIdentify == false)
                 return;
@@ -1277,11 +1278,31 @@ namespace DEETU.Source.Window
             GeoRectangle sBox = GetMapRectByTwoPoints(mStartMouseLocation, e.Location);
             double tolerance = geoMap.ToMapDistance(mSelectingTolerance);
             GeoMapLayer sLayer = GetSelectableLayer();
+            if(sLayer == null)
+            {
+                return;
+            }
 
             GeoFeatures sFeatures = sLayer.SearchByBox(sBox, tolerance, 全包含选择.Checked);
             sLayer.SelectedFeatures.Clear();
             sLayer.SelectedFeatures.AddRange(sFeatures.ToArray());
+
+            DrawIdentifyFlash(sFeatures);
             ShowIdentifyMessage(sFeatures, sLayer);
+        }
+
+        private void DrawIdentifyFlash(GeoFeatures sFeatures)
+        {
+            int sSelFeatureCount = sFeatures.Count;
+            if (sSelFeatureCount > 0)
+            {
+                GeoGeometry[] sGeometryies = new GeoGeometry[sSelFeatureCount];
+                for (int i = 0; i < sSelFeatureCount; i++)
+                {
+                    sGeometryies[i] = sFeatures.GetItem(i).Geometry;
+                }
+                geoMap.FlashShapes(sGeometryies, 1, 800);
+            }
         }
 
         /// <summary>
