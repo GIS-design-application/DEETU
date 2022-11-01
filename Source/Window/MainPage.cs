@@ -2073,12 +2073,12 @@ namespace DEETU.Source.Window
             {
                 mMapOpStyle = GeoMapOpStyleEnum.Select;
                 this.Cursor = new Cursor("./icons/EditSelect.ico");
-                startEditToolStripButton.Image = new Bitmap("./icons/edit_off.png");
+                startEditToolStripButton.Image = new Bitmap("../../icons/edit_off.png");
                 startEditToolStripButton.ToolTipText = "结束编辑";
             }
             else
             {
-                startEditToolStripButton.Image = new Bitmap("./icons/edit.png");
+                startEditToolStripButton.Image = new Bitmap("../../icons/edit.png");
                 startEditToolStripButton.ToolTipText = "开始编辑";
             }
 
@@ -2797,13 +2797,21 @@ namespace DEETU.Source.Window
                 {
                     GeoSymbol sSymbol = e.Node.Tag as GeoSymbol;
                     if (sSymbol.SymbolType == GeoSymbolTypeConstant.SimpleFillSymbol)
-                        (sSymbol as GeoSimpleFillSymbol).Visible = !(sSymbol as GeoSimpleFillSymbol).Visible;
+                    {
+                        if(e.Node.Checked)
+                            (sSymbol as GeoSimpleFillSymbol).Visible = true; 
+                        else
+                            (sSymbol as GeoSimpleFillSymbol).Visible = false;
+                    }
                 }
             }
             else // 父节点
             {
                 GeoMapLayer sLayer = e.Node.Tag as GeoMapLayer;
-                sLayer.Visible = !sLayer.Visible;
+                if (e.Node.Checked)
+                    sLayer.Visible = true;
+                else
+                    sLayer.Visible = false;
             }
             geoMap.RedrawMap();
         }

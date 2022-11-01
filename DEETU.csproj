@@ -357,6 +357,7 @@
     <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="icons\add_feature.png" />
     <Content Include="icons\baseline_add_black_48.png" />
     <Content Include="icons\baseline_clear_black_48.png" />
     <Content Include="icons\baseline_content_copy_black_48.png" />
@@ -379,6 +380,7 @@
     <Content Include="icons\baseline_remove_circle_outline_black_48.png" />
     <Content Include="icons\baseline_save_alt_black_48.png" />
     <None Include="icons\baseline_table_rows_black_48.png" />
+    <Content Include="icons\baseline_table_chart_black_48.png" />
     <Content Include="icons\baseline_undo_black_48.png" />
     <Content Include="icons\baseline_visibility_black_48.png" />
     <Content Include="icons\baseline_visibility_off_black_48.png" />
@@ -386,19 +388,39 @@
     <Content Include="icons\baseline_zoom_out_black_48.png" />
     <Content Include="icons\baseline_zoom_out_map_black_48.png" />
     <Content Include="icons\Cross.ico" />
+    <Content Include="icons\edit.png" />
     <Content Include="icons\EditMove.ico" />
     <Content Include="icons\EditMoveVertex.ico" />
     <Content Include="icons\EditSelect.ico" />
+    <Content Include="icons\edit_off.png" />
+    <Content Include="icons\icons8-cursor-24.png" />
+    <Content Include="icons\icons8-polygon-50.png" />
+    <Content Include="icons\icons8-polygon-80.png" />
+    <Content Include="icons\identify.png" />
     <Content Include="icons\MoveColumn.ico" />
     <Content Include="icons\No.ico" />
     <Content Include="icons\outline_mode_comment_black_48.png" />
+    <Content Include="icons\outline_open_with_black_24dp.png" />
     <Content Include="icons\PanDown.ico" />
     <Content Include="icons\PanUp.ico" />
     <Content Include="icons\save.ico" />
     <Content Include="icons\save.png" />
+    <Content Include="icons\search.jpeg" />
+    <Content Include="icons\selected.bmp" />
+    <Content Include="icons\selectType.jpeg" />
+    <Content Include="icons\toArea.jpeg" />
+    <Content Include="icons\unselected.bmp" />
     <Content Include="icons\ZoomIn.ico" />
     <Content Include="icons\ZoomOut.ico" />
     <None Include="icons\添加要素.png" />
+    <Content Include="icons\全选.png" />
+    <Content Include="icons\反选.png" />
+    <Content Include="icons\取消选择.png" />
+    <Content Include="icons\图标_删除字段.png" />
+    <Content Include="icons\图标_添加字段.png" />
+    <Content Include="icons\编辑.png" />
+    <Content Include="icons\表达式.png" />
+    <Content Include="icons\选择.png" />
     <Content Include="obj\Debug\DEETU.csproj.FileListAbsolute.txt" />
     <Content Include="obj\Debug\DEETU.exe" />
     <Content Include="obj\Debug\DEETU.pdb" />
