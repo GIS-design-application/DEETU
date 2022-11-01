@@ -25,7 +25,7 @@ namespace DEETU.Source.Window
             mLayer = layer;
             mTemporaryLayer = layer.Clone();
 
-            AddPage(new InfoPage(mTemporaryLayer), 1);
+            AddPage(new InfoPage(mLayer), 1);// 需要和下面的实时同步
             switch (mTemporaryLayer.ShapeType)
             {
                 case GeoGeometryTypeConstant.Point:
@@ -43,15 +43,16 @@ namespace DEETU.Source.Window
             AddPage(new FieldPage(mTemporaryLayer), 3);
             AddPage(new AnnotationPage(mTemporaryLayer), 4);
             
-            Aside.CreateNode("信息", 61451, 24, 1); 
-            Aside.CreateNode("符号化", 61452, 24, 2); 
-            Aside.CreateNode("字段", 61453, 24, 3); 
-            Aside.CreateNode("注记", 61454, 24, 4); 
+            Aside.CreateNode("信息", 112, 24, 1); 
+            Aside.CreateNode("符号化", 61445, 24, 2); 
+            Aside.CreateNode("字段", 61641, 24, 3); 
+            Aside.CreateNode("注记", 61483, 24, 4); 
         }
 
         private void okButton_Click(object sender, EventArgs e)
         {
             mLayer.Renderer = mTemporaryLayer.Renderer;
+            mLayer.LabelRenderer = mTemporaryLayer.LabelRenderer;
             this.Close();
         }
 
