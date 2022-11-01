@@ -2750,6 +2750,39 @@ namespace DEETU.Source.Window
             geoMap.RedrawMap();
         }
 
+        private void layerTreeView_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            TreeNode node = layerTreeView.GetNodeAt(e.Location);
+            if(node != null)
+            {
+                if(node.Nodes.Count != 0)
+                {
+                    mCurrentLayerNode = node;
+                }
+                else
+                {
+                    mCurrentLayerNode = node.Parent;
+                }
+                GeoMapLayer layer = mCurrentLayerNode.Tag as GeoMapLayer;
+
+                FormCollection collection = Application.OpenForms;
+
+                foreach (Form form in collection)
+                {
+                    if (form.GetType() == typeof(LayerAttributesForm))
+                    { 
+                        form.TopMost = true; 
+                        return;
+                    }
+                }
+
+                //GeoMapLayer layer = new GeoMapLayer(mCurrentLayerNode.Text, GeoGeometryTypeConstant.Point);
+                LayerAttributesForm layerAttributes = new LayerAttributesForm(layer);
+                layerAttributes.FormClosed += layerAttributes_FormClosed;
+                layerAttributes.Show();
+            }
+        }
+
         private void 剪切要素ToolStripButton_Click(object sender, EventArgs e)
         {
             Cut();

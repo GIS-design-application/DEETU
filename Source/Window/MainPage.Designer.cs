@@ -1018,7 +1018,7 @@ namespace DEETU.Source.Window
             treeNode3});
             this.uiTreeView2.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
             this.uiTreeView2.SelectedNode = null;
-            this.uiTreeView2.Size = new System.Drawing.Size(276, 202);
+            this.uiTreeView2.Size = new System.Drawing.Size(276, 211);
             this.uiTreeView2.Style = Sunny.UI.UIStyle.Office2010Black;
             this.uiTreeView2.TabIndex = 0;
             this.uiTreeView2.Text = "uiTreeView2";
@@ -1057,8 +1057,7 @@ namespace DEETU.Source.Window
             this.layerTreeView.SelectedNode = null;
             this.layerTreeView.ShowLines = true;
             this.layerTreeView.ShowNodeToolTips = true;
-            this.layerTreeView.Size = new System.Drawing.Size(276, 290);
-            this.layerTreeView.Style = Sunny.UI.UIStyle.Office2010Black;
+            this.layerTreeView.Size = new System.Drawing.Size(276, 285);
             this.layerTreeView.TabIndex = 0;
             this.layerTreeView.Text = "layerTreeView";
             this.layerTreeView.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.layerTreeView_AfterCheck);
@@ -1066,6 +1065,7 @@ namespace DEETU.Source.Window
             this.layerTreeView.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.layerTreeView_NodeMouseClick);
             this.layerTreeView.DragDrop += new System.Windows.Forms.DragEventHandler(this.layerTreeView_DragDrop);
             this.layerTreeView.DragEnter += new System.Windows.Forms.DragEventHandler(this.layerTreeView_DragEnter);
+            this.layerTreeView.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.layerTreeView_MouseDoubleClick);
             // 
             // TreeImages
             // 
