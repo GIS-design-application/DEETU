@@ -58,25 +58,31 @@ namespace DEETU.Source.Window
             for (int i = 0; i < mLayer.AttributeFields.Count; i++)
                 uniqueFieldComboBox.Items.Add(mLayer.AttributeFields.GetItem(i).Name);
             for (int i = 0; i < mLayer.AttributeFields.Count; i++)
-                classFieldComboBox.Items.Add(mLayer.AttributeFields.GetItem(i).Name);
+                if (mLayer.AttributeFields.GetItem(i).ValueType != GeoValueTypeConstant.dText)
+                    classFieldComboBox.Items.Add(mLayer.AttributeFields.GetItem(i).Name);
 
             // 对于不同的渲染模式进行配置
             if (mLayer.Renderer.RendererType == GeoRendererTypeConstant.Simple)
             {
                 renderMethodCB.SelectedIndex = 0;
+                renderTabControl.SelectedIndex = 0;
                 initializeSimpleRenderer();
             }
             else if (mLayer.Renderer.RendererType == GeoRendererTypeConstant.UniqueValue)
             {
                 mUniqueValueRenderer = mLayer.Renderer as GeoUniqueValueRenderer;
                 renderMethodCB.SelectedIndex = 1;
+                renderTabControl.SelectedIndex = 1;
                 uniqueFieldComboBox.SelectedIndex = mLayer.AttributeFields.FindField(mUniqueValueRenderer.Field);
             }
             else
             {
                 mClassBreaksRenderer = mLayer.Renderer as GeoClassBreaksRenderer;
+                uiIntegerUpDown2.Value = (mLayer.Renderer as GeoClassBreaksRenderer).BreakCount;
                 renderMethodCB.SelectedIndex = 2;
-                classFieldComboBox.SelectedIndex = mLayer.AttributeFields.FindField(mClassBreaksRenderer.Field);
+                renderTabControl.SelectedIndex = 2;
+                classFieldComboBox.SelectedItem = mClassBreaksRenderer.Field;
+                // classFieldComboBox.SelectedIndex = mLayer.AttributeFields.FindField(mClassBreaksRenderer.Field);
             }
 
         }
@@ -100,7 +106,12 @@ namespace DEETU.Source.Window
         {
             Bitmap styleImage = new Bitmap(20, 20);
             Graphics g = Graphics.FromImage(styleImage);
-            Rectangle sRect = new Rectangle(0, 0, 20, 20);
+            int size = 0;
+            if(uiDoubleUpDown1.Value > uiDoubleUpDown2.Value)
+                size = (int)(20 * symbol.Size / uiDoubleUpDown1.Value);
+            else
+                size = (int)(20 * symbol.Size / uiDoubleUpDown2.Value);
+            Rectangle sRect = new Rectangle(0, 0, size, size);
             GeoMapDrawingTools.DrawSimpleMarker(g, sRect, 0, symbol); // dpm is useless in this 
             g.Dispose();
             return styleImage;
@@ -161,7 +172,7 @@ namespace DEETU.Source.Window
             if (classFieldComboBox.SelectedIndex == -1) return;
             if (mClassBreaksRenderer == null || mClassBreaksRenderer.Field != classFieldComboBox.SelectedItem.ToString())
             {
-                mLayer.Renderer = CreateClassBreaksRenderer(classFieldComboBox.SelectedItem.ToString());
+                mLayer.Renderer = CreateClassBreaksRenderer(classFieldComboBox.SelectedItem.ToString(), uiIntegerUpDown2.Value, uiDoubleUpDown1.Value, uiDoubleUpDown2.Value);
                 mClassBreaksRenderer = mLayer.Renderer as GeoClassBreaksRenderer;
             }
             if (mLayer.Renderer != null)
@@ -170,10 +181,10 @@ namespace DEETU.Source.Window
                 classDataGridView.Rows.Clear();
                 mClassBreaksRenderers.Clear();
 
-                initializeClassBreaksRenderer();
-                classDataGridView.Refresh();
+                initializeClassBreaksRenderer(uiIntegerUpDown2.Value);
                 classColorgradComboBox.Items.AddRange(mClassBreaksRenderers.ToArray());
                 classColorgradComboBox.SelectedIndex = 0;
+                classDataGridView.Refresh();
             }
         }
 
@@ -242,7 +253,7 @@ namespace DEETU.Source.Window
 
         private void uniqueColorgradComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            mLayer.Renderer = mUniqueValueRenderers[uniqueColorgradComboBox.SelectedIndex];
+            mLayer.Renderer = mUniqueValueRenderer = mUniqueValueRenderers[uniqueColorgradComboBox.SelectedIndex];
             uniqueDataGridView.Rows.Clear();
             GeoUniqueValueRenderer uniqueValueRenderer = mLayer.Renderer as GeoUniqueValueRenderer;
             for (int i = 0; i < uniqueValueRenderer.ValueCount; i++)
@@ -256,7 +267,7 @@ namespace DEETU.Source.Window
 
         private void classColorgradComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            mLayer.Renderer = mClassBreaksRenderers[classColorgradComboBox.SelectedIndex];
+            mLayer.Renderer = mClassBreaksRenderer = mClassBreaksRenderers[classColorgradComboBox.SelectedIndex];
             classDataGridView.Rows.Clear();
             GeoClassBreaksRenderer classBreaksRenderer = mLayer.Renderer as GeoClassBreaksRenderer;
             for (int i = 0; i < classBreaksRenderer.BreakCount; i++)
@@ -334,7 +345,7 @@ namespace DEETU.Source.Window
             CreateUniqueValueRenderers((mLayer.Renderer as GeoUniqueValueRenderer).Field);
         }
 
-        private void initializeClassBreaksRenderer()
+        private void initializeClassBreaksRenderer(int value)
         {
             GeoClassBreaksRenderer classBreaksRenderer = (GeoClassBreaksRenderer)mLayer.Renderer;
             mClassBreaksRenderer = classBreaksRenderer;
@@ -350,11 +361,11 @@ namespace DEETU.Source.Window
                 Bitmap symbolImage = CreateMarkerBitmapFromSymbol(markerSymbol);
                 classDataGridView.AddRow(symbolImage, classBreaksRenderer.GetBreakValue(i));
             }
-            CreateClassBreaksRenderers((mLayer.Renderer as GeoUniqueValueRenderer).Field);
+            CreateClassBreaksRenderers((mLayer.Renderer as GeoClassBreaksRenderer).Field, value);
 
         }
 
-        private GeoClassBreaksRenderer CreateClassBreaksRenderer(string field)
+        private GeoClassBreaksRenderer CreateClassBreaksRenderer(string field, int n, double startWidth, double endWidth)
         {
             try
             {
@@ -363,18 +374,54 @@ namespace DEETU.Source.Window
                 List<double> sValues = new List<double>();
                 int sFeatureCount = mLayer.Features.Count;
                 int sFieldIndex = mLayer.AttributeFields.FindField(sRenderer.Field);
-                for (int i = 0; i < sFeatureCount; i++)
+                GeoValueTypeConstant sFieldValueType = mLayer.AttributeFields.GetItem(sFieldIndex).ValueType;
+                switch (sFieldValueType)
                 {
-                    double sValue = (float)mLayer.Features.GetItem(i).Attributes.GetItem(sFieldIndex);
-                    sValues.Add(sValue);
+                    case GeoValueTypeConstant.dDouble:
+                        for (int i = 0; i < sFeatureCount; i++)
+                        {
+                            double sValue = (double)mLayer.Features.GetItem(i).Attributes.GetItem(sFieldIndex);
+                            sValues.Add(sValue);
+                        }
+                        break;
+                    case GeoValueTypeConstant.dSingle:
+                        for (int i = 0; i < sFeatureCount; i++)
+                        {
+                            double sValue = (float)mLayer.Features.GetItem(i).Attributes.GetItem(sFieldIndex);
+                            sValues.Add(sValue);
+                        }
+                        break;
+                    case GeoValueTypeConstant.dInt16:
+                        for (int i = 0; i < sFeatureCount; i++)
+                        {
+                            double sValue = (Int16)mLayer.Features.GetItem(i).Attributes.GetItem(sFieldIndex);
+                            sValues.Add(sValue);
+                        }
+                        break;
+                    case GeoValueTypeConstant.dInt32:
+                        for (int i = 0; i < sFeatureCount; i++)
+                        {
+                            double sValue = (Int32)mLayer.Features.GetItem(i).Attributes.GetItem(sFieldIndex);
+                            sValues.Add(sValue);
+                        }
+                        break;
+                    case GeoValueTypeConstant.dInt64:
+                        for (int i = 0; i < sFeatureCount; i++)
+                        {
+                            double sValue = (Int64)mLayer.Features.GetItem(i).Attributes.GetItem(sFieldIndex);
+                            sValues.Add(sValue);
+                        }
+                        break;
                 }
-                // 获取最小, 最大值, 并分为5级
+
                 double sMinValue = sValues.Min();
                 double sMaxValue = sValues.Max();
-                for (int i = 0; i < 5; i++)
+                for (int i = 0; i < n; i++)
                 {
-                    double sValue = sMinValue + (sMaxValue - sMinValue) * (i + 1) / 5;
+                    double sValue = sMinValue + (sMaxValue - sMinValue) * (i + 1) / n;
+                    double sWidth = startWidth + (endWidth - startWidth) * (i + 1) / n;
                     GeoSimpleMarkerSymbol sSymbol = new GeoSimpleMarkerSymbol();
+                    sSymbol.Size = sWidth;
                     sRenderer.AddBreakValue(sValue, sSymbol);
                 }
                 Color sStartColor = new GeoSimpleMarkerSymbol().Color;
@@ -389,11 +436,11 @@ namespace DEETU.Source.Window
                 return null;
             }
         }
-        private void CreateClassBreaksRenderers(string field)
+        private void CreateClassBreaksRenderers(string field, int value)
         {
             for (int i = 0; i < mSymbolsCount; ++i)
             {
-                mClassBreaksRenderers.Add(CreateClassBreaksRenderer(field));
+                mClassBreaksRenderers.Add(CreateClassBreaksRenderer(field, uiIntegerUpDown2.Value, uiDoubleUpDown1.Value, uiDoubleUpDown2.Value));
             }
         }
         private GeoUniqueValueRenderer CreateUniqueValueRenderer(string field)
@@ -444,6 +491,60 @@ namespace DEETU.Source.Window
             return sRenderer;
         }
 
+        private void uiIntegerUpDown2_ValueChanged(object sender, int value)
+        {
+            if (mClassBreaksRenderer == null || mClassBreaksRenderer.BreakCount != value)
+            {
+                mLayer.Renderer = CreateClassBreaksRenderer(classFieldComboBox.SelectedItem.ToString(), uiIntegerUpDown2.Value, uiDoubleUpDown1.Value, uiDoubleUpDown2.Value);
+                mClassBreaksRenderer = mLayer.Renderer as GeoClassBreaksRenderer;
+            }
+            if (mLayer.Renderer != null)
+            {
+                classColorgradComboBox.Items.Clear();
+                classDataGridView.Rows.Clear();
+                mClassBreaksRenderers.Clear();
+
+                initializeClassBreaksRenderer(value);
+                classColorgradComboBox.Items.AddRange(mClassBreaksRenderers.ToArray());
+                classColorgradComboBox.SelectedIndex = 0;
+                classDataGridView.Refresh();
+            }
+        }
+
+        private void uiDoubleUpDown1_ValueChanged(object sender, double value)
+        {
+            if (mClassBreaksRenderer != null)
+            {
+                UpdateClassBreaksRenderers(mClassBreaksRenderer.BreakCount, uiDoubleUpDown1.Value, uiDoubleUpDown2.Value);
+            }
+        }
+
+        private void uiDoubleUpDown2_ValueChanged(object sender, double value)
+        {
+            if (mClassBreaksRenderer != null)
+            {
+                UpdateClassBreaksRenderers(mClassBreaksRenderer.BreakCount, uiDoubleUpDown1.Value, uiDoubleUpDown2.Value);
+            }
+        }
+        private void UpdateClassBreaksRenderers(int value, double startWidth, double endWidth)
+        {
+            classDataGridView.Rows.Clear();
+            for (int i = 0; i < mClassBreaksRenderer.BreakCount; i++)
+            {
+                GeoSimpleMarkerSymbol sMarkerSymbol = mClassBreaksRenderer.GetSymbol(i) as GeoSimpleMarkerSymbol;
+                sMarkerSymbol.Size = startWidth + (endWidth - startWidth) * (i + 1) / value;
+                Bitmap symbolImage = CreateMarkerBitmapFromSymbol(sMarkerSymbol);
+                classDataGridView.AddRow(symbolImage, mClassBreaksRenderer.GetBreakValue(i));
+            }
+            for (int i = 0; i < mClassBreaksRenderers.Count; ++i)
+            {
+                GeoClassBreaksRenderer sRenderer = mClassBreaksRenderers[i];
+                for (int j = 0; j < sRenderer.BreakCount; ++j)
+                    (sRenderer.GetSymbol(j) as GeoSimpleMarkerSymbol).Size = startWidth + (endWidth - startWidth) * (j + 1) / value;
+
+            }
+            classDataGridView.Refresh();
+        }
 
     }
 }

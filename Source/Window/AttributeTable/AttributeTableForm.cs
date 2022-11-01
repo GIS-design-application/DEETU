@@ -84,7 +84,6 @@ namespace DEETU.Source.Window
         private void editToolStripButton_Click(object sender, EventArgs e)
         {
             mIsEditing = !mIsEditing;
-            startEditToolStripButton.Checked = mIsEditing;
             MapEditStatusChanged?.Invoke(this, mIsEditing);
             SetEdit();
         }
@@ -96,24 +95,27 @@ namespace DEETU.Source.Window
 
         private void addFeatureToolStripButton_Click(object sender, EventArgs e)
         {
-            GeoFeature newFeature = mLayer.GetNewFeature();
-            mLayer.Features.Add(newFeature);
-            ReloadPages();
+            //GeoFeature newFeature = mLayer.GetNewFeature();
+            //mLayer.Features.Add(newFeature);
+            //ReloadPages();
+            FeatureAdded?.Invoke(this, mLayer);
         }
 
         private void removeFeatureToolStripButton_Click(object sender, EventArgs e)
         {
-            if (mLayer.SelectedFeatures.Count < 0)
+            if (mLayer.SelectedFeatures.Count == 0)
             {
-                UIMessageBox.ShowError("请选择图层", false);
+                UIMessageBox.ShowError("请选择要素", false);
+                return;
             }
+            FeatureRemoved?.Invoke(this, mLayer);
 
-            for (int i = 0; i < mLayer.SelectedFeatures.Count; i++)
-            {
-                mLayer.Features.Remove(mLayer.SelectedFeatures.GetItem(i));
-            }
-            ReloadPages();
-            MapRedraw?.Invoke(this);
+            //for (int i = 0; i < mLayer.SelectedFeatures.Count; i++)
+            //{
+            //    mLayer.Features.Remove(mLayer.SelectedFeatures.GetItem(i));
+            //}
+            //ReloadPages();
+            //MapRedraw?.Invoke(this);
         }
 
         private void addFieldStripButton_Click(object sender, EventArgs e)
@@ -121,7 +123,7 @@ namespace DEETU.Source.Window
 
         }
 
-        private void removeToolStripButton_Click(object sender, EventArgs e)
+        private void removeFieldToolStripButton_Click(object sender, EventArgs e)
         {
 
         }
@@ -157,7 +159,7 @@ namespace DEETU.Source.Window
         private void removeSelectToolStripButton_Click(object sender, EventArgs e)
         {
             // ban selectedChanged
-            //featureList.SelectedIndexChanged -= featureList_SelectedIndexChanged;
+            featureList.SelectedIndexChanged -= featureList_SelectedIndexChanged;
             for (int i = 1; i < featureList.Items.Count; i++)
             {
                 featureList.Items[i].Selected = false;
@@ -165,8 +167,25 @@ namespace DEETU.Source.Window
             // recover selectedChanged
             featureList.SelectedIndexChanged += featureList_SelectedIndexChanged;
             featureList.Items[0].Selected = false;
+            featureList_SelectedIndexChanged(sender, e);
             
         }
+
+        private void cutToolStripButton_Click(object sender, EventArgs e)
+        {
+            FeatureCut?.Invoke(this, mLayer);
+        }
+
+        private void copyStripButton_Click(object sender, EventArgs e)
+        {
+            FeatureCopied?.Invoke(this, mLayer);
+        }
+
+        private void pasteToolStripButton_Click(object sender, EventArgs e)
+        {
+            FeaturePasted?.Invoke(this, mLayer);
+        }
+
         #endregion
 
         #region 私有函数
@@ -296,6 +315,19 @@ namespace DEETU.Source.Window
 
         private void SetEdit()
         {
+            startEditToolStripButton.Checked = mIsEditing;
+            if (mIsEditing)
+            {
+                startEditToolStripButton.Image = new Bitmap("./icons/edit_off.png");
+                startEditToolStripButton.ToolTipText = "结束编辑";
+            }
+            else
+            {
+                startEditToolStripButton.Image = new Bitmap("./icons/edit.png");
+                startEditToolStripButton.ToolTipText = "开始编辑";
+            }
+
+
             cutToolStripButton.Enabled = mIsEditing;
             pasteToolStripButton.Enabled = mIsEditing;
             copyStripButton.Enabled = mIsEditing;
@@ -329,21 +361,25 @@ namespace DEETU.Source.Window
 
         public delegate void LayerQueryHandler(object sender, GeoMapLayer layer, string expression, GeoSelectionModeConstant selectionMode);
         public event LayerQueryHandler LayerQuery;
+
+        public delegate void FeatureEditHandle(object sender, GeoMapLayer layer);
+        public event FeatureEditHandle FeatureCopied;
+        public event FeatureEditHandle FeatureCut;
+        public event FeatureEditHandle FeaturePasted;
+        public event FeatureEditHandle FeatureAdded;
+        public event FeatureEditHandle FeatureRemoved;
         #endregion
 
-        private void cutToolStripButton_Click(object sender, EventArgs e)
+        public void MainPage_CurrentActiveLayerChanged(object sender, GeoMapLayer layer)
         {
-
+            mLayer = layer;
+            ReloadPages();
         }
 
-        private void copyStripButton_Click(object sender, EventArgs e)
+        public void MainPage_EditStatusChanged(object sender, bool status)
         {
-
-        }
-
-        private void pasteToolStripButton_Click(object sender, EventArgs e)
-        {
-
+            mIsEditing = status;
+            SetEdit();
         }
     }
 }

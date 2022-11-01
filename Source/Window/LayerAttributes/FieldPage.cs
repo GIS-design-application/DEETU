@@ -70,11 +70,18 @@ namespace DEETU.Source.Window
             if (editForm.IsOK)
             {
                 fieldDataGridView.Rows.Add(editForm["Name"], editForm["AliasName"], ((GeoValueTypeConstant)editForm["Type"] ).ToString());
+                mLayer.AddField((string)editForm["Name"], (GeoValueTypeConstant)editForm["Type"]);
             }
         }
 
         private void removeFieldButton_Click(object sender, EventArgs e)
         {
+            var removedRows = fieldDataGridView.SelectedRows;
+            for (int i = 0; i < removedRows.Count; i++)
+            {
+                fieldDataGridView.Rows.Remove(removedRows[i]);
+                mLayer.RemoveField(removedRows[i].Index);
+            }
             fieldDataGridView.Rows.RemoveAt(fieldDataGridView.RowCount - 1);
         }
 

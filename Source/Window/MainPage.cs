@@ -359,8 +359,7 @@ namespace DEETU.Source.Window
              // 停止描绘地理要素
             {
                 btnEndSketch_Click(sender, e);
-                mMapOpStyle = GeoMapOpStyleEnum.Select;
-                this.Cursor = new Cursor("./icons/EditSelect.ico");
+                CurrentAcitveLayerUpdated?.Invoke(this, mCurrentLayerNode.Tag as GeoMapLayer);
                 UncheckToolStrip(mMapOpStyle);
             }
 
@@ -1377,6 +1376,7 @@ namespace DEETU.Source.Window
             double tolerance = geoMap.ToMapDistance(mSelectingTolerance);
             geoMap.SelectByBox(sBox, tolerance, 全包含选择.Checked);
             geoMap.RedrawTrackingShapes();
+            CurrentAcitveLayerUpdated?.Invoke(this, mCurrentLayerNode.Tag as GeoMapLayer);
         }
 
         private void OnPan_MouseUp(MouseEventArgs e)
@@ -1475,11 +1475,11 @@ namespace DEETU.Source.Window
                 TreeNode targetTreeNode;
                 // 获取当前光标所处的坐标
                 // 定义一个位置点的变量，保存当前光标所处的坐标点
-                Point point = ((UITreeView)sender).PointToClient(new Point(e.X, e.Y));
-                if (((UITreeView)sender).Bounds.Contains(point))
+                Point point = ((TreeView)sender).PointToClient(new Point(e.X, e.Y));
+                if (((TreeView)sender).Bounds.Contains(point))
                 {
                     // 根据坐标点取得处于坐标点位置的节点
-                    targetTreeNode = ((UITreeView)sender).GetNodeAt(point);
+                    targetTreeNode = ((TreeView)sender).GetNodeAt(point);
                     // 获取被拖动的节点
                     treeNode = (TreeNode)e.Data.GetData("System.Windows.Forms.TreeNode");
                     // 判断拖动的节点与目标节点是否是同一个,同一个不予处理
@@ -1520,16 +1520,24 @@ namespace DEETU.Source.Window
 
         private void LoadRecentUsedFiles()
         {
-            using (StreamReader sr = new StreamReader("./recent_used_files.txt"))
+            try
             {
-                while (sr.EndOfStream == false)
+                using (StreamReader sr = new StreamReader("./recent_used_files.txt"))
                 {
-                    TreeNode sNode = new TreeNode();
-                    sNode.Text = sr.ReadLine();
-                    sNode.Tag = sr.ReadLine();
-                    FileTreeView.Nodes[0].Nodes.Add(sNode);
+                    while (sr.EndOfStream == false)
+                    {
+                        TreeNode sNode = new TreeNode();
+                        sNode.Text = sr.ReadLine();
+                        sNode.Tag = sr.ReadLine();
+                        FileTreeView.Nodes[0].Nodes.Add(sNode);
+                    }
                 }
             }
+            catch (Exception e)
+            {
+
+            }
+
         }
         //初始化符号
         private void InitializeSymbols()
@@ -1921,7 +1929,10 @@ namespace DEETU.Source.Window
             }
             // 在更新树的同时更新选中的节点
             if (mCurrentLayerNode != null)
+            {
                 mCurrentLayerNode = layerTreeView.Nodes[mCurrentLayerNode.Index];
+                //CurrentAcitveLayerUpdated?.Invoke(this, mCurrentLayerNode.Tag as GeoMapLayer);
+            }
         }
 
         // 这个函数是为了显示图层渲染方式
@@ -1934,7 +1945,14 @@ namespace DEETU.Source.Window
             if (sRenderer.RendererType == GeoRendererTypeConstant.Simple)
             {
                 TreeNode style = CreateSimpleStyleTreeNode((sRenderer as GeoSimpleRenderer).Symbol);
+                
                 TreeNode layerNode = new TreeNode(layer.Name, new TreeNode[] { style });
+                GeoSimpleFillSymbol sSymbol = new GeoSimpleFillSymbol();
+                sSymbol.Color = Color.Transparent;
+                TreeImages.Images.Add(CreateBitmapFromSymbol(sSymbol));
+                layerNode.SelectedImageIndex = layerNode.ImageIndex = TreeImages.Images.Count - 1;
+                layerNode.Checked = true;
+
                 layerNode.ContextMenuStrip = layerContextMenuStrip;
                 //layerTreeView.Nodes.Insert(0,layerNode);
                 layerNode.Tag = layer;
@@ -1943,7 +1961,15 @@ namespace DEETU.Source.Window
             else if (sRenderer.RendererType == GeoRendererTypeConstant.ClassBreaks)
             {
                 GeoClassBreaksRenderer sClassBreaksRenderer = (GeoClassBreaksRenderer)sRenderer;
-                List<TreeNode> styles = new List<TreeNode>() { new TreeNode(sClassBreaksRenderer.Field) };
+                
+                TreeNode FieldName = new TreeNode(sClassBreaksRenderer.Field);
+                GeoSimpleFillSymbol sSymbol = new GeoSimpleFillSymbol();
+                sSymbol.Color = Color.Transparent;
+                TreeImages.Images.Add(CreateBitmapFromSymbol(sSymbol));
+                FieldName.SelectedImageIndex = FieldName.ImageIndex = TreeImages.Images.Count - 1;
+                FieldName.Checked = true;
+
+                List<TreeNode> styles = new List<TreeNode>() { FieldName };
                 int BreakCount = sClassBreaksRenderer.BreakCount;
                 for (int i = 0; i < BreakCount; ++i)
                 {
@@ -1951,7 +1977,14 @@ namespace DEETU.Source.Window
                     string endValue = sClassBreaksRenderer.GetBreakValue(i).ToString();
                     styles.Add(CreateSimpleStyleTreeNode(sClassBreaksRenderer.GetSymbol(i), startValue + "~" + endValue));
                 }
+
                 TreeNode layerNode = new TreeNode(layer.Name, styles.ToArray());
+                sSymbol = new GeoSimpleFillSymbol();
+                sSymbol.Color = Color.Transparent;
+                TreeImages.Images.Add(CreateBitmapFromSymbol(sSymbol));
+                layerNode.SelectedImageIndex = layerNode.ImageIndex = TreeImages.Images.Count - 1;
+                layerNode.Checked = true;
+
                 layerNode.ContextMenuStrip = layerContextMenuStrip;
                 //layerTreeView.Nodes.Insert(0,layerNode);
                 layerNode.Tag = layer;
@@ -1960,13 +1993,28 @@ namespace DEETU.Source.Window
             else if (sRenderer.RendererType == GeoRendererTypeConstant.UniqueValue)
             {
                 GeoUniqueValueRenderer sUniqueValueRenderer = (GeoUniqueValueRenderer)sRenderer;
-                List<TreeNode> styles = new List<TreeNode>() { new TreeNode(sUniqueValueRenderer.Field) };
+                
+                TreeNode FieldName = new TreeNode(sUniqueValueRenderer.Field);
+                GeoSimpleFillSymbol sSymbol = new GeoSimpleFillSymbol();
+                sSymbol.Color = Color.Transparent;
+                TreeImages.Images.Add(CreateBitmapFromSymbol(sSymbol));
+                FieldName.SelectedImageIndex = FieldName.ImageIndex = TreeImages.Images.Count - 1;
+                FieldName.Checked = true;
+
+                List<TreeNode> styles = new List<TreeNode>() { FieldName };
                 int ValueCount = sUniqueValueRenderer.ValueCount;
                 for (int i = 0; i < ValueCount; ++i)
                 {
                     styles.Add(CreateSimpleStyleTreeNode(sUniqueValueRenderer.GetSymbol(i), sUniqueValueRenderer.GetValue(i)));
                 }
+
                 TreeNode layerNode = new TreeNode(layer.Name, styles.ToArray());
+                sSymbol = new GeoSimpleFillSymbol();
+                sSymbol.Color = Color.Transparent;
+                TreeImages.Images.Add(CreateBitmapFromSymbol(sSymbol));
+                layerNode.SelectedImageIndex = layerNode.ImageIndex = TreeImages.Images.Count - 1;
+                layerNode.Checked = true;
+
                 layerNode.ContextMenuStrip = layerContextMenuStrip;
                 //layerTreeView.Nodes.Insert(0,layerNode);
                 layerNode.Tag = layer;
@@ -1978,11 +2026,13 @@ namespace DEETU.Source.Window
             }
         }
 
-        private TreeNode CreateSimpleStyleTreeNode(GeoSymbol symbol, string label = "")
+        private TreeNode CreateSimpleStyleTreeNode(GeoSymbol symbol, string label = "    ")
         {
             TreeNode style = new TreeNode(label);
             TreeImages.Images.Add(CreateBitmapFromSymbol(symbol));
-            style.ImageIndex = TreeImages.Images.Count - 1;
+            style.SelectedImageIndex = style.ImageIndex = TreeImages.Images.Count - 1;
+            style.Tag = symbol;
+            style.Checked = true;
             return style;
         }
 
@@ -1998,8 +2048,8 @@ namespace DEETU.Source.Window
             else if (symbol.SymbolType == GeoSymbolTypeConstant.SimpleLineSymbol)
             {
                 GeoSimpleLineSymbol sLineSymbol = (symbol as GeoSimpleLineSymbol);
-                double dpm = 1000; // I don't know the correct dpm here so I just randomly assigned a number
-                Pen sPen = new Pen(sLineSymbol.Color, (float)(sLineSymbol.Size / 1000 * dpm));
+                double dpm = 10000; // I don't know the correct dpm here so I just randomly assigned a number
+                Pen sPen = new Pen(sLineSymbol.Color, (float)(sLineSymbol.Size * dpm / 1000));
                 sPen.DashStyle = (DashStyle)sLineSymbol.Style;
                 g.DrawLine(sPen, new Point(0, styleImage.Height / 2), new Point(styleImage.Width, styleImage.Height / 2));
                 sPen.Dispose();
@@ -2055,6 +2105,8 @@ namespace DEETU.Source.Window
             }
 
 
+
+            EditStatusChanged?.Invoke(this, mIsEditing);
         }
         #endregion
 
@@ -2064,6 +2116,14 @@ namespace DEETU.Source.Window
             // !这里获取layer时应该是按名字获取，或许可以考虑在Layers里面加一个GetItem(string name)的函数。
             // ** 现在用code的Tag data 的形式实现了；
             GeoMapLayer layer = mCurrentLayerNode.Tag as GeoMapLayer;
+
+            FormCollection collection = Application.OpenForms;
+
+            foreach (Form form in collection)
+            {
+                if (form.GetType() == typeof(LayerAttributesForm))
+                { form.TopMost = true; return; }
+            }
 
             //GeoMapLayer layer = new GeoMapLayer(mCurrentLayerNode.Text, GeoGeometryTypeConstant.Point);
             LayerAttributesForm layerAttributes = new LayerAttributesForm(layer);
@@ -2154,9 +2214,37 @@ namespace DEETU.Source.Window
             attributeForm.MapRedraw += AttributeForm_MapRedraw;
             attributeForm.LayerQuery += ExpressionForm_LayerQuery;
             attributeForm.MapEditStatusChanged += AttributeForm_MapEditStatusChanged;
+            attributeForm.FeatureCut += AttributeForm_FeatureCut;
+            attributeForm.FeatureCopied += AttributeForm_FeatureCopied;
+            attributeForm.FeaturePasted += AttributeForm_FeaturePasted;
+            attributeForm.FeatureAdded += AttributeForm_FeatureAdded;
+            attributeForm.FeatureRemoved += AttributeForm_FeatureRemoved;
+            CurrentAcitveLayerUpdated += attributeForm.MainPage_CurrentActiveLayerChanged;
+            EditStatusChanged += attributeForm.MainPage_EditStatusChanged;
             attributeForm.Show();
         }
 
+
+        private void 移除图层ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DialogResult dr = MessageBox.Show("确定要删除图层吗？", "提示", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+            if (dr == DialogResult.OK)
+            {
+                geoMap.Layers.RemoveAt(mCurrentLayerNode.Index);
+                mCurrentLayerNode.Remove();
+                UpdateTreeView();
+                geoMap.RedrawMap();
+            }
+        }
+
+        private void 移到顶层ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            layerTreeView.Nodes.Insert(0, (TreeNode)mCurrentLayerNode.Clone());
+            geoMap.Layers.Insert(0, mCurrentLayerNode.Tag as GeoMapLayer);
+            geoMap.Layers.RemoveAt(mCurrentLayerNode.Index);
+            mCurrentLayerNode.Remove();
+            geoMap.RedrawMap();
+        }
 
         #endregion
 
@@ -2183,6 +2271,48 @@ namespace DEETU.Source.Window
             btnSelect_Click(sender, new EventArgs());
             mIsEditing = status;
             SetEditing();
+
+        }
+
+        private void AttributeForm_FeatureCut(object sender, GeoMapLayer layer)
+        {
+            Cut();
+        }
+
+        private void AttributeForm_FeatureRemoved(object sender, GeoMapLayer layer)
+        {
+            GeoMapLayer sLayer = NewUndo(layer);
+            sLayer.Features.RemoveRange(sLayer.SelectedFeatures.ToArray());
+            geoMap.RedrawMap();
+            CurrentAcitveLayerUpdated?.Invoke(this,sLayer);
+        }
+
+        private void AttributeForm_FeatureAdded(object sender, GeoMapLayer layer)
+        {
+            GeoMapLayer sLayer = layer;
+            if(sLayer != null)
+            {
+                sLayer = NewUndo(sLayer);
+            }
+
+            GeoFeature newFeature = sLayer.GetNewFeature();
+            sLayer.Features.Add(newFeature);
+            sLayer.UpdateExtent();
+
+            // 初始化描绘图形
+            InitializeSketchingShape();
+            geoMap.RedrawMap();
+            CurrentAcitveLayerUpdated?.Invoke(this,sLayer);
+        }
+
+        private void AttributeForm_FeaturePasted(object sender, GeoMapLayer layer)
+        {
+            Paste();
+        }
+
+        private void AttributeForm_FeatureCopied(object sender, GeoMapLayer layer)
+        {
+            Copy();
         }
 
         #endregion
@@ -2194,7 +2324,8 @@ namespace DEETU.Source.Window
         /// <param name="e"></param>
         private void layerTreeView_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
         {
-            mCurrentLayerNode = e.Node;
+            if(e.Node.Nodes.Count != 0)
+                mCurrentLayerNode = e.Node;
 #if DEBUG
             logging = mCurrentLayerNode.Text;
 #endif
@@ -2204,6 +2335,19 @@ namespace DEETU.Source.Window
             layer.Selectable = true;
         }
 
+        #region 事件
+        public delegate void CurrentActiveLayerUpdatedHandle(object sender, GeoMapLayer layer);
+        public event CurrentActiveLayerUpdatedHandle CurrentAcitveLayerUpdated;
+
+        public delegate void EditStatusChangedHandle(object sender, bool status);
+        public event EditStatusChangedHandle EditStatusChanged;
+        //public event CurrentActiveLayerUpdatedHandle CurrentAcitveLayerSelected;
+        //public event CurrentActiveLayerUpdatedHandle CurrentAcitveLayerMoved;
+        //public event CurrentActiveLayerUpdatedHandle CurrentAcitveLayerDeleted;
+        //public event CurrentActiveLayerUpdatedHandle CurrentAcitveLayerEdited;
+        //public event CurrentActiveLayerUpdatedHandle CurrentAcitveLayerAdded;
+
+        #endregion
 #if DEBUG
         private string logging
         {
@@ -2225,7 +2369,9 @@ namespace DEETU.Source.Window
 #endif
         private void LoadLayerFile(string sFileName)
         {
-            string suffix = sFileName.Split('.')[1];
+            string suffix = sFileName.Split('.').Last();
+            //string suffix = sFileName.Split('.')[1];
+            
 #if DEBUG
             logging = suffix;
 #endif
@@ -2436,7 +2582,6 @@ namespace DEETU.Source.Window
             }
         }
 
-
         private void RemoveItemToolStripButton_Click(object sender, EventArgs e)
         {
             if (mIsEditing == false)
@@ -2452,7 +2597,7 @@ namespace DEETU.Source.Window
             layer.Features.RemoveRange(selectedFeatures.ToArray());
             selectedFeatures.Clear();
             geoMap.RedrawMap();
-            this.Cursor = new Cursor("./icons/EditSelect.ico");
+            CurrentAcitveLayerUpdated?.Invoke(this, mCurrentLayerNode.Tag as GeoMapLayer);
         }
 
         private void uiPanel3_DoubleClick(object sender, EventArgs e)
@@ -2475,10 +2620,7 @@ namespace DEETU.Source.Window
             }
         }
 
-
-
-
-
+        #region CopyPaste
         private void MainPage_KeyDown(object sender, KeyEventArgs e)
         {
 
@@ -2537,6 +2679,7 @@ namespace DEETU.Source.Window
                 {
                     mItemsForCopy.Add(feature.Geometry.Clone());
                 }
+                CurrentAcitveLayerUpdated?.Invoke(this, mCurrentLayerNode.Tag as GeoMapLayer);
             }
         }
 
@@ -2564,6 +2707,7 @@ namespace DEETU.Source.Window
                 sLayer.UpdateExtent();
                 
                 geoMap.RedrawMap();
+                CurrentAcitveLayerUpdated?.Invoke(this, mCurrentLayerNode.Tag as GeoMapLayer);
             }
 
 
@@ -2586,9 +2730,12 @@ namespace DEETU.Source.Window
 
                 sLayer.Features.RemoveRange(features.ToArray());
                 geoMap.RedrawMap();
+                CurrentAcitveLayerUpdated?.Invoke(this, mCurrentLayerNode.Tag as GeoMapLayer);
             }
         }
+        #endregion
 
+        #region 撤销和重做
         private List<(GeoMapLayer, GeoMapLayer)> undo_layers = new List<(GeoMapLayer, GeoMapLayer)>();
         private int undo_index = -1;
 
@@ -2612,6 +2759,7 @@ namespace DEETU.Source.Window
             重做操作ToolStripMenuItem.Enabled = true;
             
             geoMap.RedrawMap();
+            CurrentAcitveLayerUpdated?.Invoke(this, mCurrentLayerNode.Tag as GeoMapLayer);
         }
 
         private void Redo()
@@ -2623,6 +2771,7 @@ namespace DEETU.Source.Window
             undo_index++;
             geoMap.Layers.Replace(undo_layers[undo_index].Item1, undo_layers[undo_index].Item2);
             geoMap.RedrawMap();
+            CurrentAcitveLayerUpdated?.Invoke(this, mCurrentLayerNode.Tag as GeoMapLayer);
         }
 
         private void ResetUndo()
@@ -2645,6 +2794,7 @@ namespace DEETU.Source.Window
             UpdateTreeView();
             return desLayer;
         }
+        #endregion
 
         private void 复制要素_Click(object sender, EventArgs e)
         {
@@ -2655,32 +2805,62 @@ namespace DEETU.Source.Window
         {
             Paste();
         }
-
-        private void 移除图层ToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            DialogResult dr = MessageBox.Show("确定要删除图层吗？", "提示", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
-            if(dr == DialogResult.OK)
-            {
-                geoMap.Layers.RemoveAt(mCurrentLayerNode.Index);
-                mCurrentLayerNode.Remove();
-                UpdateTreeView();
-                geoMap.RedrawMap();
-            }
-        }
-
+       
         private void 退出DEETUToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.Close();
             
         }
-
-        private void 移到顶层ToolStripMenuItem_Click(object sender, EventArgs e)
+        private void layerTreeView_AfterCheck(object sender, TreeViewEventArgs e)
         {
-            layerTreeView.Nodes.Insert(0, (TreeNode)mCurrentLayerNode.Clone());
-            geoMap.Layers.Insert(0, mCurrentLayerNode.Tag as GeoMapLayer);
-            geoMap.Layers.RemoveAt(mCurrentLayerNode.Index);
-            mCurrentLayerNode.Remove();
+            if (e.Node.Nodes.Count == 0) // 子节点
+            {
+                if (e.Node.Tag != null)
+                {
+                    GeoSymbol sSymbol = e.Node.Tag as GeoSymbol;
+                    if (sSymbol.SymbolType == GeoSymbolTypeConstant.SimpleFillSymbol)
+                        (sSymbol as GeoSimpleFillSymbol).Visible = !(sSymbol as GeoSimpleFillSymbol).Visible;
+                }
+            }
+            else // 父节点
+            {
+                GeoMapLayer sLayer = e.Node.Tag as GeoMapLayer;
+                sLayer.Visible = !sLayer.Visible;
+            }
             geoMap.RedrawMap();
+        }
+
+        private void layerTreeView_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            TreeNode node = layerTreeView.GetNodeAt(e.Location);
+            if(node != null)
+            {
+                if(node.Nodes.Count != 0)
+                {
+                    mCurrentLayerNode = node;
+                }
+                else
+                {
+                    mCurrentLayerNode = node.Parent;
+                }
+                GeoMapLayer layer = mCurrentLayerNode.Tag as GeoMapLayer;
+
+                FormCollection collection = Application.OpenForms;
+
+                foreach (Form form in collection)
+                {
+                    if (form.GetType() == typeof(LayerAttributesForm))
+                    { 
+                        form.TopMost = true; 
+                        return;
+                    }
+                }
+
+                //GeoMapLayer layer = new GeoMapLayer(mCurrentLayerNode.Text, GeoGeometryTypeConstant.Point);
+                LayerAttributesForm layerAttributes = new LayerAttributesForm(layer);
+                layerAttributes.FormClosed += layerAttributes_FormClosed;
+                layerAttributes.Show();
+            }
         }
 
         private void FileTreeView_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
@@ -2732,7 +2912,6 @@ namespace DEETU.Source.Window
         }
 
      
-
         private void MainPage_KeyUp(object sender, KeyEventArgs e)
         {
 #if DEBUG
