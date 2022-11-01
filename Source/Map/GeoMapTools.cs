@@ -364,6 +364,46 @@ namespace DEETU.Map
         }
 
         /// <summary>
+        /// 判断geoparts是否在矩形盒内部
+        /// </summary>
+        /// <param name="parts"></param>
+        /// <param name="box"></param>
+        /// <returns></returns>
+        public static bool IsPartsWithinBox(GeoParts parts, GeoRectangle box)
+        {
+            var sExtent = parts.GetEnvelope();
+            if (!AreBoxesCross(sExtent, box))
+            {
+                return false;
+            }
+
+            // 迭代查看所有点是否都在矩形盒内部
+            foreach (var points in parts.Parts)
+            {
+                foreach (var point in points.Points)
+                {
+                    if (!IsPointWithinBox(point, box))
+                    {
+                        return false;
+                    }
+                }
+            }
+
+            return true;
+        }
+
+        public static bool IsMultiPolygonWithinBox(GeoMultiPolygon polygons, GeoRectangle box)
+        {
+            return IsPartsWithinBox(polygons.Parts, box);
+            
+        }
+
+        public static bool IsMultiPolylineWithinBox(GeoMultiPolyline polylines, GeoRectangle box)
+        {
+            return IsPartsWithinBox(polylines.Parts, box);
+        }
+
+        /// <summary>
         /// 指示指定点是否位于指定复合多边形内
         /// </summary>
         /// <param name="point"></param>

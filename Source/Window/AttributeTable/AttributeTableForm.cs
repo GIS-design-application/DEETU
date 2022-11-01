@@ -86,7 +86,6 @@ namespace DEETU.Source.Window
             mIsEditing = !mIsEditing;
             MapEditStatusChanged?.Invoke(this, mIsEditing);
             SetEdit();
-
         }
 
         private void saveEditToolStripButton_Click(object sender, EventArgs e)

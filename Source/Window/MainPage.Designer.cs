@@ -30,9 +30,7 @@ namespace DEETU.Source.Window
 		{
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainPage));
-            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("工程目录");
-            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("收藏夹");
-            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("C:\\");
+            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("最近使用的图层");
             DEETU.Map.GeoLayers geoLayers1 = new DEETU.Map.GeoLayers();
             this.projectContextMenuStrip = new Sunny.UI.UIContextMenuStrip();
             this.设置工程目录ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -84,8 +82,8 @@ namespace DEETU.Source.Window
             this.按属性值选择ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.按表达式选择ToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.按矩形范围选择ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.交叉选择ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.全包含选中ToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.交叉选择菜单 = new System.Windows.Forms.ToolStripMenuItem();
+            this.全包含选择菜单 = new System.Windows.Forms.ToolStripMenuItem();
             this.视图ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.平移ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.放大ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -121,14 +119,14 @@ namespace DEETU.Source.Window
             this.全部选择ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.反向选择ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.selectByExtentToolStripDropDownButton = new System.Windows.Forms.ToolStripDropDownButton();
-            this.交叉选中ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.全包含选中ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.交叉选择 = new System.Windows.Forms.ToolStripMenuItem();
+            this.全包含选择 = new System.Windows.Forms.ToolStripMenuItem();
             this.cancelSelectionToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.uiPanel1 = new Sunny.UI.UIPanel();
-            this.uiTreeView2 = new Sunny.UI.UITreeView();
+            this.FileTreeView = new Sunny.UI.UITreeView();
             this.uiPanel2 = new Sunny.UI.UIPanel();
             this.layerTreeView = new Sunny.UI.UITreeView();
             this.TreeImages = new System.Windows.Forms.ImageList(this.components);
@@ -480,49 +478,50 @@ namespace DEETU.Source.Window
             // 
             this.撤销操作ToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("撤销操作ToolStripMenuItem.Image")));
             this.撤销操作ToolStripMenuItem.Name = "撤销操作ToolStripMenuItem";
-            this.撤销操作ToolStripMenuItem.Size = new System.Drawing.Size(152, 26);
+            this.撤销操作ToolStripMenuItem.Size = new System.Drawing.Size(184, 26);
             this.撤销操作ToolStripMenuItem.Text = "撤销操作";
+            this.撤销操作ToolStripMenuItem.Click += new System.EventHandler(this.撤销_Click);
             // 
             // 重做操作ToolStripMenuItem
             // 
             this.重做操作ToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("重做操作ToolStripMenuItem.Image")));
             this.重做操作ToolStripMenuItem.Name = "重做操作ToolStripMenuItem";
-            this.重做操作ToolStripMenuItem.Size = new System.Drawing.Size(152, 26);
+            this.重做操作ToolStripMenuItem.Size = new System.Drawing.Size(184, 26);
             this.重做操作ToolStripMenuItem.Text = "重做操作";
+            this.重做操作ToolStripMenuItem.Click += new System.EventHandler(this.重做_Click);
             // 
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator4.Size = new System.Drawing.Size(181, 6);
             // 
             // 剪切要素ToolStripMenuItem
             // 
             this.剪切要素ToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("剪切要素ToolStripMenuItem.Image")));
             this.剪切要素ToolStripMenuItem.Name = "剪切要素ToolStripMenuItem";
-            this.剪切要素ToolStripMenuItem.Size = new System.Drawing.Size(152, 26);
+            this.剪切要素ToolStripMenuItem.Size = new System.Drawing.Size(184, 26);
             this.剪切要素ToolStripMenuItem.Text = "剪切要素";
-            this.剪切要素ToolStripMenuItem.Click += new System.EventHandler(this.剪切要素ToolStripButton_Click);
             // 
             // 复制要素ToolStripMenuItem
             // 
             this.复制要素ToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("复制要素ToolStripMenuItem.Image")));
             this.复制要素ToolStripMenuItem.Name = "复制要素ToolStripMenuItem";
-            this.复制要素ToolStripMenuItem.Size = new System.Drawing.Size(152, 26);
+            this.复制要素ToolStripMenuItem.Size = new System.Drawing.Size(184, 26);
             this.复制要素ToolStripMenuItem.Text = "复制要素";
-            this.复制要素ToolStripMenuItem.Click += new System.EventHandler(this.复制要素ToolStripButton_Click);
+            this.复制要素ToolStripMenuItem.Click += new System.EventHandler(this.复制要素_Click);
             // 
             // 粘贴要素ToolStripMenuItem
             // 
             this.粘贴要素ToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("粘贴要素ToolStripMenuItem.Image")));
             this.粘贴要素ToolStripMenuItem.Name = "粘贴要素ToolStripMenuItem";
-            this.粘贴要素ToolStripMenuItem.Size = new System.Drawing.Size(152, 26);
+            this.粘贴要素ToolStripMenuItem.Size = new System.Drawing.Size(184, 26);
             this.粘贴要素ToolStripMenuItem.Text = "粘贴要素";
-            this.粘贴要素ToolStripMenuItem.Click += new System.EventHandler(this.粘贴要素ToolStripButton_Click);
+            this.粘贴要素ToolStripMenuItem.Click += new System.EventHandler(this.粘贴要素_Click);
             // 
             // toolStripSeparator5
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator5.Size = new System.Drawing.Size(181, 6);
             // 
             // 选择ToolStripMenuItem
             // 
@@ -531,7 +530,7 @@ namespace DEETU.Source.Window
             this.按表达式选择ToolStripMenuItem1,
             this.按矩形范围选择ToolStripMenuItem});
             this.选择ToolStripMenuItem.Name = "选择ToolStripMenuItem";
-            this.选择ToolStripMenuItem.Size = new System.Drawing.Size(152, 26);
+            this.选择ToolStripMenuItem.Size = new System.Drawing.Size(184, 26);
             this.选择ToolStripMenuItem.Text = "选择";
             // 
             // 按属性值选择ToolStripMenuItem
@@ -549,23 +548,27 @@ namespace DEETU.Source.Window
             // 按矩形范围选择ToolStripMenuItem
             // 
             this.按矩形范围选择ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.交叉选择ToolStripMenuItem,
-            this.全包含选中ToolStripMenuItem1});
+            this.交叉选择菜单,
+            this.全包含选择菜单});
             this.按矩形范围选择ToolStripMenuItem.Name = "按矩形范围选择ToolStripMenuItem";
             this.按矩形范围选择ToolStripMenuItem.Size = new System.Drawing.Size(197, 26);
             this.按矩形范围选择ToolStripMenuItem.Text = "按矩形范围选择";
             // 
-            // 交叉选择ToolStripMenuItem
+            // 交叉选择菜单
             // 
-            this.交叉选择ToolStripMenuItem.Name = "交叉选择ToolStripMenuItem";
-            this.交叉选择ToolStripMenuItem.Size = new System.Drawing.Size(167, 26);
-            this.交叉选择ToolStripMenuItem.Text = "交叉选中";
+            this.交叉选择菜单.Checked = true;
+            this.交叉选择菜单.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.交叉选择菜单.Name = "交叉选择菜单";
+            this.交叉选择菜单.Size = new System.Drawing.Size(136, 22);
+            this.交叉选择菜单.Text = "交叉选中";
+            this.交叉选择菜单.Click += new System.EventHandler(this.选择模式更改_Click);
             // 
-            // 全包含选中ToolStripMenuItem1
+            // 全包含选择菜单
             // 
-            this.全包含选中ToolStripMenuItem1.Name = "全包含选中ToolStripMenuItem1";
-            this.全包含选中ToolStripMenuItem1.Size = new System.Drawing.Size(167, 26);
-            this.全包含选中ToolStripMenuItem1.Text = "全包含选中";
+            this.全包含选择菜单.Name = "全包含选择菜单";
+            this.全包含选择菜单.Size = new System.Drawing.Size(136, 22);
+            this.全包含选择菜单.Text = "全包含选中";
+            this.全包含选择菜单.Click += new System.EventHandler(this.选择模式更改_Click);
             // 
             // 视图ToolStripMenuItem
             // 
@@ -654,6 +657,7 @@ namespace DEETU.Source.Window
             // 
             // menuStrip1
             // 
+            this.menuStrip1.GripMargin = new System.Windows.Forms.Padding(2, 2, 0, 2);
             this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.文件ToolStripMenuItem,
@@ -881,26 +885,29 @@ namespace DEETU.Source.Window
             // 
             this.selectByExtentToolStripDropDownButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.selectByExtentToolStripDropDownButton.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.交叉选中ToolStripMenuItem,
-            this.全包含选中ToolStripMenuItem});
+            this.交叉选择,
+            this.全包含选择});
             this.selectByExtentToolStripDropDownButton.Image = ((System.Drawing.Image)(resources.GetObject("selectByExtentToolStripDropDownButton.Image")));
             this.selectByExtentToolStripDropDownButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.selectByExtentToolStripDropDownButton.Name = "selectByExtentToolStripDropDownButton";
             this.selectByExtentToolStripDropDownButton.Size = new System.Drawing.Size(34, 28);
             this.selectByExtentToolStripDropDownButton.Text = "按照范围选择";
             // 
-            // 交叉选中ToolStripMenuItem
+            // 交叉选择
             // 
-            this.交叉选中ToolStripMenuItem.Name = "交叉选中ToolStripMenuItem";
-            this.交叉选中ToolStripMenuItem.Size = new System.Drawing.Size(167, 26);
-            this.交叉选中ToolStripMenuItem.Text = "交叉选中";
-            this.交叉选中ToolStripMenuItem.Click += new System.EventHandler(this.btnSelect_Click);
+            this.交叉选择.Checked = true;
+            this.交叉选择.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.交叉选择.Name = "交叉选择";
+            this.交叉选择.Size = new System.Drawing.Size(136, 22);
+            this.交叉选择.Text = "交叉选中";
+            this.交叉选择.Click += new System.EventHandler(this.选择模式更改_Click);
             // 
-            // 全包含选中ToolStripMenuItem
+            // 全包含选择
             // 
-            this.全包含选中ToolStripMenuItem.Name = "全包含选中ToolStripMenuItem";
-            this.全包含选中ToolStripMenuItem.Size = new System.Drawing.Size(167, 26);
-            this.全包含选中ToolStripMenuItem.Text = "全包含选中";
+            this.全包含选择.Name = "全包含选择";
+            this.全包含选择.Size = new System.Drawing.Size(136, 22);
+            this.全包含选择.Text = "全包含选中";
+            this.全包含选择.Click += new System.EventHandler(this.选择模式更改_Click);
             // 
             // cancelSelectionToolStripButton
             // 
@@ -971,7 +978,7 @@ namespace DEETU.Source.Window
             // 
             // uiPanel1
             // 
-            this.uiPanel1.Controls.Add(this.uiTreeView2);
+            this.uiPanel1.Controls.Add(this.FileTreeView);
             this.uiPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.uiPanel1.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(211)))), ((int)(((byte)(211)))), ((int)(((byte)(211)))));
             this.uiPanel1.Font = new System.Drawing.Font("微软雅黑", 12F);
@@ -986,35 +993,29 @@ namespace DEETU.Source.Window
             this.uiPanel1.Text = "uiPanel1";
             this.uiPanel1.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // uiTreeView2
+            // FileTreeView
             // 
-            this.uiTreeView2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.uiTreeView2.FillColor = System.Drawing.Color.White;
-            this.uiTreeView2.Font = new System.Drawing.Font("微软雅黑", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.uiTreeView2.HideSelection = false;
-            this.uiTreeView2.Location = new System.Drawing.Point(0, 0);
-            this.uiTreeView2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.uiTreeView2.MinimumSize = new System.Drawing.Size(1, 1);
-            this.uiTreeView2.Name = "uiTreeView2";
+            this.FileTreeView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.FileTreeView.FillColor = System.Drawing.Color.White;
+            this.FileTreeView.Font = new System.Drawing.Font("微软雅黑", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.FileTreeView.HideSelection = false;
+            this.FileTreeView.Location = new System.Drawing.Point(0, 0);
+            this.FileTreeView.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.FileTreeView.MinimumSize = new System.Drawing.Size(1, 1);
+            this.FileTreeView.Name = "FileTreeView";
             treeNode1.ContextMenuStrip = this.projectContextMenuStrip;
             treeNode1.Name = "节点0";
-            treeNode1.Text = "工程目录";
-            treeNode2.ContextMenuStrip = this.favoriteContextMenuStrip1;
-            treeNode2.Name = "节点0";
-            treeNode2.Text = "收藏夹";
-            treeNode3.Name = "节点1";
-            treeNode3.Text = "C:\\";
-            this.uiTreeView2.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode1,
-            treeNode2,
-            treeNode3});
-            this.uiTreeView2.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
-            this.uiTreeView2.SelectedNode = null;
-            this.uiTreeView2.Size = new System.Drawing.Size(276, 211);
-            this.uiTreeView2.Style = Sunny.UI.UIStyle.Office2010Black;
-            this.uiTreeView2.TabIndex = 0;
-            this.uiTreeView2.Text = "uiTreeView2";
-            this.uiTreeView2.TextAlignment = System.Drawing.ContentAlignment.BottomRight;
+            treeNode1.Text = "最近使用的图层";
+            this.FileTreeView.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
+            treeNode1});
+            this.FileTreeView.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
+            this.FileTreeView.SelectedNode = null;
+            this.FileTreeView.Size = new System.Drawing.Size(276, 217);
+            this.FileTreeView.Style = Sunny.UI.UIStyle.Office2010Black;
+            this.FileTreeView.TabIndex = 0;
+            this.FileTreeView.Text = "uiTreeView2";
+            this.FileTreeView.TextAlignment = System.Drawing.ContentAlignment.BottomRight;
+            this.FileTreeView.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.FileTreeView_NodeMouseDoubleClick);
             // 
             // uiPanel2
             // 
@@ -1036,8 +1037,8 @@ namespace DEETU.Source.Window
             // layerTreeView
             // 
             this.layerTreeView.AllowDrop = true;
+            this.layerTreeView.CheckBoxes = true;
             this.layerTreeView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.layerTreeView.FillColor = System.Drawing.Color.White;
             this.layerTreeView.Font = new System.Drawing.Font("微软雅黑", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.layerTreeView.ImageIndex = 0;
             this.layerTreeView.ImageList = this.TreeImages;
@@ -1045,19 +1046,20 @@ namespace DEETU.Source.Window
             this.layerTreeView.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.layerTreeView.MinimumSize = new System.Drawing.Size(1, 1);
             this.layerTreeView.Name = "layerTreeView";
-            this.layerTreeView.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
             this.layerTreeView.SelectedImageIndex = 0;
             this.layerTreeView.SelectedNode = null;
+            this.layerTreeView.ShowLines = true;
             this.layerTreeView.ShowNodeToolTips = true;
             this.layerTreeView.Size = new System.Drawing.Size(276, 283);
             this.layerTreeView.Style = Sunny.UI.UIStyle.Office2010Black;
             this.layerTreeView.TabIndex = 0;
             this.layerTreeView.Text = "layerTreeView";
-            this.layerTreeView.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter;
+            this.layerTreeView.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.layerTreeView_AfterCheck);
             this.layerTreeView.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.layerTreeView_ItemDrag);
             this.layerTreeView.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.layerTreeView_NodeMouseClick);
             this.layerTreeView.DragDrop += new System.Windows.Forms.DragEventHandler(this.layerTreeView_DragDrop);
             this.layerTreeView.DragEnter += new System.Windows.Forms.DragEventHandler(this.layerTreeView_DragEnter);
+            this.layerTreeView.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.layerTreeView_MouseDoubleClick);
             // 
             // TreeImages
             // 
@@ -1093,10 +1095,10 @@ namespace DEETU.Source.Window
             geoLayers1.FilePath = null;
             this.geoMap.Layers = geoLayers1;
             this.geoMap.Location = new System.Drawing.Point(0, 0);
-            this.geoMap.Margin = new System.Windows.Forms.Padding(7216268, 58567880, 7216268, 58567880);
+            this.geoMap.Margin = new System.Windows.Forms.Padding(37120712, 305168164, 37120712, 305168164);
             this.geoMap.Name = "geoMap";
             this.geoMap.SelectionColor = System.Drawing.Color.Cyan;
-            this.geoMap.Size = new System.Drawing.Size(637, 472);
+            this.geoMap.Size = new System.Drawing.Size(637, 489);
             this.geoMap.TabIndex = 0;
             this.geoMap.MapScaleChanged += new DEETU.Map.GeoMapControl.MapScaleChangedHandle(this.geoMap_MapScaleChanged);
             this.geoMap.AfterTrackingLayerDraw += new DEETU.Map.GeoMapControl.AfterTrackingLayerDrawHandle(this.geoMap_AfterTrackingLayerDraw);
@@ -1178,7 +1180,7 @@ namespace DEETU.Source.Window
             this.startEditToolStripButton.Name = "startEditToolStripButton";
             this.startEditToolStripButton.Size = new System.Drawing.Size(29, 28);
             this.startEditToolStripButton.Text = "开始编辑";
-            this.startEditToolStripButton.Click += new System.EventHandler(this.startEditToolStripButton_Click);
+            this.startEditToolStripButton.Click += new System.EventHandler(this.开始编辑_Click);
             // 
             // 保存当前编辑ToolStripButton
             // 
@@ -1247,7 +1249,6 @@ namespace DEETU.Source.Window
             this.剪切要素ToolStripButton.Name = "剪切要素ToolStripButton";
             this.剪切要素ToolStripButton.Size = new System.Drawing.Size(29, 28);
             this.剪切要素ToolStripButton.Text = "剪切要素";
-            this.剪切要素ToolStripButton.Click += new System.EventHandler(this.剪切要素ToolStripButton_Click);
             // 
             // 复制要素ToolStripButton
             // 
@@ -1257,7 +1258,7 @@ namespace DEETU.Source.Window
             this.复制要素ToolStripButton.Name = "复制要素ToolStripButton";
             this.复制要素ToolStripButton.Size = new System.Drawing.Size(29, 28);
             this.复制要素ToolStripButton.Text = "复制要素";
-            this.复制要素ToolStripButton.Click += new System.EventHandler(this.复制要素ToolStripButton_Click);
+            this.复制要素ToolStripButton.Click += new System.EventHandler(this.复制要素_Click);
             // 
             // 粘贴要素ToolStripButton
             // 
@@ -1267,7 +1268,7 @@ namespace DEETU.Source.Window
             this.粘贴要素ToolStripButton.Name = "粘贴要素ToolStripButton";
             this.粘贴要素ToolStripButton.Size = new System.Drawing.Size(29, 28);
             this.粘贴要素ToolStripButton.Text = "粘贴要素";
-            this.粘贴要素ToolStripButton.Click += new System.EventHandler(this.粘贴要素ToolStripButton_Click);
+            this.粘贴要素ToolStripButton.Click += new System.EventHandler(this.粘贴要素_Click);
             // 
             // PasteUndoToolStripSeparator14
             // 
@@ -1282,6 +1283,7 @@ namespace DEETU.Source.Window
             this.撤销ToolStripButton.Name = "撤销ToolStripButton";
             this.撤销ToolStripButton.Size = new System.Drawing.Size(29, 28);
             this.撤销ToolStripButton.Text = "撤销";
+            this.撤销ToolStripButton.Click += new System.EventHandler(this.撤销_Click);
             // 
             // 重做ToolStripButton
             // 
@@ -1291,6 +1293,7 @@ namespace DEETU.Source.Window
             this.重做ToolStripButton.Name = "重做ToolStripButton";
             this.重做ToolStripButton.Size = new System.Drawing.Size(29, 28);
             this.重做ToolStripButton.Text = "重做";
+            this.重做ToolStripButton.Click += new System.EventHandler(this.重做_Click);
             // 
             // MainPage
             // 
@@ -1357,7 +1360,7 @@ namespace DEETU.Source.Window
 		private Sunny.UI.UIPanel uiPanel2;
 		private Sunny.UI.UITreeView layerTreeView;
 		private Sunny.UI.UIPanel uiPanel3;
-		private Sunny.UI.UITreeView uiTreeView2;
+		private Sunny.UI.UITreeView FileTreeView;
 		private System.Windows.Forms.ToolStripButton newToolStripButton;
 		private System.Windows.Forms.ToolStripButton openToolStripButton;
 		private System.Windows.Forms.ToolStripButton saveToolStripButton;
@@ -1374,8 +1377,8 @@ namespace DEETU.Source.Window
 		private System.Windows.Forms.ToolStripDropDownButton selectByValueToolStripDropDownButton;
 		private System.Windows.Forms.ToolStripMenuItem 按表达式选择ToolStripMenuItem;
 		private System.Windows.Forms.ToolStripDropDownButton selectByExtentToolStripDropDownButton;
-		private System.Windows.Forms.ToolStripMenuItem 交叉选中ToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem 全包含选中ToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem 交叉选择;
+		private System.Windows.Forms.ToolStripMenuItem 全包含选择;
 		private System.Windows.Forms.ToolStripMenuItem 新建ToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem 打开ToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem 保存ToolStripMenuItem;
@@ -1394,8 +1397,8 @@ namespace DEETU.Source.Window
 		private System.Windows.Forms.ToolStripMenuItem 按属性值选择ToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem 按表达式选择ToolStripMenuItem1;
 		private System.Windows.Forms.ToolStripMenuItem 按矩形范围选择ToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem 交叉选择ToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem 全包含选中ToolStripMenuItem1;
+		private System.Windows.Forms.ToolStripMenuItem 交叉选择菜单;
+		private System.Windows.Forms.ToolStripMenuItem 全包含选择菜单;
 		private Sunny.UI.UIContextMenuStrip projectContextMenuStrip;
 		private System.Windows.Forms.ToolStripMenuItem 设置工程目录ToolStripMenuItem;
 		private Sunny.UI.UIContextMenuStrip favoriteContextMenuStrip1;
