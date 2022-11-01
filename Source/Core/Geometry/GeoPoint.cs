@@ -59,6 +59,14 @@ namespace DEETU.Geometry
         {
             return new GeoPoint(this);
         }
+
+        /// <summary>
+        /// 重新计算坐标范围
+        /// </summary>
+        public override void UpdateExtent()
+        {
+            return;
+        }
         #endregion
     }
 }
