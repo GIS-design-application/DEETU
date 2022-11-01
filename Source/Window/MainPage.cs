@@ -1498,16 +1498,24 @@ namespace DEETU.Source.Window
 
         private void LoadRecentUsedFiles()
         {
-            using (StreamReader sr = new StreamReader("./recent_used_files.txt"))
+            try
             {
-                while (sr.EndOfStream == false)
+                using (StreamReader sr = new StreamReader("./recent_used_files.txt"))
                 {
-                    TreeNode sNode = new TreeNode();
-                    sNode.Text = sr.ReadLine();
-                    sNode.Tag = sr.ReadLine();
-                    FileTreeView.Nodes[0].Nodes.Add(sNode);
+                    while (sr.EndOfStream == false)
+                    {
+                        TreeNode sNode = new TreeNode();
+                        sNode.Text = sr.ReadLine();
+                        sNode.Tag = sr.ReadLine();
+                        FileTreeView.Nodes[0].Nodes.Add(sNode);
+                    }
                 }
             }
+            catch (Exception e)
+            {
+
+            }
+
         }
         //初始化符号
         private void InitializeSymbols()
@@ -2709,49 +2717,6 @@ namespace DEETU.Source.Window
             geoMap.RedrawMap();
         }
 
-        private void FileTreeView_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
-        {
-            if (e.Node.Level == 0) return;//双击父节点返回
-            string path = e.Node.Tag.ToString();
-#if DEBUG
-            logging = path;
-#endif
-            if (File.Exists(path))
-            {
-                LoadLayerFile(path);
-            }
-        }
-
-        private void 撤销_Click(object sender, EventArgs e)
-        {
-            Undo();
-        }
-
-        private void 重做_Click(object sender, EventArgs e)
-        {
-            Redo();
-        }
-
-        private void 选择模式更改_Click(object sender, EventArgs e)
-        {
-            if (sender == 交叉选择 || sender == 交叉选择菜单)
-            {
-                全包含选择菜单.Checked = false;
-                全包含选择.Checked = false;
-                交叉选择.Checked = true;
-                交叉选择菜单.Checked = true;
-                return;
-            }
-            else if (sender == 全包含选择 || sender == 全包含选择菜单)
-            {
-                全包含选择菜单.Checked = true;
-                全包含选择.Checked = true;
-                交叉选择.Checked = false;
-                交叉选择菜单.Checked = false;
-                return;
-            }
-        }
-
         private void layerTreeView_AfterCheck(object sender, TreeViewEventArgs e)
         {
             if(e.Node.Nodes.Count == 0) // 子节点
@@ -2804,13 +2769,55 @@ namespace DEETU.Source.Window
             }
         }
 
-        private void 剪切要素ToolStripButton_Click(object sender, EventArgs e)
+        private void FileTreeView_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
+        {
+            if (e.Node.Level == 0) return;//双击父节点返回
+            string path = e.Node.Tag.ToString();
+#if DEBUG
+            logging = path;
+#endif
+            if (File.Exists(path))
+            {
+                LoadLayerFile(path);
+            }
+        }
+
+        private void 撤销_Click(object sender, EventArgs e)
+        {
+            Undo();
+        }
+
+        private void 重做_Click(object sender, EventArgs e)
+        {
+            Redo();
+        }
+
+        private void 选择模式更改_Click(object sender, EventArgs e)
+        {
+            if (sender == 交叉选择 || sender == 交叉选择菜单)
+            {
+                全包含选择菜单.Checked = false;
+                全包含选择.Checked = false;
+                交叉选择.Checked = true;
+                交叉选择菜单.Checked = true;
+                return;
+            }
+            else if (sender == 全包含选择 || sender == 全包含选择菜单)
+            {
+                全包含选择菜单.Checked = true;
+                全包含选择.Checked = true;
+                交叉选择.Checked = false;
+                交叉选择菜单.Checked = false;
+                return;
+            }
+        }
+
+        private void 剪切要素_Click(object sender, EventArgs e)
         {
             Cut();
         }
 
      
-
         private void MainPage_KeyUp(object sender, KeyEventArgs e)
         {
 #if DEBUG
