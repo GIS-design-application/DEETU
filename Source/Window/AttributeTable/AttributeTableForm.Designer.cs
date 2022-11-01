@@ -50,18 +50,18 @@ namespace DEETU.Source.Window
             this.Header = new Sunny.UI.UINavBar();
             this.navBarImageList = new System.Windows.Forms.ImageList(this.components);
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.editToolStripButton = new System.Windows.Forms.ToolStripButton();
+            this.startEditToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.saveEditToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.reloadToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.CutToolStripButton4 = new System.Windows.Forms.ToolStripButton();
+            this.cutToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.copyStripButton = new System.Windows.Forms.ToolStripButton();
             this.pasteToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.addFeatureToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.removeFeatureToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.addFieldStripButton = new System.Windows.Forms.ToolStripButton();
-            this.removeToolStripButton = new System.Windows.Forms.ToolStripButton();
+            this.removeFieldToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.selectAllToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.removeSelectToolStripButton = new System.Windows.Forms.ToolStripButton();
@@ -257,18 +257,18 @@ namespace DEETU.Source.Window
             // toolStrip1
             // 
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.editToolStripButton,
+            this.startEditToolStripButton,
             this.saveEditToolStripButton,
             this.reloadToolStripButton,
             this.toolStripSeparator1,
-            this.CutToolStripButton4,
+            this.cutToolStripButton,
             this.copyStripButton,
             this.pasteToolStripButton,
             this.addFeatureToolStripButton,
             this.removeFeatureToolStripButton,
             this.toolStripSeparator2,
             this.addFieldStripButton,
-            this.removeToolStripButton,
+            this.removeFieldToolStripButton,
             this.toolStripSeparator3,
             this.selectAllToolStripButton,
             this.removeSelectToolStripButton,
@@ -279,15 +279,15 @@ namespace DEETU.Source.Window
             this.toolStrip1.TabIndex = 2;
             this.toolStrip1.Text = "toolStrip1";
             // 
-            // editToolStripButton
+            // startEditToolStripButton
             // 
-            this.editToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.editToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("editToolStripButton.Image")));
-            this.editToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.editToolStripButton.Name = "editToolStripButton";
-            this.editToolStripButton.Size = new System.Drawing.Size(23, 22);
-            this.editToolStripButton.Text = "开始编辑";
-            this.editToolStripButton.Click += new System.EventHandler(this.editToolStripButton_Click);
+            this.startEditToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.startEditToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("startEditToolStripButton.Image")));
+            this.startEditToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.startEditToolStripButton.Name = "startEditToolStripButton";
+            this.startEditToolStripButton.Size = new System.Drawing.Size(23, 22);
+            this.startEditToolStripButton.Text = "开始编辑";
+            this.startEditToolStripButton.Click += new System.EventHandler(this.editToolStripButton_Click);
             // 
             // saveEditToolStripButton
             // 
@@ -316,14 +316,14 @@ namespace DEETU.Source.Window
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
             // 
-            // CutToolStripButton4
+            // cutToolStripButton
             // 
-            this.CutToolStripButton4.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.CutToolStripButton4.Image = ((System.Drawing.Image)(resources.GetObject("CutToolStripButton4.Image")));
-            this.CutToolStripButton4.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.CutToolStripButton4.Name = "CutToolStripButton4";
-            this.CutToolStripButton4.Size = new System.Drawing.Size(23, 22);
-            this.CutToolStripButton4.Text = "剪切选中行";
+            this.cutToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.cutToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("cutToolStripButton.Image")));
+            this.cutToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.cutToolStripButton.Name = "cutToolStripButton";
+            this.cutToolStripButton.Size = new System.Drawing.Size(23, 22);
+            this.cutToolStripButton.Text = "剪切选中行";
             // 
             // copyStripButton
             // 
@@ -378,15 +378,15 @@ namespace DEETU.Source.Window
             this.addFieldStripButton.Text = "添加字段";
             this.addFieldStripButton.Click += new System.EventHandler(this.addFieldStripButton_Click);
             // 
-            // removeToolStripButton
+            // removeFieldToolStripButton
             // 
-            this.removeToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.removeToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("removeToolStripButton.Image")));
-            this.removeToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.removeToolStripButton.Name = "removeToolStripButton";
-            this.removeToolStripButton.Size = new System.Drawing.Size(23, 22);
-            this.removeToolStripButton.Text = "删除字段";
-            this.removeToolStripButton.Click += new System.EventHandler(this.removeToolStripButton_Click);
+            this.removeFieldToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.removeFieldToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("removeFieldToolStripButton.Image")));
+            this.removeFieldToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.removeFieldToolStripButton.Name = "removeFieldToolStripButton";
+            this.removeFieldToolStripButton.Size = new System.Drawing.Size(23, 22);
+            this.removeFieldToolStripButton.Text = "删除字段";
+            this.removeFieldToolStripButton.Click += new System.EventHandler(this.removeToolStripButton_Click);
             // 
             // toolStripSeparator3
             // 
@@ -463,16 +463,16 @@ namespace DEETU.Source.Window
         private System.Windows.Forms.TableLayoutPanel detailTable;
         private System.Windows.Forms.ListView featureList;
         private System.Windows.Forms.ToolStrip toolStrip1;
-        private System.Windows.Forms.ToolStripButton editToolStripButton;
+        private System.Windows.Forms.ToolStripButton startEditToolStripButton;
         private System.Windows.Forms.ToolStripButton saveEditToolStripButton;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-        private System.Windows.Forms.ToolStripButton CutToolStripButton4;
+        private System.Windows.Forms.ToolStripButton cutToolStripButton;
         private System.Windows.Forms.ToolStripButton copyStripButton;
         private System.Windows.Forms.ToolStripButton pasteToolStripButton;
         private System.Windows.Forms.ToolStripButton removeFeatureToolStripButton;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripButton addFieldStripButton;
-        private System.Windows.Forms.ToolStripButton removeToolStripButton;
+        private System.Windows.Forms.ToolStripButton removeFieldToolStripButton;
         private System.Windows.Forms.ToolStripButton selectAllToolStripButton;
         private System.Windows.Forms.ToolStripButton removeSelectToolStripButton;
         private System.Windows.Forms.ToolStripButton reloadToolStripButton;

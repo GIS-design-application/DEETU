@@ -17,16 +17,20 @@ namespace DEETU.Source.Window
     public partial class AttributeTableForm : UIForm
     {
         #region 字段
-        private GeoMapLayer mLayer;       
+        private GeoMapLayer mLayer;
+        bool mIsEditing = false;
 
         #endregion
-        public AttributeTableForm(GeoMapLayer layer)
+        public AttributeTableForm(GeoMapLayer layer, bool isEditing)
         {
             InitializeComponent();
             mLayer = layer;
+            mIsEditing = isEditing;
 
             InitializeFormPage();
             InitializeGridPage();
+
+            SetEdit();
         }
 
         #region 事件处理函数
@@ -78,6 +82,21 @@ namespace DEETU.Source.Window
 
         private void editToolStripButton_Click(object sender, EventArgs e)
         {
+            mIsEditing = !mIsEditing;
+            startEditToolStripButton.Checked = mIsEditing;
+            MapEditStatusChanged?.Invoke(this, mIsEditing);
+            SetEdit();
+
+            if (mIsEditing)
+            {
+                startEditToolStripButton.Image = new Bitmap("./icons/edit_off.png");
+                startEditToolStripButton.ToolTipText = "结束编辑";
+            }
+            else
+            {
+                startEditToolStripButton.Image = new Bitmap("./icons/edit.png");
+                startEditToolStripButton.ToolTipText = "开始编辑";
+            }
 
         }
 
@@ -267,6 +286,24 @@ namespace DEETU.Source.Window
                 textBox.Text = feature.Attributes.GetItem(i).ToString();
             }
         }
+
+        private void SetEdit()
+        {
+            cutToolStripButton.Enabled = mIsEditing;
+            pasteToolStripButton.Enabled = mIsEditing;
+            copyStripButton.Enabled = mIsEditing;
+            addFeatureToolStripButton.Enabled = mIsEditing;
+            removeFeatureToolStripButton.Enabled = mIsEditing;
+            addFieldStripButton.Enabled = mIsEditing;
+            removeFieldToolStripButton.Enabled = mIsEditing;
+
+            featureDataGridView.ReadOnly = !mIsEditing;
+            for (int i = 0; i < detailTable.RowCount; i++)
+            {
+                UITextBox textBox = detailTable.GetControlFromPosition(1, i) as UITextBox;
+                textBox.ReadOnly = !mIsEditing;
+            }
+        }
         #endregion
 
         #region 事件
@@ -277,11 +314,11 @@ namespace DEETU.Source.Window
         /// <param name="sender"></param>
         public event MapRedrawHandle MapRedraw;
 
-        public delegate void MapEditStartHandle(object sender);
+        public delegate void MapEditStatusChangedHandle(object sender, bool status);
         /// <summary>
         /// Set MainPage MapControl Start editding;
         /// </summary>
-        public event MapEditStartHandle MapEditStart;
+        public event MapEditStatusChangedHandle MapEditStatusChanged;
 
         public delegate void LayerQueryHandler(object sender, GeoMapLayer layer, string expression, GeoSelectionModeConstant selectionMode);
         public event LayerQueryHandler LayerQuery;

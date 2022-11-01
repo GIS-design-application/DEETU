@@ -689,9 +689,16 @@ namespace DEETU.Source.Window
             SetEditing();
 
             if (mIsEditing)
+            {
                 startEditToolStripButton.Image = new Bitmap("./icons/edit_off.png");
+                startEditToolStripButton.ToolTipText = "结束编辑";
+            }
             else
+            {
                 startEditToolStripButton.Image = new Bitmap("./icons/edit.png");
+                startEditToolStripButton.ToolTipText = "开始编辑";
+            }
+
 
         }
         #endregion
@@ -2085,11 +2092,13 @@ namespace DEETU.Source.Window
         private void 打开属性表ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             GeoMapLayer layer = mCurrentLayerNode.Tag as GeoMapLayer;
-            AttributeTableForm attributeForm = new AttributeTableForm(layer);
+            AttributeTableForm attributeForm = new AttributeTableForm(layer, mIsEditing);
             attributeForm.MapRedraw += AttributeForm_MapRedraw;
             attributeForm.LayerQuery += ExpressionForm_LayerQuery;
+            attributeForm.MapEditStatusChanged += AttributeForm_MapEditStatusChanged;
             attributeForm.Show();
         }
+
 
         #endregion
 
@@ -2109,6 +2118,24 @@ namespace DEETU.Source.Window
         private void ExpressionForm_LayerQuery(object sender, GeoMapLayer layer, string expression, GeoSelectionModeConstant selectionMode)
         {
             QueryExpressionLayer(layer, expression, selectionMode);
+        }
+
+        private void AttributeForm_MapEditStatusChanged(object sender, bool status)
+        {
+            btnSelect_Click(sender, new EventArgs());
+            mIsEditing = status;
+            SetEditing();
+
+            if (mIsEditing)
+            {
+                startEditToolStripButton.Image = new Bitmap("./icons/edit_off.png");
+                startEditToolStripButton.ToolTipText = "结束编辑";
+            }
+            else
+            {
+                startEditToolStripButton.Image = new Bitmap("./icons/edit.png");
+                startEditToolStripButton.ToolTipText = "开始编辑";
+            }
         }
 
         #endregion
