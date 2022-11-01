@@ -2750,25 +2750,6 @@ namespace DEETU.Source.Window
             geoMap.RedrawMap();
         }
 
-        private void layerTreeView_AfterCheck(object sender, TreeViewEventArgs e)
-        {
-            if(e.Node.Nodes.Count == 0) // 子节点
-            {
-                if (e.Node.Tag != null)
-                {
-                    GeoSymbol sSymbol = e.Node.Tag as GeoSymbol;
-                    if (sSymbol.SymbolType == GeoSymbolTypeConstant.SimpleFillSymbol)
-                        (sSymbol as GeoSimpleFillSymbol).Visible = !(sSymbol as GeoSimpleFillSymbol).Visible;
-                }
-            }
-            else // 父节点
-            {
-                GeoMapLayer sLayer = e.Node.Tag as GeoMapLayer;
-                sLayer.Visible = !sLayer.Visible;
-            }
-            geoMap.RedrawMap();
-        }
-
         private void layerTreeView_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             TreeNode node = layerTreeView.GetNodeAt(e.Location);

@@ -501,7 +501,6 @@ namespace DEETU.Source.Window
             this.剪切要素ToolStripMenuItem.Name = "剪切要素ToolStripMenuItem";
             this.剪切要素ToolStripMenuItem.Size = new System.Drawing.Size(184, 26);
             this.剪切要素ToolStripMenuItem.Text = "剪切要素";
-            this.剪切要素ToolStripMenuItem.Click += new System.EventHandler(this.剪切要素_Click);
             // 
             // 复制要素ToolStripMenuItem
             // 
@@ -1007,22 +1006,6 @@ namespace DEETU.Source.Window
             treeNode1.ContextMenuStrip = this.projectContextMenuStrip;
             treeNode1.Name = "节点0";
             treeNode1.Text = "工程目录";
-            treeNode2.ContextMenuStrip = this.favoriteContextMenuStrip1;
-            treeNode2.Name = "节点0";
-            treeNode2.Text = "收藏夹";
-            treeNode3.Name = "节点1";
-            treeNode3.Text = "C:\\";
-            this.uiTreeView2.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode1,
-            treeNode2,
-            treeNode3});
-            this.uiTreeView2.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
-            this.uiTreeView2.SelectedNode = null;
-            this.uiTreeView2.Size = new System.Drawing.Size(276, 211);
-            this.uiTreeView2.Style = Sunny.UI.UIStyle.Office2010Black;
-            this.uiTreeView2.TabIndex = 0;
-            this.uiTreeView2.Text = "uiTreeView2";
-            this.uiTreeView2.TextAlignment = System.Drawing.ContentAlignment.BottomRight;
             // 
             // uiPanel2
             // 
@@ -1254,7 +1237,6 @@ namespace DEETU.Source.Window
             this.剪切要素ToolStripButton.Name = "剪切要素ToolStripButton";
             this.剪切要素ToolStripButton.Size = new System.Drawing.Size(24, 24);
             this.剪切要素ToolStripButton.Text = "剪切要素";
-            this.剪切要素ToolStripButton.Click += new System.EventHandler(this.剪切要素_Click);
             // 
             // 复制要素ToolStripButton
             // 
