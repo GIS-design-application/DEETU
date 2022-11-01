@@ -51,11 +51,19 @@ namespace DEETU.Source.Window
         private void getUniqueValueButton_Click(object sender, EventArgs e)
         {
             int fieldIdx = fieldsListBox.SelectedIndex;
-
+            GeoValueTypeConstant valueType = mLayer.AttributeFields.GetItem(fieldIdx).ValueType;
+            valueListBox.Items.Clear();
             GeoFeatures features = mLayer.Features;
+            List<object> valueList = new List<object>();
             for (int i = 0; i < features.Count; i++)
             {
-                valueListBox.Items.Add(features.GetItem(i).Attributes.GetItem(fieldIdx).ToString());
+                valueList.Add(features.GetItem(i).Attributes.GetItem(fieldIdx).ToString());
+            }
+
+            valueList.Sort();
+            for (int i = 0; i < features.Count; i++)
+            {
+                valueListBox.Items.Add(valueList[i]);
             }
         }
 
@@ -86,6 +94,13 @@ namespace DEETU.Source.Window
 
         private void okButton_Click(object sender, EventArgs e)
         {
+            if (expressionTextBox.Text.IsNullOrWhiteSpace())
+            {
+                DialogResult dr = MessageBox.Show("您没有输入任何表达式，确定要继续吗", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (dr == DialogResult.No)
+                    return;
+            }
+                
             GeoSelectionModeConstant selectionMode = (GeoSelectionModeConstant)uiComboboxEx1.SelectedIndex;
             LayerQuery?.Invoke(this, mLayer, expressionTextBox.Text, selectionMode);
 

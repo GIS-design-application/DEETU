@@ -1465,10 +1465,6 @@ namespace DEETU.Source.Window
             e.Effect = DragDropEffects.Move;
         }
 
-
-
-
-
         #endregion
 
         #region 私有函数

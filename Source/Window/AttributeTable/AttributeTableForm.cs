@@ -257,7 +257,8 @@ namespace DEETU.Source.Window
             {
                 featureDataGridView.AddColumn(fields.GetItem(i).AliaName, null);
                 featureDataGridView.Columns[i].DefaultCellStyle.Font = (new Font("微软雅黑", 10f));
-                featureDataGridView.Columns[i].ReadOnly = true;
+                //featureDataGridView.Columns[i].ReadOnly = true;
+                featureDataGridView.Columns[i].SortMode = DataGridViewColumnSortMode.Automatic;
             }
 
             GeoFeatures features = mLayer.Features;
