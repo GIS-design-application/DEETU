@@ -1498,14 +1498,17 @@ namespace DEETU.Source.Window
 
         private void LoadRecentUsedFiles()
         {
-            using (StreamReader sr = new StreamReader("./recent_used_files.txt"))
+            if (File.Exists("./recent_used_files.txt"))
             {
-                while (sr.EndOfStream == false)
+                using (StreamReader sr = new StreamReader("./recent_used_files.txt"))
                 {
-                    TreeNode sNode = new TreeNode();
-                    sNode.Text = sr.ReadLine();
-                    sNode.Tag = sr.ReadLine();
-                    FileTreeView.Nodes[0].Nodes.Add(sNode);
+                    while (sr.EndOfStream == false)
+                    {
+                        TreeNode sNode = new TreeNode();
+                        sNode.Text = sr.ReadLine();
+                        sNode.Tag = sr.ReadLine();
+                        FileTreeView.Nodes[0].Nodes.Add(sNode);
+                    }
                 }
             }
         }
@@ -2701,6 +2704,39 @@ namespace DEETU.Source.Window
                 交叉选择.Checked = false;
                 交叉选择菜单.Checked = false;
                 return;
+            }
+        }
+
+        private void 导出图片ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog saveFileDialog1 = new SaveFileDialog();
+            saveFileDialog1.Title = "保存";
+            saveFileDialog1.Filter = "*.png|*.png";
+            saveFileDialog1.RestoreDirectory = true;
+            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                Point screenPoint = geoMap.PointToScreen(new Point());
+                Rectangle rect = new Rectangle(screenPoint, geoMap.Size);
+                Image img = new Bitmap(rect.Width, rect.Height);
+                Graphics g = Graphics.FromImage(img);
+                g.CopyFromScreen(rect.X - 1, rect.Y - 1, 0, 0, rect.Size);
+                img.Save(saveFileDialog1.FileName, System.Drawing.Imaging.ImageFormat.Png);
+                
+                
+                //Timer timer1 = new Timer();
+                //timer1.Enabled = true;
+                //timer1.Enabled = false;
+                //Bitmap bit = new Bitmap(this.Width, this.Height);//实例化一个和窗体一样大的bitmap
+                //Graphics g = Graphics.FromImage(bit);
+                //g.CompositingQuality = CompositingQuality.HighQuality;//质量设为最高
+                //                                                      //g.CopyFromScreen(this.Left, this.Top, 0, 0, new Size(this.Width, this.Height));//保存整个窗体为图片
+                //g.CopyFromScreen(geoMap.PointToScreen(Point.Empty), Point.Empty, geoMap.Size);//只保存某个控件
+                //bit.Save(saveFileDialog1.FileName);//默认保存格式为PNG，保存成jpg格式质量不是很好
+                //if (File.Exists(saveFileDialog1.FileName.ToString()))
+                //{
+                //    MessageBox.Show("截图成功！");
+                //    return;
+                //}
             }
         }
 
