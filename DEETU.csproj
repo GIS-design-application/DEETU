@@ -334,7 +334,6 @@
     <None Include=".vs\slnx.sqlite" />
     <None Include=".vs\VSWorkspaceState.json" />
     <None Include="App.config" />
-    <None Include="ClassDiagram1.cd" />
     <None Include="LICENSE" />
     <None Include="obj\Debug\DEETU.csproj.CoreCompileInputs.cache" />
     <None Include="obj\Debug\DEETU.csproj.GenerateResource.cache" />
@@ -366,13 +365,11 @@
     <Content Include="icons\baseline_create_new_folder_black_48.png" />
     <Content Include="icons\baseline_delete_black_48.png" />
     <Content Include="icons\baseline_done_all_black_48.png" />
-    <Content Include="icons\baseline_edit_off_black_48.png" />
     <Content Include="icons\baseline_folder_black_48.png" />
     <Content Include="icons\baseline_folder_open_black_48.png" />
     <Content Include="icons\baseline_insert_drive_file_black_48.png" />
     <Content Include="icons\baseline_layers_black_48.png" />
     <Content Include="icons\baseline_layers_clear_black_48.png" />
-    <Content Include="icons\baseline_mode_edit_black_48.png" />
     <Content Include="icons\baseline_pan_tool_black_48.png" />
     <Content Include="icons\baseline_photo_size_select_small_black_48.png" />
     <Content Include="icons\baseline_redo_black_48.png" />

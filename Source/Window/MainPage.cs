@@ -1973,8 +1973,8 @@ namespace DEETU.Source.Window
                 int BreakCount = sClassBreaksRenderer.BreakCount;
                 for (int i = 0; i < BreakCount; ++i)
                 {
-                    string startValue = i == 0 ? "0" : sClassBreaksRenderer.GetBreakValue(i - 1).ToString();
-                    string endValue = sClassBreaksRenderer.GetBreakValue(i).ToString();
+                    string startValue = i == 0 ? "0" : sClassBreaksRenderer.GetBreakValue(i - 1).ToString("F2");
+                    string endValue = sClassBreaksRenderer.GetBreakValue(i).ToString("F2");
                     styles.Add(CreateSimpleStyleTreeNode(sClassBreaksRenderer.GetSymbol(i), startValue + "~" + endValue));
                 }
 

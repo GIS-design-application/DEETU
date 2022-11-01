@@ -273,7 +273,7 @@ namespace DEETU.Source.Window
             {
                 GeoSimpleLineSymbol LineSymbol = (GeoSimpleLineSymbol)classBreaksRenderer.GetSymbol(i);
                 Bitmap symbolImage = CreateLineBitmapFromSymbol(LineSymbol);
-                classDataGridView.AddRow(symbolImage, classBreaksRenderer.GetBreakValue(i));
+                classDataGridView.AddRow(symbolImage, classBreaksRenderer.GetBreakValue(i).ToString("F2"));
             }
             classDataGridView.Refresh();
         }
@@ -363,7 +363,7 @@ namespace DEETU.Source.Window
             {
                 GeoSimpleLineSymbol lineSymbol = (GeoSimpleLineSymbol)classBreaksRenderer.GetSymbol(i);
                 Bitmap symbolImage = CreateLineBitmapFromSymbol(lineSymbol);
-                classDataGridView.AddRow(symbolImage, classBreaksRenderer.GetBreakValue(i));
+                classDataGridView.AddRow(symbolImage, classBreaksRenderer.GetBreakValue(i).ToString("F2"));
             }
             CreateClassBreaksRenderers((mLayer.Renderer as GeoClassBreaksRenderer).Field, value);
         }
@@ -546,7 +546,7 @@ namespace DEETU.Source.Window
                 GeoSimpleLineSymbol lineSymbol = mClassBreaksRenderer.GetSymbol(i) as GeoSimpleLineSymbol;
                 lineSymbol.Size = startWidth + (endWidth - startWidth) * (i + 1) / value;
                 Bitmap symbolImage = CreateLineBitmapFromSymbol(lineSymbol);
-                classDataGridView.AddRow(symbolImage, mClassBreaksRenderer.GetBreakValue(i));
+                classDataGridView.AddRow(symbolImage, mClassBreaksRenderer.GetBreakValue(i).ToString("F2"));
             }
             for(int i = 0; i < mClassBreaksRenderers.Count; ++i)
             {

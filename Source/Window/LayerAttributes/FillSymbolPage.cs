@@ -344,7 +344,7 @@ namespace DEETU.Source.Window
             {
                 GeoSimpleFillSymbol fillSymbol = (GeoSimpleFillSymbol)classBreaksRenderer.GetSymbol(i);
                 Bitmap symbolImage = CreateSimpleFillSymbolImage(fillSymbol);
-                classDataGridView.AddRow(symbolImage, classBreaksRenderer.GetBreakValue(i));
+                classDataGridView.AddRow(symbolImage, classBreaksRenderer.GetBreakValue(i).ToString("F2"));
             }
             classDataGridView.Refresh();
         }
@@ -433,7 +433,7 @@ namespace DEETU.Source.Window
             {
                 GeoSimpleFillSymbol fillSymbol = (GeoSimpleFillSymbol)classBreaksRenderer.GetSymbol(i);
                 Bitmap symbolImage = CreateSimpleFillSymbolImage(fillSymbol);
-                classDataGridView.AddRow(symbolImage, classBreaksRenderer.GetBreakValue(i));
+                classDataGridView.AddRow(symbolImage, classBreaksRenderer.GetBreakValue(i).ToString("F2"));
             }
             CreateClassBreaksRenderers((mLayer.Renderer as GeoClassBreaksRenderer).Field, value);
         }
