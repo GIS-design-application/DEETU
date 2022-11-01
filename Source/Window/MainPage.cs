@@ -683,6 +683,7 @@ namespace DEETU.Source.Window
             if (mCurrentLayerNode == null)
             {
                 UIMessageBox.ShowError("请选择图层", false);
+                return;
             }
             btnSelect_Click(sender, e);
             mIsEditing = !mIsEditing;
@@ -1875,6 +1876,9 @@ namespace DEETU.Source.Window
             {
                 InsertTreeNode(geoMap.Layers.GetItem(i), i);
             }
+            // 在更新树的同时更新选中的节点
+            if (mCurrentLayerNode != null)
+                mCurrentLayerNode = layerTreeView.Nodes[mCurrentLayerNode.Index];
         }
 
         // 这个函数是为了显示图层渲染方式

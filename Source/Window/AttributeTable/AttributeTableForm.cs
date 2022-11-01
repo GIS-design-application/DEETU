@@ -163,12 +163,13 @@ namespace DEETU.Source.Window
             // recover selectedChanged
             featureList.SelectedIndexChanged += featureList_SelectedIndexChanged;
             featureList.Items[0].Selected = true;
+            MapRedraw?.Invoke(this);
         }
 
         private void removeSelectToolStripButton_Click(object sender, EventArgs e)
         {
             // ban selectedChanged
-            featureList.SelectedIndexChanged -= featureList_SelectedIndexChanged;
+            //featureList.SelectedIndexChanged -= featureList_SelectedIndexChanged;
             for (int i = 1; i < featureList.Items.Count; i++)
             {
                 featureList.Items[i].Selected = false;
