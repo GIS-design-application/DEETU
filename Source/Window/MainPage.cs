@@ -2002,6 +2002,8 @@ namespace DEETU.Source.Window
             粘贴要素ToolStripMenuItem.Enabled = mIsEditing;
             撤销操作ToolStripMenuItem.Enabled = mIsEditing;
             重做操作ToolStripMenuItem.Enabled = mIsEditing;
+
+            EditStatusChanged?.Invoke(this, mIsEditing);
         }
         #endregion
 
@@ -2107,6 +2109,7 @@ namespace DEETU.Source.Window
             attributeForm.FeatureAdded += AttributeForm_FeatureAdded;
             attributeForm.FeatureRemoved += AttributeForm_FeatureRemoved;
             CurrentAcitveLayerUpdated += attributeForm.MainPage_CurrentActiveLayerChanged;
+            EditStatusChanged += attributeForm.MainPage_EditStatusChanged;
             attributeForm.Show();
         }
 
@@ -2233,6 +2236,9 @@ namespace DEETU.Source.Window
         #region 事件
         public delegate void CurrentActiveLayerUpdatedHandle(object sender, GeoMapLayer layer);
         public event CurrentActiveLayerUpdatedHandle CurrentAcitveLayerUpdated;
+
+        public delegate void EditStatusChangedHandle(object sender, bool status);
+        public event EditStatusChangedHandle EditStatusChanged;
         //public event CurrentActiveLayerUpdatedHandle CurrentAcitveLayerSelected;
         //public event CurrentActiveLayerUpdatedHandle CurrentAcitveLayerMoved;
         //public event CurrentActiveLayerUpdatedHandle CurrentAcitveLayerDeleted;

@@ -376,5 +376,11 @@ namespace DEETU.Source.Window
             mLayer = layer;
             ReloadPages();
         }
+
+        public void MainPage_EditStatusChanged(object sender, bool status)
+        {
+            mIsEditing = status;
+            SetEdit();
+        }
     }
 }

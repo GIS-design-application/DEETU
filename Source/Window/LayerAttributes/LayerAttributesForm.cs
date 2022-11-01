@@ -40,7 +40,7 @@ namespace DEETU.Source.Window
                 default:
                     break;
             }
-            AddPage(new FieldPage(mTemporaryLayer), 3);
+            AddPage(new FieldPage(mLayer), 3);
             AddPage(new AnnotationPage(mTemporaryLayer), 4);
             
             Aside.CreateNode("信息", 112, 24, 1); 
