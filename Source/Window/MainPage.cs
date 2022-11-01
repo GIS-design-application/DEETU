@@ -2347,7 +2347,9 @@ namespace DEETU.Source.Window
 #endif
         private void LoadLayerFile(string sFileName)
         {
-            string suffix = sFileName.Split('.')[1];
+            string suffix = sFileName.Split('.').Last();
+            //string suffix = sFileName.Split('.')[1];
+            
 #if DEBUG
             logging = suffix;
 #endif
