@@ -58,25 +58,31 @@ namespace DEETU.Source.Window
             for (int i = 0; i < mLayer.AttributeFields.Count; i++)
                 uniqueFieldComboBox.Items.Add(mLayer.AttributeFields.GetItem(i).Name);
             for (int i = 0; i < mLayer.AttributeFields.Count; i++)
-                classFieldComboBox.Items.Add(mLayer.AttributeFields.GetItem(i).Name);
+                if(mLayer.AttributeFields.GetItem(i).ValueType != GeoValueTypeConstant.dText)
+                    classFieldComboBox.Items.Add(mLayer.AttributeFields.GetItem(i).Name);
 
             // 对于不同的渲染模式进行配置
             if (mLayer.Renderer.RendererType == GeoRendererTypeConstant.Simple)
             {
                 renderMethodCB.SelectedIndex = 0;
+                renderTabControl.SelectedIndex = 0;
                 initializeSimpleRenderer();
             }
             else if (mLayer.Renderer.RendererType == GeoRendererTypeConstant.UniqueValue)
             {
                 mUniqueValueRenderer = mLayer.Renderer as GeoUniqueValueRenderer;
+
                 renderMethodCB.SelectedIndex = 1;
+                renderTabControl.SelectedIndex = 1;
                 uniqueFieldComboBox.SelectedIndex = mLayer.AttributeFields.FindField(mUniqueValueRenderer.Field);
             }
             else
             {
                 mClassBreaksRenderer = mLayer.Renderer as GeoClassBreaksRenderer;
                 renderMethodCB.SelectedIndex = 2;
-                classFieldComboBox.SelectedIndex = mLayer.AttributeFields.FindField(mClassBreaksRenderer.Field);
+                renderTabControl.SelectedIndex = 2;
+                classFieldComboBox.SelectedItem = mClassBreaksRenderer.Field;
+                // classFieldComboBox.SelectedIndex = mLayer.AttributeFields.FindField(mClassBreaksRenderer.Field);
             }
             
         }
@@ -101,7 +107,7 @@ namespace DEETU.Source.Window
         {
             Bitmap styleImage = new Bitmap(50, 20);
             Graphics g = Graphics.FromImage(styleImage);
-            double dpm = 100; // I don't know the correct dpm here so I just randomly assigned a number
+            double dpm = 1000; // I don't know the correct dpm here so I just randomly assigned a number
             Pen sPen = new Pen(symbol.Color, (float)(symbol.Size / 1000 * dpm));
             sPen.DashStyle = (DashStyle)symbol.Style;
             g.DrawLine(sPen, new Point(0, styleImage.Height / 2), new Point(styleImage.Width, styleImage.Height / 2));
@@ -203,9 +209,9 @@ namespace DEETU.Source.Window
                 mClassBreaksRenderers.Clear();
 
                 initializeClassBreaksRenderer();
-                classDataGridView.Refresh();
                 ClassBreaksComboBoxEx.Items.AddRange(mClassBreaksRenderers.ToArray());
                 ClassBreaksComboBoxEx.SelectedIndex = 0;
+                classDataGridView.Refresh();
             }
 
         }
@@ -346,7 +352,8 @@ namespace DEETU.Source.Window
             mClassBreaksRenderer = classBreaksRenderer;
             mClassBreaksRenderers.Add(mClassBreaksRenderer);
 
-            if (mClassBreaksRenderer != null) classTableLayoutPanel.Controls.Remove(mClassDefaultButton);
+            if (mClassDefaultButton != null) classTableLayoutPanel.Controls.Remove(mClassDefaultButton);
+            
             Button defaultSymbolButton = GetLineSymbolButton((GeoSimpleLineSymbol)classBreaksRenderer.DefaultSymbol);
             mClassDefaultButton = defaultSymbolButton;
             classTableLayoutPanel.Controls.Add(defaultSymbolButton, 1, 2);
@@ -368,11 +375,46 @@ namespace DEETU.Source.Window
                 List<double> sValues = new List<double>();
                 int sFeatureCount = mLayer.Features.Count;
                 int sFieldIndex = mLayer.AttributeFields.FindField(sRenderer.Field);
-                for (int i = 0; i < sFeatureCount; i++)
+                GeoValueTypeConstant sFieldValueType = mLayer.AttributeFields.GetItem(sFieldIndex).ValueType;
+                switch (sFieldValueType)
                 {
-                    double sValue = (float)mLayer.Features.GetItem(i).Attributes.GetItem(sFieldIndex);
-                    sValues.Add(sValue);
+                    case GeoValueTypeConstant.dDouble:
+                        for (int i = 0; i < sFeatureCount; i++)
+                        {
+                            double sValue = (double)mLayer.Features.GetItem(i).Attributes.GetItem(sFieldIndex);
+                            sValues.Add(sValue);
+                        }
+                        break;
+                    case GeoValueTypeConstant.dSingle:
+                        for (int i = 0; i < sFeatureCount; i++)
+                        {
+                            double sValue = (float)mLayer.Features.GetItem(i).Attributes.GetItem(sFieldIndex);
+                            sValues.Add(sValue);
+                        }
+                        break;
+                    case GeoValueTypeConstant.dInt16:
+                        for (int i = 0; i < sFeatureCount; i++)
+                        {
+                            double sValue = (Int16)mLayer.Features.GetItem(i).Attributes.GetItem(sFieldIndex);
+                            sValues.Add(sValue);
+                        }
+                        break;
+                    case GeoValueTypeConstant.dInt32:
+                        for (int i = 0; i < sFeatureCount; i++)
+                        {
+                            double sValue = (Int32)mLayer.Features.GetItem(i).Attributes.GetItem(sFieldIndex);
+                            sValues.Add(sValue);
+                        }
+                        break;
+                    case GeoValueTypeConstant.dInt64:
+                        for (int i = 0; i < sFeatureCount; i++)
+                        {
+                            double sValue = (Int64)mLayer.Features.GetItem(i).Attributes.GetItem(sFieldIndex);
+                            sValues.Add(sValue);
+                        }
+                        break;
                 }
+
                 // 获取最小, 最大值, 并分为5级
                 double sMinValue = sValues.Min();
                 double sMaxValue = sValues.Max();

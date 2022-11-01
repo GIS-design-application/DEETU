@@ -55,7 +55,8 @@ namespace DEETU.Source.Window
             for (int i = 0; i < mLayer.AttributeFields.Count; i++)
                 uniqueFieldComboBox.Items.Add(mLayer.AttributeFields.GetItem(i).Name);
             for (int i = 0; i < mLayer.AttributeFields.Count; i++)
-                classFieldComboBox.Items.Add(mLayer.AttributeFields.GetItem(i).Name);
+                if(mLayer.AttributeFields.GetItem(i).ValueType != GeoValueTypeConstant.dText)
+                    classFieldComboBox.Items.Add(mLayer.AttributeFields.GetItem(i).Name);
             // 对于不同的渲染模式进行配置
             if (mLayer.Renderer.RendererType == GeoRendererTypeConstant.Simple)
             {
@@ -76,7 +77,8 @@ namespace DEETU.Source.Window
                 mClassBreaksRenderer = mLayer.Renderer as GeoClassBreaksRenderer;
                 renderMethodCB.SelectedIndex = 2;
                 renderTabControl.SelectedIndex = 2;
-                classFieldComboBox.SelectedIndex = mLayer.AttributeFields.FindField(mClassBreaksRenderer.Field);
+                classFieldComboBox.SelectedItem = mClassBreaksRenderer.Field;
+                // classFieldComboBox.SelectedIndex = mLayer.AttributeFields.FindField(mClassBreaksRenderer.Field);
             }
             
         }
@@ -181,9 +183,9 @@ namespace DEETU.Source.Window
                 mClassBreaksRenderers.Clear();
 
                 initializeClassBreaksRenderer();
-                classDataGridView.Refresh();
                 classColorgradComboBox.Items.AddRange(mClassBreaksRenderers.ToArray());
                 classColorgradComboBox.SelectedIndex = 0;
+                classDataGridView.Refresh();
             }
         }
 
@@ -248,7 +250,7 @@ namespace DEETU.Source.Window
             renderTabControl.SelectedIndex = renderMethodCB.SelectedIndex;
         }
 
-        private GeoClassBreaksRenderer CreateClassBreaksRenderer(string field)
+        private GeoClassBreaksRenderer CreateClassBreaksRenderer(string field, int n = 5)
         {
             try
             {
@@ -257,17 +259,51 @@ namespace DEETU.Source.Window
                 List<double> sValues = new List<double>();
                 int sFeatureCount = mLayer.Features.Count;
                 int sFieldIndex = mLayer.AttributeFields.FindField(sRenderer.Field);
-                for (int i = 0; i < sFeatureCount; i++)
+                GeoValueTypeConstant sFieldValueType = mLayer.AttributeFields.GetItem(sFieldIndex).ValueType;
+                switch(sFieldValueType)
                 {
-                    double sValue = (float)mLayer.Features.GetItem(i).Attributes.GetItem(sFieldIndex);
-                    sValues.Add(sValue);
+                    case GeoValueTypeConstant.dDouble:
+                        for (int i = 0; i < sFeatureCount; i++)
+                        {
+                            double sValue = (double)mLayer.Features.GetItem(i).Attributes.GetItem(sFieldIndex);
+                            sValues.Add(sValue);
+                        }
+                        break;
+                    case GeoValueTypeConstant.dSingle:
+                        for (int i = 0; i < sFeatureCount; i++)
+                        {
+                            double sValue = (float)mLayer.Features.GetItem(i).Attributes.GetItem(sFieldIndex);
+                            sValues.Add(sValue);
+                        }
+                        break;
+                    case GeoValueTypeConstant.dInt16:
+                        for (int i = 0; i < sFeatureCount; i++)
+                        {
+                            double sValue = (Int16)mLayer.Features.GetItem(i).Attributes.GetItem(sFieldIndex);
+                            sValues.Add(sValue);
+                        }
+                        break;
+                    case GeoValueTypeConstant.dInt32:
+                        for (int i = 0; i < sFeatureCount; i++)
+                        {
+                            double sValue = (Int32)mLayer.Features.GetItem(i).Attributes.GetItem(sFieldIndex);
+                            sValues.Add(sValue);
+                        }
+                        break;
+                    case GeoValueTypeConstant.dInt64:
+                        for (int i = 0; i < sFeatureCount; i++)
+                        {
+                            double sValue = (Int64)mLayer.Features.GetItem(i).Attributes.GetItem(sFieldIndex);
+                            sValues.Add(sValue);
+                        }
+                        break;
                 }
-                // 获取最小, 最大值, 并分为5级
+
                 double sMinValue = sValues.Min();
                 double sMaxValue = sValues.Max();
-                for (int i = 0; i < 5; i++)
+                for (int i = 0; i < n; i++)
                 {
-                    double sValue = sMinValue + (sMaxValue - sMinValue) * (i + 1) / 5;
+                    double sValue = sMinValue + (sMaxValue - sMinValue) * (i + 1) / n;
                     GeoSimpleFillSymbol sSymbol = new GeoSimpleFillSymbol();
                     sRenderer.AddBreakValue(sValue, sSymbol);
                 }

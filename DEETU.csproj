@@ -378,6 +378,7 @@
     <Content Include="icons\baseline_refresh_black_48.png" />
     <Content Include="icons\baseline_remove_circle_outline_black_48.png" />
     <Content Include="icons\baseline_save_alt_black_48.png" />
+    <None Include="icons\baseline_table_rows_black_48.png" />
     <Content Include="icons\baseline_undo_black_48.png" />
     <Content Include="icons\baseline_visibility_black_48.png" />
     <Content Include="icons\baseline_visibility_off_black_48.png" />
@@ -397,6 +398,7 @@
     <Content Include="icons\save.png" />
     <Content Include="icons\ZoomIn.ico" />
     <Content Include="icons\ZoomOut.ico" />
+    <None Include="icons\添加要素.png" />
     <Content Include="obj\Debug\DEETU.csproj.FileListAbsolute.txt" />
     <Content Include="obj\Debug\DEETU.exe" />
     <Content Include="obj\Debug\DEETU.pdb" />
