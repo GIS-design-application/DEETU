@@ -148,7 +148,7 @@ namespace DEETU.Source.Window
 
         private void btnSelect_Click(object sender, EventArgs e)
         {
-            if (mMapOpStyle != GeoMapOpStyleEnum.Select)
+            if (mMapOpStyle != GeoMapOpStyleEnum.Select && !mIsEditing)
             {
                 UncheckToolStrip(mMapOpStyle);
                 this.Cursor = new Cursor("./icons/EditSelect.ico");
@@ -331,6 +331,7 @@ namespace DEETU.Source.Window
                 btnEndSketch_Click(sender, e);
                 mMapOpStyle = GeoMapOpStyleEnum.None;
                 this.Cursor = Cursors.Default;
+                CurrentAcitveLayerUpdated?.Invoke(this, mCurrentLayerNode.Tag as GeoMapLayer);
             }
 
         }
@@ -1329,6 +1330,7 @@ namespace DEETU.Source.Window
             double tolerance = geoMap.ToMapDistance(mSelectingTolerance);
             geoMap.SelectByBox(sBox, tolerance, 0);
             geoMap.RedrawTrackingShapes();
+            CurrentAcitveLayerUpdated?.Invoke(this, mCurrentLayerNode.Tag as GeoMapLayer);
         }
 
         private void OnPan_MouseUp(MouseEventArgs e)
@@ -1878,7 +1880,10 @@ namespace DEETU.Source.Window
             }
             // 在更新树的同时更新选中的节点
             if (mCurrentLayerNode != null)
+            {
                 mCurrentLayerNode = layerTreeView.Nodes[mCurrentLayerNode.Index];
+                //CurrentAcitveLayerUpdated?.Invoke(this, mCurrentLayerNode.Tag as GeoMapLayer);
+            }
         }
 
         // 这个函数是为了显示图层渲染方式
@@ -2096,9 +2101,36 @@ namespace DEETU.Source.Window
             attributeForm.MapRedraw += AttributeForm_MapRedraw;
             attributeForm.LayerQuery += ExpressionForm_LayerQuery;
             attributeForm.MapEditStatusChanged += AttributeForm_MapEditStatusChanged;
+            attributeForm.FeatureCut += AttributeForm_FeatureCut;
+            attributeForm.FeatureCopied += AttributeForm_FeatureCopied;
+            attributeForm.FeaturePasted += AttributeForm_FeaturePasted;
+            attributeForm.FeatureAdded += AttributeForm_FeatureAdded;
+            attributeForm.FeatureRemoved += AttributeForm_FeatureRemoved;
+            CurrentAcitveLayerUpdated += attributeForm.MainPage_CurrentActiveLayerChanged;
             attributeForm.Show();
         }
 
+
+        private void 移除图层ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DialogResult dr = MessageBox.Show("确定要删除图层吗？", "提示", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+            if (dr == DialogResult.OK)
+            {
+                geoMap.Layers.RemoveAt(mCurrentLayerNode.Index);
+                mCurrentLayerNode.Remove();
+                UpdateTreeView();
+                geoMap.RedrawMap();
+            }
+        }
+
+        private void 移到顶层ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            layerTreeView.Nodes.Insert(0, (TreeNode)mCurrentLayerNode.Clone());
+            geoMap.Layers.Insert(0, mCurrentLayerNode.Tag as GeoMapLayer);
+            geoMap.Layers.RemoveAt(mCurrentLayerNode.Index);
+            mCurrentLayerNode.Remove();
+            geoMap.RedrawMap();
+        }
 
         #endregion
 
@@ -2138,6 +2170,47 @@ namespace DEETU.Source.Window
             }
         }
 
+        private void AttributeForm_FeatureCut(object sender, GeoMapLayer layer)
+        {
+            Cut();
+        }
+
+        private void AttributeForm_FeatureRemoved(object sender, GeoMapLayer layer)
+        {
+            GeoMapLayer sLayer = NewUndo(layer);
+            sLayer.Features.RemoveRange(sLayer.SelectedFeatures.ToArray());
+            geoMap.RedrawMap();
+            CurrentAcitveLayerUpdated?.Invoke(this,sLayer);
+        }
+
+        private void AttributeForm_FeatureAdded(object sender, GeoMapLayer layer)
+        {
+            GeoMapLayer sLayer = layer;
+            if(sLayer != null)
+            {
+                sLayer = NewUndo(sLayer);
+            }
+
+            GeoFeature newFeature = sLayer.GetNewFeature();
+            sLayer.Features.Add(newFeature);
+            sLayer.UpdateExtent();
+
+            // 初始化描绘图形
+            InitializeSketchingShape();
+            geoMap.RedrawMap();
+            CurrentAcitveLayerUpdated?.Invoke(this,sLayer);
+        }
+
+        private void AttributeForm_FeaturePasted(object sender, GeoMapLayer layer)
+        {
+            Paste();
+        }
+
+        private void AttributeForm_FeatureCopied(object sender, GeoMapLayer layer)
+        {
+            Copy();
+        }
+
         #endregion
 
         /// <summary>
@@ -2157,6 +2230,16 @@ namespace DEETU.Source.Window
             layer.Selectable = true;
         }
 
+        #region 事件
+        public delegate void CurrentActiveLayerUpdatedHandle(object sender, GeoMapLayer layer);
+        public event CurrentActiveLayerUpdatedHandle CurrentAcitveLayerUpdated;
+        //public event CurrentActiveLayerUpdatedHandle CurrentAcitveLayerSelected;
+        //public event CurrentActiveLayerUpdatedHandle CurrentAcitveLayerMoved;
+        //public event CurrentActiveLayerUpdatedHandle CurrentAcitveLayerDeleted;
+        //public event CurrentActiveLayerUpdatedHandle CurrentAcitveLayerEdited;
+        //public event CurrentActiveLayerUpdatedHandle CurrentAcitveLayerAdded;
+
+        #endregion
 #if DEBUG
         private string logging
         {
@@ -2311,7 +2394,6 @@ namespace DEETU.Source.Window
             }
         }
 
-
         private void RemoveItemToolStripButton_Click(object sender, EventArgs e)
         {
 
@@ -2324,6 +2406,7 @@ namespace DEETU.Source.Window
             layer.Features.RemoveRange(selectedFeatures.ToArray());
             selectedFeatures.Clear();
             geoMap.RedrawMap();
+            CurrentAcitveLayerUpdated?.Invoke(this, mCurrentLayerNode.Tag as GeoMapLayer);
             this.Cursor = Cursors.Default;
         }
 
@@ -2343,10 +2426,7 @@ namespace DEETU.Source.Window
             }
         }
 
-
-
-
-
+        #region CopyPaste
         private void MainPage_KeyDown(object sender, KeyEventArgs e)
         {
 
@@ -2404,6 +2484,7 @@ namespace DEETU.Source.Window
                 {
                     mItemsForCopy.Add(feature.Geometry.Clone());
                 }
+                CurrentAcitveLayerUpdated?.Invoke(this, mCurrentLayerNode.Tag as GeoMapLayer);
             }
         }
 
@@ -2430,6 +2511,7 @@ namespace DEETU.Source.Window
                 sLayer.UpdateExtent();
                 
                 geoMap.RedrawMap();
+                CurrentAcitveLayerUpdated?.Invoke(this, mCurrentLayerNode.Tag as GeoMapLayer);
             }
 
 
@@ -2452,9 +2534,12 @@ namespace DEETU.Source.Window
 
                 sLayer.Features.RemoveRange(features.ToArray());
                 geoMap.RedrawMap();
+                CurrentAcitveLayerUpdated?.Invoke(this, mCurrentLayerNode.Tag as GeoMapLayer);
             }
         }
+        #endregion
 
+        #region 撤销和重做
         private List<(GeoMapLayer, GeoMapLayer)> undo_layers = new List<(GeoMapLayer, GeoMapLayer)>();
         private int undo_index = -1;
 
@@ -2467,6 +2552,7 @@ namespace DEETU.Source.Window
             geoMap.Layers.Replace(undo_layers[undo_index].Item2, undo_layers[undo_index].Item1);
             undo_index--;
             geoMap.RedrawMap();
+            CurrentAcitveLayerUpdated?.Invoke(this, mCurrentLayerNode.Tag as GeoMapLayer);
         }
 
         private void Redo()
@@ -2478,6 +2564,7 @@ namespace DEETU.Source.Window
             undo_index++;
             geoMap.Layers.Replace(undo_layers[undo_index].Item1, undo_layers[undo_index].Item2);
             geoMap.RedrawMap();
+            CurrentAcitveLayerUpdated?.Invoke(this, mCurrentLayerNode.Tag as GeoMapLayer);
         }
 
         private void ResetUndo()
@@ -2501,6 +2588,8 @@ namespace DEETU.Source.Window
             return desLayer;
         }
 
+        #endregion
+
         private void 复制要素ToolStripButton_Click(object sender, EventArgs e)
         {
             Copy();
@@ -2510,40 +2599,17 @@ namespace DEETU.Source.Window
         {
             Paste();
         }
-
-        private void 移除图层ToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            DialogResult dr = MessageBox.Show("确定要删除图层吗？", "提示", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
-            if(dr == DialogResult.OK)
-            {
-                geoMap.Layers.RemoveAt(mCurrentLayerNode.Index);
-                mCurrentLayerNode.Remove();
-                UpdateTreeView();
-                geoMap.RedrawMap();
-            }
-        }
-
+       
         private void 退出DEETUToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.Close();
             
         }
 
-        private void 移到顶层ToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            layerTreeView.Nodes.Insert(0, (TreeNode)mCurrentLayerNode.Clone());
-            geoMap.Layers.Insert(0, mCurrentLayerNode.Tag as GeoMapLayer);
-            geoMap.Layers.RemoveAt(mCurrentLayerNode.Index);
-            mCurrentLayerNode.Remove();
-            geoMap.RedrawMap();
-        }
-
         private void 剪切要素ToolStripButton_Click(object sender, EventArgs e)
         {
             Cut();
         }
-
-     
 
         private void MainPage_KeyUp(object sender, KeyEventArgs e)
         {

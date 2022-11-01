@@ -391,7 +391,7 @@ namespace DEETU.Source.Window
             this.removeFieldToolStripButton.Name = "removeFieldToolStripButton";
             this.removeFieldToolStripButton.Size = new System.Drawing.Size(29, 24);
             this.removeFieldToolStripButton.Text = "删除字段";
-            this.removeFieldToolStripButton.Click += new System.EventHandler(this.removeToolStripButton_Click);
+            this.removeFieldToolStripButton.Click += new System.EventHandler(this.removeFieldToolStripButton_Click);
             // 
             // toolStripSeparator3
             // 

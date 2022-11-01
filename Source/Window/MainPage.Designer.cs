@@ -30,10 +30,10 @@ namespace DEETU.Source.Window
 		{
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainPage));
-            System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("工程目录");
-            System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("收藏夹");
-            System.Windows.Forms.TreeNode treeNode9 = new System.Windows.Forms.TreeNode("C:\\");
-            DEETU.Map.GeoLayers geoLayers3 = new DEETU.Map.GeoLayers();
+            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("工程目录");
+            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("收藏夹");
+            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("C:\\");
+            DEETU.Map.GeoLayers geoLayers2 = new DEETU.Map.GeoLayers();
             this.projectContextMenuStrip = new Sunny.UI.UIContextMenuStrip();
             this.设置工程目录ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.favoriteContextMenuStrip1 = new Sunny.UI.UIContextMenuStrip();
@@ -133,6 +133,7 @@ namespace DEETU.Source.Window
             this.layerTreeView = new Sunny.UI.UITreeView();
             this.TreeImages = new System.Windows.Forms.ImageList(this.components);
             this.uiPanel3 = new Sunny.UI.UIPanel();
+            this.geoMap = new DEETU.Map.GeoMapControl();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.tssCoordinate = new System.Windows.Forms.ToolStripStatusLabel();
             this.tssMapScale = new System.Windows.Forms.ToolStripStatusLabel();
@@ -153,7 +154,6 @@ namespace DEETU.Source.Window
             this.PasteUndoToolStripSeparator14 = new System.Windows.Forms.ToolStripSeparator();
             this.撤销ToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.重做ToolStripButton = new System.Windows.Forms.ToolStripButton();
-            this.geoMap = new DEETU.Map.GeoMapControl();
             this.projectContextMenuStrip.SuspendLayout();
             this.favoriteContextMenuStrip1.SuspendLayout();
             this.layerContextMenuStrip.SuspendLayout();
@@ -996,18 +996,18 @@ namespace DEETU.Source.Window
             this.uiTreeView2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.uiTreeView2.MinimumSize = new System.Drawing.Size(1, 1);
             this.uiTreeView2.Name = "uiTreeView2";
-            treeNode7.ContextMenuStrip = this.projectContextMenuStrip;
-            treeNode7.Name = "节点0";
-            treeNode7.Text = "工程目录";
-            treeNode8.ContextMenuStrip = this.favoriteContextMenuStrip1;
-            treeNode8.Name = "节点0";
-            treeNode8.Text = "收藏夹";
-            treeNode9.Name = "节点1";
-            treeNode9.Text = "C:\\";
+            treeNode4.ContextMenuStrip = this.projectContextMenuStrip;
+            treeNode4.Name = "节点0";
+            treeNode4.Text = "工程目录";
+            treeNode5.ContextMenuStrip = this.favoriteContextMenuStrip1;
+            treeNode5.Name = "节点0";
+            treeNode5.Text = "收藏夹";
+            treeNode6.Name = "节点1";
+            treeNode6.Text = "C:\\";
             this.uiTreeView2.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode7,
-            treeNode8,
-            treeNode9});
+            treeNode4,
+            treeNode5,
+            treeNode6});
             this.uiTreeView2.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
             this.uiTreeView2.SelectedNode = null;
             this.uiTreeView2.Size = new System.Drawing.Size(276, 217);
@@ -1084,6 +1084,28 @@ namespace DEETU.Source.Window
             this.uiPanel3.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter;
             this.uiPanel3.DoubleClick += new System.EventHandler(this.uiPanel3_DoubleClick);
             // 
+            // geoMap
+            // 
+            this.geoMap.BackColor = System.Drawing.Color.White;
+            this.geoMap.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.geoMap.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.geoMap.FlashColor = System.Drawing.Color.Green;
+            geoLayers2.FilePath = null;
+            this.geoMap.Layers = geoLayers2;
+            this.geoMap.Location = new System.Drawing.Point(0, 0);
+            this.geoMap.Margin = new System.Windows.Forms.Padding(4810845, 32537712, 4810845, 32537712);
+            this.geoMap.Name = "geoMap";
+            this.geoMap.SelectionColor = System.Drawing.Color.Cyan;
+            this.geoMap.Size = new System.Drawing.Size(637, 489);
+            this.geoMap.TabIndex = 0;
+            this.geoMap.MapScaleChanged += new DEETU.Map.GeoMapControl.MapScaleChangedHandle(this.geoMap_MapScaleChanged);
+            this.geoMap.AfterTrackingLayerDraw += new DEETU.Map.GeoMapControl.AfterTrackingLayerDrawHandle(this.geoMap_AfterTrackingLayerDraw);
+            this.geoMap.DoubleClick += new System.EventHandler(this.geoMap_DoubleClick);
+            this.geoMap.MouseClick += new System.Windows.Forms.MouseEventHandler(this.geoMap_MouseClick);
+            this.geoMap.MouseDown += new System.Windows.Forms.MouseEventHandler(this.geoMap_MouseDown);
+            this.geoMap.MouseMove += new System.Windows.Forms.MouseEventHandler(this.geoMap_MouseMove);
+            this.geoMap.MouseUp += new System.Windows.Forms.MouseEventHandler(this.geoMap_MouseUp);
+            // 
             // statusStrip
             // 
             this.statusStrip.ImageScalingSize = new System.Drawing.Size(32, 32);
@@ -1145,7 +1167,7 @@ namespace DEETU.Source.Window
             this.重做ToolStripButton});
             this.toolStrip2.Location = new System.Drawing.Point(3, 0);
             this.toolStrip2.Name = "toolStrip2";
-            this.toolStrip2.Size = new System.Drawing.Size(294, 27);
+            this.toolStrip2.Size = new System.Drawing.Size(325, 27);
             this.toolStrip2.TabIndex = 50;
             // 
             // startEditToolStripButton
@@ -1269,28 +1291,6 @@ namespace DEETU.Source.Window
             this.重做ToolStripButton.Name = "重做ToolStripButton";
             this.重做ToolStripButton.Size = new System.Drawing.Size(24, 24);
             this.重做ToolStripButton.Text = "重做";
-            // 
-            // geoMap
-            // 
-            this.geoMap.BackColor = System.Drawing.Color.White;
-            this.geoMap.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.geoMap.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.geoMap.FlashColor = System.Drawing.Color.Green;
-            geoLayers3.FilePath = null;
-            this.geoMap.Layers = geoLayers3;
-            this.geoMap.Location = new System.Drawing.Point(0, 0);
-            this.geoMap.Margin = new System.Windows.Forms.Padding(2886507, 18592978, 2886507, 18592978);
-            this.geoMap.Name = "geoMap";
-            this.geoMap.SelectionColor = System.Drawing.Color.Cyan;
-            this.geoMap.Size = new System.Drawing.Size(637, 489);
-            this.geoMap.TabIndex = 0;
-            this.geoMap.MapScaleChanged += new DEETU.Map.GeoMapControl.MapScaleChangedHandle(this.geoMap_MapScaleChanged);
-            this.geoMap.AfterTrackingLayerDraw += new DEETU.Map.GeoMapControl.AfterTrackingLayerDrawHandle(this.geoMap_AfterTrackingLayerDraw);
-            this.geoMap.DoubleClick += new System.EventHandler(this.geoMap_DoubleClick);
-            this.geoMap.MouseClick += new System.Windows.Forms.MouseEventHandler(this.geoMap_MouseClick);
-            this.geoMap.MouseDown += new System.Windows.Forms.MouseEventHandler(this.geoMap_MouseDown);
-            this.geoMap.MouseMove += new System.Windows.Forms.MouseEventHandler(this.geoMap_MouseMove);
-            this.geoMap.MouseUp += new System.Windows.Forms.MouseEventHandler(this.geoMap_MouseUp);
             // 
             // MainPage
             // 
