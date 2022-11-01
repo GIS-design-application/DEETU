@@ -15,6 +15,8 @@ using DEETU.IO;
 using System.IO;
 using System.Drawing.Drawing2D;
 using DEETU.Testing;
+using System.Diagnostics;
+using System.Reflection.Emit;
 
 namespace DEETU.Source.Window
 {
@@ -24,6 +26,7 @@ namespace DEETU.Source.Window
         {
             InitializeComponent();
             geoMap.MouseWheel += geoMap_MouseWheel;
+            LoadRecentUsedFiles();
         }
 
         #region 字段
@@ -1469,6 +1472,20 @@ namespace DEETU.Source.Window
         #endregion
 
         #region 私有函数
+
+        private void LoadRecentUsedFiles()
+        {
+            using (StreamReader sr = new StreamReader("./recent_used_files.txt"))
+            {
+                while (sr.EndOfStream == false)
+                {
+                    TreeNode sNode = new TreeNode();
+                    sNode.Text = sr.ReadLine();
+                    sNode.Tag = sr.ReadLine();
+                    FileTreeView.Nodes[0].Nodes.Add(sNode);
+                }
+            }
+        }
         //初始化符号
         private void InitializeSymbols()
         {
@@ -2176,6 +2193,155 @@ namespace DEETU.Source.Window
             _logging = form.logging;
         }
 #endif
+        private void LoadLayerFile(string sFileName)
+        {
+            string suffix = sFileName.Split('.')[1];
+#if DEBUG
+            logging = suffix;
+#endif
+            switch (suffix)
+            {
+                case "lay":
+                    {
+                        try
+                        {
+                            FileStream sStream = new FileStream(sFileName, FileMode.Open);
+                            BinaryReader sr = new BinaryReader(sStream);
+                            GeoMapLayer sLayer = GeoDataIOTools.LoadMapLayer(sr);
+                            sLayer.Name = sFileName.Split('\\').Last().Split('.').First();
+                            geoMap.Layers.Add(sLayer);
+                            if (geoMap.Layers.Count == 1)
+                            {
+                                geoMap.FullExtent();
+                            }
+                            else
+                            {
+                                geoMap.RedrawMap();
+                            }
+                            sStream.Dispose();
+                            sr.Dispose();
+
+                            UpdateTreeView();
+                            TreeNodeCollection sCollection = FileTreeView.Nodes[0].Nodes;
+                            for (int j = 0; j < sCollection.Count; j++)
+                            {
+                                if (sCollection[j].Text == sFileName.Split('\\').Last())
+                                    return;
+                            }
+                            TreeNode sTreeNode = new TreeNode();
+                            sTreeNode.Text = sFileName.Split('\\').Last();
+                            sTreeNode.Tag = sFileName;
+                            //MessageBox.Show(sTreeNode.Tag.ToString());
+                            FileTreeView.Nodes[0].Nodes.Insert(0, sTreeNode);
+                            if (FileTreeView.Nodes[0].Nodes.Count >= 8)
+                                FileTreeView.Nodes[0].Nodes.RemoveAt(7);
+                            FileTreeView.Update();
+                        }
+                        catch (Exception error)
+                        {
+                            MessageBox.Show(error.ToString());
+                        }
+                        break;
+                    }
+                case "db":
+                    {
+                        try
+                        {
+                            GeoLayers sLayers = new GeoLayers();
+                            GeoDatabaseIOTools.LoadGeoProject(sLayers, sFileName);
+                            GeoMapLayer sLayer = sLayers.GetItem(0);
+                            sLayer.Name = sFileName.Split('\\').Last().Split('.').First();
+                            geoMap.Layers.Add(sLayer);
+                            if (geoMap.Layers.Count == 1)
+                            {
+                                geoMap.FullExtent();
+                            }
+                            else
+                            {
+                                geoMap.RedrawMap();
+                            }
+                            UpdateTreeView();
+                            TreeNodeCollection sCollection = FileTreeView.Nodes[0].Nodes;
+                            for (int j = 0; j < sCollection.Count; j++)
+                            {
+                                if (sCollection[j].Text == sFileName.Split('\\').Last())
+                                    return;
+                            }
+                            TreeNode sTreeNode = new TreeNode();
+                            sTreeNode.Text = sFileName.Split('\\').Last();
+                            sTreeNode.Tag = sFileName;
+                            //MessageBox.Show(sTreeNode.Tag.ToString());
+                            FileTreeView.Nodes[0].Nodes.Insert(0, sTreeNode);
+                            if (FileTreeView.Nodes[0].Nodes.Count >= 8)
+                                FileTreeView.Nodes[0].Nodes.RemoveAt(7);
+                            FileTreeView.Update();
+                        }
+                        catch (Exception error)
+                        {
+                            MessageBox.Show(error.ToString());
+                        }
+                        break;
+                    }
+                case "shp":
+                    {
+                        try
+                        {
+                            GeoMapLayer sLayer = GeoShpIOTools.ReadSHPFile(sFileName);
+                            sLayer.Name = sFileName.Split('\\').Last().Split('.').First();
+                            char[] path = sFileName.ToCharArray();
+                            if (path.Length != 0)
+                            {
+                                path[path.Length - 1] = 'f';
+                                path[path.Length - 2] = 'b';
+                                path[path.Length - 3] = 'd';
+
+                                GeoShpIOTools.ReadDBFFile(new string(path), sLayer);
+                            }
+                            geoMap.Layers.Add(sLayer);
+                            if (geoMap.Layers.Count == 1)
+                            {
+                                geoMap.FullExtent();
+                            }
+                            else
+                            {
+                                geoMap.RedrawMap();
+                            }
+                            UpdateTreeView();
+                            TreeNodeCollection sCollection = FileTreeView.Nodes[0].Nodes;
+                            for (int j = 0; j < sCollection.Count; j++)
+                            {
+                                if (sCollection[j].Text == sFileName.Split('\\').Last())
+                                    return;
+                            }
+                            TreeNode sTreeNode = new TreeNode();
+                            sTreeNode.Text = sFileName.Split('\\').Last();
+                            sTreeNode.Tag = sFileName;
+                            //MessageBox.Show(sTreeNode.Tag.ToString());
+                            FileTreeView.Nodes[0].Nodes.Insert(0,sTreeNode);
+                            if (FileTreeView.Nodes[0].Nodes.Count >= 8)
+                                FileTreeView.Nodes[0].Nodes.RemoveAt(7);
+                            FileTreeView.Update();
+                        }
+                        catch (Exception error)
+                        {
+                            MessageBox.Show(error.ToString());
+                        }
+                        break; 
+                    }
+                default:
+                    Debug.Assert(false);
+                    break;
+            }
+            
+            using (System.IO.StreamWriter file = new System.IO.StreamWriter("./recent_used_files.txt"))
+            {
+                foreach (TreeNode sNode in FileTreeView.Nodes[0].Nodes)
+                {
+                    file.WriteLine(sNode.Text);
+                    file.WriteLine(sNode.Tag.ToString());
+                }
+            }
+        }
         private void btnLoadLayerFile_Click(object sender, EventArgs e)
         {
             var crs = new GeoCoordinateReferenceSystem(GeographicCrsType.Beijing1954,ProjectedCrsType.Lambert2SP);
@@ -2193,32 +2359,8 @@ namespace DEETU.Source.Window
                 sDialog.Dispose();
                 return;
             }
-
-            try
-            {
-                FileStream sStream = new FileStream(sFileName, FileMode.Open);
-                BinaryReader sr = new BinaryReader(sStream);
-                GeoMapLayer sLayer = GeoDataIOTools.LoadMapLayer(sr);
-                sLayer.Crs = crs;
-                sLayer.Name = sFileName.Split('\\').Last().Split('.').First();
-                geoMap.Layers.Add(sLayer);
-                if (geoMap.Layers.Count == 1)
-                {
-                    geoMap.FullExtent();
-                }
-                else
-                {
-                    geoMap.RedrawMap();
-                }
-                sStream.Dispose();
-                sr.Dispose();
-
-                UpdateTreeView();
-            }
-            catch (Exception error)
-            {
-                MessageBox.Show(error.ToString());
-            }
+            LoadLayerFile(sFileName);
+            
         }
         /// <summary>
         /// 读取shp文件选择界面
@@ -2235,34 +2377,7 @@ namespace DEETU.Source.Window
             {
                 sFileName = sOpenFileDialog.FileName;
                 sOpenFileDialog.Dispose();
-                try
-                {
-                    GeoMapLayer sLayer = GeoShpIOTools.ReadSHPFile(sFileName);
-                    sLayer.Name = sFileName.Split('\\').Last().Split('.').First();
-                    char[] path = sOpenFileDialog.FileName.ToCharArray();
-                    if (path.Length != 0)
-                    {
-                        path[path.Length - 1] = 'f';
-                        path[path.Length - 2] = 'b';
-                        path[path.Length - 3] = 'd';
-
-                        GeoShpIOTools.ReadDBFFile(new string(path), sLayer);
-                    }
-                    geoMap.Layers.Add(sLayer);
-                    if (geoMap.Layers.Count == 1)
-                    {
-                        geoMap.FullExtent();
-                    }
-                    else
-                    {
-                        geoMap.RedrawMap();
-                    }
-                    UpdateTreeView();
-                }
-                catch (Exception error)
-                {
-                    MessageBox.Show(error.ToString());
-                }
+                LoadLayerFile(sFileName);
             }
             else
             {
@@ -2282,27 +2397,7 @@ namespace DEETU.Source.Window
             {
                 sFileName = sOpenFileDialog.FileName;
                 sOpenFileDialog.Dispose();
-                try
-                {
-                    GeoLayers sLayers = new GeoLayers();
-                    GeoDatabaseIOTools.LoadGeoProject(sLayers, sFileName);
-                    GeoMapLayer sLayer = sLayers.GetItem(0);
-                    sLayer.Name = sFileName.Split('\\').Last().Split('.').First();
-                    geoMap.Layers.Add(sLayer);
-                    if (geoMap.Layers.Count == 1)
-                    {
-                        geoMap.FullExtent();
-                    }
-                    else
-                    {
-                        geoMap.RedrawMap();
-                    }
-                    UpdateTreeView();
-                }
-                catch (Exception error)
-                {
-                    MessageBox.Show(error.ToString());
-                }
+                LoadLayerFile(sFileName);
             }
             else
             {
@@ -2536,6 +2631,19 @@ namespace DEETU.Source.Window
             geoMap.Layers.RemoveAt(mCurrentLayerNode.Index);
             mCurrentLayerNode.Remove();
             geoMap.RedrawMap();
+        }
+
+        private void FileTreeView_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
+        {
+            if (e.Node.Level == 0) return;//双击父节点返回
+            string path = e.Node.Tag.ToString();
+#if DEBUG
+            logging = path;
+#endif
+            if (File.Exists(path))
+            {
+                LoadLayerFile(path);
+            }
         }
 
         private void 剪切要素ToolStripButton_Click(object sender, EventArgs e)
