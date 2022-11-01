@@ -629,12 +629,14 @@ namespace DEETU.Source.Window
             this.缩放至图层ToolStripMenuItem.Name = "缩放至图层ToolStripMenuItem";
             this.缩放至图层ToolStripMenuItem.Size = new System.Drawing.Size(236, 34);
             this.缩放至图层ToolStripMenuItem.Text = "缩放至图层";
+            this.缩放至图层ToolStripMenuItem.Click += new System.EventHandler(this.btnLayerExtent_Click);
             // 
             // 缩放至选中区域ToolStripMenuItem
             // 
             this.缩放至选中区域ToolStripMenuItem.Name = "缩放至选中区域ToolStripMenuItem";
             this.缩放至选中区域ToolStripMenuItem.Size = new System.Drawing.Size(236, 34);
             this.缩放至选中区域ToolStripMenuItem.Text = "缩放至选中区域";
+            this.缩放至选中区域ToolStripMenuItem.Click += new System.EventHandler(this.btnSelectedAreaExtent_Click);
             // 
             // toolStripSeparator11
             // 
@@ -809,6 +811,7 @@ namespace DEETU.Source.Window
             this.zoomToSelectionToolStripButton.Name = "zoomToSelectionToolStripButton";
             this.zoomToSelectionToolStripButton.Size = new System.Drawing.Size(34, 33);
             this.zoomToSelectionToolStripButton.Text = "缩放到选中区域";
+            this.zoomToSelectionToolStripButton.Click += new System.EventHandler(this.btnSelectedAreaExtent_Click);
             // 
             // zoomToLayerToolStripButton
             // 
@@ -818,6 +821,7 @@ namespace DEETU.Source.Window
             this.zoomToLayerToolStripButton.Name = "zoomToLayerToolStripButton";
             this.zoomToLayerToolStripButton.Size = new System.Drawing.Size(34, 33);
             this.zoomToLayerToolStripButton.Text = "缩放到图层";
+            this.zoomToLayerToolStripButton.Click += new System.EventHandler(this.btnLayerExtent_Click);
             // 
             // refreshToolStripButton
             // 

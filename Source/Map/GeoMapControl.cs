@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -197,16 +197,72 @@ namespace DEETU.Map
             return sFullExtent;
         }
 
+
+        /// <summary>
+        /// 获取当前图层选中区域的范围
+        /// </summary>
+        /// <returns></returns>
+        public GeoRectangle GetSelectedAreaExtent(GeoMapLayer layer)
+        {
+            //（1）新建一个空矩形
+            double sMinX = double.MaxValue, sMaxX = double.MinValue;
+            double sMinY = double.MaxValue, sMaxY = double.MinValue;
+            GeoRectangle sSelectedAreaExtent;
+            //（2）计算范围矩形
+            Int32 sSelFeatureCount = layer.SelectedFeatures.Count;
+            for (Int32 i = 0; i <= sSelFeatureCount - 1; i++)
+            {
+                GeoRectangle sExtent = layer.SelectedFeatures.GetItem(i).GetEnvelope();
+                if (sExtent.MinX < sMinX)
+                    sMinX = sExtent.MinX;
+                if (sExtent.MaxX > sMaxX)
+                    sMaxX = sExtent.MaxX;
+                if (sExtent.MinY < sMinY)
+                    sMinY = sExtent.MinY;
+                if (sExtent.MaxY > sMaxY)
+                    sMaxY = sExtent.MaxY;
+            }
+            sSelectedAreaExtent = new GeoRectangle(sMinX, sMaxX, sMinY, sMaxY);
+            return sSelectedAreaExtent;
+        }
+
+
         /// <summary>
         ///  在窗口内显示地图全部范围
         /// </summary>
         public void FullExtent()
         {
             GeoRectangle sFullExtent = GetFullExtent();
-            if (!sFullExtent.IsEmpty)
+            ToExtent(sFullExtent);
+        }
+
+        /// <summary>
+        ///  在窗口内显示当前图层全部范围
+        /// </summary>
+        public void LayerExtent(GeoMapLayer layer)
+        {
+            GeoRectangle sLayerExtent = layer.Extent;
+            ToExtent(sLayerExtent);
+        }
+
+        /// <summary>
+        ///  在窗口内显示当前图层选中区域全部范围
+        /// </summary>
+        public void SelectedAreaExtent(GeoMapLayer layer)
+        {
+            GeoRectangle sSelectedAreaExtent = GetSelectedAreaExtent(layer);
+            ToExtent(sSelectedAreaExtent);
+        }
+
+        /// <summary>
+        ///  在窗口内显示某一范围
+        /// </summary>
+        public void ToExtent(GeoRectangle sExtent)
+        {
+            if (!sExtent.IsEmpty)
             {
                 Rectangle sClientRect = ClientRectangle;
-                mMapDrawingReference.ZoomExtentToWindow(sFullExtent, sClientRect.Width, sClientRect.Height);
+                mMapDrawingReference.ZoomExtentToWindow(sExtent, sClientRect.Width, sClientRect.Height);
                 UseWaitCursor = true;
                 DrawBufferMap1();
                 DrawBufferMap2();
@@ -220,6 +276,7 @@ namespace DEETU.Map
                 }
             }
         }
+
         /// <summary>
         /// 以指定中心和系数对地图进行缩放
         /// </summary>

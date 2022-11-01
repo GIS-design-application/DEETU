@@ -99,6 +99,28 @@ namespace DEETU.Source.Window
             geoMap.FullExtent();
         }
 
+        private void btnLayerExtent_Click(object sender, EventArgs e)
+        {
+            if (mCurrentLayerNode == null)
+            {
+                UIMessageBox.ShowError("请先选择图层！");
+                return;
+            }
+            GeoMapLayer layer = mCurrentLayerNode.Tag as GeoMapLayer;
+            geoMap.LayerExtent(layer);
+        }
+
+        private void btnSelectedAreaExtent_Click(object sender, EventArgs e)
+        {
+            if (mCurrentLayerNode == null)
+            {
+                UIMessageBox.ShowError("请先选择图层！");
+                return;
+            }
+            GeoMapLayer layer = mCurrentLayerNode.Tag as GeoMapLayer;
+            geoMap.SelectedAreaExtent(layer);
+        }
+
         private void btnZoomIn_Click(object sender, EventArgs e)
         {
             if (mMapOpStyle != GeoMapOpStyleEnum.ZoomIn)
