@@ -1054,8 +1054,7 @@ namespace DEETU.Source.Window
             this.layerTreeView.MinimumSize = new System.Drawing.Size(1, 1);
             this.layerTreeView.Name = "layerTreeView";
             this.layerTreeView.SelectedImageIndex = 0;
-            this.layerTreeView.SelectedNode = null;
-            this.layerTreeView.ShowLines = true;
+            this.layerTreeView.ShowLines = false;
             this.layerTreeView.ShowNodeToolTips = true;
             this.layerTreeView.Size = new System.Drawing.Size(276, 285);
             this.layerTreeView.TabIndex = 0;
