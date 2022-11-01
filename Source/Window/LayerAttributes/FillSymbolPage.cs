@@ -75,6 +75,7 @@ namespace DEETU.Source.Window
             else
             {
                 mClassBreaksRenderer = mLayer.Renderer as GeoClassBreaksRenderer;
+                uiIntegerUpDown2.Value = (mLayer.Renderer as GeoClassBreaksRenderer).BreakCount;
                 renderMethodCB.SelectedIndex = 2;
                 renderTabControl.SelectedIndex = 2;
                 classFieldComboBox.SelectedItem = mClassBreaksRenderer.Field;
@@ -182,7 +183,7 @@ namespace DEETU.Source.Window
                 classDataGridView.Rows.Clear();
                 mClassBreaksRenderers.Clear();
 
-                initializeClassBreaksRenderer();
+                initializeClassBreaksRenderer(uiIntegerUpDown2.Value);
                 classColorgradComboBox.Items.AddRange(mClassBreaksRenderers.ToArray());
                 classColorgradComboBox.SelectedIndex = 0;
                 classDataGridView.Refresh();
@@ -416,7 +417,7 @@ namespace DEETU.Source.Window
             CreateUniqueValueRenderers((mLayer.Renderer as GeoUniqueValueRenderer).Field);
         }
 
-        private void initializeClassBreaksRenderer()
+        private void initializeClassBreaksRenderer(int value)
         {
             GeoClassBreaksRenderer classBreaksRenderer = (GeoClassBreaksRenderer)mLayer.Renderer;
             mClassBreaksRenderer = classBreaksRenderer;
@@ -434,13 +435,13 @@ namespace DEETU.Source.Window
                 Bitmap symbolImage = CreateSimpleFillSymbolImage(fillSymbol);
                 classDataGridView.AddRow(symbolImage, classBreaksRenderer.GetBreakValue(i));
             }
-            CreateClassBreaksRenderers((mLayer.Renderer as GeoClassBreaksRenderer).Field);
+            CreateClassBreaksRenderers((mLayer.Renderer as GeoClassBreaksRenderer).Field, value);
         }
-        private void CreateClassBreaksRenderers(string field)
+        private void CreateClassBreaksRenderers(string field, int value)
         {
             for (int i = 0; i < mSymbolsCount; ++i)
             {
-                mClassBreaksRenderers.Add(CreateClassBreaksRenderer(field));
+                mClassBreaksRenderers.Add(CreateClassBreaksRenderer(field, value));
             }
         }
         private GeoUniqueValueRenderer CreateUniqueValueRenderer(string field)
@@ -490,6 +491,26 @@ namespace DEETU.Source.Window
             GeoSimpleFillSymbol sSymbol = new GeoSimpleFillSymbol();
             sRenderer.Symbol = sSymbol;
             return sRenderer;
+        }
+
+        private void uiIntegerUpDown2_ValueChanged(object sender, int value)
+        {
+            if (mClassBreaksRenderer == null || mClassBreaksRenderer.BreakCount != value)
+            {
+                mLayer.Renderer = CreateClassBreaksRenderer(classFieldComboBox.SelectedItem.ToString(), value);
+                mClassBreaksRenderer = mLayer.Renderer as GeoClassBreaksRenderer;
+            }
+            if (mLayer.Renderer != null)
+            {
+                classColorgradComboBox.Items.Clear();
+                classDataGridView.Rows.Clear();
+                mClassBreaksRenderers.Clear();
+
+                initializeClassBreaksRenderer(value);
+                classColorgradComboBox.Items.AddRange(mClassBreaksRenderers.ToArray());
+                classColorgradComboBox.SelectedIndex = 0;
+                classDataGridView.Refresh();
+            }
         }
     }
 }

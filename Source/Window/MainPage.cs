@@ -1897,7 +1897,8 @@ namespace DEETU.Source.Window
                 sSymbol.Color = Color.Transparent;
                 TreeImages.Images.Add(CreateBitmapFromSymbol(sSymbol));
                 layerNode.SelectedImageIndex = layerNode.ImageIndex = TreeImages.Images.Count - 1;
-                
+                layerNode.Checked = true;
+
                 layerNode.ContextMenuStrip = layerContextMenuStrip;
                 //layerTreeView.Nodes.Insert(0,layerNode);
                 layerNode.Tag = layer;
@@ -1912,6 +1913,7 @@ namespace DEETU.Source.Window
                 sSymbol.Color = Color.Transparent;
                 TreeImages.Images.Add(CreateBitmapFromSymbol(sSymbol));
                 FieldName.SelectedImageIndex = FieldName.ImageIndex = TreeImages.Images.Count - 1;
+                FieldName.Checked = true;
 
                 List<TreeNode> styles = new List<TreeNode>() { FieldName };
                 int BreakCount = sClassBreaksRenderer.BreakCount;
@@ -1927,6 +1929,7 @@ namespace DEETU.Source.Window
                 sSymbol.Color = Color.Transparent;
                 TreeImages.Images.Add(CreateBitmapFromSymbol(sSymbol));
                 layerNode.SelectedImageIndex = layerNode.ImageIndex = TreeImages.Images.Count - 1;
+                layerNode.Checked = true;
 
                 layerNode.ContextMenuStrip = layerContextMenuStrip;
                 //layerTreeView.Nodes.Insert(0,layerNode);
@@ -1942,6 +1945,7 @@ namespace DEETU.Source.Window
                 sSymbol.Color = Color.Transparent;
                 TreeImages.Images.Add(CreateBitmapFromSymbol(sSymbol));
                 FieldName.SelectedImageIndex = FieldName.ImageIndex = TreeImages.Images.Count - 1;
+                FieldName.Checked = true;
 
                 List<TreeNode> styles = new List<TreeNode>() { FieldName };
                 int ValueCount = sUniqueValueRenderer.ValueCount;
@@ -1955,6 +1959,7 @@ namespace DEETU.Source.Window
                 sSymbol.Color = Color.Transparent;
                 TreeImages.Images.Add(CreateBitmapFromSymbol(sSymbol));
                 layerNode.SelectedImageIndex = layerNode.ImageIndex = TreeImages.Images.Count - 1;
+                layerNode.Checked = true;
 
                 layerNode.ContextMenuStrip = layerContextMenuStrip;
                 //layerTreeView.Nodes.Insert(0,layerNode);
@@ -1973,6 +1978,7 @@ namespace DEETU.Source.Window
             TreeImages.Images.Add(CreateBitmapFromSymbol(symbol));
             style.SelectedImageIndex = style.ImageIndex = TreeImages.Images.Count - 1;
             style.Tag = symbol;
+            style.Checked = true;
             return style;
         }
 
@@ -2717,7 +2723,26 @@ namespace DEETU.Source.Window
             }
         }
 
-        private void 剪切要素_Click(object sender, EventArgs e)
+        private void layerTreeView_AfterCheck(object sender, TreeViewEventArgs e)
+        {
+            if(e.Node.Nodes.Count == 0) // 子节点
+            {
+                if (e.Node.Tag != null)
+                {
+                    GeoSymbol sSymbol = e.Node.Tag as GeoSymbol;
+                    if (sSymbol.SymbolType == GeoSymbolTypeConstant.SimpleFillSymbol)
+                        (sSymbol as GeoSimpleFillSymbol).Visible = !(sSymbol as GeoSimpleFillSymbol).Visible;
+                }
+            }
+            else // 父节点
+            {
+                GeoMapLayer sLayer = e.Node.Tag as GeoMapLayer;
+                sLayer.Visible = !sLayer.Visible;
+            }
+            geoMap.RedrawMap();
+        }
+
+        private void 剪切要素ToolStripButton_Click(object sender, EventArgs e)
         {
             Cut();
         }

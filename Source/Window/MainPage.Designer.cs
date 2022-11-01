@@ -1061,6 +1061,7 @@ namespace DEETU.Source.Window
             this.layerTreeView.Style = Sunny.UI.UIStyle.Office2010Black;
             this.layerTreeView.TabIndex = 0;
             this.layerTreeView.Text = "layerTreeView";
+            this.layerTreeView.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.layerTreeView_AfterCheck);
             this.layerTreeView.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.layerTreeView_ItemDrag);
             this.layerTreeView.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.layerTreeView_NodeMouseClick);
             this.layerTreeView.DragDrop += new System.Windows.Forms.DragEventHandler(this.layerTreeView_DragDrop);
