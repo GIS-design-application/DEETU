@@ -79,6 +79,7 @@ namespace DEETU.Source.Window
             else
             {
                 mClassBreaksRenderer = mLayer.Renderer as GeoClassBreaksRenderer;
+                uiIntegerUpDown2.Value = (mLayer.Renderer as GeoClassBreaksRenderer).BreakCount;
                 renderMethodCB.SelectedIndex = 2;
                 renderTabControl.SelectedIndex = 2;
                 classFieldComboBox.SelectedItem = mClassBreaksRenderer.Field;
@@ -199,7 +200,7 @@ namespace DEETU.Source.Window
             if (classFieldComboBox.SelectedIndex == -1) return;
             if (mClassBreaksRenderer == null || mClassBreaksRenderer.Field != classFieldComboBox.SelectedItem.ToString())
             {
-                mLayer.Renderer = CreateClassBreaksRenderer(classFieldComboBox.SelectedItem.ToString());
+                mLayer.Renderer = CreateClassBreaksRenderer(classFieldComboBox.SelectedItem.ToString(), uiIntegerUpDown2.Value);
                 mClassBreaksRenderer = mLayer.Renderer as GeoClassBreaksRenderer;
             }
             if (mLayer.Renderer != null)
@@ -208,7 +209,7 @@ namespace DEETU.Source.Window
                 classDataGridView.Rows.Clear();
                 mClassBreaksRenderers.Clear();
 
-                initializeClassBreaksRenderer();
+                initializeClassBreaksRenderer(uiIntegerUpDown2.Value);
                 ClassBreaksComboBoxEx.Items.AddRange(mClassBreaksRenderers.ToArray());
                 ClassBreaksComboBoxEx.SelectedIndex = 0;
                 classDataGridView.Refresh();
@@ -346,7 +347,7 @@ namespace DEETU.Source.Window
             CreateUniqueValueRenderers((mLayer.Renderer as GeoUniqueValueRenderer).Field);
         }
 
-        private void initializeClassBreaksRenderer()
+        private void initializeClassBreaksRenderer(int value)
         {
             GeoClassBreaksRenderer classBreaksRenderer = (GeoClassBreaksRenderer)mLayer.Renderer;
             mClassBreaksRenderer = classBreaksRenderer;
@@ -364,9 +365,9 @@ namespace DEETU.Source.Window
                 Bitmap symbolImage = CreateLineBitmapFromSymbol(lineSymbol);
                 classDataGridView.AddRow(symbolImage, classBreaksRenderer.GetBreakValue(i));
             }
-            CreateClassBreaksRenderers((mLayer.Renderer as GeoUniqueValueRenderer).Field);
+            CreateClassBreaksRenderers((mLayer.Renderer as GeoClassBreaksRenderer).Field, value);
         }
-        private GeoClassBreaksRenderer CreateClassBreaksRenderer(string field)
+        private GeoClassBreaksRenderer CreateClassBreaksRenderer(string field, int n)
         {
             try
             {
@@ -415,12 +416,11 @@ namespace DEETU.Source.Window
                         break;
                 }
 
-                // 获取最小, 最大值, 并分为5级
                 double sMinValue = sValues.Min();
                 double sMaxValue = sValues.Max();
-                for (int i = 0; i < 5; i++)
+                for (int i = 0; i < n; i++)
                 {
-                    double sValue = sMinValue + (sMaxValue - sMinValue) * (i + 1) / 5;
+                    double sValue = sMinValue + (sMaxValue - sMinValue) * (i + 1) / n;
                     GeoSimpleLineSymbol sSymbol = new GeoSimpleLineSymbol();
                     sRenderer.AddBreakValue(sValue, sSymbol);
                 }
@@ -437,11 +437,11 @@ namespace DEETU.Source.Window
             }
         }
 
-        private void CreateClassBreaksRenderers(string field)
+        private void CreateClassBreaksRenderers(string field, int value)
         {
             for (int i = 0; i < mSymbolsCount; ++i)
             {
-                mClassBreaksRenderers.Add(CreateClassBreaksRenderer(field));
+                mClassBreaksRenderers.Add(CreateClassBreaksRenderer(field, value));
             }
         }
 
@@ -495,6 +495,27 @@ namespace DEETU.Source.Window
             GeoSimpleLineSymbol sSymbol = new GeoSimpleLineSymbol();
             sRenderer.Symbol = sSymbol;
             return sRenderer;
+        }
+
+        private void uiIntegerUpDown2_ValueChanged(object sender, int value)
+        {
+            if (mClassBreaksRenderer == null || mClassBreaksRenderer.BreakCount != value)
+            {
+                mLayer.Renderer = CreateClassBreaksRenderer(classFieldComboBox.SelectedItem.ToString(), value);
+                mClassBreaksRenderer = mLayer.Renderer as GeoClassBreaksRenderer;
+            }
+            if (mLayer.Renderer != null)
+            {
+                ClassBreaksComboBoxEx.Items.Clear();
+                classDataGridView.Rows.Clear();
+                mClassBreaksRenderers.Clear();
+
+                initializeClassBreaksRenderer(value);
+                ClassBreaksComboBoxEx.Items.AddRange(mClassBreaksRenderers.ToArray());
+                ClassBreaksComboBoxEx.SelectedIndex = 0;
+                classDataGridView.Refresh();
+            }
+
         }
     }
 }

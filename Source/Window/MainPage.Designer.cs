@@ -1052,6 +1052,7 @@ namespace DEETU.Source.Window
             this.layerTreeView.Size = new System.Drawing.Size(276, 272);
             this.layerTreeView.TabIndex = 0;
             this.layerTreeView.Text = "layerTreeView";
+            this.layerTreeView.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.layerTreeView_AfterCheck);
             this.layerTreeView.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.layerTreeView_ItemDrag);
             this.layerTreeView.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.layerTreeView_NodeMouseClick);
             this.layerTreeView.DragDrop += new System.Windows.Forms.DragEventHandler(this.layerTreeView_DragDrop);
@@ -1091,7 +1092,7 @@ namespace DEETU.Source.Window
             geoLayers1.FilePath = null;
             this.geoMap.Layers = geoLayers1;
             this.geoMap.Location = new System.Drawing.Point(0, 0);
-            this.geoMap.Margin = new System.Windows.Forms.Padding(6518991, 54272333, 6518991, 54272333);
+            this.geoMap.Margin = new System.Windows.Forms.Padding(10140653, 93469016, 10140653, 93469016);
             this.geoMap.Name = "geoMap";
             this.geoMap.SelectionColor = System.Drawing.Color.Cyan;
             this.geoMap.Size = new System.Drawing.Size(637, 447);
