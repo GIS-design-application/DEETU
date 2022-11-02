@@ -32,8 +32,8 @@ namespace DEETU.Source.Window
 		{
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainPage));
-            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("最近使用的图层");
-            DEETU.Map.GeoLayers geoLayers3 = new DEETU.Map.GeoLayers();
+            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("最近使用的图层");
+            DEETU.Map.GeoLayers geoLayers1 = new DEETU.Map.GeoLayers();
             this.projectContextMenuStrip = new Sunny.UI.UIContextMenuStrip();
             this.设置工程目录ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.favoriteContextMenuStrip1 = new Sunny.UI.UIContextMenuStrip();
@@ -1060,11 +1060,11 @@ namespace DEETU.Source.Window
             this.FileTreeView.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.FileTreeView.MinimumSize = new System.Drawing.Size(1, 1);
             this.FileTreeView.Name = "FileTreeView";
-            treeNode3.ContextMenuStrip = this.projectContextMenuStrip;
-            treeNode3.Name = "节点0";
-            treeNode3.Text = "最近使用的图层";
+            treeNode1.ContextMenuStrip = this.projectContextMenuStrip;
+            treeNode1.Name = "节点0";
+            treeNode1.Text = "最近使用的图层";
             this.FileTreeView.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode3});
+            treeNode1});
             this.FileTreeView.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
             this.FileTreeView.SelectedNode = null;
             this.FileTreeView.Size = new System.Drawing.Size(276, 214);
@@ -1114,9 +1114,9 @@ namespace DEETU.Source.Window
             this.layerTreeView.DrawNode += new System.Windows.Forms.DrawTreeNodeEventHandler(this.layerTreeView_DrawNode);
             this.layerTreeView.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.layerTreeView_ItemDrag);
             this.layerTreeView.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.layerTreeView_NodeMouseClick);
+            this.layerTreeView.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.layerTreeView_NodeMouseDoubleClick);
             this.layerTreeView.DragDrop += new System.Windows.Forms.DragEventHandler(this.layerTreeView_DragDrop);
             this.layerTreeView.DragEnter += new System.Windows.Forms.DragEventHandler(this.layerTreeView_DragEnter);
-            this.layerTreeView.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.layerTreeView_MouseDoubleClick);
             // 
             // TreeImages
             // 
@@ -1149,10 +1149,10 @@ namespace DEETU.Source.Window
             this.geoMap.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.geoMap.Dock = System.Windows.Forms.DockStyle.Fill;
             this.geoMap.FlashColor = System.Drawing.Color.Green;
-            geoLayers3.FilePath = null;
-            this.geoMap.Layers = geoLayers3;
+            geoLayers1.FilePath = null;
+            this.geoMap.Layers = geoLayers1;
             this.geoMap.Location = new System.Drawing.Point(0, 0);
-            this.geoMap.Margin = new System.Windows.Forms.Padding(415847003, 0, 415847003, 0);
+            this.geoMap.Margin = new System.Windows.Forms.Padding(693078330, 0, 693078330, 0);
             this.geoMap.Name = "geoMap";
             this.geoMap.SelectionColor = System.Drawing.Color.Cyan;
             this.geoMap.Size = new System.Drawing.Size(637, 489);
