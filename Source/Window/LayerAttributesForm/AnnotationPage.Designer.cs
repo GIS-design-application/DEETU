@@ -31,8 +31,8 @@ namespace DEETU.Source.Window
         {
             this.fieldComboBox = new Sunny.UI.UIComboBox();
             this.uiLabel1 = new Sunny.UI.UILabel();
-            this.uiRichTextBox1 = new Sunny.UI.UIRichTextBox();
             this.uiTitlePanel1 = new Sunny.UI.UITitlePanel();
+            this.SampleTextPanel = new System.Windows.Forms.Panel();
             this.fontTitlePanel = new Sunny.UI.UITitlePanel();
             this.uiLabel8 = new Sunny.UI.UILabel();
             this.fontColotPicker = new Sunny.UI.UIColorPicker();
@@ -102,29 +102,11 @@ namespace DEETU.Source.Window
             this.uiLabel1.Text = "注记字段";
             this.uiLabel1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // uiRichTextBox1
-            // 
-            this.uiRichTextBox1.AutoWordSelection = true;
-            this.uiRichTextBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.uiRichTextBox1.FillColor = System.Drawing.Color.White;
-            this.uiRichTextBox1.Font = new System.Drawing.Font("微软雅黑", 12F);
-            this.uiRichTextBox1.Location = new System.Drawing.Point(0, 25);
-            this.uiRichTextBox1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.uiRichTextBox1.MinimumSize = new System.Drawing.Size(1, 1);
-            this.uiRichTextBox1.Name = "uiRichTextBox1";
-            this.uiRichTextBox1.Padding = new System.Windows.Forms.Padding(2);
-            this.uiRichTextBox1.RadiusSides = Sunny.UI.UICornerRadiusSides.None;
-            this.uiRichTextBox1.Size = new System.Drawing.Size(472, 73);
-            this.uiRichTextBox1.Style = Sunny.UI.UIStyle.Custom;
-            this.uiRichTextBox1.TabIndex = 4;
-            this.uiRichTextBox1.Text = "Lorem Ipsum 乱数假文";
-            this.uiRichTextBox1.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
             // uiTitlePanel1
             // 
             this.uiTitlePanel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.uiTitlePanel1.Controls.Add(this.uiRichTextBox1);
+            this.uiTitlePanel1.Controls.Add(this.SampleTextPanel);
             this.uiTitlePanel1.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(228)))), ((int)(((byte)(233)))));
             this.uiTitlePanel1.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.uiTitlePanel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(46)))), ((int)(((byte)(46)))));
@@ -144,6 +126,14 @@ namespace DEETU.Source.Window
             this.uiTitlePanel1.TextAlignment = System.Drawing.ContentAlignment.MiddleLeft;
             this.uiTitlePanel1.TitleColor = System.Drawing.Color.Silver;
             this.uiTitlePanel1.TitleHeight = 25;
+            // 
+            // SampleTextPanel
+            // 
+            this.SampleTextPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.SampleTextPanel.Location = new System.Drawing.Point(0, 25);
+            this.SampleTextPanel.Name = "SampleTextPanel";
+            this.SampleTextPanel.Size = new System.Drawing.Size(472, 73);
+            this.SampleTextPanel.TabIndex = 0;
             // 
             // fontTitlePanel
             // 
@@ -178,7 +168,7 @@ namespace DEETU.Source.Window
             // 
             this.uiLabel8.BackColor = System.Drawing.Color.Transparent;
             this.uiLabel8.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.uiLabel8.Location = new System.Drawing.Point(3, 30);
+            this.uiLabel8.Location = new System.Drawing.Point(3, 36);
             this.uiLabel8.Name = "uiLabel8";
             this.uiLabel8.Size = new System.Drawing.Size(90, 29);
             this.uiLabel8.Style = Sunny.UI.UIStyle.Custom;
@@ -223,7 +213,7 @@ namespace DEETU.Source.Window
             this.fontButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.fontButton.Cursor = System.Windows.Forms.Cursors.Hand;
             this.fontButton.Font = new System.Drawing.Font("微软雅黑", 12F);
-            this.fontButton.Location = new System.Drawing.Point(440, 30);
+            this.fontButton.Location = new System.Drawing.Point(440, 36);
             this.fontButton.MinimumSize = new System.Drawing.Size(1, 1);
             this.fontButton.Name = "fontButton";
             this.fontButton.RectSides = ((System.Windows.Forms.ToolStripStatusLabelBorderSides)(((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left | System.Windows.Forms.ToolStripStatusLabelBorderSides.Top) 
@@ -241,7 +231,7 @@ namespace DEETU.Source.Window
             this.fontTextBox.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.fontTextBox.FillColor = System.Drawing.Color.White;
             this.fontTextBox.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.fontTextBox.Location = new System.Drawing.Point(97, 30);
+            this.fontTextBox.Location = new System.Drawing.Point(97, 36);
             this.fontTextBox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.fontTextBox.Maximum = 2147483647D;
             this.fontTextBox.Minimum = -2147483648D;
@@ -583,7 +573,6 @@ namespace DEETU.Source.Window
 
         #endregion
         private Sunny.UI.UITitlePanel uiTitlePanel1;
-        private Sunny.UI.UIRichTextBox uiRichTextBox1;
         private Sunny.UI.UILabel uiLabel1;
         private Sunny.UI.UIComboBox fieldComboBox;
         private Sunny.UI.UITitlePanel posTitlePanel;
@@ -609,5 +598,6 @@ namespace DEETU.Source.Window
         private Sunny.UI.UILabel uiLabel8;
         private Sunny.UI.UIColorPicker fontColotPicker;
         private Sunny.UI.UILabel uiLabel7;
+        private System.Windows.Forms.Panel SampleTextPanel;
     }
 }
