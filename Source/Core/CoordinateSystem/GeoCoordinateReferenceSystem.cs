@@ -43,6 +43,7 @@ namespace DEETU.Core
         #region 运算符重载
         public static bool operator == (GeoCoordinateReferenceSystem crs1,GeoCoordinateReferenceSystem crs2)
         {
+            if ((object)crs2 == null || (object)crs1 == null) return true;
             if (crs1.GeographicCrs == crs2.GeographicCrs && crs1.ProjectedCrs == crs2.ProjectedCrs)
                 return true;
             return false;
@@ -112,8 +113,10 @@ namespace DEETU.Core
             var desCrs = new GeoCoordinateReferenceSystem();
             desCrs._ProjectedCrs = ProjectedCrs;
             desCrs._GeographicCrs = GeographicCrs;
-            desCrs._GeographicParameters = new Dictionary<string, string>(_GeographicParameters);
-            desCrs._ProjectedParameters = new Dictionary<string, string>(_ProjectedParameters);
+            if(_GeographicCrs!=null)
+                desCrs._GeographicParameters = new Dictionary<string, string>(_GeographicParameters);
+            if(_ProjectedCrs!=null)
+                desCrs._ProjectedParameters = new Dictionary<string, string>(_ProjectedParameters);
             desCrs._Unit = _Unit;
             return desCrs;
         }

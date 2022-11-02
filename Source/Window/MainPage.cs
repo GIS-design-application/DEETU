@@ -18,6 +18,7 @@ using DEETU.Testing;
 using System.Diagnostics;
 using System.Reflection.Emit;
 using System.Threading.Tasks;
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace DEETU.Source.Window
 {
@@ -1601,6 +1602,7 @@ namespace DEETU.Source.Window
         private void ShowCrs()
         {
             tssCrs.Text = "Crs:";
+            
             if (mCrs.Type == CrsType.None)
                 tssCrs.Text += "None";
             else if (mCrs.Type == CrsType.Geographic)
@@ -2397,6 +2399,12 @@ namespace DEETU.Source.Window
                             FileStream sStream = new FileStream(sFileName, FileMode.Open);
                             BinaryReader sr = new BinaryReader(sStream);
                             GeoMapLayer sLayer = GeoDataIOTools.LoadMapLayer(sr);
+                            if (File.Exists(sFileName + "prj"))
+                            {
+                                BinaryFormatter formatter = new BinaryFormatter();
+                                FileStream fileStream = new FileStream(sFileName + "prj", FileMode.Open, FileAccess.ReadWrite);
+                                sLayer.Crs = (GeoCoordinateReferenceSystem)formatter.Deserialize(fileStream);
+                            }
                             sLayer.Name = sFileName.Split('\\').Last().Split('.').First();
                             geoMap.Layers.Add(sLayer);
                             if (geoMap.Layers.Count == 1)
@@ -2485,6 +2493,11 @@ namespace DEETU.Source.Window
                                 path[path.Length - 3] = 'd';
 
                                 GeoShpIOTools.ReadDBFFile(new string(path), sLayer);
+                                path[path.Length - 1] = 'j';
+                                path[path.Length - 2] = 'r';
+                                path[path.Length - 3] = 'p';
+                                GeoShpIOTools.ReadPrjFile(new string(path), sLayer);
+
                             }
                             geoMap.Layers.Add(sLayer);
                             if (geoMap.Layers.Count == 1)
@@ -2518,7 +2531,9 @@ namespace DEETU.Source.Window
                         break; 
                     }
                 default:
-                    Debug.Assert(false);
+                    MessageBox.Show("不支持的文件类型:" + suffix);
+
+                    //Debug.Assert(false);
                     break;
             }
             
