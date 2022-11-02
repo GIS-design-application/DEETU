@@ -165,7 +165,33 @@ namespace DEETU.Map
             g.SmoothingMode = sSmoothMode;
         }
 
+        internal static Color[][] GetColors()
+        {
+            List<Color[]> sColors = new List<Color[]>();
 
+            // 1
+            sColors.Add(new List<Color> { Color.Green, Color.Red}.ToArray());
+            // 2
+            sColors.Add(new List<Color> { Color.Cyan, Color.Red }.ToArray());
+            // 3
+            sColors.Add(new List<Color> { Color.Green, Color.Snow }.ToArray());
+            // 4
+            sColors.Add(new List<Color> { Color.FromArgb(212, 239, 247), Color.FromArgb(0, 57, 245) }.ToArray());
+            // 5
+            sColors.Add(new List<Color> { Color.FromArgb(173, 255, 217), Color.FromArgb(0, 157, 21) }.ToArray());
+            // 6
+            sColors.Add(new List<Color> { Color.FromArgb(255, 184, 184), Color.FromArgb(200, 0, 0) }.ToArray());
+            // 7
+            sColors.Add(new List<Color> { Color.FromArgb(116, 78, 230), Color.FromArgb(230, 78, 78) }.ToArray());
+            // 8
+            sColors.Add(new List<Color> { Color.FromArgb(78, 106, 230), Color.FromArgb(78, 230, 78) }.ToArray());
+            // 9
+            sColors.Add(new List<Color> { Color.FromArgb(243, 247, 166), Color.FromArgb(227, 219, 0) }.ToArray());
+            // 10
+            sColors.Add(new List<Color> { Color.FromArgb(255, 243, 79), Color.FromArgb(255, 0, 0) }.ToArray());
+
+            return sColors.ToArray();
+        }
         #endregion
 
         #region 私有函数

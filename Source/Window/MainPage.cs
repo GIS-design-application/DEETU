@@ -2257,6 +2257,23 @@ namespace DEETU.Source.Window
             geoMap.RedrawMap();
         }
 
+        private void 图层重命名ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            GeoMapLayer layer = mCurrentLayerNode.Tag as GeoMapLayer;
+            UIEditOption option = new UIEditOption();
+            option.AutoLabelWidth = true;
+            option.Text = "图层重命名";
+            option.AddText("Name", "图层名称", mCurrentLayerNode.Text, true);
+            UIEditForm editForm = new UIEditForm(option);
+            editForm.ShowDialog();
+            if (editForm.IsOK)
+            {
+                layer.Name = (string)editForm["Name"];
+                geoMap.Layers.SetItem(mCurrentLayerNode.Index, layer);
+                UpdateTreeView();
+            }
+        }
+
         #endregion
 
         #region 子窗口事件处理
@@ -2994,6 +3011,22 @@ namespace DEETU.Source.Window
                 SelectModeButton.Checked = true;
                 this.Cursor = Cursors.Default;
                 mMapOpStyle = GeoMapOpStyleEnum.Select;
+            }
+        }
+
+        private void 显示所有图层ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            foreach(TreeNode node in layerTreeView.Nodes)
+            {
+                node.Checked = true;
+            }
+        }
+
+        private void 隐藏所有图层ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            foreach(TreeNode node in layerTreeView.Nodes)
+            {
+                node.Checked = false;
             }
         }
 
