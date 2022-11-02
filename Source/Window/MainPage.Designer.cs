@@ -67,6 +67,7 @@ namespace DEETU.Source.Window
             this.打开ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.保存ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.另存为ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.导出图片ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.关闭ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.退出DEETUToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -403,6 +404,7 @@ namespace DEETU.Source.Window
             this.打开ToolStripMenuItem,
             this.保存ToolStripMenuItem,
             this.另存为ToolStripMenuItem,
+            this.导出图片ToolStripMenuItem,
             this.关闭ToolStripMenuItem,
             this.toolStripSeparator3,
             this.退出DEETUToolStripMenuItem});
@@ -441,6 +443,13 @@ namespace DEETU.Source.Window
             this.另存为ToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
             this.另存为ToolStripMenuItem.Text = "另存为";
             this.另存为ToolStripMenuItem.Click += new System.EventHandler(this.SaveNewProjectToolStripMenuItem_Click);
+            // 
+            // 导出图片ToolStripMenuItem
+            // 
+            this.导出图片ToolStripMenuItem.Name = "导出图片ToolStripMenuItem";
+            this.导出图片ToolStripMenuItem.Size = new System.Drawing.Size(203, 34);
+            this.导出图片ToolStripMenuItem.Text = "导出图片";
+            this.导出图片ToolStripMenuItem.Click += new System.EventHandler(this.导出图片ToolStripMenuItem_Click);
             // 
             // 关闭ToolStripMenuItem
             // 
@@ -686,8 +695,8 @@ namespace DEETU.Source.Window
             // 打开图层ToolStripMenuItem
             // 
             this.打开图层ToolStripMenuItem.Name = "打开图层ToolStripMenuItem";
-            this.打开图层ToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
-            this.打开图层ToolStripMenuItem.Text = "添加lyr图层文件";
+            this.打开图层ToolStripMenuItem.Size = new System.Drawing.Size(272, 34);
+            this.打开图层ToolStripMenuItem.Text = "添加lay图层文件";
             this.打开图层ToolStripMenuItem.Click += new System.EventHandler(this.btnLoadLayerFile_Click);
             // 
             // 打开shp图层文件ToolStripMenuItem
@@ -727,7 +736,7 @@ namespace DEETU.Source.Window
             this.selectByValueToolStripDropDownButton,
             this.selectByExtentToolStripDropDownButton,
             this.cancelSelectionToolStripButton});
-            this.toolStrip1.Location = new System.Drawing.Point(3, 27);
+            this.toolStrip1.Location = new System.Drawing.Point(4, 38);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
             this.toolStrip1.Size = new System.Drawing.Size(439, 27);
@@ -948,7 +957,7 @@ namespace DEETU.Source.Window
             // toolStripContainer1.ContentPanel
             // 
             this.toolStripContainer1.ContentPanel.Controls.Add(this.splitContainer1);
-            this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(917, 511);
+            this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(917, 478);
             this.toolStripContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.toolStripContainer1.LeftToolStripPanelVisible = false;
             this.toolStripContainer1.Location = new System.Drawing.Point(0, 25);
@@ -960,8 +969,8 @@ namespace DEETU.Source.Window
             // 
             // toolStripContainer1.TopToolStripPanel
             // 
-            this.toolStripContainer1.TopToolStripPanel.Controls.Add(this.toolStrip2);
             this.toolStripContainer1.TopToolStripPanel.Controls.Add(this.toolStrip1);
+            this.toolStripContainer1.TopToolStripPanel.Controls.Add(this.toolStrip2);
             // 
             // splitContainer1
             // 
@@ -976,7 +985,7 @@ namespace DEETU.Source.Window
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.uiPanel3);
-            this.splitContainer1.Size = new System.Drawing.Size(917, 511);
+            this.splitContainer1.Size = new System.Drawing.Size(917, 478);
             this.splitContainer1.SplitterDistance = 276;
             this.splitContainer1.TabIndex = 51;
             // 
@@ -994,8 +1003,8 @@ namespace DEETU.Source.Window
             // splitContainer2.Panel2
             // 
             this.splitContainer2.Panel2.Controls.Add(this.uiPanel2);
-            this.splitContainer2.Size = new System.Drawing.Size(276, 511);
-            this.splitContainer2.SplitterDistance = 215;
+            this.splitContainer2.Size = new System.Drawing.Size(276, 478);
+            this.splitContainer2.SplitterDistance = 201;
             this.splitContainer2.TabIndex = 0;
             // 
             // uiPanel1
@@ -1009,7 +1018,7 @@ namespace DEETU.Source.Window
             this.uiPanel1.MinimumSize = new System.Drawing.Size(1, 1);
             this.uiPanel1.Name = "uiPanel1";
             this.uiPanel1.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
-            this.uiPanel1.Size = new System.Drawing.Size(276, 215);
+            this.uiPanel1.Size = new System.Drawing.Size(276, 201);
             this.uiPanel1.Style = Sunny.UI.UIStyle.Office2010Black;
             this.uiPanel1.TabIndex = 0;
             this.uiPanel1.Text = "uiPanel1";
@@ -1032,7 +1041,7 @@ namespace DEETU.Source.Window
             treeNode1});
             this.FileTreeView.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
             this.FileTreeView.SelectedNode = null;
-            this.FileTreeView.Size = new System.Drawing.Size(276, 215);
+            this.FileTreeView.Size = new System.Drawing.Size(276, 201);
             this.FileTreeView.Style = Sunny.UI.UIStyle.Office2010Black;
             this.FileTreeView.TabIndex = 0;
             this.FileTreeView.Text = "uiTreeView2";
@@ -1050,7 +1059,7 @@ namespace DEETU.Source.Window
             this.uiPanel2.MinimumSize = new System.Drawing.Size(1, 1);
             this.uiPanel2.Name = "uiPanel2";
             this.uiPanel2.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
-            this.uiPanel2.Size = new System.Drawing.Size(276, 292);
+            this.uiPanel2.Size = new System.Drawing.Size(276, 273);
             this.uiPanel2.Style = Sunny.UI.UIStyle.Office2010Black;
             this.uiPanel2.TabIndex = 0;
             this.uiPanel2.Text = "uiPanel2";
@@ -1070,7 +1079,7 @@ namespace DEETU.Source.Window
             this.layerTreeView.Name = "layerTreeView";
             this.layerTreeView.SelectedImageIndex = 0;
             this.layerTreeView.ShowNodeToolTips = true;
-            this.layerTreeView.Size = new System.Drawing.Size(276, 292);
+            this.layerTreeView.Size = new System.Drawing.Size(276, 273);
             this.layerTreeView.TabIndex = 0;
             this.layerTreeView.Text = "layerTreeView";
             this.layerTreeView.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.layerTreeView_AfterCheck);
@@ -1098,7 +1107,7 @@ namespace DEETU.Source.Window
             this.uiPanel3.MinimumSize = new System.Drawing.Size(1, 1);
             this.uiPanel3.Name = "uiPanel3";
             this.uiPanel3.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
-            this.uiPanel3.Size = new System.Drawing.Size(637, 511);
+            this.uiPanel3.Size = new System.Drawing.Size(637, 478);
             this.uiPanel3.Style = Sunny.UI.UIStyle.Office2010Black;
             this.uiPanel3.TabIndex = 0;
             this.uiPanel3.Text = "MapControl";
@@ -1114,10 +1123,10 @@ namespace DEETU.Source.Window
             geoLayers1.FilePath = null;
             this.geoMap.Layers = geoLayers1;
             this.geoMap.Location = new System.Drawing.Point(0, 0);
-            this.geoMap.Margin = new System.Windows.Forms.Padding(1175757945, 0, 1175757945, 0);
+            this.geoMap.Margin = new System.Windows.Forms.Padding(89822962, 905143835, 89822962, 905143835);
             this.geoMap.Name = "geoMap";
             this.geoMap.SelectionColor = System.Drawing.Color.Cyan;
-            this.geoMap.Size = new System.Drawing.Size(637, 489);
+            this.geoMap.Size = new System.Drawing.Size(637, 447);
             this.geoMap.TabIndex = 0;
             this.geoMap.MapScaleChanged += new DEETU.Map.GeoMapControl.MapScaleChangedHandle(this.geoMap_MapScaleChanged);
             this.geoMap.AfterTrackingLayerDraw += new DEETU.Map.GeoMapControl.AfterTrackingLayerDrawHandle(this.geoMap_AfterTrackingLayerDraw);
@@ -1135,7 +1144,7 @@ namespace DEETU.Source.Window
             this.tssMapScale,
             this.spaceToolStripStatusLabel,
             this.tssCrs});
-            this.statusStrip.Location = new System.Drawing.Point(0, 489);
+            this.statusStrip.Location = new System.Drawing.Point(0, 447);
             this.statusStrip.Name = "statusStrip";
             this.statusStrip.Size = new System.Drawing.Size(637, 22);
             this.statusStrip.TabIndex = 1;
@@ -1186,9 +1195,9 @@ namespace DEETU.Source.Window
             this.PasteUndoToolStripSeparator14,
             this.撤销ToolStripButton,
             this.重做ToolStripButton});
-            this.toolStrip2.Location = new System.Drawing.Point(3, 0);
+            this.toolStrip2.Location = new System.Drawing.Point(4, 0);
             this.toolStrip2.Name = "toolStrip2";
-            this.toolStrip2.Size = new System.Drawing.Size(294, 27);
+            this.toolStrip2.Size = new System.Drawing.Size(410, 38);
             this.toolStrip2.TabIndex = 50;
             // 
             // startEditToolStripButton
@@ -1483,6 +1492,7 @@ namespace DEETU.Source.Window
         private System.Windows.Forms.ToolStripButton cancelSelectionToolStripButton;
         private System.Windows.Forms.ToolStripStatusLabel spaceToolStripStatusLabel;
         private System.Windows.Forms.ToolStripStatusLabel tssCrs;
+        private System.Windows.Forms.ToolStripMenuItem 导出图片ToolStripMenuItem;
         private System.Windows.Forms.ToolStripButton SelectModeButton;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator13;
     }

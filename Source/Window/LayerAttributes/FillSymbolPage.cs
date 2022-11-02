@@ -33,9 +33,7 @@ namespace DEETU.Source.Window
         public FillSymbolPage(GeoMapLayer layer)
         {
             InitializeComponent();
-            // mLayer = layer.Clone();
             mLayer = layer;
-            renderMethodCB.SelectedIndex = (int)layer.Renderer.RendererType;
             renderMethodCB.SelectedIndexChanged += RenderMethodCB_SelectedIndexChanged;
             renderTabControl.SelectedIndexChanged += RenderTabControl_SelectedIndexChanged;
             InitializeTabs();
@@ -96,11 +94,11 @@ namespace DEETU.Source.Window
         }
 
 
-        private Button GetFillSymbolButton(GeoSimpleFillSymbol symbol)
+        private Button GetFillSymbolButton(GeoSimpleFillSymbol symbol, string name)
         {
             Button sButton = new Button();
             sButton.BackColor = symbol.Color;
-            sButton.Text = "";
+            sButton.Name = name;
             sButton.Dock = DockStyle.Fill;
             sButton.FlatAppearance.BorderColor = symbol.Outline.Color;
             sButton.FlatAppearance.BorderSize = (int)symbol.Outline.Size;
@@ -126,6 +124,10 @@ namespace DEETU.Source.Window
             button.FlatAppearance.BorderColor = symbol.Outline.Color;
             button.FlatAppearance.BorderSize = (int)symbol.Outline.Size;
             button.Refresh();
+            if (button.Name == "class")
+                UpdateClassBreaksRenderersOutLine();
+            else if (button.Name == "unique")
+                UpdateUniqueValueRenderersOutLine();
         }
 
         private void fillColorPicker_ValueChanged(object sender, Color value)
@@ -158,14 +160,7 @@ namespace DEETU.Source.Window
             }
             if(mLayer.Renderer != null)
             {
-                uniqueColorgradComboBox.Items.Clear();
-                uniqueDataGridView.Rows.Clear();
-                mUniqueValueRenderers.Clear();
-
                 initializeUniqueValueRenderer();
-                uniqueColorgradComboBox.Items.AddRange(mUniqueValueRenderers.ToArray());
-                uniqueColorgradComboBox.SelectedIndex = 0;
-                uniqueDataGridView.Refresh();
             }
         }
 
@@ -179,14 +174,7 @@ namespace DEETU.Source.Window
             }
             if(mLayer.Renderer != null)
             {
-                classColorgradComboBox.Items.Clear();
-                classDataGridView.Rows.Clear();
-                mClassBreaksRenderers.Clear();
-
                 initializeClassBreaksRenderer(uiIntegerUpDown2.Value);
-                classColorgradComboBox.Items.AddRange(mClassBreaksRenderers.ToArray());
-                classColorgradComboBox.SelectedIndex = 0;
-                classDataGridView.Refresh();
             }
         }
 
@@ -233,7 +221,11 @@ namespace DEETU.Source.Window
             }
             else if (renderMethodCB.SelectedItem.ToString() == "分级符号")
             {
-                if (mClassBreaksRenderer == null)
+                if(classFieldComboBox.Items.Count == 0)
+                {
+                    MessageBox.Show("没有可以渲染的字段");
+                }
+                else if (mClassBreaksRenderer == null)
                 {
                     classFieldComboBox.SelectedIndex = 0;
                 }
@@ -241,7 +233,11 @@ namespace DEETU.Source.Window
             }
             else if (renderMethodCB.SelectedItem.ToString() == "唯一值")
             {
-                if (mUniqueValueRenderer == null)
+                if (uniqueFieldComboBox.Items.Count == 0)
+                {
+                    MessageBox.Show("没有可以渲染的字段");
+                }
+                else if (mUniqueValueRenderer == null)
                 {
                     uniqueFieldComboBox.SelectedIndex = 0;
                 }
@@ -388,6 +384,18 @@ namespace DEETU.Source.Window
                 uniqueDataGridView.Refresh();
             }
         }
+        private void uiIntegerUpDown2_ValueChanged(object sender, int value)
+        {
+            if (mClassBreaksRenderer == null || mClassBreaksRenderer.BreakCount != value)
+            {
+                mLayer.Renderer = CreateClassBreaksRenderer(classFieldComboBox.SelectedItem.ToString(), value);
+                mClassBreaksRenderer = mLayer.Renderer as GeoClassBreaksRenderer;
+            }
+            if (mLayer.Renderer != null)
+            {
+                initializeClassBreaksRenderer(value);
+            }
+        }
         #endregion
         private void initializeSimpleRenderer()
         {
@@ -402,12 +410,16 @@ namespace DEETU.Source.Window
 
         private void initializeUniqueValueRenderer()
         {
+            uniqueColorgradComboBox.Items.Clear();
+            uniqueDataGridView.Rows.Clear();
+            mUniqueValueRenderers.Clear();
+
             GeoUniqueValueRenderer uniqueValueRenderer = (GeoUniqueValueRenderer)mLayer.Renderer;
             mUniqueValueRenderer = uniqueValueRenderer;
             mUniqueValueRenderers.Add(mUniqueValueRenderer);
 
             if (mUniqueDefaultButton != null) uniqueTableLayoutPanel.Controls.Remove(mUniqueDefaultButton);
-            Button defaultSymbolButton = GetFillSymbolButton((GeoSimpleFillSymbol)uniqueValueRenderer.DefaultSymbol);
+            Button defaultSymbolButton = GetFillSymbolButton((GeoSimpleFillSymbol)uniqueValueRenderer.DefaultSymbol, "unique");
             mUniqueDefaultButton = defaultSymbolButton;
             uniqueTableLayoutPanel.Controls.Add(defaultSymbolButton, 1, 2);
 
@@ -418,17 +430,25 @@ namespace DEETU.Source.Window
                 uniqueDataGridView.AddRow(symbolImage, uniqueValueRenderer.GetValue(i));
             }
             CreateUniqueValueRenderers((mLayer.Renderer as GeoUniqueValueRenderer).Field);
+
+            uniqueColorgradComboBox.Items.AddRange(mUniqueValueRenderers.ToArray());
+            uniqueColorgradComboBox.SelectedIndex = 0;
+            uniqueDataGridView.Refresh();
         }
 
         private void initializeClassBreaksRenderer(int value)
         {
+            classColorgradComboBox.Items.Clear();
+            classDataGridView.Rows.Clear();
+            mClassBreaksRenderers.Clear();
+
             GeoClassBreaksRenderer classBreaksRenderer = (GeoClassBreaksRenderer)mLayer.Renderer;
             mClassBreaksRenderer = classBreaksRenderer;
             mClassBreaksRenderers.Add(mClassBreaksRenderer);
 
             if (mClassDefaultButton != null) classTableLayoutPanel.Controls.Remove(mClassDefaultButton);
 
-            Button defaultSymbolButton = GetFillSymbolButton((GeoSimpleFillSymbol)classBreaksRenderer.DefaultSymbol);
+            Button defaultSymbolButton = GetFillSymbolButton((GeoSimpleFillSymbol)classBreaksRenderer.DefaultSymbol, "class");
             mClassDefaultButton = defaultSymbolButton;
             classTableLayoutPanel.Controls.Add(defaultSymbolButton, 1, 2);
 
@@ -439,6 +459,11 @@ namespace DEETU.Source.Window
                 classDataGridView.AddRow(symbolImage, classBreaksRenderer.GetBreakValue(i).ToString("F2"));
             }
             CreateClassBreaksRenderers((mLayer.Renderer as GeoClassBreaksRenderer).Field, value);
+
+            classColorgradComboBox.Items.AddRange(mClassBreaksRenderers.ToArray());
+            classColorgradComboBox.SelectedIndex = 0;
+            classDataGridView.Refresh();
+
         }
         private void CreateClassBreaksRenderers(string field, int value)
         {
@@ -496,24 +521,37 @@ namespace DEETU.Source.Window
             return sRenderer;
         }
 
-        private void uiIntegerUpDown2_ValueChanged(object sender, int value)
+        private void UpdateClassBreaksRenderersOutLine()
         {
-            if (mClassBreaksRenderer == null || mClassBreaksRenderer.BreakCount != value)
+            for (int i = 0; i < mClassBreaksRenderers.Count; ++i)
             {
-                mLayer.Renderer = CreateClassBreaksRenderer(classFieldComboBox.SelectedItem.ToString(), value);
-                mClassBreaksRenderer = mLayer.Renderer as GeoClassBreaksRenderer;
-            }
-            if (mLayer.Renderer != null)
-            {
-                classColorgradComboBox.Items.Clear();
-                classDataGridView.Rows.Clear();
-                mClassBreaksRenderers.Clear();
-
-                initializeClassBreaksRenderer(value);
-                classColorgradComboBox.Items.AddRange(mClassBreaksRenderers.ToArray());
-                classColorgradComboBox.SelectedIndex = 0;
-                classDataGridView.Refresh();
+                GeoClassBreaksRenderer sRenderer = mClassBreaksRenderers[i];
+                for (int j = 0; j < sRenderer.BreakCount; ++j)
+                {
+                    GeoSimpleFillSymbol sSymbol = (sRenderer.GetSymbol(j) as GeoSimpleFillSymbol);
+                    GeoSimpleFillSymbol sDefaultSymbol = (mClassBreaksRenderer.DefaultSymbol as GeoSimpleFillSymbol);
+                    sSymbol.Outline.Size = sDefaultSymbol.Outline.Size;
+                    sSymbol.Outline.Style = sDefaultSymbol.Outline.Style;
+                    sSymbol.Outline.Color = sDefaultSymbol.Outline.Color;
+                }
             }
         }
+        private void UpdateUniqueValueRenderersOutLine()
+        {
+            for (int i = 0; i < mUniqueValueRenderers.Count; ++i)
+            {
+                GeoUniqueValueRenderer sRenderer = mUniqueValueRenderers[i];
+                for (int j = 0; j < sRenderer.ValueCount; ++j)
+                {
+                    GeoSimpleFillSymbol sSymbol = (sRenderer.GetSymbol(j) as GeoSimpleFillSymbol);
+                    GeoSimpleFillSymbol sDefaultSymbol = (mUniqueValueRenderer.DefaultSymbol as GeoSimpleFillSymbol);
+                    sSymbol.Outline.Size = sDefaultSymbol.Outline.Size;
+                    sSymbol.Outline.Style = sDefaultSymbol.Outline.Style;
+                    sSymbol.Outline.Color = sDefaultSymbol.Outline.Color;
+                }
+            }
+        }
+
+
     }
 }

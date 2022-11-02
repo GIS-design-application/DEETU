@@ -56,9 +56,16 @@ namespace DEETU.Source.Window
 
         private void okButton_Click(object sender, EventArgs e)
         {
-            mLayer.Renderer = mTemporaryLayer.Renderer;
-            mLayer.LabelRenderer = mTemporaryLayer.LabelRenderer;
-            this.Close();
+            if (mTemporaryLayer.Renderer != null)
+            {
+                mLayer.Renderer = mTemporaryLayer.Renderer;
+                mLayer.LabelRenderer = mTemporaryLayer.LabelRenderer;
+                this.Close();
+            }
+            else
+            {
+                MessageBox.Show("渲染失败！");
+            }
         }
 
         private void cancelButton_Click(object sender, EventArgs e)
