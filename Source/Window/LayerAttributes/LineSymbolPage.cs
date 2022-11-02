@@ -96,7 +96,7 @@ namespace DEETU.Source.Window
             sButton.Dock = DockStyle.Fill;
             sButton.FlatAppearance.BorderSize = 0;
             sButton.BackgroundImage = CreateLineBitmapFromSymbol(symbol);
-            sButton.BackgroundImageLayout = ImageLayout.Tile;
+            sButton.BackgroundImageLayout = ImageLayout.Zoom;
 
             MouseEventHandler handler = (sender, e) => SymbolGridButton_MouseClick(sButton, symbol);
             sButton.MouseClick += handler;
@@ -111,7 +111,7 @@ namespace DEETU.Source.Window
             double dpm = 1000; // I don't know the correct dpm here so I just randomly assigned a number
             Pen sPen = new Pen(symbol.Color, (float)(symbol.Size / 1000 * dpm));
             sPen.DashStyle = (DashStyle)symbol.Style;
-            g.DrawLine(sPen, new Point(0, styleImage.Height / 2), new Point(styleImage.Width, styleImage.Height / 2));
+            g.DrawLine(sPen, new Point(0, (styleImage.Height - (int)sPen.Width) / 2), new Point(styleImage.Width, (styleImage.Height - (int)sPen.Width) / 2));
             g.Dispose();
             return styleImage;
         }
@@ -128,7 +128,7 @@ namespace DEETU.Source.Window
         private void SimpleForm_FormClosed(Button button, GeoSimpleLineSymbol symbol)
         {
             button.BackgroundImage = CreateLineBitmapFromSymbol(symbol);
-            button.BackgroundImageLayout = ImageLayout.Tile;
+            button.BackgroundImageLayout = ImageLayout.Zoom;
             button.Refresh();
         }
         private void ClassBreaksComboboxEx_DrawItem(object sender, DrawItemEventArgs e)
@@ -427,7 +427,7 @@ namespace DEETU.Source.Window
                     sRenderer.AddBreakValue(sValue, sSymbol);
                 }
                 Color sStartColor = new GeoSimpleLineSymbol().Color;
-                Color sEndColor = Color.FromArgb(sStartColor.R - 128, sStartColor.G - 128, sStartColor.B - 128);
+                Color sEndColor = Color.FromArgb(sStartColor.R / 3, sStartColor.G / 3, sStartColor.B / 3);
                 sRenderer.RampColor(sStartColor, sEndColor);
                 sRenderer.DefaultSymbol = new GeoSimpleLineSymbol();
                 return sRenderer;

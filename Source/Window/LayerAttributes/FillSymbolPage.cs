@@ -309,7 +309,7 @@ namespace DEETU.Source.Window
                     sRenderer.AddBreakValue(sValue, sSymbol);
                 }
                 Color sStartColor = new GeoSimpleFillSymbol().Color;
-                Color sEndColor = Color.FromArgb(sStartColor.R - 128, sStartColor.G - 128, sStartColor.B - 128);
+                Color sEndColor = Color.FromArgb(sStartColor.R / 2, sStartColor.G / 2, sStartColor.B / 2);
                 sRenderer.RampColor(sStartColor, sEndColor);
                 sRenderer.DefaultSymbol = new GeoSimpleFillSymbol();
                 return sRenderer;
