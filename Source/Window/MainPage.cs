@@ -1956,7 +1956,7 @@ namespace DEETU.Source.Window
                 sSymbol.Color = Color.Transparent;
                 TreeImages.Images.Add(CreateBitmapFromSymbol(sSymbol));
                 layerNode.SelectedImageIndex = layerNode.ImageIndex = TreeImages.Images.Count - 1;
-                layerNode.Checked = true;
+                layerNode.Checked = layer.Visible;
 
                 layerNode.ContextMenuStrip = layerContextMenuStrip;
                 //layerTreeView.Nodes.Insert(0,layerNode);
@@ -1972,7 +1972,7 @@ namespace DEETU.Source.Window
                 sSymbol.Color = Color.Transparent;
                 TreeImages.Images.Add(CreateBitmapFromSymbol(sSymbol));
                 FieldName.SelectedImageIndex = FieldName.ImageIndex = TreeImages.Images.Count - 1;
-                FieldName.Checked = true;
+                FieldName.Checked = layer.Visible;
 
                 List<TreeNode> styles = new List<TreeNode>() { FieldName };
                 int BreakCount = sClassBreaksRenderer.BreakCount;
@@ -1988,7 +1988,7 @@ namespace DEETU.Source.Window
                 sSymbol.Color = Color.Transparent;
                 TreeImages.Images.Add(CreateBitmapFromSymbol(sSymbol));
                 layerNode.SelectedImageIndex = layerNode.ImageIndex = TreeImages.Images.Count - 1;
-                layerNode.Checked = true;
+                layerNode.Checked = layer.Visible;
 
                 layerNode.ContextMenuStrip = layerContextMenuStrip;
                 //layerTreeView.Nodes.Insert(0,layerNode);
@@ -2004,7 +2004,7 @@ namespace DEETU.Source.Window
                 sSymbol.Color = Color.Transparent;
                 TreeImages.Images.Add(CreateBitmapFromSymbol(sSymbol));
                 FieldName.SelectedImageIndex = FieldName.ImageIndex = TreeImages.Images.Count - 1;
-                FieldName.Checked = true;
+                FieldName.Checked = layer.Visible;
 
                 List<TreeNode> styles = new List<TreeNode>() { FieldName };
                 int ValueCount = sUniqueValueRenderer.ValueCount;
@@ -2018,7 +2018,7 @@ namespace DEETU.Source.Window
                 sSymbol.Color = Color.Transparent;
                 TreeImages.Images.Add(CreateBitmapFromSymbol(sSymbol));
                 layerNode.SelectedImageIndex = layerNode.ImageIndex = TreeImages.Images.Count - 1;
-                layerNode.Checked = true;
+                layerNode.Checked = layer.Visible;
 
                 layerNode.ContextMenuStrip = layerContextMenuStrip;
                 //layerTreeView.Nodes.Insert(0,layerNode);
@@ -2037,7 +2037,12 @@ namespace DEETU.Source.Window
             TreeImages.Images.Add(CreateBitmapFromSymbol(symbol));
             style.SelectedImageIndex = style.ImageIndex = TreeImages.Images.Count - 1;
             style.Tag = symbol;
-            style.Checked = true;
+            if(symbol.SymbolType == GeoSymbolTypeConstant.SimpleFillSymbol)
+                style.Checked = (symbol as GeoSimpleFillSymbol).Visible;
+            else if(symbol.SymbolType == GeoSymbolTypeConstant.SimpleLineSymbol)
+                style.Checked = (symbol as GeoSimpleLineSymbol).Visible;
+            else if(symbol.SymbolType == GeoSymbolTypeConstant.SimpleMarkerSymbol)
+                style.Checked = (symbol as GeoSimpleMarkerSymbol).Visible;
             return style;
         }
 
