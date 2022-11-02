@@ -8,6 +8,8 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.Runtime.Serialization;
 
 namespace DEETU.IO
 {
@@ -31,6 +33,10 @@ namespace DEETU.IO
                 return false;
             }
             fileStream.Close();
+            BinaryFormatter formatter = new BinaryFormatter();
+            fileStream = new FileStream(path + "prj", FileMode.Create, FileAccess.Write);
+            formatter.Serialize(fileStream, sLayer.Crs);
+            fileStream.Close();
             return true;
         }
         internal static GeoMapLayer LoadMapLayer(BinaryReader sr)
@@ -41,6 +47,7 @@ namespace DEETU.IO
             GeoFeatures sFeatures = LoadFeatures(sGeometryType, sFields, sr);
             GeoMapLayer sMapLayer = new GeoMapLayer("", sGeometryType, sFields);
             sMapLayer.Features = sFeatures;
+
             return sMapLayer;
         }
         #endregion
