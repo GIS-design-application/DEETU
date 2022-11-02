@@ -196,7 +196,7 @@ namespace DEETU.Source.Window
             int n = mUniqueValueRenderers[e.Index].ValueCount;
             for (int i = 0; i < n; ++i)
             {
-                SolidBrush sBrush = new SolidBrush((mUniqueValueRenderers[e.Index].GetSymbol(i) as GeoSimpleLineSymbol).Color);
+                SolidBrush sBrush = new SolidBrush((mUniqueValueRenderers[e.Index].GetSymbol(i) as GeoSimpleMarkerSymbol).Color);
                 Rectangle sRect = new Rectangle(r.X + i * r.Width / n, r.Y, r.Width / n, r.Height);
                 g.FillRectangle(sBrush, sRect);
             }

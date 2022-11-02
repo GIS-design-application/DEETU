@@ -127,9 +127,9 @@ namespace DEETU.Source.Window
             button.FlatAppearance.BorderSize = (int)symbol.Outline.Size;
             button.Refresh();
             if (button.Name == "class")
-                UpdateClassBreaksRenderers();
+                UpdateClassBreaksRenderersOutLine();
             else if (button.Name == "unique")
-                UpdateUniqueValueRenderers();
+                UpdateUniqueValueRenderersOutLine();
         }
 
         private void fillColorPicker_ValueChanged(object sender, Color value)
@@ -527,7 +527,7 @@ namespace DEETU.Source.Window
                 classDataGridView.Refresh();
             }
         }
-        private void UpdateClassBreaksRenderers()
+        private void UpdateClassBreaksRenderersOutLine()
         {
             for (int i = 0; i < mClassBreaksRenderers.Count; ++i)
             {
@@ -542,7 +542,7 @@ namespace DEETU.Source.Window
                 }
             }
         }
-        private void UpdateUniqueValueRenderers()
+        private void UpdateUniqueValueRenderersOutLine()
         {
             for (int i = 0; i < mUniqueValueRenderers.Count; ++i)
             {
@@ -557,5 +557,16 @@ namespace DEETU.Source.Window
                 }
             }
         }
+
+        private void RefreshClassBreaksPage()
+        {
+
+        }
+        private void RefreshUniqueValuePage()
+        {
+
+        }
+
+
     }
 }
