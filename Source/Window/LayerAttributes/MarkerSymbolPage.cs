@@ -25,7 +25,7 @@ namespace DEETU.Source.Window
         private GeoUniqueValueRenderer mUniqueValueRenderer = null;
         private List<GeoUniqueValueRenderer> mUniqueValueRenderers = new List<GeoUniqueValueRenderer>();
         private List<GeoClassBreaksRenderer> mClassBreaksRenderers = new List<GeoClassBreaksRenderer>();
-        private int mSymbolsCount = 10;
+        private Color[][] mColors = GeoMapDrawingTools.GetColors();
         private Button mClassDefaultButton = null;
         private Button mUniqueDefaultButton = null;
         #endregion
@@ -163,7 +163,9 @@ namespace DEETU.Source.Window
             if (classFieldComboBox.SelectedIndex == -1) return;
             if (mClassBreaksRenderer == null || mClassBreaksRenderer.Field != classFieldComboBox.SelectedItem.ToString())
             {
-                mLayer.Renderer = CreateClassBreaksRenderer(classFieldComboBox.SelectedItem.ToString(), uiIntegerUpDown2.Value, uiDoubleUpDown1.Value, uiDoubleUpDown2.Value);
+                Color sStartColor = new GeoSimpleFillSymbol().Color;
+                Color sEndColor = Color.FromArgb(sStartColor.R / 2, sStartColor.G / 2, sStartColor.B / 2);
+                mLayer.Renderer = CreateClassBreaksRenderer(classFieldComboBox.SelectedItem.ToString(), uiIntegerUpDown2.Value, uiDoubleUpDown1.Value, uiDoubleUpDown2.Value, sStartColor, sEndColor);
                 mClassBreaksRenderer = mLayer.Renderer as GeoClassBreaksRenderer;
             }
             if (mLayer.Renderer != null)
@@ -313,7 +315,9 @@ namespace DEETU.Source.Window
         {
             if (mClassBreaksRenderer == null || mClassBreaksRenderer.BreakCount != value)
             {
-                mLayer.Renderer = CreateClassBreaksRenderer(classFieldComboBox.SelectedItem.ToString(), uiIntegerUpDown2.Value, uiDoubleUpDown1.Value, uiDoubleUpDown2.Value);
+                Color sStartColor = (mClassBreaksRenderer.GetSymbol(0) as GeoSimpleFillSymbol).Color;
+                Color sEndColor = (mClassBreaksRenderer.GetSymbol(mClassBreaksRenderer.BreakCount - 1) as GeoSimpleFillSymbol).Color;
+                mLayer.Renderer = CreateClassBreaksRenderer(classFieldComboBox.SelectedItem.ToString(), uiIntegerUpDown2.Value, uiDoubleUpDown1.Value, uiDoubleUpDown2.Value, sStartColor, sEndColor);
                 mClassBreaksRenderer = mLayer.Renderer as GeoClassBreaksRenderer;
             }
             if (mLayer.Renderer != null)
@@ -402,7 +406,7 @@ namespace DEETU.Source.Window
             classDataGridView.Refresh();
         }
 
-        private GeoClassBreaksRenderer CreateClassBreaksRenderer(string field, int n, double startWidth, double endWidth)
+        private GeoClassBreaksRenderer CreateClassBreaksRenderer(string field, int n, double startWidth, double endWidth, Color startColor, Color endColor)
         {
             try
             {
@@ -461,8 +465,8 @@ namespace DEETU.Source.Window
                     sSymbol.Size = sWidth;
                     sRenderer.AddBreakValue(sValue, sSymbol);
                 }
-                Color sStartColor = new GeoSimpleMarkerSymbol().Color;
-                Color sEndColor = Color.FromArgb(sStartColor.R / 3, sStartColor.G / 3, sStartColor.B / 3);
+                Color sStartColor = startColor;
+                Color sEndColor = endColor;
                 sRenderer.RampColor(sStartColor, sEndColor);
                 sRenderer.DefaultSymbol = new GeoSimpleMarkerSymbol();
                 return sRenderer;
@@ -475,9 +479,9 @@ namespace DEETU.Source.Window
         }
         private void CreateClassBreaksRenderers(string field, int value)
         {
-            for (int i = 0; i < mSymbolsCount; ++i)
+            for (int i = 0; i < mColors.Length; ++i)
             {
-                mClassBreaksRenderers.Add(CreateClassBreaksRenderer(field, uiIntegerUpDown2.Value, uiDoubleUpDown1.Value, uiDoubleUpDown2.Value));
+                mClassBreaksRenderers.Add(CreateClassBreaksRenderer(field, uiIntegerUpDown2.Value, uiDoubleUpDown1.Value, uiDoubleUpDown2.Value, mColors[i][0], mColors[i][1]));
             }
         }
         private GeoUniqueValueRenderer CreateUniqueValueRenderer(string field)
@@ -516,7 +520,7 @@ namespace DEETU.Source.Window
         }
         private void CreateUniqueValueRenderers(string field)
         {
-            for (int i = 0; i < mSymbolsCount; ++i)
+            for (int i = 0; i < 5; ++i)
             {
                 mUniqueValueRenderers.Add(CreateUniqueValueRenderer(field));
             }
