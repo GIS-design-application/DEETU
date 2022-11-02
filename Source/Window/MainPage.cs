@@ -130,6 +130,7 @@ namespace DEETU.Source.Window
             if (!ZoomInModeButton.Checked)
             {
                 UncheckModeToolStrip();
+                UncheckToolStrip();
                 this.Cursor = new Cursor("./icons/ZoomIn.ico");
                 mMapOpStyle = GeoMapOpStyleEnum.ZoomIn;
                 ZoomInModeButton.Checked = true;
@@ -147,6 +148,7 @@ namespace DEETU.Source.Window
             if (!ZoomoutModeButton.Checked)
             {
                 UncheckModeToolStrip();
+                UncheckToolStrip();
                 this.Cursor = new Cursor("./icons/ZoomOut.ico");
                 mMapOpStyle = GeoMapOpStyleEnum.ZoomOut;
                 ZoomoutModeButton.Checked = true;
@@ -164,6 +166,7 @@ namespace DEETU.Source.Window
             if (mMapOpStyle != GeoMapOpStyleEnum.Pan)
             {
                 UncheckModeToolStrip();
+                UncheckToolStrip();
                 this.Cursor = new Cursor("./icons/PanUp.ico");
                 mMapOpStyle = GeoMapOpStyleEnum.Pan;
                 PanModeButton.Checked = true;
@@ -182,6 +185,7 @@ namespace DEETU.Source.Window
             if (!IdentifyModeButton.Checked)
             {
                 UncheckModeToolStrip();
+                UncheckToolStrip();
                 Cursor = Cursors.Default;
                 mMapOpStyle = GeoMapOpStyleEnum.Identify;
                 IdentifyModeButton.Checked = true;
@@ -300,7 +304,7 @@ namespace DEETU.Source.Window
         {
             if (mMapOpStyle != GeoMapOpStyleEnum.Move)
             {
-                UncheckToolStrip(mMapOpStyle);
+                UncheckToolStrip();
                 this.Cursor = new Cursor("./icons/EditMove.ico");
                 mMapOpStyle = GeoMapOpStyleEnum.Move;
                 CheckToolStrip(mMapOpStyle);
@@ -309,7 +313,7 @@ namespace DEETU.Source.Window
             {
                 mMapOpStyle = GeoMapOpStyleEnum.Select;
                 this.Cursor = new Cursor("./icons/EditSelect.ico");
-                UncheckToolStrip(mMapOpStyle);
+                UncheckToolStrip();
             }
 
         }
@@ -332,7 +336,7 @@ namespace DEETU.Source.Window
             if (mMapOpStyle != GeoMapOpStyleEnum.Sketch && GetSelectableLayer() != null)
                 // 开始描绘地理要素
             {
-                UncheckToolStrip(mMapOpStyle);
+                UncheckToolStrip();
                 this.Cursor = new Cursor("./icons/Cross.ico");
                 mMapOpStyle = GeoMapOpStyleEnum.Sketch;
                 mSketchingGeometryType = GetSelectableLayer().ShapeType; // 可以编辑的图层是什么类别就用添加什么类别的多边形
@@ -343,7 +347,8 @@ namespace DEETU.Source.Window
             {
                 btnEndSketch_Click(sender, e);
                 CurrentAcitveLayerUpdated?.Invoke(this, mCurrentLayerNode.Tag as GeoMapLayer);
-                UncheckToolStrip(mMapOpStyle);
+                mMapOpStyle = GeoMapOpStyleEnum.Select;
+                UncheckToolStrip();
             }
 
         }
@@ -499,12 +504,14 @@ namespace DEETU.Source.Window
             if (mMapOpStyle == GeoMapOpStyleEnum.Edit)
                 // 如果正在编辑那么直接取消编辑
             {
+                mMapOpStyle = GeoMapOpStyleEnum.Select;
+                mEditingGeometry = null;
                 geoMap.RedrawMap();
-                UncheckToolStrip(mMapOpStyle);
+                UncheckToolStrip();
             }
             else
             {
-                UncheckToolStrip(mMapOpStyle);
+                UncheckToolStrip();
 
                 GeoMapLayer slayer = GetSelectableLayer();
                 if (slayer == null)
@@ -717,7 +724,7 @@ namespace DEETU.Source.Window
                 mMapOpStyle = GeoMapOpStyleEnum.Select;
 
                 // 编辑按钮组的其他按钮不可以被点击
-                UncheckToolStrip(mMapOpStyle);
+                UncheckToolStrip();
                 this.Cursor = new Cursor("./icons/EditSelect.ico");
                 CheckToolStrip(mMapOpStyle);
             }
@@ -726,7 +733,7 @@ namespace DEETU.Source.Window
                 //btnEndEdit_Click(sender, e);
                 this.Cursor = Cursors.Default;
                 mMapOpStyle = GeoMapOpStyleEnum.Select;
-                UncheckToolStrip(mMapOpStyle);
+                UncheckToolStrip();
             }
 
             SetEditing();
@@ -889,7 +896,7 @@ namespace DEETU.Source.Window
                 if (tolerance > GeoMapTools.GetDistance(point.X, point.Y, mousePoint.X, mousePoint.Y))
                 {
 #if DEBUG
-                    logging = "点击到了嗷" + tolerance.ToString();
+                    Logging = "点击到了嗷" + tolerance.ToString();
 #endif
                     mEditingPoint = point;
                     mIsEditingShapes = true;
@@ -1428,7 +1435,7 @@ namespace DEETU.Source.Window
         private void geoMap_MouseClick(object sender, MouseEventArgs e)
         {
 #if DEBUG
-            logging = "鼠标单击";
+            Logging = "鼠标单击";
 #endif
             if (mMapOpStyle == GeoMapOpStyleEnum.Sketch)
             {
@@ -1817,7 +1824,7 @@ namespace DEETU.Source.Window
         }
 
         // 取消工具栏对应按钮的选中状态
-        private void UncheckToolStrip(GeoMapOpStyleEnum mapOpStyle)
+        private void UncheckToolStrip()
         {
             SetEditing();
             UpdateTreeView();
@@ -1862,6 +1869,8 @@ namespace DEETU.Source.Window
                 default:
                     break;
             }
+
+            UncheckModeToolStrip();
         }
 
         private void QueryExpression(string expression)
@@ -2395,9 +2404,17 @@ namespace DEETU.Source.Window
         {
             if(e.Node.Nodes.Count != 0)
                 mCurrentLayerNode = e.Node;
+
+            if (mCurrentLayerNode != null)
+            {
+                var oldlayer = (GeoMapLayer)mCurrentLayerNode.Tag;
+                oldlayer.SelectedFeatures.Clear();
+            }
+
 #if DEBUG
-            logging = mCurrentLayerNode.Text;
+            Logging = mCurrentLayerNode.Text;
 #endif
+
             int layerIndex = mCurrentLayerNode.Index;
             geoMap.Layers.Deselect();
             GeoMapLayer layer = geoMap.Layers.GetItem(layerIndex);
@@ -2422,22 +2439,22 @@ namespace DEETU.Source.Window
 
         #endregion
 #if DEBUG
-        private string logging
+        private string Logging
         {
             get
             {
-                return _logging.Text;
+                return _Logging.Text;
             }
             set
             {
-                _logging.AppendText("\r\n" + System.DateTime.Now.ToString("HH:mm:ss") + "  " + value);
-                _logging.ScrollToCaret();
+                _Logging.AppendText("\r\n" + System.DateTime.Now.ToString("HH:mm:ss") + "  " + value);
+                _Logging.ScrollToCaret();
             }
         }
-        private TextBox _logging = null;
+        private TextBox _Logging = null;
         public void SetDebugForm(DebugForm form)
         {
-            _logging = form.logging;
+            _Logging = form.logging;
         }
 #endif
         private void LoadLayerFile(string sFileName)
@@ -2446,7 +2463,7 @@ namespace DEETU.Source.Window
             //string suffix = sFileName.Split('.')[1];
             
 #if DEBUG
-            logging = suffix;
+            Logging = suffix;
 #endif
             switch (suffix)
             {
@@ -2697,7 +2714,7 @@ namespace DEETU.Source.Window
         private void geoMap_DoubleClick(object sender, EventArgs e)
         {
 #if DEBUG
-            logging = "鼠标双击";
+            Logging = "鼠标双击";
 #endif
             if (mMapOpStyle == GeoMapOpStyleEnum.Sketch)
             {
@@ -2717,13 +2734,13 @@ namespace DEETU.Source.Window
             // Control被按下
             {
 #if DEBUG
-                logging = "Control 按下";
+                Logging = "Control 按下";
 #endif
                 if (e.KeyCode == Keys.C)
                 // Control-C, Copy
                 {
 #if DEBUG
-                    logging = "Control-C 按下";
+                    Logging = "Control-C 按下";
 #endif
                     Copy();
                 }
@@ -2748,7 +2765,7 @@ namespace DEETU.Source.Window
                 }
             }
 #if DEBUG
-            logging = e.KeyValue.ToString() + " key down";
+            Logging = e.KeyValue.ToString() + " key down";
 #endif
         }
 
@@ -2756,11 +2773,15 @@ namespace DEETU.Source.Window
         private void Copy()
         {
 #if DEBUG
-            logging = "Copy";
+            Logging = "Copy";
 #endif
             if (mMapOpStyle == GeoMapOpStyleEnum.Select)
             {
                 var sLayer = GetSelectableLayer();
+                if (sLayer.SelectedFeatures.Count == 0)
+                {
+                    return;
+                }
                 sLayer = NewUndo(sLayer);
                 var features = sLayer.SelectedFeatures;
                 mItemsForCopy.Clear();
@@ -2775,7 +2796,7 @@ namespace DEETU.Source.Window
         private void Paste()
         {
 #if DEBUG
-            logging = "Paste";
+            Logging = "Paste";
 #endif
             if (mMapOpStyle == GeoMapOpStyleEnum.Select)
             {
@@ -2787,6 +2808,10 @@ namespace DEETU.Source.Window
                 MoveGeometries(mItemsForCopy, sDeltaX, sDeltaY);
                 foreach (var geometry in mItemsForCopy)
                 {
+                    if (geometry.Type != sLayer.ShapeType)
+                    {
+                        return;
+                    }
                     var sFeature = sLayer.GetNewFeature();
                     
                     sFeature.Geometry = geometry.Clone();
@@ -2805,7 +2830,7 @@ namespace DEETU.Source.Window
         private void Cut()
         {
 #if DEBUG
-            logging = "Cut";
+            Logging = "Cut";
 #endif
             if (mMapOpStyle == GeoMapOpStyleEnum.Select)
             {
@@ -2835,7 +2860,7 @@ namespace DEETU.Source.Window
             {
                 _undo_index = value;
 #if DEBUG
-                logging = _undo_index.ToString();
+                Logging = _undo_index.ToString();
 #endif
                 CheckUndo();
             }
@@ -2954,7 +2979,7 @@ namespace DEETU.Source.Window
         private void layerTreeView_AfterCheck(object sender, TreeViewEventArgs e)
         {
 #if DEBUG
-            logging = "Node AfterCheck triggered, Current Node Check Status:" + e.Node.Checked.ToString();
+            Logging = "Node AfterCheck triggered, Current Node Check Status:" + e.Node.Checked.ToString();
 #endif
             LayerTreeViewUpdateCheck(e.Node);
         }
@@ -2964,7 +2989,7 @@ namespace DEETU.Source.Window
             if (e.Node.Level == 0) return;//双击父节点返回
             string path = e.Node.Tag.ToString();
 #if DEBUG
-            logging = path;
+            Logging = path;
 #endif
             if (File.Exists(path))
             {
@@ -3120,10 +3145,11 @@ namespace DEETU.Source.Window
             {
                 //LayerTreeViewUpdateCheck(e.Node);
 #if DEBUG
-                logging = "Node Double clicked not on TextRect, Current Node Check Status:" + e.Node.Checked.ToString();
+                Logging = "Node Double clicked not on TextRect, Current Node Check Status:" + e.Node.Checked.ToString();
 #endif
                 return;
             }
+
             
             TreeNode node = layerTreeView.GetNodeAt(e.Location);
             if(node != null)
@@ -3167,7 +3193,7 @@ namespace DEETU.Source.Window
         private void MainPage_KeyUp(object sender, KeyEventArgs e)
         {
 #if DEBUG
-            logging = e.KeyValue.ToString() + " key up";
+            Logging = e.KeyValue.ToString() + " key up";
 #endif
         }
     }

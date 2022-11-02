@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DEETU.Tool;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -31,6 +32,8 @@ namespace DEETU.Geometry
         #endregion
 
         #region 属性
+
+        public override GeoGeometryTypeConstant Type => GeoGeometryTypeConstant.Point;
         /// <summary>
         /// 获取或设置X坐标
         /// </summary>

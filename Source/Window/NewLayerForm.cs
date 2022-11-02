@@ -28,8 +28,8 @@ namespace DEETU.Source.Window
         {
             GeometryTypeComboBox.Items.AddRange(new string[3] {
                 "Point",
-                "MultiPolygon",
-                "MultiPolyline"
+                "MultiPolyline",
+                "MultiPolygon"
             });
 
             GeoCrsComboBox.Items.AddRange(new string[2]
