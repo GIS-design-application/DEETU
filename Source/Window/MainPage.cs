@@ -23,13 +23,14 @@ namespace DEETU.Source.Window
 {
     public partial class MainPage : UIPage
     {
+        #region 构造函数
         public MainPage()
         {
             InitializeComponent();
             geoMap.MouseWheel += geoMap_MouseWheel;
             LoadRecentUsedFiles();
         }
-
+        #endregion
         #region 字段
         // 选项变量
         private Color mZoomBoxColor = Color.DeepPink; // 放大盒颜色
@@ -1804,10 +1805,11 @@ namespace DEETU.Source.Window
         private void UncheckToolStrip(GeoMapOpStyleEnum mapOpStyle)
         {
             SetEditing();
+            UpdateTreeView();
 
-            zoomInToolStripButton.Checked = false;
-            zoomOutToolStripButton.Checked = false;
-            panToolStripButton.Checked = false;
+            ZoomInModeButton.Checked = false;
+            ZoomoutModeButton.Checked = false;
+            PanModeButton.Checked = false;
             identifyToolStripButton.Checked = false;
             MoveItemToolStripButton.Checked = false;
             EditFeatureToolStripButton.Checked = false;
@@ -1823,13 +1825,13 @@ namespace DEETU.Source.Window
             switch (mapOpStyle)
             {
                 case GeoMapOpStyleEnum.ZoomIn:
-                    zoomInToolStripButton.Checked = true;
+                    ZoomInModeButton.Checked = true;
                     break;
                 case GeoMapOpStyleEnum.ZoomOut:
-                    zoomOutToolStripButton.Checked = true;
+                    ZoomoutModeButton.Checked = true;
                     break;
                 case GeoMapOpStyleEnum.Pan:
-                    panToolStripButton.Checked = true;
+                    PanModeButton.Checked = true;
                     break;
                 case GeoMapOpStyleEnum.Identify:
                     identifyToolStripButton.Checked = true;
@@ -2609,6 +2611,7 @@ namespace DEETU.Source.Window
             layer.Features.RemoveRange(selectedFeatures.ToArray());
             selectedFeatures.Clear();
             geoMap.RedrawMap();
+            UpdateTreeView();
             CurrentAcitveLayerUpdated?.Invoke(this, mCurrentLayerNode.Tag as GeoMapLayer);
         }
 
