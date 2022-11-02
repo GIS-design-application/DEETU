@@ -344,7 +344,7 @@ namespace DEETU.IO
                     }
                 }
                 layer.Crs=sCrs;
-                MessageBox.Show(prj);
+                //MessageBox.Show(prj);
             }
         }
 

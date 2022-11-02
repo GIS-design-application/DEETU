@@ -138,6 +138,8 @@ namespace DEETU.IO
             SQLiteConnection conn = new SQLiteConnection(conn_str);
             conn.Open();
             SQLiteCommand cmd = conn.CreateCommand();
+            SQLiteTransaction trans = conn.BeginTransaction();
+            
             //新建表
             if (true)
             {
@@ -256,6 +258,8 @@ namespace DEETU.IO
                     try { cmd.ExecuteNonQuery(); } catch (Exception e) { MessageBox.Show(e.Message.ToString()); }
                 }
             }
+            trans.Commit();
+            trans.Dispose();
             conn.Close();
             conn.Dispose();
             return true;
@@ -276,7 +280,8 @@ namespace DEETU.IO
             SQLiteConnection conn = new SQLiteConnection(conn_str);
             conn.Open();
             SQLiteCommand cmd = conn.CreateCommand();
-            if(LoadMeta(project, conn)==false)
+            SQLiteTransaction trans = conn.BeginTransaction();
+            if (LoadMeta(project, conn)==false)
             {
                 MessageBox.Show("loadmeta fail");
                 return false;
@@ -286,6 +291,8 @@ namespace DEETU.IO
                 MessageBox.Show("loadlayer fail");
                 return false;
             }
+            trans.Commit();
+            trans.Dispose();
             conn.Close();
             conn.Dispose();
             GC.Collect();
