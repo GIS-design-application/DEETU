@@ -30,12 +30,15 @@ namespace DEETU.Source.Window
         private void InitializeField()
         {
             GeoFields fields = mLayer.AttributeFields;
+            fieldType.Items.AddRange(Enum.GetNames(typeof(GeoValueTypeConstant)));
             if (fields.Count == 0)
                 fieldDataGridView.Visible = false;
             for (int i = 0; i < fields.Count; i++)
             {
                 GeoField f = fields.GetItem(i);
-                fieldDataGridView.AddRow(f.Name, f.AliaName, f.ValueType.ToString());
+                fieldDataGridView.AddRow(f.Name, f.AliaName);
+                fieldDataGridView.Rows[i].Cells[2].Value = f.ValueType.ToString();
+                
             }
             fieldDataGridView.ReadOnly = true;
             if (mLayer.IsDirty == false)
@@ -70,7 +73,9 @@ namespace DEETU.Source.Window
             if (editForm.IsOK)
             {
                 fieldDataGridView.Rows.Add(editForm["Name"], editForm["AliasName"], ((GeoValueTypeConstant)editForm["Type"] ).ToString());
-                mLayer.AddField((string)editForm["Name"], (GeoValueTypeConstant)editForm["Type"]);
+                GeoField newField = new GeoField((string)editForm["Name"], (GeoValueTypeConstant)editForm["Type"]);
+                newField.AliaName = (string)editForm["AliasName"];
+                mLayer.AttributeFields.Append(newField);
             }
         }
 
@@ -79,10 +84,9 @@ namespace DEETU.Source.Window
             var removedRows = fieldDataGridView.SelectedRows;
             for (int i = 0; i < removedRows.Count; i++)
             {
+                mLayer.AttributeFields.RemoveAt(removedRows[i].Index);
                 fieldDataGridView.Rows.Remove(removedRows[i]);
-                mLayer.RemoveField(removedRows[i].Index);
             }
-            fieldDataGridView.Rows.RemoveAt(fieldDataGridView.RowCount - 1);
         }
 
         private void editButton_Click(object sender, EventArgs e)
@@ -101,9 +105,23 @@ namespace DEETU.Source.Window
                 fieldDataGridView.ReadOnly = true;
                 addFieldButton.SetDisabled();
                 removeFieldButton.SetDisabled();
+
+                SaveFields();
             }
         }
         
+        private void SaveFields()
+        {
+            GeoFields fields = mLayer.AttributeFields;
+            for (int i = 0; i < fields.Count; i++)
+            {
+                GeoField field = fields.GetItem(i);
+                
+                field.AliaName = (string)fieldDataGridView.Rows[i].Cells[1].Value;
+                field.ValueType = (GeoValueTypeConstant)Enum.Parse(typeof(GeoValueTypeConstant),
+                    fieldDataGridView.Rows[i].Cells[2].Value.ToString());
+            }
+        }
         // TODO: 
         // 1. 把Dirty换成Editing
         // 2. editButton尽可能和主界面同步

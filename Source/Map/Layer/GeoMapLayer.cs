@@ -281,36 +281,6 @@ namespace DEETU.Map
 
             return newLayer;
         }
-
-        public void AddField(string name, GeoValueTypeConstant valueType)
-        {
-            GeoField sNewField = new GeoField(Name, valueType);
-            _AttributeFields.Append(sNewField);
-
-            object defaultValue;
-            if (valueType == GeoValueTypeConstant.dText)
-                defaultValue = "";
-            else
-                defaultValue = 0; 
-            // 更新每一个要素
-            for (int i = 0; i < _Features.Count; i++)
-            {
-                GeoFeature sFeature = _Features.GetItem(i);
-                sFeature.Attributes.Append(defaultValue);
-            }
-        }
-
-        public void RemoveField(int index)
-        {
-            _AttributeFields.RemoveAt(index);
-            // 更新每一个要素
-            for (int i = 0; i < _Features.Count; i++)
-            {
-                GeoFeature sFeature = _Features.GetItem(i);
-                sFeature.Attributes.RemoveAt(i);
-            }
-            
-        }
         #endregion
 
         #region 程序集方法

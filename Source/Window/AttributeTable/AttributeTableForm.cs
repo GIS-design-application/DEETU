@@ -75,7 +75,7 @@ namespace DEETU.Source.Window
 
             foreach (DataGridViewRow row in featureDataGridView.SelectedRows)
             {
-                mLayer.SelectedFeatures.Add(mLayer.Features.GetItem(row.Index));
+                mLayer.SelectedFeatures.Add(row.Tag as GeoFeature);
             }
             
             MapRedraw?.Invoke(this);
@@ -90,7 +90,7 @@ namespace DEETU.Source.Window
 
         private void saveEditToolStripButton_Click(object sender, EventArgs e)
         {
-
+            
         }
 
         private void addFeatureToolStripButton_Click(object sender, EventArgs e)
@@ -120,12 +120,29 @@ namespace DEETU.Source.Window
 
         private void addFieldStripButton_Click(object sender, EventArgs e)
         {
+            UIEditOption option = new UIEditOption();
+            option.AutoLabelWidth = true;
+            option.Text = "增加一个字段";
+            option.AddText("Name", "字段名称", "", true);
+            option.AddText("AliasName", "别名", "", false);
+            option.AddCombobox("Type", "数据类型", Enum.GetNames(typeof(GeoValueTypeConstant)));
 
+            UIEditForm editForm = new UIEditForm(option);
+            editForm.ShowDialog();
+
+            if (editForm.IsOK)
+            {
+                GeoField newField = new GeoField((string)editForm["Name"], (GeoValueTypeConstant)editForm["Type"]);
+                newField.AliaName = (string)editForm["AliasName"];
+                mLayer.AttributeFields.Append(newField);
+                ReloadPages();
+            }
         }
 
         private void removeFieldToolStripButton_Click(object sender, EventArgs e)
         {
-
+            GeoFields fields = mLayer.AttributeFields;
+            fields.RemoveAt(fields.Count - 1);
         }
 
         private void selectByExpressionToolStripButton_Click(object sender, EventArgs e)
@@ -194,6 +211,9 @@ namespace DEETU.Source.Window
             // 先禁用选择改变事件 
             featureList.SelectedIndexChanged -= featureList_SelectedIndexChanged;
 
+            detailTable.Controls.Clear();
+            featureList.Clear();
+
             // Detailed panel
             GeoFields fields = mLayer.AttributeFields;
             detailTable.RowCount = fields.Count;
@@ -204,12 +224,12 @@ namespace DEETU.Source.Window
                 UILabel label = new UILabel();
                 label.Text = fields.GetItem(i).AliaName;
                 label.Font = new System.Drawing.Font("微软雅黑", 10f);
-                label.Dock = DockStyle.Fill;
+                label.Dock = DockStyle.Top;
 
                 UITextBox textBox = new UITextBox();
                 textBox.Font = new System.Drawing.Font("微软雅黑", 10f);
                 textBox.ReadOnly = false;
-                textBox.Dock = DockStyle.Fill;
+                textBox.Dock = DockStyle.Top;
 
                 detailTable.Controls.Add(label, 0, i);
                 detailTable.Controls.Add(textBox, 1, i);
@@ -258,7 +278,7 @@ namespace DEETU.Source.Window
             // 复用DataGridViewChanged
             featureDataGridView.SelectionChanged -= featureDataGridView_SelectionChanged;
 
-            GeoDataTable sDataTable = new GeoDataTable(mLayer);
+            featureDataGridView.ClearAll();
             // Columns
             GeoFields fields = mLayer.AttributeFields;
             for (int i = 0; i < fields.Count; i++)
@@ -280,6 +300,7 @@ namespace DEETU.Source.Window
                     rowValue[j] = feature.Attributes.GetItem(j);
                 }
                 featureDataGridView.AddRow(rowValue);
+                featureDataGridView.Rows[i].Tag = feature;
 
                 for (int j = 0; j < selectedFeatures.Count; j++)
                 {
@@ -298,8 +319,6 @@ namespace DEETU.Source.Window
 
         private void ReloadPages()
         {
-            detailTable.Controls.Clear();
-            featureList.Clear();
             InitializeFormPage();
             InitializeGridPage();
         }
@@ -320,14 +339,16 @@ namespace DEETU.Source.Window
             {
                 startEditToolStripButton.Image = new Bitmap("./icons/edit_off.png");
                 startEditToolStripButton.ToolTipText = "结束编辑";
+                featureDataGridView.SelectionMode = DataGridViewSelectionMode.RowHeaderSelect;
             }
             else
             {
                 startEditToolStripButton.Image = new Bitmap("./icons/edit.png");
                 startEditToolStripButton.ToolTipText = "开始编辑";
+                featureDataGridView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             }
 
-
+            saveEditToolStripButton.Enabled = mIsEditing;
             cutToolStripButton.Enabled = mIsEditing;
             pasteToolStripButton.Enabled = mIsEditing;
             copyStripButton.Enabled = mIsEditing;
@@ -380,6 +401,22 @@ namespace DEETU.Source.Window
         {
             mIsEditing = status;
             SetEdit();
+        }
+
+        private void featureDataGridView_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            DataGridViewCell cell = featureDataGridView.SelectedCells[0];
+            GeoFeature feature = mLayer.Features.GetItem(cell.RowIndex);
+            GeoField field = mLayer.AttributeFields.GetItem(cell.ColumnIndex);
+            feature.Attributes.SetItem(cell.ColumnIndex, cell.Value);
+        }
+
+        private void uiTabControl1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (uiTabControl1.SelectedIndex == 0)
+                InitializeFormPage();
+            else
+                InitializeGridPage();
         }
     }
 }
