@@ -2124,6 +2124,33 @@ namespace DEETU.Source.Window
 
             EditStatusChanged?.Invoke(this, mIsEditing);
         }
+
+        private void LayerTreeViewUpdateCheck(TreeNode node)
+        {
+            if (node.Nodes.Count == 0) // 子节点
+            {
+                if (node.Tag != null)
+                {
+                    GeoSymbol sSymbol = node.Tag as GeoSymbol;
+                    if (sSymbol.SymbolType == GeoSymbolTypeConstant.SimpleFillSymbol)
+                    {
+                        if (node.Checked)
+                            (sSymbol as GeoSimpleFillSymbol).Visible = true;
+                        else
+                            (sSymbol as GeoSimpleFillSymbol).Visible = false;
+                    }
+                }
+            }
+            else // 父节点
+            {
+                GeoMapLayer sLayer = node.Tag as GeoMapLayer;
+                if (node.Checked)
+                    sLayer.Visible = true;
+                else
+                    sLayer.Visible = false;
+            }
+            geoMap.RedrawMap();
+        }
         #endregion
 
         #region 图层右键菜单
@@ -2926,62 +2953,10 @@ namespace DEETU.Source.Window
         }
         private void layerTreeView_AfterCheck(object sender, TreeViewEventArgs e)
         {
-            if (e.Node.Nodes.Count == 0) // 子节点
-            {
-                if (e.Node.Tag != null)
-                {
-                    GeoSymbol sSymbol = e.Node.Tag as GeoSymbol;
-                    if (sSymbol.SymbolType == GeoSymbolTypeConstant.SimpleFillSymbol)
-                    {
-                        if(e.Node.Checked)
-                            (sSymbol as GeoSimpleFillSymbol).Visible = true; 
-                        else
-                            (sSymbol as GeoSimpleFillSymbol).Visible = false;
-                    }
-                }
-            }
-            else // 父节点
-            {
-                GeoMapLayer sLayer = e.Node.Tag as GeoMapLayer;
-                if (e.Node.Checked)
-                    sLayer.Visible = true;
-                else
-                    sLayer.Visible = false;
-            }
-            geoMap.RedrawMap();
-        }
-
-        private void layerTreeView_MouseDoubleClick(object sender, MouseEventArgs e)
-        {
-            TreeNode node = layerTreeView.GetNodeAt(e.Location);
-            if(node != null)
-            {
-                if(node.Nodes.Count != 0)
-                {
-                    mCurrentLayerNode = node;
-                }
-                else
-                {
-                    mCurrentLayerNode = node.Parent;
-                }
-                GeoMapLayer layer = mCurrentLayerNode.Tag as GeoMapLayer;
-
-                FormCollection collection = Application.OpenForms;
-
-                foreach (Form form in collection)
-                {
-                    if (form.GetType() == typeof(LayerAttributesForm))
-                    { 
-                        form.TopMost = true; 
-                        return;
-                    }
-                }
-
-                //GeoMapLayer layer = new GeoMapLayer(mCurrentLayerNode.Text, GeoGeometryTypeConstant.Point);
-                LayerAttributesForm layerAttributes = new LayerAttributesForm(layer);
-                layerAttributes.FormClosed += layerAttributes_FormClosed;
-                layerAttributes.Show();
-            }
+#if DEBUG
+            logging = "Node AfterCheck triggered, Current Node Check Status:" + e.Node.Checked.ToString();
+#endif
+            LayerTreeViewUpdateCheck(e.Node);
         }
 
         private void FileTreeView_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
@@ -3110,6 +3085,78 @@ namespace DEETU.Source.Window
         }
 
         
+        private void layerTreeView_DrawNode(object sender, DrawTreeNodeEventArgs e)
+        {
+            Color selectedColor = Color.FromArgb(48,48,48);
+            if ((e.State & TreeNodeStates.Selected) != 0)
+            {
+                e.Graphics.FillRectangle(new SolidBrush(selectedColor), e.Node.Bounds);
+         
+                Font nodeFont = e.Node.NodeFont;
+                if (nodeFont == null) nodeFont = ((TreeView)sender).Font;
+                e.Graphics.DrawString(e.Node.Text, nodeFont, Brushes.White,e.Bounds);
+            }
+            else
+            {
+                e.DrawDefault = true;
+            }
+         
+            //if ((e.State & TreeNodeStates.Focused) != 0)
+            //{
+            //    using (Pen focusPen = new Pen(Color.Black))
+            //    {
+            //        focusPen.DashStyle = System.Drawing.Drawing2D.DashStyle.Dot;
+            //        Rectangle focusBounds = e.Node.Bounds;
+            //        focusBounds.Size = new Size(focusBounds.Width - 1,
+            //        focusBounds.Height - 1);
+            //        e.Graphics.DrawRectangle(focusPen, focusBounds);
+            //    }
+            //}
+        }
+
+        private void layerTreeView_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
+        {
+            if (!e.Node.Bounds.Contains(e.Location)) // 保证点其余部分不会出问题
+            {
+                //LayerTreeViewUpdateCheck(e.Node);
+#if DEBUG
+                logging = "Node Double clicked not on TextRect, Current Node Check Status:" + e.Node.Checked.ToString();
+#endif
+                return;
+            }
+            
+            TreeNode node = layerTreeView.GetNodeAt(e.Location);
+            if(node != null)
+            {
+                if(node.Nodes.Count != 0)
+                {
+                    mCurrentLayerNode = node;
+                }
+                else
+                {
+                    mCurrentLayerNode = node.Parent;
+                }
+                GeoMapLayer layer = mCurrentLayerNode.Tag as GeoMapLayer;
+
+                FormCollection collection = Application.OpenForms;
+
+                foreach (Form form in collection)
+                {
+                    if (form.GetType() == typeof(LayerAttributesForm))
+                    { 
+                        form.TopMost = true; 
+                        return;
+                    }
+                }
+
+                //GeoMapLayer layer = new GeoMapLayer(mCurrentLayerNode.Text, GeoGeometryTypeConstant.Point);
+                LayerAttributesForm layerAttributes = new LayerAttributesForm(layer);
+                layerAttributes.FormClosed += layerAttributes_FormClosed;
+                layerAttributes.Show();
+            }
+
+    
+        }
 
         private void 剪切要素_Click(object sender, EventArgs e)
         {

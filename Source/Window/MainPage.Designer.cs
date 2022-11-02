@@ -796,7 +796,9 @@ namespace DEETU.Source.Window
             this.layerTreeView.AllowDrop = true;
             this.layerTreeView.CheckBoxes = true;
             this.layerTreeView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.layerTreeView.DrawMode = System.Windows.Forms.TreeViewDrawMode.OwnerDrawText;
             this.layerTreeView.Font = new System.Drawing.Font("微软雅黑", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.layerTreeView.HideSelection = false;
             this.layerTreeView.ImageIndex = 0;
             this.layerTreeView.ImageList = this.TreeImages;
             this.layerTreeView.Location = new System.Drawing.Point(0, 0);
@@ -809,11 +811,12 @@ namespace DEETU.Source.Window
             this.layerTreeView.TabIndex = 0;
             this.layerTreeView.Text = "layerTreeView";
             this.layerTreeView.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.layerTreeView_AfterCheck);
+            this.layerTreeView.DrawNode += new System.Windows.Forms.DrawTreeNodeEventHandler(this.layerTreeView_DrawNode);
             this.layerTreeView.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.layerTreeView_ItemDrag);
             this.layerTreeView.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.layerTreeView_NodeMouseClick);
+            this.layerTreeView.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.layerTreeView_NodeMouseDoubleClick);
             this.layerTreeView.DragDrop += new System.Windows.Forms.DragEventHandler(this.layerTreeView_DragDrop);
             this.layerTreeView.DragEnter += new System.Windows.Forms.DragEventHandler(this.layerTreeView_DragEnter);
-            this.layerTreeView.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.layerTreeView_MouseDoubleClick);
             // 
             // TreeImages
             // 

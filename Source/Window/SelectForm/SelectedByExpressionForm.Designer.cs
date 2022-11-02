@@ -34,7 +34,7 @@
             this.uiLabel2 = new Sunny.UI.UILabel();
             this.getUniqueValueButton = new Sunny.UI.UIButton();
             this.uiLabel3 = new Sunny.UI.UILabel();
-            this.uiLabel4 = new Sunny.UI.UILabel();
+            this.expressionLabel = new Sunny.UI.UILabel();
             this.expressionTextBox = new Sunny.UI.UIRichTextBox();
             this.uiFlowLayoutPanel1 = new Sunny.UI.UIPanel();
             this.quoteButton = new Sunny.UI.UIButton();
@@ -154,16 +154,16 @@
             this.uiLabel3.Text = "操作符";
             this.uiLabel3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // uiLabel4
+            // expressionLabel
             // 
-            this.uiLabel4.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.uiLabel4.Location = new System.Drawing.Point(8, 381);
-            this.uiLabel4.Name = "uiLabel4";
-            this.uiLabel4.Size = new System.Drawing.Size(370, 23);
-            this.uiLabel4.Style = Sunny.UI.UIStyle.Custom;
-            this.uiLabel4.TabIndex = 8;
-            this.uiLabel4.Text = "Select * from where";
-            this.uiLabel4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.expressionLabel.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.expressionLabel.Location = new System.Drawing.Point(8, 381);
+            this.expressionLabel.Name = "expressionLabel";
+            this.expressionLabel.Size = new System.Drawing.Size(370, 23);
+            this.expressionLabel.Style = Sunny.UI.UIStyle.Custom;
+            this.expressionLabel.TabIndex = 8;
+            this.expressionLabel.Text = "Select * from where";
+            this.expressionLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // expressionTextBox
             // 
@@ -221,10 +221,22 @@
             // quoteButton
             // 
             this.quoteButton.Cursor = System.Windows.Forms.Cursors.Arrow;
+            this.quoteButton.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(211)))), ((int)(((byte)(211)))), ((int)(((byte)(211)))));
+            this.quoteButton.FillHoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(226)))), ((int)(((byte)(137)))));
+            this.quoteButton.FillPressColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(228)))), ((int)(((byte)(137)))));
+            this.quoteButton.FillSelectedColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(228)))), ((int)(((byte)(137)))));
             this.quoteButton.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.quoteButton.ForeColor = System.Drawing.Color.Black;
+            this.quoteButton.ForeHoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
+            this.quoteButton.ForePressColor = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
+            this.quoteButton.ForeSelectedColor = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
             this.quoteButton.Location = new System.Drawing.Point(78, 77);
             this.quoteButton.MinimumSize = new System.Drawing.Size(1, 1);
             this.quoteButton.Name = "quoteButton";
+            this.quoteButton.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
+            this.quoteButton.RectHoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(238)))), ((int)(((byte)(201)))), ((int)(((byte)(88)))));
+            this.quoteButton.RectPressColor = System.Drawing.Color.FromArgb(((int)(((byte)(194)))), ((int)(((byte)(118)))), ((int)(((byte)(43)))));
+            this.quoteButton.RectSelectedColor = System.Drawing.Color.FromArgb(((int)(((byte)(194)))), ((int)(((byte)(118)))), ((int)(((byte)(43)))));
             this.quoteButton.Size = new System.Drawing.Size(30, 30);
             this.quoteButton.Style = Sunny.UI.UIStyle.Custom;
             this.quoteButton.TabIndex = 16;
@@ -520,7 +532,8 @@
             this.searchTextBox.MinimumSize = new System.Drawing.Size(1, 1);
             this.searchTextBox.Name = "searchTextBox";
             this.searchTextBox.Padding = new System.Windows.Forms.Padding(5);
-            this.searchTextBox.Size = new System.Drawing.Size(138, 44);
+            this.searchTextBox.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
+            this.searchTextBox.Size = new System.Drawing.Size(138, 26);
             this.searchTextBox.Style = Sunny.UI.UIStyle.Custom;
             this.searchTextBox.TabIndex = 11;
             this.searchTextBox.TextAlignment = System.Drawing.ContentAlignment.MiddleLeft;
@@ -577,7 +590,8 @@
             this.layerNameText.Name = "layerNameText";
             this.layerNameText.Padding = new System.Windows.Forms.Padding(5);
             this.layerNameText.ReadOnly = true;
-            this.layerNameText.Size = new System.Drawing.Size(412, 50);
+            this.layerNameText.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
+            this.layerNameText.Size = new System.Drawing.Size(412, 29);
             this.layerNameText.Style = Sunny.UI.UIStyle.Custom;
             this.layerNameText.TabIndex = 16;
             this.layerNameText.TextAlignment = System.Drawing.ContentAlignment.MiddleLeft;
@@ -596,7 +610,8 @@
             this.uiComboboxEx1.ItemSelectForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(235)))), ((int)(((byte)(243)))), ((int)(((byte)(255)))));
             this.uiComboboxEx1.Location = new System.Drawing.Point(6, 537);
             this.uiComboboxEx1.Name = "uiComboboxEx1";
-            this.uiComboboxEx1.Size = new System.Drawing.Size(224, 45);
+            this.uiComboboxEx1.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
+            this.uiComboboxEx1.Size = new System.Drawing.Size(224, 27);
             this.uiComboboxEx1.Style = Sunny.UI.UIStyle.Custom;
             this.uiComboboxEx1.TabIndex = 17;
             // 
@@ -614,7 +629,7 @@
             this.Controls.Add(this.searchTextBox);
             this.Controls.Add(this.uiFlowLayoutPanel1);
             this.Controls.Add(this.expressionTextBox);
-            this.Controls.Add(this.uiLabel4);
+            this.Controls.Add(this.expressionLabel);
             this.Controls.Add(this.uiLabel3);
             this.Controls.Add(this.getUniqueValueButton);
             this.Controls.Add(this.uiLabel2);
@@ -623,14 +638,11 @@
             this.Controls.Add(this.fieldsListBox);
             this.Name = "SelectedByExpressionForm";
             this.Padding = new System.Windows.Forms.Padding(2, 35, 2, 2);
-            this.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
             this.ShowDragStretch = true;
             this.ShowRadius = false;
             this.ShowShadow = true;
             this.Style = Sunny.UI.UIStyle.Custom;
             this.Text = "按表达式选择";
-            this.TitleColor = System.Drawing.Color.FromArgb(((int)(((byte)(118)))), ((int)(((byte)(118)))), ((int)(((byte)(118)))));
-            this.TitleForeColor = System.Drawing.Color.Black;
             this.uiFlowLayoutPanel1.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -644,7 +656,7 @@
         private Sunny.UI.UILabel uiLabel2;
         private Sunny.UI.UIButton getUniqueValueButton;
         private Sunny.UI.UILabel uiLabel3;
-        private Sunny.UI.UILabel uiLabel4;
+        private Sunny.UI.UILabel expressionLabel;
         private Sunny.UI.UIRichTextBox expressionTextBox;
         private Sunny.UI.UIPanel uiFlowLayoutPanel1;
         private Sunny.UI.UIButton nullButton;
