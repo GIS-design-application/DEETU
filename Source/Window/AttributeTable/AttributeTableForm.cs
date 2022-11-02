@@ -230,6 +230,7 @@ namespace DEETU.Source.Window
                 textBox.Font = new System.Drawing.Font("微软雅黑", 10f);
                 textBox.ReadOnly = false;
                 textBox.Dock = DockStyle.Top;
+                textBox.TextChanged += TextBox_TextChanged;
 
                 detailTable.Controls.Add(label, 0, i);
                 detailTable.Controls.Add(textBox, 1, i);
@@ -272,6 +273,7 @@ namespace DEETU.Source.Window
             featureList.SelectedIndexChanged += featureList_SelectedIndexChanged;
 
         }
+
 
         private void InitializeGridPage()
         {
@@ -408,7 +410,79 @@ namespace DEETU.Source.Window
             DataGridViewCell cell = featureDataGridView.SelectedCells[0];
             GeoFeature feature = mLayer.Features.GetItem(cell.RowIndex);
             GeoField field = mLayer.AttributeFields.GetItem(cell.ColumnIndex);
-            feature.Attributes.SetItem(cell.ColumnIndex, cell.Value);
+            try
+            {
+                switch (field.ValueType)
+                {
+                    case GeoValueTypeConstant.dInt16:
+                        feature.Attributes.SetItem(cell.ColumnIndex, Convert.ToInt16(cell.Value));
+                        break;
+                    case GeoValueTypeConstant.dInt32:
+                        feature.Attributes.SetItem(cell.ColumnIndex, Convert.ToInt32(cell.Value));
+                        break;
+                    case GeoValueTypeConstant.dInt64:
+                        feature.Attributes.SetItem(cell.ColumnIndex, Convert.ToInt64(cell.Value));
+                        break;
+                    case GeoValueTypeConstant.dSingle:
+                        feature.Attributes.SetItem(cell.ColumnIndex, Convert.ToSingle(cell.Value));
+                        break;
+                    case GeoValueTypeConstant.dDouble:
+                        feature.Attributes.SetItem(cell.ColumnIndex, Convert.ToDouble(cell.Value));
+                        break;
+                    case GeoValueTypeConstant.dText:
+                        feature.Attributes.SetItem(cell.ColumnIndex, Convert.ToString(cell.Value));
+                        break;
+                    default:
+                        throw new Exception();
+                        break;
+                }
+            }
+            catch (Exception error)
+            {
+                UIMessageBox.ShowError("错误的数据类型！\n" + error.Message, false);
+            }
+        }
+
+        private void TextBox_TextChanged(object sender, EventArgs e)
+        {
+            UITextBox textBox = sender as UITextBox;
+            int featureIdx = featureList.SelectedItems[0].Index;
+            int fieldIdx = detailTable.GetRow(textBox);
+            GeoFeature feature = mLayer.Features.GetItem(featureIdx);
+            GeoField field = mLayer.AttributeFields.GetItem(fieldIdx);
+            if (textBox.Text.IsNullOrWhiteSpace())
+                return;
+            try
+            {
+                switch (field.ValueType)
+                {
+                    case GeoValueTypeConstant.dInt16:
+                        feature.Attributes.SetItem(fieldIdx, Convert.ToInt16(textBox.Text));
+                        break;
+                    case GeoValueTypeConstant.dInt32:
+                        feature.Attributes.SetItem(fieldIdx, Convert.ToInt32(textBox.Text));
+                        break;
+                    case GeoValueTypeConstant.dInt64:
+                        feature.Attributes.SetItem(fieldIdx, Convert.ToInt64(textBox.Text));
+                        break;
+                    case GeoValueTypeConstant.dSingle:
+                        feature.Attributes.SetItem(fieldIdx, Convert.ToSingle(textBox.Text));
+                        break;
+                    case GeoValueTypeConstant.dDouble:
+                        feature.Attributes.SetItem(fieldIdx, Convert.ToDouble(textBox.Text));
+                        break;
+                    case GeoValueTypeConstant.dText:
+                        feature.Attributes.SetItem(fieldIdx, (textBox.Text));
+                        break;
+                    default:
+                        throw new Exception();
+                        break;
+                }
+            }
+            catch (Exception error)
+            {
+                UIMessageBox.ShowError("错误的数据类型！\n" + error.Message, false);
+            }
         }
 
         private void uiTabControl1_SelectedIndexChanged(object sender, EventArgs e)

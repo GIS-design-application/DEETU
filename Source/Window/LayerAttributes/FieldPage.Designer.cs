@@ -35,13 +35,13 @@ namespace DEETU.Source.Window
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             this.fieldDataGridView = new Sunny.UI.UIDataGridView();
+            this.fieldName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.fieldAlias = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.fieldType = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.addFieldButton = new Sunny.UI.UISymbolButton();
             this.removeFieldButton = new Sunny.UI.UISymbolButton();
             this.editButton = new Sunny.UI.UISymbolButton();
             this.uiPanel1 = new Sunny.UI.UIPanel();
-            this.fieldName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.fieldAlias = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.fieldType = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.PagePanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.fieldDataGridView)).BeginInit();
             this.uiPanel1.SuspendLayout();
@@ -117,6 +117,26 @@ namespace DEETU.Source.Window
             this.fieldDataGridView.Style = Sunny.UI.UIStyle.Custom;
             this.fieldDataGridView.StyleCustomMode = true;
             this.fieldDataGridView.TabIndex = 6;
+            // 
+            // fieldName
+            // 
+            this.fieldName.HeaderText = "字段名";
+            this.fieldName.Name = "fieldName";
+            this.fieldName.ReadOnly = true;
+            // 
+            // fieldAlias
+            // 
+            this.fieldAlias.HeaderText = "别名";
+            this.fieldAlias.Name = "fieldAlias";
+            this.fieldAlias.ReadOnly = true;
+            // 
+            // fieldType
+            // 
+            this.fieldType.HeaderText = "类型";
+            this.fieldType.Name = "fieldType";
+            this.fieldType.ReadOnly = true;
+            this.fieldType.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.fieldType.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             // 
             // addFieldButton
             // 
@@ -222,26 +242,6 @@ namespace DEETU.Source.Window
             this.uiPanel1.TabIndex = 10;
             this.uiPanel1.Text = null;
             this.uiPanel1.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // fieldName
-            // 
-            this.fieldName.HeaderText = "字段名";
-            this.fieldName.Name = "fieldName";
-            this.fieldName.ReadOnly = true;
-            // 
-            // fieldAlias
-            // 
-            this.fieldAlias.HeaderText = "别名";
-            this.fieldAlias.Name = "fieldAlias";
-            this.fieldAlias.ReadOnly = true;
-            // 
-            // fieldType
-            // 
-            this.fieldType.HeaderText = "类型";
-            this.fieldType.Name = "fieldType";
-            this.fieldType.ReadOnly = true;
-            this.fieldType.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.fieldType.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             // 
             // FieldPage
             // 

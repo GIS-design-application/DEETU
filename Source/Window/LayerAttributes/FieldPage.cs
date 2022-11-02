@@ -98,6 +98,7 @@ namespace DEETU.Source.Window
                 fieldDataGridView.ReadOnly = false;
                 addFieldButton.SetEnabled();
                 removeFieldButton.SetEnabled();
+                //editButton.Symbol = 57572;
             }
             else
             {
@@ -105,7 +106,7 @@ namespace DEETU.Source.Window
                 fieldDataGridView.ReadOnly = true;
                 addFieldButton.SetDisabled();
                 removeFieldButton.SetDisabled();
-
+                //editButton.Symbol = 61508;
                 SaveFields();
             }
         }
@@ -121,12 +122,18 @@ namespace DEETU.Source.Window
                 field.ValueType = (GeoValueTypeConstant)Enum.Parse(typeof(GeoValueTypeConstant),
                     fieldDataGridView.Rows[i].Cells[2].Value.ToString());
             }
+            FieldEdited?.Invoke(this);
         }
         // TODO: 
         // 1. 把Dirty换成Editing
         // 2. editButton尽可能和主界面同步
         // 3. 结束编辑之后的同步，推送到撤销，以及infopage的更新。 还有一种方案就是不要editing按钮，但是有点奇怪。
 
+        #endregion
+
+        #region 事件
+        public delegate void FieldEditedHandle(object sender);
+        public event FieldEditedHandle FieldEdited;
         #endregion
     }
 }

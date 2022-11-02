@@ -80,5 +80,18 @@ namespace DEETU.Source.Window
         }
         #endregion
 
+        public void FieldPage_FieldEdited(object sender)
+        {
+            fieldDataGridView.ClearRows();
+            GeoFields fields = mLayer.AttributeFields;
+            fieldRichTextBox.Text = fields.Count.ToString();
+            if (fields.Count == 0)
+                fieldDataGridView.Visible = false;
+            for (int i = 0; i < fields.Count; i++)
+            {
+                GeoField f = fields.GetItem(i);
+                fieldDataGridView.AddRow(f.Name, f.AliaName, f.ValueType.ToString());
+            }
+        }
     }
 }
