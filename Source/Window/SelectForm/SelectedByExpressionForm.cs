@@ -170,6 +170,7 @@ namespace DEETU.Source.Window
             {
                 fieldsListBox.Items.Add(fields.GetItem(i).Name);
             }
+            expressionLabel.Text = "Select * From " + mLayer.Name + " Where";
         }
         #endregion
 

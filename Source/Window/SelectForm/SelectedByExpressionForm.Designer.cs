@@ -34,9 +34,10 @@
             this.uiLabel2 = new Sunny.UI.UILabel();
             this.getUniqueValueButton = new Sunny.UI.UIButton();
             this.uiLabel3 = new Sunny.UI.UILabel();
-            this.uiLabel4 = new Sunny.UI.UILabel();
+            this.expressionLabel = new Sunny.UI.UILabel();
             this.expressionTextBox = new Sunny.UI.UIRichTextBox();
             this.uiFlowLayoutPanel1 = new Sunny.UI.UIPanel();
+            this.quoteButton = new Sunny.UI.UIButton();
             this.nullButton = new Sunny.UI.UIButton();
             this.inButton = new Sunny.UI.UIButton();
             this.isButton = new Sunny.UI.UIButton();
@@ -64,7 +65,6 @@
             this.uiLabel5 = new Sunny.UI.UILabel();
             this.layerNameText = new Sunny.UI.UITextBox();
             this.uiComboboxEx1 = new Sunny.UI.UIComboboxEx();
-            this.quoteButton = new Sunny.UI.UIButton();
             this.uiFlowLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -84,7 +84,7 @@
             this.fieldsListBox.Padding = new System.Windows.Forms.Padding(2);
             this.fieldsListBox.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
             this.fieldsListBox.Size = new System.Drawing.Size(489, 105);
-            this.fieldsListBox.Style = Sunny.UI.UIStyle.Office2010Black;
+            this.fieldsListBox.Style = Sunny.UI.UIStyle.Custom;
             this.fieldsListBox.TabIndex = 0;
             this.fieldsListBox.Text = "fieldListBox";
             this.fieldsListBox.ItemDoubleClick += new System.EventHandler(this.fieldsListBox_ItemDoubleClick);
@@ -105,7 +105,7 @@
             this.valueListBox.Padding = new System.Windows.Forms.Padding(2);
             this.valueListBox.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
             this.valueListBox.Size = new System.Drawing.Size(255, 146);
-            this.valueListBox.Style = Sunny.UI.UIStyle.Office2010Black;
+            this.valueListBox.Style = Sunny.UI.UIStyle.Custom;
             this.valueListBox.TabIndex = 2;
             this.valueListBox.Text = "valueListBox";
             this.valueListBox.ItemDoubleClick += new System.EventHandler(this.valueListBox_ItemDoubleClick);
@@ -116,7 +116,7 @@
             this.uiLabel1.Location = new System.Drawing.Point(2, 69);
             this.uiLabel1.Name = "uiLabel1";
             this.uiLabel1.Size = new System.Drawing.Size(100, 23);
-            this.uiLabel1.Style = Sunny.UI.UIStyle.Office2010Black;
+            this.uiLabel1.Style = Sunny.UI.UIStyle.Custom;
             this.uiLabel1.TabIndex = 3;
             this.uiLabel1.Text = "字段列表";
             this.uiLabel1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -127,7 +127,7 @@
             this.uiLabel2.Location = new System.Drawing.Point(236, 202);
             this.uiLabel2.Name = "uiLabel2";
             this.uiLabel2.Size = new System.Drawing.Size(88, 26);
-            this.uiLabel2.Style = Sunny.UI.UIStyle.Office2010Black;
+            this.uiLabel2.Style = Sunny.UI.UIStyle.Custom;
             this.uiLabel2.TabIndex = 4;
             this.uiLabel2.Text = "唯一值列表";
             this.uiLabel2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -154,7 +154,7 @@
             this.getUniqueValueButton.RectPressColor = System.Drawing.Color.FromArgb(((int)(((byte)(194)))), ((int)(((byte)(118)))), ((int)(((byte)(43)))));
             this.getUniqueValueButton.RectSelectedColor = System.Drawing.Color.FromArgb(((int)(((byte)(194)))), ((int)(((byte)(118)))), ((int)(((byte)(43)))));
             this.getUniqueValueButton.Size = new System.Drawing.Size(109, 23);
-            this.getUniqueValueButton.Style = Sunny.UI.UIStyle.Office2010Black;
+            this.getUniqueValueButton.Style = Sunny.UI.UIStyle.Custom;
             this.getUniqueValueButton.TabIndex = 5;
             this.getUniqueValueButton.Text = "获取唯一值";
             this.getUniqueValueButton.Click += new System.EventHandler(this.getUniqueValueButton_Click);
@@ -165,21 +165,21 @@
             this.uiLabel3.Location = new System.Drawing.Point(8, 202);
             this.uiLabel3.Name = "uiLabel3";
             this.uiLabel3.Size = new System.Drawing.Size(128, 23);
-            this.uiLabel3.Style = Sunny.UI.UIStyle.Office2010Black;
+            this.uiLabel3.Style = Sunny.UI.UIStyle.Custom;
             this.uiLabel3.TabIndex = 7;
             this.uiLabel3.Text = "操作符";
             this.uiLabel3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // uiLabel4
+            // expressionLabel
             // 
-            this.uiLabel4.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.uiLabel4.Location = new System.Drawing.Point(8, 381);
-            this.uiLabel4.Name = "uiLabel4";
-            this.uiLabel4.Size = new System.Drawing.Size(370, 23);
-            this.uiLabel4.Style = Sunny.UI.UIStyle.Office2010Black;
-            this.uiLabel4.TabIndex = 8;
-            this.uiLabel4.Text = "Select * from where";
-            this.uiLabel4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.expressionLabel.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.expressionLabel.Location = new System.Drawing.Point(8, 381);
+            this.expressionLabel.Name = "expressionLabel";
+            this.expressionLabel.Size = new System.Drawing.Size(370, 23);
+            this.expressionLabel.Style = Sunny.UI.UIStyle.Custom;
+            this.expressionLabel.TabIndex = 8;
+            this.expressionLabel.Text = "Select * from where";
+            this.expressionLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // expressionTextBox
             // 
@@ -195,7 +195,7 @@
             this.expressionTextBox.Padding = new System.Windows.Forms.Padding(2);
             this.expressionTextBox.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
             this.expressionTextBox.Size = new System.Drawing.Size(486, 120);
-            this.expressionTextBox.Style = Sunny.UI.UIStyle.Office2010Black;
+            this.expressionTextBox.Style = Sunny.UI.UIStyle.Custom;
             this.expressionTextBox.TabIndex = 9;
             this.expressionTextBox.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter;
             // 
@@ -232,10 +232,35 @@
             this.uiFlowLayoutPanel1.Padding = new System.Windows.Forms.Padding(2);
             this.uiFlowLayoutPanel1.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
             this.uiFlowLayoutPanel1.Size = new System.Drawing.Size(224, 146);
-            this.uiFlowLayoutPanel1.Style = Sunny.UI.UIStyle.Office2010Black;
+            this.uiFlowLayoutPanel1.Style = Sunny.UI.UIStyle.Custom;
             this.uiFlowLayoutPanel1.TabIndex = 10;
             this.uiFlowLayoutPanel1.Text = null;
             this.uiFlowLayoutPanel1.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // quoteButton
+            // 
+            this.quoteButton.Cursor = System.Windows.Forms.Cursors.Arrow;
+            this.quoteButton.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(211)))), ((int)(((byte)(211)))), ((int)(((byte)(211)))));
+            this.quoteButton.FillHoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(226)))), ((int)(((byte)(137)))));
+            this.quoteButton.FillPressColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(228)))), ((int)(((byte)(137)))));
+            this.quoteButton.FillSelectedColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(228)))), ((int)(((byte)(137)))));
+            this.quoteButton.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.quoteButton.ForeColor = System.Drawing.Color.Black;
+            this.quoteButton.ForeHoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
+            this.quoteButton.ForePressColor = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
+            this.quoteButton.ForeSelectedColor = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
+            this.quoteButton.Location = new System.Drawing.Point(78, 77);
+            this.quoteButton.MinimumSize = new System.Drawing.Size(1, 1);
+            this.quoteButton.Name = "quoteButton";
+            this.quoteButton.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
+            this.quoteButton.RectHoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(238)))), ((int)(((byte)(201)))), ((int)(((byte)(88)))));
+            this.quoteButton.RectPressColor = System.Drawing.Color.FromArgb(((int)(((byte)(194)))), ((int)(((byte)(118)))), ((int)(((byte)(43)))));
+            this.quoteButton.RectSelectedColor = System.Drawing.Color.FromArgb(((int)(((byte)(194)))), ((int)(((byte)(118)))), ((int)(((byte)(43)))));
+            this.quoteButton.Size = new System.Drawing.Size(30, 30);
+            this.quoteButton.Style = Sunny.UI.UIStyle.Custom;
+            this.quoteButton.TabIndex = 16;
+            this.quoteButton.Text = "\'";
+            this.quoteButton.Click += new System.EventHandler(this.OperatorButtons_Click);
             // 
             // nullButton
             // 
@@ -257,7 +282,7 @@
             this.nullButton.RectPressColor = System.Drawing.Color.FromArgb(((int)(((byte)(194)))), ((int)(((byte)(118)))), ((int)(((byte)(43)))));
             this.nullButton.RectSelectedColor = System.Drawing.Color.FromArgb(((int)(((byte)(194)))), ((int)(((byte)(118)))), ((int)(((byte)(43)))));
             this.nullButton.Size = new System.Drawing.Size(30, 30);
-            this.nullButton.Style = Sunny.UI.UIStyle.Office2010Black;
+            this.nullButton.Style = Sunny.UI.UIStyle.Custom;
             this.nullButton.TabIndex = 15;
             this.nullButton.Text = "null";
             this.nullButton.Click += new System.EventHandler(this.OperatorButtons_Click);
@@ -282,7 +307,7 @@
             this.inButton.RectPressColor = System.Drawing.Color.FromArgb(((int)(((byte)(194)))), ((int)(((byte)(118)))), ((int)(((byte)(43)))));
             this.inButton.RectSelectedColor = System.Drawing.Color.FromArgb(((int)(((byte)(194)))), ((int)(((byte)(118)))), ((int)(((byte)(43)))));
             this.inButton.Size = new System.Drawing.Size(30, 30);
-            this.inButton.Style = Sunny.UI.UIStyle.Office2010Black;
+            this.inButton.Style = Sunny.UI.UIStyle.Custom;
             this.inButton.TabIndex = 14;
             this.inButton.Text = "in";
             this.inButton.Click += new System.EventHandler(this.OperatorButtons_Click);
@@ -307,7 +332,7 @@
             this.isButton.RectPressColor = System.Drawing.Color.FromArgb(((int)(((byte)(194)))), ((int)(((byte)(118)))), ((int)(((byte)(43)))));
             this.isButton.RectSelectedColor = System.Drawing.Color.FromArgb(((int)(((byte)(194)))), ((int)(((byte)(118)))), ((int)(((byte)(43)))));
             this.isButton.Size = new System.Drawing.Size(30, 30);
-            this.isButton.Style = Sunny.UI.UIStyle.Office2010Black;
+            this.isButton.Style = Sunny.UI.UIStyle.Custom;
             this.isButton.TabIndex = 13;
             this.isButton.Text = "is";
             this.isButton.Click += new System.EventHandler(this.OperatorButtons_Click);
@@ -333,7 +358,7 @@
             this.likeButton.RectSelectedColor = System.Drawing.Color.FromArgb(((int)(((byte)(194)))), ((int)(((byte)(118)))), ((int)(((byte)(43)))));
             this.likeButton.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.likeButton.Size = new System.Drawing.Size(30, 30);
-            this.likeButton.Style = Sunny.UI.UIStyle.Office2010Black;
+            this.likeButton.Style = Sunny.UI.UIStyle.Custom;
             this.likeButton.TabIndex = 12;
             this.likeButton.Text = "like";
             this.likeButton.Click += new System.EventHandler(this.OperatorButtons_Click);
@@ -358,7 +383,7 @@
             this.notButton.RectPressColor = System.Drawing.Color.FromArgb(((int)(((byte)(194)))), ((int)(((byte)(118)))), ((int)(((byte)(43)))));
             this.notButton.RectSelectedColor = System.Drawing.Color.FromArgb(((int)(((byte)(194)))), ((int)(((byte)(118)))), ((int)(((byte)(43)))));
             this.notButton.Size = new System.Drawing.Size(30, 30);
-            this.notButton.Style = Sunny.UI.UIStyle.Office2010Black;
+            this.notButton.Style = Sunny.UI.UIStyle.Custom;
             this.notButton.TabIndex = 12;
             this.notButton.Text = "not";
             this.notButton.Click += new System.EventHandler(this.OperatorButtons_Click);
@@ -384,7 +409,7 @@
             this.orButton.RectSelectedColor = System.Drawing.Color.FromArgb(((int)(((byte)(194)))), ((int)(((byte)(118)))), ((int)(((byte)(43)))));
             this.orButton.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.orButton.Size = new System.Drawing.Size(30, 30);
-            this.orButton.Style = Sunny.UI.UIStyle.Office2010Black;
+            this.orButton.Style = Sunny.UI.UIStyle.Custom;
             this.orButton.TabIndex = 12;
             this.orButton.Text = "or";
             this.orButton.Click += new System.EventHandler(this.OperatorButtons_Click);
@@ -409,7 +434,7 @@
             this.andButton.RectPressColor = System.Drawing.Color.FromArgb(((int)(((byte)(194)))), ((int)(((byte)(118)))), ((int)(((byte)(43)))));
             this.andButton.RectSelectedColor = System.Drawing.Color.FromArgb(((int)(((byte)(194)))), ((int)(((byte)(118)))), ((int)(((byte)(43)))));
             this.andButton.Size = new System.Drawing.Size(30, 30);
-            this.andButton.Style = Sunny.UI.UIStyle.Office2010Black;
+            this.andButton.Style = Sunny.UI.UIStyle.Custom;
             this.andButton.TabIndex = 12;
             this.andButton.Text = "and";
             this.andButton.Click += new System.EventHandler(this.OperatorButtons_Click);
@@ -434,7 +459,7 @@
             this.rightPButton.RectPressColor = System.Drawing.Color.FromArgb(((int)(((byte)(194)))), ((int)(((byte)(118)))), ((int)(((byte)(43)))));
             this.rightPButton.RectSelectedColor = System.Drawing.Color.FromArgb(((int)(((byte)(194)))), ((int)(((byte)(118)))), ((int)(((byte)(43)))));
             this.rightPButton.Size = new System.Drawing.Size(30, 30);
-            this.rightPButton.Style = Sunny.UI.UIStyle.Office2010Black;
+            this.rightPButton.Style = Sunny.UI.UIStyle.Custom;
             this.rightPButton.TabIndex = 12;
             this.rightPButton.Text = ")";
             this.rightPButton.Click += new System.EventHandler(this.OperatorButtons_Click);
@@ -459,7 +484,7 @@
             this.leftPButton.RectPressColor = System.Drawing.Color.FromArgb(((int)(((byte)(194)))), ((int)(((byte)(118)))), ((int)(((byte)(43)))));
             this.leftPButton.RectSelectedColor = System.Drawing.Color.FromArgb(((int)(((byte)(194)))), ((int)(((byte)(118)))), ((int)(((byte)(43)))));
             this.leftPButton.Size = new System.Drawing.Size(30, 30);
-            this.leftPButton.Style = Sunny.UI.UIStyle.Office2010Black;
+            this.leftPButton.Style = Sunny.UI.UIStyle.Custom;
             this.leftPButton.TabIndex = 12;
             this.leftPButton.Text = "(";
             this.leftPButton.Click += new System.EventHandler(this.OperatorButtons_Click);
@@ -484,7 +509,7 @@
             this.percentButton.RectPressColor = System.Drawing.Color.FromArgb(((int)(((byte)(194)))), ((int)(((byte)(118)))), ((int)(((byte)(43)))));
             this.percentButton.RectSelectedColor = System.Drawing.Color.FromArgb(((int)(((byte)(194)))), ((int)(((byte)(118)))), ((int)(((byte)(43)))));
             this.percentButton.Size = new System.Drawing.Size(30, 30);
-            this.percentButton.Style = Sunny.UI.UIStyle.Office2010Black;
+            this.percentButton.Style = Sunny.UI.UIStyle.Custom;
             this.percentButton.TabIndex = 12;
             this.percentButton.Text = "%";
             this.percentButton.Click += new System.EventHandler(this.OperatorButtons_Click);
@@ -509,7 +534,7 @@
             this.leButton.RectPressColor = System.Drawing.Color.FromArgb(((int)(((byte)(194)))), ((int)(((byte)(118)))), ((int)(((byte)(43)))));
             this.leButton.RectSelectedColor = System.Drawing.Color.FromArgb(((int)(((byte)(194)))), ((int)(((byte)(118)))), ((int)(((byte)(43)))));
             this.leButton.Size = new System.Drawing.Size(30, 30);
-            this.leButton.Style = Sunny.UI.UIStyle.Office2010Black;
+            this.leButton.Style = Sunny.UI.UIStyle.Custom;
             this.leButton.TabIndex = 12;
             this.leButton.Text = "<=";
             this.leButton.Click += new System.EventHandler(this.OperatorButtons_Click);
@@ -534,7 +559,7 @@
             this.lessButton.RectPressColor = System.Drawing.Color.FromArgb(((int)(((byte)(194)))), ((int)(((byte)(118)))), ((int)(((byte)(43)))));
             this.lessButton.RectSelectedColor = System.Drawing.Color.FromArgb(((int)(((byte)(194)))), ((int)(((byte)(118)))), ((int)(((byte)(43)))));
             this.lessButton.Size = new System.Drawing.Size(30, 30);
-            this.lessButton.Style = Sunny.UI.UIStyle.Office2010Black;
+            this.lessButton.Style = Sunny.UI.UIStyle.Custom;
             this.lessButton.TabIndex = 12;
             this.lessButton.Text = "<";
             this.lessButton.Click += new System.EventHandler(this.OperatorButtons_Click);
@@ -559,7 +584,7 @@
             this.equalButton.RectPressColor = System.Drawing.Color.FromArgb(((int)(((byte)(194)))), ((int)(((byte)(118)))), ((int)(((byte)(43)))));
             this.equalButton.RectSelectedColor = System.Drawing.Color.FromArgb(((int)(((byte)(194)))), ((int)(((byte)(118)))), ((int)(((byte)(43)))));
             this.equalButton.Size = new System.Drawing.Size(30, 30);
-            this.equalButton.Style = Sunny.UI.UIStyle.Office2010Black;
+            this.equalButton.Style = Sunny.UI.UIStyle.Custom;
             this.equalButton.TabIndex = 8;
             this.equalButton.Text = "=";
             this.equalButton.Click += new System.EventHandler(this.OperatorButtons_Click);
@@ -584,7 +609,7 @@
             this.geButton.RectPressColor = System.Drawing.Color.FromArgb(((int)(((byte)(194)))), ((int)(((byte)(118)))), ((int)(((byte)(43)))));
             this.geButton.RectSelectedColor = System.Drawing.Color.FromArgb(((int)(((byte)(194)))), ((int)(((byte)(118)))), ((int)(((byte)(43)))));
             this.geButton.Size = new System.Drawing.Size(30, 30);
-            this.geButton.Style = Sunny.UI.UIStyle.Office2010Black;
+            this.geButton.Style = Sunny.UI.UIStyle.Custom;
             this.geButton.TabIndex = 11;
             this.geButton.Text = ">=";
             this.geButton.Click += new System.EventHandler(this.OperatorButtons_Click);
@@ -609,7 +634,7 @@
             this.greatButton.RectPressColor = System.Drawing.Color.FromArgb(((int)(((byte)(194)))), ((int)(((byte)(118)))), ((int)(((byte)(43)))));
             this.greatButton.RectSelectedColor = System.Drawing.Color.FromArgb(((int)(((byte)(194)))), ((int)(((byte)(118)))), ((int)(((byte)(43)))));
             this.greatButton.Size = new System.Drawing.Size(30, 30);
-            this.greatButton.Style = Sunny.UI.UIStyle.Office2010Black;
+            this.greatButton.Style = Sunny.UI.UIStyle.Custom;
             this.greatButton.TabIndex = 10;
             this.greatButton.Text = ">";
             this.greatButton.Click += new System.EventHandler(this.OperatorButtons_Click);
@@ -634,7 +659,7 @@
             this.notEqualButton.RectPressColor = System.Drawing.Color.FromArgb(((int)(((byte)(194)))), ((int)(((byte)(118)))), ((int)(((byte)(43)))));
             this.notEqualButton.RectSelectedColor = System.Drawing.Color.FromArgb(((int)(((byte)(194)))), ((int)(((byte)(118)))), ((int)(((byte)(43)))));
             this.notEqualButton.Size = new System.Drawing.Size(30, 30);
-            this.notEqualButton.Style = Sunny.UI.UIStyle.Office2010Black;
+            this.notEqualButton.Style = Sunny.UI.UIStyle.Custom;
             this.notEqualButton.TabIndex = 9;
             this.notEqualButton.Text = "<>";
             this.notEqualButton.Click += new System.EventHandler(this.OperatorButtons_Click);
@@ -659,7 +684,7 @@
             this.powButton.RectPressColor = System.Drawing.Color.FromArgb(((int)(((byte)(194)))), ((int)(((byte)(118)))), ((int)(((byte)(43)))));
             this.powButton.RectSelectedColor = System.Drawing.Color.FromArgb(((int)(((byte)(194)))), ((int)(((byte)(118)))), ((int)(((byte)(43)))));
             this.powButton.Size = new System.Drawing.Size(30, 30);
-            this.powButton.Style = Sunny.UI.UIStyle.Office2010Black;
+            this.powButton.Style = Sunny.UI.UIStyle.Custom;
             this.powButton.TabIndex = 7;
             this.powButton.Text = "^";
             this.powButton.Click += new System.EventHandler(this.OperatorButtons_Click);
@@ -684,7 +709,7 @@
             this.divideButton.RectPressColor = System.Drawing.Color.FromArgb(((int)(((byte)(194)))), ((int)(((byte)(118)))), ((int)(((byte)(43)))));
             this.divideButton.RectSelectedColor = System.Drawing.Color.FromArgb(((int)(((byte)(194)))), ((int)(((byte)(118)))), ((int)(((byte)(43)))));
             this.divideButton.Size = new System.Drawing.Size(30, 30);
-            this.divideButton.Style = Sunny.UI.UIStyle.Office2010Black;
+            this.divideButton.Style = Sunny.UI.UIStyle.Custom;
             this.divideButton.TabIndex = 6;
             this.divideButton.Text = "/";
             this.divideButton.Click += new System.EventHandler(this.OperatorButtons_Click);
@@ -709,7 +734,7 @@
             this.timeButton.RectPressColor = System.Drawing.Color.FromArgb(((int)(((byte)(194)))), ((int)(((byte)(118)))), ((int)(((byte)(43)))));
             this.timeButton.RectSelectedColor = System.Drawing.Color.FromArgb(((int)(((byte)(194)))), ((int)(((byte)(118)))), ((int)(((byte)(43)))));
             this.timeButton.Size = new System.Drawing.Size(30, 30);
-            this.timeButton.Style = Sunny.UI.UIStyle.Office2010Black;
+            this.timeButton.Style = Sunny.UI.UIStyle.Custom;
             this.timeButton.TabIndex = 5;
             this.timeButton.Text = "×";
             this.timeButton.Click += new System.EventHandler(this.OperatorButtons_Click);
@@ -734,7 +759,7 @@
             this.minusButton.RectPressColor = System.Drawing.Color.FromArgb(((int)(((byte)(194)))), ((int)(((byte)(118)))), ((int)(((byte)(43)))));
             this.minusButton.RectSelectedColor = System.Drawing.Color.FromArgb(((int)(((byte)(194)))), ((int)(((byte)(118)))), ((int)(((byte)(43)))));
             this.minusButton.Size = new System.Drawing.Size(30, 30);
-            this.minusButton.Style = Sunny.UI.UIStyle.Office2010Black;
+            this.minusButton.Style = Sunny.UI.UIStyle.Custom;
             this.minusButton.TabIndex = 4;
             this.minusButton.Text = "-";
             this.minusButton.Click += new System.EventHandler(this.OperatorButtons_Click);
@@ -759,7 +784,7 @@
             this.plusButton.RectPressColor = System.Drawing.Color.FromArgb(((int)(((byte)(194)))), ((int)(((byte)(118)))), ((int)(((byte)(43)))));
             this.plusButton.RectSelectedColor = System.Drawing.Color.FromArgb(((int)(((byte)(194)))), ((int)(((byte)(118)))), ((int)(((byte)(43)))));
             this.plusButton.Size = new System.Drawing.Size(30, 30);
-            this.plusButton.Style = Sunny.UI.UIStyle.Office2010Black;
+            this.plusButton.Style = Sunny.UI.UIStyle.Custom;
             this.plusButton.TabIndex = 3;
             this.plusButton.Text = "+";
             this.plusButton.Click += new System.EventHandler(this.OperatorButtons_Click);
@@ -780,7 +805,7 @@
             this.searchTextBox.Padding = new System.Windows.Forms.Padding(5);
             this.searchTextBox.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
             this.searchTextBox.Size = new System.Drawing.Size(138, 26);
-            this.searchTextBox.Style = Sunny.UI.UIStyle.Office2010Black;
+            this.searchTextBox.Style = Sunny.UI.UIStyle.Custom;
             this.searchTextBox.TabIndex = 11;
             this.searchTextBox.TextAlignment = System.Drawing.ContentAlignment.MiddleLeft;
             this.searchTextBox.Watermark = "搜索唯一值";
@@ -806,7 +831,7 @@
             this.searchValueButton.RectPressColor = System.Drawing.Color.FromArgb(((int)(((byte)(194)))), ((int)(((byte)(118)))), ((int)(((byte)(43)))));
             this.searchValueButton.RectSelectedColor = System.Drawing.Color.FromArgb(((int)(((byte)(194)))), ((int)(((byte)(118)))), ((int)(((byte)(43)))));
             this.searchValueButton.Size = new System.Drawing.Size(24, 26);
-            this.searchValueButton.Style = Sunny.UI.UIStyle.Office2010Black;
+            this.searchValueButton.Style = Sunny.UI.UIStyle.Custom;
             this.searchValueButton.Symbol = 61442;
             this.searchValueButton.TabIndex = 12;
             this.searchValueButton.Click += new System.EventHandler(this.searchValueButton_Click);
@@ -831,7 +856,7 @@
             this.okButton.RectPressColor = System.Drawing.Color.FromArgb(((int)(((byte)(194)))), ((int)(((byte)(118)))), ((int)(((byte)(43)))));
             this.okButton.RectSelectedColor = System.Drawing.Color.FromArgb(((int)(((byte)(194)))), ((int)(((byte)(118)))), ((int)(((byte)(43)))));
             this.okButton.Size = new System.Drawing.Size(81, 35);
-            this.okButton.Style = Sunny.UI.UIStyle.Office2010Black;
+            this.okButton.Style = Sunny.UI.UIStyle.Custom;
             this.okButton.TabIndex = 13;
             this.okButton.Text = "选择";
             this.okButton.Click += new System.EventHandler(this.okButton_Click);
@@ -842,7 +867,7 @@
             this.uiLabel5.Location = new System.Drawing.Point(2, 35);
             this.uiLabel5.Name = "uiLabel5";
             this.uiLabel5.Size = new System.Drawing.Size(75, 34);
-            this.uiLabel5.Style = Sunny.UI.UIStyle.Office2010Black;
+            this.uiLabel5.Style = Sunny.UI.UIStyle.Custom;
             this.uiLabel5.TabIndex = 15;
             this.uiLabel5.Text = "当前图层";
             this.uiLabel5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -862,7 +887,7 @@
             this.layerNameText.ReadOnly = true;
             this.layerNameText.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
             this.layerNameText.Size = new System.Drawing.Size(412, 29);
-            this.layerNameText.Style = Sunny.UI.UIStyle.Office2010Black;
+            this.layerNameText.Style = Sunny.UI.UIStyle.Custom;
             this.layerNameText.TabIndex = 16;
             this.layerNameText.TextAlignment = System.Drawing.ContentAlignment.MiddleLeft;
             // 
@@ -883,33 +908,8 @@
             this.uiComboboxEx1.Name = "uiComboboxEx1";
             this.uiComboboxEx1.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
             this.uiComboboxEx1.Size = new System.Drawing.Size(224, 27);
-            this.uiComboboxEx1.Style = Sunny.UI.UIStyle.Office2010Black;
+            this.uiComboboxEx1.Style = Sunny.UI.UIStyle.Custom;
             this.uiComboboxEx1.TabIndex = 17;
-            // 
-            // quoteButton
-            // 
-            this.quoteButton.Cursor = System.Windows.Forms.Cursors.Arrow;
-            this.quoteButton.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(211)))), ((int)(((byte)(211)))), ((int)(((byte)(211)))));
-            this.quoteButton.FillHoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(226)))), ((int)(((byte)(137)))));
-            this.quoteButton.FillPressColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(228)))), ((int)(((byte)(137)))));
-            this.quoteButton.FillSelectedColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(228)))), ((int)(((byte)(137)))));
-            this.quoteButton.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.quoteButton.ForeColor = System.Drawing.Color.Black;
-            this.quoteButton.ForeHoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
-            this.quoteButton.ForePressColor = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
-            this.quoteButton.ForeSelectedColor = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
-            this.quoteButton.Location = new System.Drawing.Point(78, 77);
-            this.quoteButton.MinimumSize = new System.Drawing.Size(1, 1);
-            this.quoteButton.Name = "quoteButton";
-            this.quoteButton.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
-            this.quoteButton.RectHoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(238)))), ((int)(((byte)(201)))), ((int)(((byte)(88)))));
-            this.quoteButton.RectPressColor = System.Drawing.Color.FromArgb(((int)(((byte)(194)))), ((int)(((byte)(118)))), ((int)(((byte)(43)))));
-            this.quoteButton.RectSelectedColor = System.Drawing.Color.FromArgb(((int)(((byte)(194)))), ((int)(((byte)(118)))), ((int)(((byte)(43)))));
-            this.quoteButton.Size = new System.Drawing.Size(30, 30);
-            this.quoteButton.Style = Sunny.UI.UIStyle.Office2010Black;
-            this.quoteButton.TabIndex = 16;
-            this.quoteButton.Text = "\'";
-            this.quoteButton.Click += new System.EventHandler(this.OperatorButtons_Click);
             // 
             // SelectedByExpressionForm
             // 
@@ -925,7 +925,7 @@
             this.Controls.Add(this.searchTextBox);
             this.Controls.Add(this.uiFlowLayoutPanel1);
             this.Controls.Add(this.expressionTextBox);
-            this.Controls.Add(this.uiLabel4);
+            this.Controls.Add(this.expressionLabel);
             this.Controls.Add(this.uiLabel3);
             this.Controls.Add(this.getUniqueValueButton);
             this.Controls.Add(this.uiLabel2);
@@ -934,14 +934,11 @@
             this.Controls.Add(this.fieldsListBox);
             this.Name = "SelectedByExpressionForm";
             this.Padding = new System.Windows.Forms.Padding(2, 35, 2, 2);
-            this.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
             this.ShowDragStretch = true;
             this.ShowRadius = false;
             this.ShowShadow = true;
             this.Style = Sunny.UI.UIStyle.Custom;
             this.Text = "按表达式选择";
-            this.TitleColor = System.Drawing.Color.FromArgb(((int)(((byte)(118)))), ((int)(((byte)(118)))), ((int)(((byte)(118)))));
-            this.TitleForeColor = System.Drawing.Color.Black;
             this.uiFlowLayoutPanel1.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -955,7 +952,7 @@
         private Sunny.UI.UILabel uiLabel2;
         private Sunny.UI.UIButton getUniqueValueButton;
         private Sunny.UI.UILabel uiLabel3;
-        private Sunny.UI.UILabel uiLabel4;
+        private Sunny.UI.UILabel expressionLabel;
         private Sunny.UI.UIRichTextBox expressionTextBox;
         private Sunny.UI.UIPanel uiFlowLayoutPanel1;
         private Sunny.UI.UIButton nullButton;
