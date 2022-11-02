@@ -31,6 +31,7 @@ namespace DEETU.Source.Window
             LoadRecentUsedFiles();
         }
         #endregion
+        
         #region 字段
         // 选项变量
         private Color mZoomBoxColor = Color.DeepPink; // 放大盒颜色
@@ -75,7 +76,6 @@ namespace DEETU.Source.Window
         private TreeNode mCurrentLayerNode;
         private GeoCoordinateReferenceSystem mCrs = new GeoCoordinateReferenceSystem();
         #endregion
-
 
         #region 窗体和按钮事件处理
 
@@ -124,35 +124,35 @@ namespace DEETU.Source.Window
 
         private void btnZoomIn_Click(object sender, EventArgs e)
         {
-            if (mMapOpStyle != GeoMapOpStyleEnum.ZoomIn)
+            if (!ZoomInModeButton.Checked)
             {
-                UncheckToolStrip(mMapOpStyle);
+                UncheckModeToolStrip();
                 this.Cursor = new Cursor("./icons/ZoomIn.ico");
                 mMapOpStyle = GeoMapOpStyleEnum.ZoomIn;
-                CheckToolStrip(mMapOpStyle);
+                ZoomInModeButton.Checked = true;
             }
             else
             {
                 this.Cursor = Cursors.Default;
                 mMapOpStyle = GeoMapOpStyleEnum.None;
-                UncheckToolStrip(mMapOpStyle);
+                UncheckModeToolStrip();
             }
         }
 
         private void btnZoomOut_Click(object sender, EventArgs e)
         {
-            if (mMapOpStyle != GeoMapOpStyleEnum.ZoomOut)
+            if (!ZoomoutModeButton.Checked)
             {
-                UncheckToolStrip(mMapOpStyle);
+                UncheckModeToolStrip();
                 this.Cursor = new Cursor("./icons/ZoomOut.ico");
                 mMapOpStyle = GeoMapOpStyleEnum.ZoomOut;
-                CheckToolStrip(mMapOpStyle);
+                ZoomoutModeButton.Checked = true;
             }
             else
             {
                 this.Cursor = Cursors.Default;
                 mMapOpStyle = GeoMapOpStyleEnum.None;
-                UncheckToolStrip(mMapOpStyle);
+                UncheckModeToolStrip();
             }
         }
 
@@ -160,55 +160,34 @@ namespace DEETU.Source.Window
         {
             if (mMapOpStyle != GeoMapOpStyleEnum.Pan)
             {
-                UncheckToolStrip(mMapOpStyle);
+                UncheckModeToolStrip();
                 this.Cursor = new Cursor("./icons/PanUp.ico");
                 mMapOpStyle = GeoMapOpStyleEnum.Pan;
-                CheckToolStrip(mMapOpStyle);
+                PanModeButton.Checked = true;
             }
             else
             {
                 this.Cursor = Cursors.Default;
                 mMapOpStyle = GeoMapOpStyleEnum.None;
-                UncheckToolStrip(mMapOpStyle);
+                UncheckModeToolStrip();
             }
         }
 
-        private void btnSelect_Click(object sender, EventArgs e)
-        {
-#if DEBUG
-            logging = sender.Equals(交叉选择).ToString();
-#endif
-
-            if (mIsEditing)
-            {
-                UncheckToolStrip(mMapOpStyle);
-                this.Cursor = new Cursor("./icons/EditSelect.ico");
-                mMapOpStyle = GeoMapOpStyleEnum.Select;
-                CheckToolStrip(mMapOpStyle);
-            }
-            else
-            {
-                //btnEndEdit_Click(sender, e);
-                this.Cursor = Cursors.Default;
-                mMapOpStyle = GeoMapOpStyleEnum.None;
-                UncheckToolStrip(mMapOpStyle);
-            }
-        }
 
         private void btnIdentify_Click(object sender, EventArgs e)
         {
-            if (mMapOpStyle != GeoMapOpStyleEnum.Identify)
+            if (!IdentifyModeButton.Checked)
             {
-                UncheckToolStrip(mMapOpStyle);
-                this.Cursor = new Cursor("./icons/EditSelect.ico");
+                UncheckModeToolStrip();
+                Cursor = Cursors.Default;
                 mMapOpStyle = GeoMapOpStyleEnum.Identify;
-                CheckToolStrip(mMapOpStyle);
+                IdentifyModeButton.Checked = true;
             }
             else
             {
-                this.Cursor = Cursors.Default;
+                Cursor = Cursors.Default;
                 mMapOpStyle = GeoMapOpStyleEnum.None;
-                UncheckToolStrip(mMapOpStyle);
+                UncheckModeToolStrip();
             }
         }
 
@@ -720,13 +699,33 @@ namespace DEETU.Source.Window
                 return;
             }
 
-            mIsEditing = !mIsEditing;
+            mIsEditing = !startEditToolStripButton.Checked;
 
-            btnSelect_Click(sender, e);
+            if (startEditToolStripButton.Checked == false) // 如果没有在编辑
+            {
+                // 得保证进入选择模式
+                UncheckModeToolStrip();
+                SelectModeButton.Checked = true;
+                mMapOpStyle = GeoMapOpStyleEnum.Select;
+
+                // 编辑按钮组的其他按钮不可以被点击
+                UncheckToolStrip(mMapOpStyle);
+                this.Cursor = new Cursor("./icons/EditSelect.ico");
+                CheckToolStrip(mMapOpStyle);
+            }
+            else
+            {
+                //btnEndEdit_Click(sender, e);
+                this.Cursor = Cursors.Default;
+                mMapOpStyle = GeoMapOpStyleEnum.Select;
+                UncheckToolStrip(mMapOpStyle);
+            }
+
             SetEditing();
+
+            startEditToolStripButton.Checked = !startEditToolStripButton.Checked;
         }
         #endregion
-
 
         #region 地图控件事件处理
         private void geoMap_MouseDown(object sender, MouseEventArgs e)
@@ -1801,16 +1800,22 @@ namespace DEETU.Source.Window
             }
         }
 
+
+        private void UncheckModeToolStrip()
+        {
+            SelectModeButton.Checked = false;
+            PanModeButton.Checked = false;
+            ZoomInModeButton.Checked = false;
+            ZoomoutModeButton.Checked = false;
+            IdentifyModeButton.Checked = false;
+        }
+
         // 取消工具栏对应按钮的选中状态
         private void UncheckToolStrip(GeoMapOpStyleEnum mapOpStyle)
         {
             SetEditing();
             UpdateTreeView();
 
-            ZoomInModeButton.Checked = false;
-            ZoomoutModeButton.Checked = false;
-            PanModeButton.Checked = false;
-            identifyToolStripButton.Checked = false;
             MoveItemToolStripButton.Checked = false;
             EditFeatureToolStripButton.Checked = false;
             AddFeatureToolStripButton.Checked = false;
@@ -1834,7 +1839,7 @@ namespace DEETU.Source.Window
                     PanModeButton.Checked = true;
                     break;
                 case GeoMapOpStyleEnum.Identify:
-                    identifyToolStripButton.Checked = true;
+                    IdentifyModeButton.Checked = true;
                     break;
                 case GeoMapOpStyleEnum.Select:
                     //交叉选中ToolStripMenuItem.Checked = true;
@@ -2082,9 +2087,7 @@ namespace DEETU.Source.Window
         /// 处理和开始编辑、结束编辑相关的button的可用性
         /// </summary>
         private void SetEditing()
-        {
-            startEditToolStripButton.Checked = mIsEditing;           
-
+        {      
             RemoveItemToolStripButton.Enabled = mIsEditing;
             MoveItemToolStripButton.Enabled = mIsEditing;
             EditFeatureToolStripButton.Enabled = mIsEditing;
@@ -2103,7 +2106,6 @@ namespace DEETU.Source.Window
 
             if (mIsEditing)
             {
-                mMapOpStyle = GeoMapOpStyleEnum.Select;
                 this.Cursor = new Cursor("./icons/EditSelect.ico");
                 startEditToolStripButton.Image = new Bitmap("./icons/edit_off.png");
                 startEditToolStripButton.ToolTipText = "结束编辑";
@@ -2113,8 +2115,7 @@ namespace DEETU.Source.Window
                 startEditToolStripButton.Image = new Bitmap("./icons/edit.png");
                 startEditToolStripButton.ToolTipText = "开始编辑";
             }
-
-
+            
 
             EditStatusChanged?.Invoke(this, mIsEditing);
         }
@@ -2287,10 +2288,10 @@ namespace DEETU.Source.Window
 
         private void AttributeForm_MapEditStatusChanged(object sender, bool status)
         {
-            btnSelect_Click(sender, new EventArgs());
-            mIsEditing = status;
-            SetEditing();
-
+            开始编辑_Click(sender, new EventArgs());
+            //btnSelect_Click(sender, new EventArgs());
+            //mIsEditing = status;
+            //SetEditing();
         }
 
         private void AttributeForm_FeatureCut(object sender, GeoMapLayer layer)
@@ -2931,6 +2932,22 @@ namespace DEETU.Source.Window
                 交叉选择.Checked = false;
                 交叉选择菜单.Checked = false;
                 return;
+            }
+        }
+
+        private void SelectModeButton_Click(object sender, EventArgs e)
+        {
+            if (SelectModeButton.Checked)
+            {
+                UncheckModeToolStrip();
+                
+                mMapOpStyle = GeoMapOpStyleEnum.None;
+            } else
+            {
+                UncheckModeToolStrip();
+                SelectModeButton.Checked = true;
+                this.Cursor = Cursors.Default;
+                mMapOpStyle = GeoMapOpStyleEnum.Select;
             }
         }
 

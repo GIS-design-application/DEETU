@@ -115,7 +115,7 @@ namespace DEETU.Source.Window
             this.zoomToLayerToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.refreshToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.identifyToolStripButton = new System.Windows.Forms.ToolStripButton();
+            this.IdentifyModeButton = new System.Windows.Forms.ToolStripButton();
             this.selectByValueToolStripDropDownButton = new System.Windows.Forms.ToolStripDropDownButton();
             this.按表达式选择ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.全部选择ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -717,13 +717,13 @@ namespace DEETU.Source.Window
             this.PanModeButton,
             this.ZoomInModeButton,
             this.ZoomoutModeButton,
+            this.IdentifyModeButton,
             this.toolStripSeparator13,
             this.fullExtentToolStripButton,
             this.zoomToSelectionToolStripButton,
             this.zoomToLayerToolStripButton,
             this.refreshToolStripButton,
             this.toolStripSeparator2,
-            this.identifyToolStripButton,
             this.selectByValueToolStripDropDownButton,
             this.selectByExtentToolStripDropDownButton,
             this.cancelSelectionToolStripButton});
@@ -774,6 +774,7 @@ namespace DEETU.Source.Window
             this.SelectModeButton.Name = "SelectModeButton";
             this.SelectModeButton.Size = new System.Drawing.Size(24, 24);
             this.SelectModeButton.Text = "选择模式";
+            this.SelectModeButton.Click += new System.EventHandler(this.SelectModeButton_Click);
             // 
             // PanModeButton
             // 
@@ -857,13 +858,13 @@ namespace DEETU.Source.Window
             // 
             // identifyToolStripButton
             // 
-            this.identifyToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.identifyToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("identifyToolStripButton.Image")));
-            this.identifyToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.identifyToolStripButton.Name = "identifyToolStripButton";
-            this.identifyToolStripButton.Size = new System.Drawing.Size(24, 24);
-            this.identifyToolStripButton.Text = "识别";
-            this.identifyToolStripButton.Click += new System.EventHandler(this.btnIdentify_Click);
+            this.IdentifyModeButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.IdentifyModeButton.Image = ((System.Drawing.Image)(resources.GetObject("identifyToolStripButton.Image")));
+            this.IdentifyModeButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.IdentifyModeButton.Name = "identifyToolStripButton";
+            this.IdentifyModeButton.Size = new System.Drawing.Size(24, 24);
+            this.IdentifyModeButton.Text = "识别";
+            this.IdentifyModeButton.Click += new System.EventHandler(this.btnIdentify_Click);
             // 
             // selectByValueToolStripDropDownButton
             // 
@@ -882,7 +883,7 @@ namespace DEETU.Source.Window
             // 
             this.按表达式选择ToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("按表达式选择ToolStripMenuItem.Image")));
             this.按表达式选择ToolStripMenuItem.Name = "按表达式选择ToolStripMenuItem";
-            this.按表达式选择ToolStripMenuItem.Size = new System.Drawing.Size(152, 26);
+            this.按表达式选择ToolStripMenuItem.Size = new System.Drawing.Size(184, 26);
             this.按表达式选择ToolStripMenuItem.Text = "按表达式选择";
             this.按表达式选择ToolStripMenuItem.Click += new System.EventHandler(this.btnSelectByExpression_Click);
             // 
@@ -890,7 +891,7 @@ namespace DEETU.Source.Window
             // 
             this.全部选择ToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("全部选择ToolStripMenuItem.Image")));
             this.全部选择ToolStripMenuItem.Name = "全部选择ToolStripMenuItem";
-            this.全部选择ToolStripMenuItem.Size = new System.Drawing.Size(152, 26);
+            this.全部选择ToolStripMenuItem.Size = new System.Drawing.Size(184, 26);
             this.全部选择ToolStripMenuItem.Text = "全部选择";
             this.全部选择ToolStripMenuItem.Click += new System.EventHandler(this.全部选择ToolStripMenuItem_Click);
             // 
@@ -898,7 +899,7 @@ namespace DEETU.Source.Window
             // 
             this.反向选择ToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("反向选择ToolStripMenuItem.Image")));
             this.反向选择ToolStripMenuItem.Name = "反向选择ToolStripMenuItem";
-            this.反向选择ToolStripMenuItem.Size = new System.Drawing.Size(152, 26);
+            this.反向选择ToolStripMenuItem.Size = new System.Drawing.Size(184, 26);
             this.反向选择ToolStripMenuItem.Text = "反向选择";
             this.反向选择ToolStripMenuItem.Click += new System.EventHandler(this.反向选择ToolStripMenuItem_Click);
             // 
@@ -1065,7 +1066,7 @@ namespace DEETU.Source.Window
             this.layerTreeView.ImageList = this.TreeImages;
             this.layerTreeView.Location = new System.Drawing.Point(0, 0);
             this.layerTreeView.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.layerTreeView.MinimumSize = new System.Drawing.Size(1, 1);
+            this.layerTreeView.MinimumSize = new System.Drawing.Size(4, 4);
             this.layerTreeView.Name = "layerTreeView";
             this.layerTreeView.SelectedImageIndex = 0;
             this.layerTreeView.ShowNodeToolTips = true;
@@ -1113,7 +1114,7 @@ namespace DEETU.Source.Window
             geoLayers1.FilePath = null;
             this.geoMap.Layers = geoLayers1;
             this.geoMap.Location = new System.Drawing.Point(0, 0);
-            this.geoMap.Margin = new System.Windows.Forms.Padding(253963727, 0, 253963727, 0);
+            this.geoMap.Margin = new System.Windows.Forms.Padding(1175757945, 0, 1175757945, 0);
             this.geoMap.Name = "geoMap";
             this.geoMap.SelectionColor = System.Drawing.Color.Cyan;
             this.geoMap.Size = new System.Drawing.Size(637, 489);
@@ -1322,8 +1323,6 @@ namespace DEETU.Source.Window
             this.Controls.Add(this.menuStrip1);
             this.KeyPreview = true;
             this.Name = "MainPage";
-            this.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
-            this.Style = Sunny.UI.UIStyle.Office2010Black;
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MainPage_KeyDown);
@@ -1393,7 +1392,7 @@ namespace DEETU.Source.Window
 		private System.Windows.Forms.ToolStripButton zoomToLayerToolStripButton;
 		private System.Windows.Forms.ToolStripButton refreshToolStripButton;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
-		private System.Windows.Forms.ToolStripButton identifyToolStripButton;
+		private System.Windows.Forms.ToolStripButton IdentifyModeButton;
 		private System.Windows.Forms.ToolStripDropDownButton selectByValueToolStripDropDownButton;
 		private System.Windows.Forms.ToolStripMenuItem 按表达式选择ToolStripMenuItem;
 		private System.Windows.Forms.ToolStripDropDownButton selectByExtentToolStripDropDownButton;
