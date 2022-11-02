@@ -725,6 +725,7 @@ namespace DEETU.Source.Window
             SetEditing();
 
             startEditToolStripButton.Checked = !startEditToolStripButton.Checked;
+            check_undo_enable();
         }
         #endregion
 
@@ -2093,14 +2094,10 @@ namespace DEETU.Source.Window
             剪切要素ToolStripButton.Enabled = mIsEditing;
             复制要素ToolStripButton.Enabled = mIsEditing;
             粘贴要素ToolStripButton.Enabled = mIsEditing;
-            撤销ToolStripButton.Enabled = mIsEditing;
-            重做ToolStripButton.Enabled = mIsEditing;
 
             剪切要素ToolStripMenuItem.Enabled = mIsEditing;
             复制要素ToolStripMenuItem.Enabled = mIsEditing;
             粘贴要素ToolStripMenuItem.Enabled = mIsEditing;
-            撤销操作ToolStripMenuItem.Enabled = mIsEditing;
-            重做操作ToolStripMenuItem.Enabled = mIsEditing;
 
             if (mIsEditing)
             {
@@ -2788,26 +2785,52 @@ namespace DEETU.Source.Window
 
         #region 撤销和重做
         private List<(GeoMapLayer, GeoMapLayer)> undo_layers = new List<(GeoMapLayer, GeoMapLayer)>();
-        private int undo_index = -1;
+        private int _undo_index = -1;
+
+        private int undo_index
+        {
+            get { return _undo_index; }
+            set
+            {
+                _undo_index = value;
+                check_undo_enable();
+            }
+        }
+
+        private void check_undo_enable ()
+        {
+            if (_undo_index == -1)
+            {
+                撤销ToolStripButton.Enabled = false;
+                撤销操作ToolStripMenuItem.Enabled = false;
+            }
+            else
+            {
+                撤销操作ToolStripMenuItem.Enabled = true;
+                撤销ToolStripButton.Enabled = true;
+            }
+
+            if (_undo_index == undo_layers.Count - 1)
+            {
+                重做ToolStripButton.Enabled = false;
+                重做操作ToolStripMenuItem.Enabled = false;
+            }
+            else
+            {
+                重做ToolStripButton.Enabled = true;
+                重做操作ToolStripMenuItem.Enabled = true;
+            }
+        }
 
         private void Undo()
         {
+            check_undo_enable();
             if (undo_layers.Count == 0 || undo_index == -1)
             {
                 return;
             }
             geoMap.Layers.Replace(undo_layers[undo_index].Item2, undo_layers[undo_index].Item1);
             undo_index--;
-
-            if (undo_index == -1)
-            {
-                // 此时无法进行撤销
-                撤销ToolStripButton.Enabled = false;
-                撤销操作ToolStripMenuItem.Enabled = false;
-            }
-
-            重做ToolStripButton.Enabled = true;
-            重做操作ToolStripMenuItem.Enabled = true;
             
             geoMap.RedrawMap();
             CurrentAcitveLayerUpdated?.Invoke(this, mCurrentLayerNode.Tag as GeoMapLayer);
@@ -2815,6 +2838,7 @@ namespace DEETU.Source.Window
 
         private void Redo()
         {
+            check_undo_enable();
             if (undo_layers.Count == 0 || undo_index == undo_layers.Count -1)
             {
                 return;
@@ -2837,6 +2861,7 @@ namespace DEETU.Source.Window
         {
             ResetUndo();
             undo_index++;
+            
             var desLayer = srcLayer.Clone();
             geoMap.Layers.Replace(srcLayer, desLayer);
             desLayer.Selectable = true;
