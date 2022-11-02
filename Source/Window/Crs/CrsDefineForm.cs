@@ -47,6 +47,11 @@ namespace DEETU.Source.Window
         private void okButton_Click(object sender, EventArgs e)
         {
             mLayer.Crs = _TargetCrs;
+            if(_TargetCrs==null)
+            {
+                MessageBox.Show("坐标系不能为空!");
+                return;
+            }
             btnOK_Click(sender, e);
             this.Close();
         }

@@ -247,7 +247,61 @@ namespace DEETU.IO
             
         }
 
-
+        public static void ReadPrjFile(string prjPath, GeoMapLayer layer)
+        {
+            if(File.Exists(prjPath) ==false)
+            {
+                layer.Crs = new GeoCoordinateReferenceSystem() ;
+                return;
+            }
+            else
+            {
+                StreamReader sr = new StreamReader(prjPath);
+                string prj = sr.ReadToEnd();
+                GeoCoordinateReferenceSystem sCrs=new GeoCoordinateReferenceSystem();
+                if(prj.Contains("PROJGCS")) 
+                { 
+                    if(prj.Contains("Lambert Conic Conformal (2SP)"))
+                    {
+                        if(prj.Contains("WGS84"))
+                        {
+                            sCrs=new 
+                                GeoCoordinateReferenceSystem(GeographicCrsType.WGS84,ProjectedCrsType.Lambert2SP);
+                        }
+                        else if(prj.Contains("Beijing 1954"))
+                        {
+                            sCrs=new 
+                                GeoCoordinateReferenceSystem(GeographicCrsType.Beijing1954,ProjectedCrsType.Lambert2SP);
+                        }
+                    }
+                    else if(prj.Contains("WGS_1984_Web_Mercator"))
+                    {
+                        sCrs=new 
+                            GeoCoordinateReferenceSystem(GeographicCrsType.WGS84,ProjectedCrsType.WebMercator);
+                    }
+                    else { MessageBox.Show("无法使用该投影坐标系对应的地理坐标系");return;}
+                }
+                else
+                {
+                    if(prj.Contains("WGS84"))
+                    {
+                        sCrs=new 
+                            GeoCoordinateReferenceSystem(GeographicCrsType.WGS84,null);
+                    }
+                    else if(prj.Contains("WGS84"))
+                    {
+                        sCrs=new 
+                            GeoCoordinateReferenceSystem(GeographicCrsType.Beijing1954,null);
+                    }
+                    else
+                    {
+                        MessageBox.Show("无法使用该地理坐标系");return;
+                    }
+                }
+                layer.Crs=sCrs;
+                MessageBox.Show(prj);
+            }
+        }
 
         #endregion
 
