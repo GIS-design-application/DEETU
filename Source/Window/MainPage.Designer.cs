@@ -151,6 +151,7 @@ namespace DEETU.Source.Window
             this.PasteUndoToolStripSeparator14 = new System.Windows.Forms.ToolStripSeparator();
             this.撤销ToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.重做ToolStripButton = new System.Windows.Forms.ToolStripButton();
+            this.导出图片ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.geoMap = new DEETU.Map.GeoMapControl();
             this.projectContextMenuStrip.SuspendLayout();
             this.favoriteContextMenuStrip1.SuspendLayout();
@@ -401,6 +402,7 @@ namespace DEETU.Source.Window
             this.打开ToolStripMenuItem,
             this.保存ToolStripMenuItem,
             this.另存为ToolStripMenuItem,
+            this.导出图片ToolStripMenuItem,
             this.关闭ToolStripMenuItem,
             this.toolStripSeparator3,
             this.退出DEETUToolStripMenuItem});
@@ -686,7 +688,7 @@ namespace DEETU.Source.Window
             // 
             this.打开图层ToolStripMenuItem.Name = "打开图层ToolStripMenuItem";
             this.打开图层ToolStripMenuItem.Size = new System.Drawing.Size(272, 34);
-            this.打开图层ToolStripMenuItem.Text = "添加lyr图层文件";
+            this.打开图层ToolStripMenuItem.Text = "添加lay图层文件";
             this.打开图层ToolStripMenuItem.Click += new System.EventHandler(this.btnLoadLayerFile_Click);
             // 
             // 打开shp图层文件ToolStripMenuItem
@@ -1276,6 +1278,13 @@ namespace DEETU.Source.Window
             this.重做ToolStripButton.Text = "重做";
             this.重做ToolStripButton.Click += new System.EventHandler(this.重做_Click);
             // 
+            // 导出图片ToolStripMenuItem
+            // 
+            this.导出图片ToolStripMenuItem.Name = "导出图片ToolStripMenuItem";
+            this.导出图片ToolStripMenuItem.Size = new System.Drawing.Size(184, 26);
+            this.导出图片ToolStripMenuItem.Text = "导出图片";
+            this.导出图片ToolStripMenuItem.Click += new System.EventHandler(this.导出图片ToolStripMenuItem_Click);
+            // 
             // geoMap
             // 
             this.geoMap.BackColor = System.Drawing.Color.White;
@@ -1467,5 +1476,6 @@ namespace DEETU.Source.Window
         private System.Windows.Forms.ToolStripButton cancelSelectionToolStripButton;
         private System.Windows.Forms.ToolStripStatusLabel spaceToolStripStatusLabel;
         private System.Windows.Forms.ToolStripStatusLabel tssCrs;
+        private System.Windows.Forms.ToolStripMenuItem 导出图片ToolStripMenuItem;
     }
 }
