@@ -10,7 +10,10 @@ namespace DEETU.Core
         #region 字段
 
         private bool _LabelFeatures = false;       //是否标注
-        private GeoTextSymbol _TextSymbol = new GeoTextSymbol();      //文本符号
+        private GeoTextSymbol _TextSymbol = new GeoTextSymbol()
+        {
+            Font = new System.Drawing.Font("微软雅黑", 8.25F, System.Drawing.FontStyle.Regular),
+        };      //文本符号
         private string _Field = "";                 //注记字段
 
         #endregion

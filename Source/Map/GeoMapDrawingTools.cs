@@ -146,12 +146,14 @@ namespace DEETU.Map
             g.SmoothingMode = SmoothingMode.HighQuality;
             //说明，OriPoint：绘制原点（即注记左上点）
             SolidBrush sTextBrush = new SolidBrush(textSymbol.FontColor);
-            Pen sMaskPen = new Pen(textSymbol.MaskColor, (float)(2 * textSymbol.MaskWidth * dpm / 1000));
-            float dpi = (float)(dpm * 0.0254);
+            float dpi = g.DpiY;
+            var maskWidth = textSymbol.MaskWidth * dpi / 72;
+            var textWidth = textSymbol.Font.Size * dpi / 72;
+            Pen sMaskPen = new Pen(textSymbol.MaskColor, (float)maskWidth);
             if (textSymbol.UseMask == true)
             {   //需要描边
                 GraphicsPath sGraphicPath = new GraphicsPath();
-                sGraphicPath.AddString(labelText, textSymbol.Font.FontFamily, (Int32)textSymbol.Font.Style, textSymbol.Font.Size * dpi / 72, OriPoint, StringFormat.GenericDefault);
+                sGraphicPath.AddString(labelText, textSymbol.Font.FontFamily, (Int32)textSymbol.Font.Style, (float)textWidth, OriPoint, StringFormat.GenericDefault);
                 g.DrawPath(sMaskPen, sGraphicPath);
                 g.FillPath(sTextBrush, sGraphicPath);
                 sGraphicPath.Dispose();

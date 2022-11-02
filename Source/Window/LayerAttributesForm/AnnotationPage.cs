@@ -31,7 +31,7 @@ namespace DEETU.Source.Window
             InitializeComponent();
             mLayer = layer;
             InitializeAnnotations();
-            UpdateSampleFontTextBox();
+            //UpdateSampleFontTextBox();
         }
 
         #region 私有函数
@@ -154,14 +154,19 @@ namespace DEETU.Source.Window
             }
 
             var g = SampleTextPanel.CreateGraphics();
+            g.Clear(BackColor);
             g.SmoothingMode = SmoothingMode.HighQuality;
             
             var textSymbol = mLayer.LabelRenderer.TextSymbol;
             SolidBrush sTextBrush = new SolidBrush(textSymbol.FontColor);
-            Pen sMaskPen = new Pen(textSymbol.MaskColor, (float)textSymbol.MaskWidth);
+            var textSize  = g.DpiY * textSymbol.Font.Size / 72;
+            var maskWidth = g.DpiY * textSymbol.MaskWidth / 72;
+            Pen sMaskPen = new Pen(textSymbol.MaskColor, (float)maskWidth);
             GraphicsPath sGraphicPath = new GraphicsPath();
             
-            var textSize  = g.DpiY * textSymbol.Font.Size / 72;
+#if DEBUG
+            //MessageBox.Show(textSymbol.Font.Style.ToString() + ", " + ((Int32)textSymbol.Font.Style).ToString());
+#endif
             if (maskCheckBox.Checked)
             {
                 sGraphicPath.AddString(sampleText, textSymbol.Font.FontFamily, (Int32)textSymbol.Font.Style, textSize, new Rectangle(0, 0, SampleTextPanel.Width, SampleTextPanel.Height), sf);
