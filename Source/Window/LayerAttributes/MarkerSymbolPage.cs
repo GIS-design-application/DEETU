@@ -193,10 +193,13 @@ namespace DEETU.Source.Window
             if (e.Index == -1) return;
             Graphics g = e.Graphics;
             Rectangle r = e.Bounds;
-            Color StartColor = (mUniqueValueRenderers[e.Index].GetSymbol(0) as GeoSimpleMarkerSymbol).Color;
-            Color EndColor = (mUniqueValueRenderers[e.Index].GetSymbol(mUniqueValueRenderers[e.Index].ValueCount - 1) as GeoSimpleMarkerSymbol).Color;
-            LinearGradientBrush sBrush = new LinearGradientBrush(new RectangleF(r.X, r.Y, r.Width, r.Height - 2), StartColor, EndColor, LinearGradientMode.Horizontal);
-            e.Graphics.FillRectangle(sBrush, r);
+            int n = mUniqueValueRenderers[e.Index].ValueCount;
+            for (int i = 0; i < n; ++i)
+            {
+                SolidBrush sBrush = new SolidBrush((mUniqueValueRenderers[e.Index].GetSymbol(i) as GeoSimpleLineSymbol).Color);
+                Rectangle sRect = new Rectangle(r.X + i * r.Width / n, r.Y, r.Width / n, r.Height);
+                g.FillRectangle(sBrush, sRect);
+            }
             g.DrawRectangle(new Pen(this.BackColor), r);
             e.DrawFocusRectangle();
         }
@@ -307,12 +310,14 @@ namespace DEETU.Source.Window
                 GeoSimpleMarkerSymbol symbol = (GeoSimpleMarkerSymbol)(mLayer.Renderer as GeoClassBreaksRenderer).GetSymbol(index);
                 classDataGridView.Rows[index].Cells[0].Value = CreateMarkerBitmapFromSymbol(symbol);
                 classDataGridView.Refresh();
+                classColorgradComboBox.Refresh();
             }
             else if (type == GeoRendererTypeConstant.UniqueValue)
             {
                 GeoSimpleMarkerSymbol symbol = (GeoSimpleMarkerSymbol)(mLayer.Renderer as GeoUniqueValueRenderer).GetSymbol(index);
                 uniqueDataGridView.Rows[index].Cells[0].Value = CreateMarkerBitmapFromSymbol(symbol);
                 uniqueDataGridView.Refresh();
+                uniqueColorgradComboBox.Refresh();
             }
         }
 
@@ -451,9 +456,10 @@ namespace DEETU.Source.Window
                 sRenderer.Field = field;
                 List<string> sValues = new List<string>();
                 int sFeatureCount = mLayer.Features.Count;
+                int sFieldIndex = mLayer.AttributeFields.FindField(sRenderer.Field);
                 for (int i = 0; i < sFeatureCount; i++)
                 {
-                    string svalue = (string)mLayer.Features.GetItem(i).Attributes.GetItem(0); // 这里使用0 假定第一个就是字符串的名称
+                    string svalue = mLayer.Features.GetItem(i).Attributes.GetItem(sFieldIndex).ToString(); // 这里使用0 假定第一个就是字符串的名称
                     sValues.Add(svalue);
                 }
                 // 去除重复

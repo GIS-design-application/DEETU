@@ -208,10 +208,13 @@ namespace DEETU.Source.Window
             if(e.Index == -1) return;
             Graphics g = e.Graphics;
             Rectangle r = e.Bounds;
-            Color StartColor = (mUniqueValueRenderers[e.Index].GetSymbol(0) as GeoSimpleFillSymbol).Color;
-            Color EndColor = (mUniqueValueRenderers[e.Index].GetSymbol(mUniqueValueRenderers[e.Index].ValueCount - 1) as GeoSimpleFillSymbol).Color;
-            LinearGradientBrush sBrush = new LinearGradientBrush(new RectangleF(r.X, r.Y, r.Width, r.Height - 2), StartColor, EndColor, LinearGradientMode.Horizontal);
-            e.Graphics.FillRectangle(sBrush, r);
+            int n = mUniqueValueRenderers[e.Index].ValueCount;
+            for (int i = 0; i < n; ++i)
+            {
+                SolidBrush sBrush = new SolidBrush((mUniqueValueRenderers[e.Index].GetSymbol(i) as GeoSimpleFillSymbol).Color);
+                Rectangle sRect = new Rectangle(r.X + i * r.Width / n, r.Y, r.Width / n, r.Height);
+                g.FillRectangle(sBrush, sRect);
+            }
             g.DrawRectangle(new Pen(this.BackColor), r);
             e.DrawFocusRectangle();
         }
