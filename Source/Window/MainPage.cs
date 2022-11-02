@@ -543,10 +543,14 @@ namespace DEETU.Source.Window
         }
         private void SaveProjectToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if(geoMap.Layers.FilePath==null)
+
+            if (geoMap.Layers.FilePath==null)
                 SaveNewProject();
             else
             {
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
+                File.Delete(geoMap.Layers.FilePath);
                 GeoDatabaseIOTools.SaveGeoProject(geoMap.Layers, geoMap.Layers.FilePath);
             }
         }
@@ -567,6 +571,7 @@ namespace DEETU.Source.Window
             {
                 MessageBox.Show(saveFileDialog1.FileName);
                 GeoDatabaseIOTools.SaveGeoProject(geoMap.Layers, saveFileDialog1.FileName);
+                geoMap.Layers.FilePath = saveFileDialog1.FileName;
                 saveFileDialog1.Dispose();
 
             }

@@ -256,6 +256,7 @@ namespace DEETU.IO
                     try { cmd.ExecuteNonQuery(); } catch (Exception e) { MessageBox.Show(e.Message.ToString()); }
                 }
             }
+            conn.Close();
             conn.Dispose();
             return true;
         }
@@ -286,6 +287,9 @@ namespace DEETU.IO
                 return false;
             }
             conn.Close();
+            conn.Dispose();
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
             return true;
         }
         /// <summary>
