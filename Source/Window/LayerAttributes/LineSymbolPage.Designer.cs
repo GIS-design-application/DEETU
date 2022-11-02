@@ -246,7 +246,6 @@ namespace DEETU.Source.Window
             this.styleComboBox.Style = Sunny.UI.UIStyle.Office2010Black;
             this.styleComboBox.StyleCustomMode = true;
             this.styleComboBox.TabIndex = 13;
-            this.styleComboBox.Text = "uiComboBox1";
             this.styleComboBox.TextAlignment = System.Drawing.ContentAlignment.MiddleLeft;
             this.styleComboBox.SelectedIndexChanged += new System.EventHandler(this.styleComboBox_SelectedIndexChanged);
             // 
@@ -354,7 +353,7 @@ namespace DEETU.Source.Window
             this.uniqueTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.uniqueTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.uniqueTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.uniqueTableLayoutPanel.Size = new System.Drawing.Size(366, 138);
+            this.uniqueTableLayoutPanel.Size = new System.Drawing.Size(456, 138);
             this.uniqueTableLayoutPanel.TabIndex = 5;
             // 
             // uiLabel8
@@ -404,11 +403,10 @@ namespace DEETU.Source.Window
             this.uniqueFieldComboBox.Name = "uniqueFieldComboBox";
             this.uniqueFieldComboBox.Padding = new System.Windows.Forms.Padding(0, 0, 30, 2);
             this.uniqueFieldComboBox.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
-            this.uniqueFieldComboBox.Size = new System.Drawing.Size(258, 39);
+            this.uniqueFieldComboBox.Size = new System.Drawing.Size(348, 39);
             this.uniqueFieldComboBox.Style = Sunny.UI.UIStyle.Office2010Black;
             this.uniqueFieldComboBox.StyleCustomMode = true;
             this.uniqueFieldComboBox.TabIndex = 13;
-            this.uniqueFieldComboBox.Text = "uiComboBox2";
             this.uniqueFieldComboBox.TextAlignment = System.Drawing.ContentAlignment.MiddleLeft;
             this.uniqueFieldComboBox.SelectedIndexChanged += new System.EventHandler(this.uniqueFieldComboBox_SelectedIndexChanged);
             // 
@@ -423,7 +421,7 @@ namespace DEETU.Source.Window
             this.UniqueValueComboBoxEx.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.UniqueValueComboBoxEx.MinimumSize = new System.Drawing.Size(63, 0);
             this.UniqueValueComboBoxEx.Name = "UniqueValueComboBoxEx";
-            this.UniqueValueComboBoxEx.Size = new System.Drawing.Size(258, 40);
+            this.UniqueValueComboBoxEx.Size = new System.Drawing.Size(348, 40);
             this.UniqueValueComboBoxEx.TabIndex = 14;
             this.UniqueValueComboBoxEx.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.UniqueColorComboboxEx_DrawItem);
             this.UniqueValueComboBoxEx.SelectedIndexChanged += new System.EventHandler(this.UniqueValueComboBoxEx_SelectedIndexChanged);
@@ -575,7 +573,7 @@ namespace DEETU.Source.Window
             this.classTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.classTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 45F));
             this.classTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 13F));
-            this.classTableLayoutPanel.Size = new System.Drawing.Size(396, 231);
+            this.classTableLayoutPanel.Size = new System.Drawing.Size(456, 231);
             this.classTableLayoutPanel.TabIndex = 7;
             // 
             // uiLabel11
@@ -625,11 +623,10 @@ namespace DEETU.Source.Window
             this.classFieldComboBox.Name = "classFieldComboBox";
             this.classFieldComboBox.Padding = new System.Windows.Forms.Padding(0, 0, 30, 2);
             this.classFieldComboBox.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
-            this.classFieldComboBox.Size = new System.Drawing.Size(282, 39);
+            this.classFieldComboBox.Size = new System.Drawing.Size(342, 39);
             this.classFieldComboBox.Style = Sunny.UI.UIStyle.Custom;
             this.classFieldComboBox.StyleCustomMode = true;
             this.classFieldComboBox.TabIndex = 13;
-            this.classFieldComboBox.Text = "uiComboBox2";
             this.classFieldComboBox.TextAlignment = System.Drawing.ContentAlignment.MiddleLeft;
             this.classFieldComboBox.SelectedIndexChanged += new System.EventHandler(this.classFieldComboBox_SelectedIndexChanged);
             // 
@@ -644,7 +641,7 @@ namespace DEETU.Source.Window
             this.ClassBreaksComboBoxEx.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.ClassBreaksComboBoxEx.MinimumSize = new System.Drawing.Size(63, 0);
             this.ClassBreaksComboBoxEx.Name = "ClassBreaksComboBoxEx";
-            this.ClassBreaksComboBoxEx.Size = new System.Drawing.Size(282, 40);
+            this.ClassBreaksComboBoxEx.Size = new System.Drawing.Size(342, 40);
             this.ClassBreaksComboBoxEx.TabIndex = 14;
             this.ClassBreaksComboBoxEx.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.ClassBreaksComboboxEx_DrawItem);
             this.ClassBreaksComboBoxEx.SelectedIndexChanged += new System.EventHandler(this.ClassBreaksComboBoxEx_SelectedIndexChanged);
@@ -714,7 +711,7 @@ namespace DEETU.Source.Window
             this.uiDoubleUpDown2.MinimumSize = new System.Drawing.Size(100, 0);
             this.uiDoubleUpDown2.Name = "uiDoubleUpDown2";
             this.uiDoubleUpDown2.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
-            this.uiDoubleUpDown2.Size = new System.Drawing.Size(140, 40);
+            this.uiDoubleUpDown2.Size = new System.Drawing.Size(135, 40);
             this.uiDoubleUpDown2.Style = Sunny.UI.UIStyle.Office2010Black;
             this.uiDoubleUpDown2.TabIndex = 1;
             this.uiDoubleUpDown2.Text = "uiDoubleUpDown2";

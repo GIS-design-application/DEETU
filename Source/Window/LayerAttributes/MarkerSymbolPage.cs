@@ -231,7 +231,11 @@ namespace DEETU.Source.Window
             }
             else if (renderMethodCB.SelectedItem.ToString() == "分级符号")
             {
-                if (mClassBreaksRenderer == null)
+                if (classFieldComboBox.Items.Count == 0)
+                {
+                    MessageBox.Show("没有可以渲染的字段");
+                }
+                else if (mClassBreaksRenderer == null)
                 {
                     classFieldComboBox.SelectedIndex = 0;
                 }
@@ -239,7 +243,11 @@ namespace DEETU.Source.Window
             }
             else if (renderMethodCB.SelectedItem.ToString() == "唯一值")
             {
-                if (mUniqueValueRenderer == null)
+                if (uniqueFieldComboBox.Items.Count == 0)
+                {
+                    MessageBox.Show("没有可以渲染的字段");
+                }
+                else if (mUniqueValueRenderer == null)
                 {
                     uniqueFieldComboBox.SelectedIndex = 0;
                 }
