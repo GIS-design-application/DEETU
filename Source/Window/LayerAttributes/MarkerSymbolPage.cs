@@ -349,6 +349,7 @@ namespace DEETU.Source.Window
             GeoSimpleMarkerSymbol markerSymbol = (GeoSimpleMarkerSymbol)simpleRenderer.Symbol;
             markerColorPicker.Value = markerSymbol.Color;
             markerStyleComboBox.SelectedIndex = (int)markerSymbol.Style;
+            sizeDoubleUpDown.Value = markerSymbol.Size;
         }
 
         private void initializeUniqueValueRenderer()
@@ -552,6 +553,5 @@ namespace DEETU.Source.Window
             }
             classDataGridView.Refresh();
         }
-
     }
 }

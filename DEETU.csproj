@@ -407,8 +407,8 @@
     <Content Include="icons\selectType.jpeg" />
     <Content Include="icons\toArea.jpeg" />
     <Content Include="icons\unselected.bmp" />
-    <Content Include="icons\ZoomIn.ico" />
     <Content Include="icons\ZoomOut.ico" />
+    <Content Include="icons\ZoomIn.ico" />
     <None Include="icons\添加要素.png" />
     <Content Include="icons\全选.png" />
     <Content Include="icons\反选.png" />
