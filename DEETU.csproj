@@ -116,101 +116,101 @@
     <Compile Include="Source\IO\GeoDataIOTools.cs" />
     <Compile Include="Source\IO\GeoDataTable.cs" />
     <Compile Include="Source\Map\GeoShapeFlashControler.cs" />
-    <Compile Include="Source\Window\AttributeTable\AttributeTableForm.cs">
+    <Compile Include="Source\Window\AttributeTableForm\AttributeTableForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Source\Window\AttributeTable\AttributeTableForm.Designer.cs">
+    <Compile Include="Source\Window\AttributeTableForm\AttributeTableForm.Designer.cs">
       <DependentUpon>AttributeTableForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Source\Window\Crs\CrsDefineForm.cs">
+    <Compile Include="Source\Window\CrsForm\CrsDefineForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Source\Window\Crs\CrsDefineForm.Designer.cs">
+    <Compile Include="Source\Window\CrsForm\CrsDefineForm.Designer.cs">
       <DependentUpon>CrsDefineForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Source\Window\Crs\CrsEditForm.cs">
+    <Compile Include="Source\Window\CrsForm\CrsEditForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Source\Window\Crs\CrsEditForm.Designer.cs">
+    <Compile Include="Source\Window\CrsForm\CrsEditForm.Designer.cs">
       <DependentUpon>CrsEditForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Source\Window\Crs\CrsTransferForm.cs">
+    <Compile Include="Source\Window\CrsForm\CrsTransferForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Source\Window\Crs\CrsTransferForm.Designer.cs">
+    <Compile Include="Source\Window\CrsForm\CrsTransferForm.Designer.cs">
       <DependentUpon>CrsTransferForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Source\Window\SelectedByExpressionForm.cs">
+    <Compile Include="Source\Window\SelectForm\SelectedByExpressionForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Source\Window\SelectedByExpressionForm.Designer.cs">
+    <Compile Include="Source\Window\SelectForm\SelectedByExpressionForm.Designer.cs">
       <DependentUpon>SelectedByExpressionForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Source\Window\GeoFormEnum.cs" />
-    <Compile Include="Source\Window\LayerAttributes\EditFillSymbolPage.cs">
+    <Compile Include="Source\Window\LayerAttributesForm\EditFillSymbolPage.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Source\Window\LayerAttributes\EditFillSymbolPage.Designer.cs">
+    <Compile Include="Source\Window\LayerAttributesForm\EditFillSymbolPage.Designer.cs">
       <DependentUpon>EditFillSymbolPage.cs</DependentUpon>
     </Compile>
-    <Compile Include="Source\Window\LayerAttributes\EditLineSymbolPage.cs">
+    <Compile Include="Source\Window\LayerAttributesForm\EditLineSymbolPage.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Source\Window\LayerAttributes\EditLineSymbolPage.Designer.cs">
+    <Compile Include="Source\Window\LayerAttributesForm\EditLineSymbolPage.Designer.cs">
       <DependentUpon>EditLineSymbolPage.cs</DependentUpon>
     </Compile>
-    <Compile Include="Source\Window\LayerAttributes\EditMarkerSymbolPage.cs">
+    <Compile Include="Source\Window\LayerAttributesForm\EditMarkerSymbolPage.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Source\Window\LayerAttributes\EditMarkerSymbolPage.Designer.cs">
+    <Compile Include="Source\Window\LayerAttributesForm\EditMarkerSymbolPage.Designer.cs">
       <DependentUpon>EditMarkerSymbolPage.cs</DependentUpon>
     </Compile>
-    <Compile Include="Source\Window\LayerAttributes\EditSimpleSymbolForm.cs">
+    <Compile Include="Source\Window\LayerAttributesForm\EditSimpleSymbolForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Source\Window\LayerAttributes\EditSimpleSymbolForm.Designer.cs">
+    <Compile Include="Source\Window\LayerAttributesForm\EditSimpleSymbolForm.Designer.cs">
       <DependentUpon>EditSimpleSymbolForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Source\Window\LayerAttributes\FieldPage.cs">
+    <Compile Include="Source\Window\LayerAttributesForm\FieldPage.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Source\Window\LayerAttributes\FieldPage.Designer.cs">
+    <Compile Include="Source\Window\LayerAttributesForm\FieldPage.Designer.cs">
       <DependentUpon>FieldPage.cs</DependentUpon>
     </Compile>
-    <Compile Include="Source\Window\LayerAttributes\AnnotationPage.cs">
+    <Compile Include="Source\Window\LayerAttributesForm\AnnotationPage.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Source\Window\LayerAttributes\AnnotationPage.Designer.cs">
+    <Compile Include="Source\Window\LayerAttributesForm\AnnotationPage.Designer.cs">
       <DependentUpon>AnnotationPage.cs</DependentUpon>
     </Compile>
-    <Compile Include="Source\Window\LayerAttributes\MarkerSymbolPage.cs">
+    <Compile Include="Source\Window\LayerAttributesForm\MarkerSymbolPage.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Source\Window\LayerAttributes\MarkerSymbolPage.Designer.cs">
+    <Compile Include="Source\Window\LayerAttributesForm\MarkerSymbolPage.Designer.cs">
       <DependentUpon>MarkerSymbolPage.cs</DependentUpon>
     </Compile>
-    <Compile Include="Source\Window\LayerAttributes\LineSymbolPage.cs">
+    <Compile Include="Source\Window\LayerAttributesForm\LineSymbolPage.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Source\Window\LayerAttributes\LineSymbolPage.Designer.cs">
+    <Compile Include="Source\Window\LayerAttributesForm\LineSymbolPage.Designer.cs">
       <DependentUpon>LineSymbolPage.cs</DependentUpon>
     </Compile>
-    <Compile Include="Source\Window\LayerAttributes\FillSymbolPage.cs">
+    <Compile Include="Source\Window\LayerAttributesForm\FillSymbolPage.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Source\Window\LayerAttributes\FillSymbolPage.Designer.cs">
+    <Compile Include="Source\Window\LayerAttributesForm\FillSymbolPage.Designer.cs">
       <DependentUpon>FillSymbolPage.cs</DependentUpon>
     </Compile>
-    <Compile Include="Source\Window\LayerAttributes\InfoPage.cs">
+    <Compile Include="Source\Window\LayerAttributesForm\InfoPage.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Source\Window\LayerAttributes\InfoPage.Designer.cs">
+    <Compile Include="Source\Window\LayerAttributesForm\InfoPage.Designer.cs">
       <DependentUpon>InfoPage.cs</DependentUpon>
     </Compile>
-    <Compile Include="Source\Window\LayerAttributes\LayerAttributesForm.cs">
+    <Compile Include="Source\Window\LayerAttributesForm\LayerAttributesForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Source\Window\LayerAttributes\LayerAttributesForm.Designer.cs">
+    <Compile Include="Source\Window\LayerAttributesForm\LayerAttributesForm.Designer.cs">
       <DependentUpon>LayerAttributesForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Source\Window\MainPage.cs">
@@ -259,53 +259,53 @@
     <EmbeddedResource Include="Source\Map\GeoMapControl.resx">
       <DependentUpon>GeoMapControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Source\Window\AttributeTable\AttributeTableForm.resx">
+    <EmbeddedResource Include="Source\Window\AttributeTableForm\AttributeTableForm.resx">
       <DependentUpon>AttributeTableForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Source\Window\Crs\CrsDefineForm.resx">
+    <EmbeddedResource Include="Source\Window\CrsForm\CrsDefineForm.resx">
       <DependentUpon>CrsDefineForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Source\Window\Crs\CrsEditForm.resx">
+    <EmbeddedResource Include="Source\Window\CrsForm\CrsEditForm.resx">
       <DependentUpon>CrsEditForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Source\Window\Crs\CrsTransferForm.resx">
+    <EmbeddedResource Include="Source\Window\CrsForm\CrsTransferForm.resx">
       <DependentUpon>CrsTransferForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Source\Window\SelectedByExpressionForm.resx">
+    <EmbeddedResource Include="Source\Window\SelectForm\SelectedByExpressionForm.resx">
       <DependentUpon>SelectedByExpressionForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Source\Window\LayerAttributes\AnnotationPage.resx">
+    <EmbeddedResource Include="Source\Window\LayerAttributesForm\AnnotationPage.resx">
       <DependentUpon>AnnotationPage.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Source\Window\LayerAttributes\EditFillSymbolPage.resx">
+    <EmbeddedResource Include="Source\Window\LayerAttributesForm\EditFillSymbolPage.resx">
       <DependentUpon>EditFillSymbolPage.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Source\Window\LayerAttributes\EditLineSymbolPage.resx">
+    <EmbeddedResource Include="Source\Window\LayerAttributesForm\EditLineSymbolPage.resx">
       <DependentUpon>EditLineSymbolPage.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Source\Window\LayerAttributes\EditMarkerSymbolPage.resx">
+    <EmbeddedResource Include="Source\Window\LayerAttributesForm\EditMarkerSymbolPage.resx">
       <DependentUpon>EditMarkerSymbolPage.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Source\Window\LayerAttributes\EditSimpleSymbolForm.resx">
+    <EmbeddedResource Include="Source\Window\LayerAttributesForm\EditSimpleSymbolForm.resx">
       <DependentUpon>EditSimpleSymbolForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Source\Window\LayerAttributes\FieldPage.resx">
+    <EmbeddedResource Include="Source\Window\LayerAttributesForm\FieldPage.resx">
       <DependentUpon>FieldPage.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Source\Window\LayerAttributes\MarkerSymbolPage.resx">
+    <EmbeddedResource Include="Source\Window\LayerAttributesForm\MarkerSymbolPage.resx">
       <DependentUpon>MarkerSymbolPage.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Source\Window\LayerAttributes\LineSymbolPage.resx">
+    <EmbeddedResource Include="Source\Window\LayerAttributesForm\LineSymbolPage.resx">
       <DependentUpon>LineSymbolPage.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Source\Window\LayerAttributes\InfoPage.resx">
+    <EmbeddedResource Include="Source\Window\LayerAttributesForm\InfoPage.resx">
       <DependentUpon>InfoPage.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Source\Window\LayerAttributes\LayerAttributesForm.resx">
+    <EmbeddedResource Include="Source\Window\LayerAttributesForm\LayerAttributesForm.resx">
       <DependentUpon>LayerAttributesForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Source\Window\LayerAttributes\FillSymbolPage.resx">
+    <EmbeddedResource Include="Source\Window\LayerAttributesForm\FillSymbolPage.resx">
       <DependentUpon>FillSymbolPage.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Source\Testing\DebugForm.resx">

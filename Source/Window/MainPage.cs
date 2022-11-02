@@ -2997,6 +2997,22 @@ namespace DEETU.Source.Window
             }
         }
 
+        private void 显示所有图层ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            foreach(TreeNode node in layerTreeView.Nodes)
+            {
+                node.Checked = true;
+            }
+        }
+
+        private void 隐藏所有图层ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            foreach(TreeNode node in layerTreeView.Nodes)
+            {
+                node.Checked = false;
+            }
+        }
+
         private void 剪切要素_Click(object sender, EventArgs e)
         {
             Cut();
