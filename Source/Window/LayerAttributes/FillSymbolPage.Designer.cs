@@ -296,7 +296,7 @@ namespace DEETU.Source.Window
             this.uniqueValueTab.Controls.Add(this.uniqueTableLayoutPanel);
             this.uniqueValueTab.Location = new System.Drawing.Point(0, 40);
             this.uniqueValueTab.Name = "uniqueValueTab";
-            this.uniqueValueTab.Size = new System.Drawing.Size(993, 488);
+            this.uniqueValueTab.Size = new System.Drawing.Size(480, 488);
             this.uniqueValueTab.TabIndex = 1;
             this.uniqueValueTab.Text = "unique value";
             // 
@@ -351,7 +351,7 @@ namespace DEETU.Source.Window
             this.uniqueDataGridView.RowTemplate.Height = 29;
             this.uniqueDataGridView.SelectedIndex = -1;
             this.uniqueDataGridView.ShowGridLine = true;
-            this.uniqueDataGridView.Size = new System.Drawing.Size(993, 328);
+            this.uniqueDataGridView.Size = new System.Drawing.Size(480, 328);
             this.uniqueDataGridView.StripeOddColor = System.Drawing.Color.FromArgb(((int)(((byte)(211)))), ((int)(((byte)(211)))), ((int)(((byte)(211)))));
             this.uniqueDataGridView.Style = Sunny.UI.UIStyle.Office2010Black;
             this.uniqueDataGridView.StyleCustomMode = true;
@@ -406,7 +406,7 @@ namespace DEETU.Source.Window
             this.uiLabel8.Size = new System.Drawing.Size(94, 40);
             this.uiLabel8.Style = Sunny.UI.UIStyle.Office2010Black;
             this.uiLabel8.TabIndex = 15;
-            this.uiLabel8.Text = "默认颜色";
+            this.uiLabel8.Text = "默认样式";
             this.uiLabel8.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // uiLabel4
@@ -625,7 +625,7 @@ namespace DEETU.Source.Window
             this.uiLabel11.Size = new System.Drawing.Size(100, 40);
             this.uiLabel11.Style = Sunny.UI.UIStyle.Office2010Black;
             this.uiLabel11.TabIndex = 15;
-            this.uiLabel11.Text = "默认颜色";
+            this.uiLabel11.Text = "默认样式";
             this.uiLabel11.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // uiLabel9

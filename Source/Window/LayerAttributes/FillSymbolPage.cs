@@ -96,11 +96,11 @@ namespace DEETU.Source.Window
         }
 
 
-        private Button GetFillSymbolButton(GeoSimpleFillSymbol symbol)
+        private Button GetFillSymbolButton(GeoSimpleFillSymbol symbol, string name)
         {
             Button sButton = new Button();
             sButton.BackColor = symbol.Color;
-            sButton.Text = "";
+            sButton.Name = name;
             sButton.Dock = DockStyle.Fill;
             sButton.FlatAppearance.BorderColor = symbol.Outline.Color;
             sButton.FlatAppearance.BorderSize = (int)symbol.Outline.Size;
@@ -126,6 +126,10 @@ namespace DEETU.Source.Window
             button.FlatAppearance.BorderColor = symbol.Outline.Color;
             button.FlatAppearance.BorderSize = (int)symbol.Outline.Size;
             button.Refresh();
+            if (button.Name == "class")
+                UpdateClassBreaksRenderers();
+            else if (button.Name == "unique")
+                UpdateUniqueValueRenderers();
         }
 
         private void fillColorPicker_ValueChanged(object sender, Color value)
@@ -407,7 +411,7 @@ namespace DEETU.Source.Window
             mUniqueValueRenderers.Add(mUniqueValueRenderer);
 
             if (mUniqueDefaultButton != null) uniqueTableLayoutPanel.Controls.Remove(mUniqueDefaultButton);
-            Button defaultSymbolButton = GetFillSymbolButton((GeoSimpleFillSymbol)uniqueValueRenderer.DefaultSymbol);
+            Button defaultSymbolButton = GetFillSymbolButton((GeoSimpleFillSymbol)uniqueValueRenderer.DefaultSymbol, "unique");
             mUniqueDefaultButton = defaultSymbolButton;
             uniqueTableLayoutPanel.Controls.Add(defaultSymbolButton, 1, 2);
 
@@ -428,7 +432,7 @@ namespace DEETU.Source.Window
 
             if (mClassDefaultButton != null) classTableLayoutPanel.Controls.Remove(mClassDefaultButton);
 
-            Button defaultSymbolButton = GetFillSymbolButton((GeoSimpleFillSymbol)classBreaksRenderer.DefaultSymbol);
+            Button defaultSymbolButton = GetFillSymbolButton((GeoSimpleFillSymbol)classBreaksRenderer.DefaultSymbol, "class");
             mClassDefaultButton = defaultSymbolButton;
             classTableLayoutPanel.Controls.Add(defaultSymbolButton, 1, 2);
 
@@ -513,6 +517,36 @@ namespace DEETU.Source.Window
                 classColorgradComboBox.Items.AddRange(mClassBreaksRenderers.ToArray());
                 classColorgradComboBox.SelectedIndex = 0;
                 classDataGridView.Refresh();
+            }
+        }
+        private void UpdateClassBreaksRenderers()
+        {
+            for (int i = 0; i < mClassBreaksRenderers.Count; ++i)
+            {
+                GeoClassBreaksRenderer sRenderer = mClassBreaksRenderers[i];
+                for (int j = 0; j < sRenderer.BreakCount; ++j)
+                {
+                    GeoSimpleFillSymbol sSymbol = (sRenderer.GetSymbol(j) as GeoSimpleFillSymbol);
+                    GeoSimpleFillSymbol sDefaultSymbol = (mClassBreaksRenderer.DefaultSymbol as GeoSimpleFillSymbol);
+                    sSymbol.Outline.Size = sDefaultSymbol.Outline.Size;
+                    sSymbol.Outline.Style = sDefaultSymbol.Outline.Style;
+                    sSymbol.Outline.Color = sDefaultSymbol.Outline.Color;
+                }
+            }
+        }
+        private void UpdateUniqueValueRenderers()
+        {
+            for (int i = 0; i < mUniqueValueRenderers.Count; ++i)
+            {
+                GeoUniqueValueRenderer sRenderer = mUniqueValueRenderers[i];
+                for (int j = 0; j < sRenderer.ValueCount; ++j)
+                {
+                    GeoSimpleFillSymbol sSymbol = (sRenderer.GetSymbol(j) as GeoSimpleFillSymbol);
+                    GeoSimpleFillSymbol sDefaultSymbol = (mUniqueValueRenderer.DefaultSymbol as GeoSimpleFillSymbol);
+                    sSymbol.Outline.Size = sDefaultSymbol.Outline.Size;
+                    sSymbol.Outline.Style = sDefaultSymbol.Outline.Style;
+                    sSymbol.Outline.Color = sDefaultSymbol.Outline.Color;
+                }
             }
         }
     }
