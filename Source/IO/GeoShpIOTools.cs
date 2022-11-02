@@ -215,6 +215,7 @@ namespace DEETU.IO
             for (int i = 0; i < table.mColumnCount; i++)
             {
                 string name = System.Text.Encoding.Default.GetString(br.ReadBytes(10));
+                name = name.TrimEnd('\0');
                 table.dt.Columns.Add(new DataColumn(name, typeof(string)));
                 GeoField sField = new GeoField(name,GeoValueTypeConstant.dText);
                 table.mColumnsName.Add(name);

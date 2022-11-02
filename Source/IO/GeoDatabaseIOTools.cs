@@ -122,7 +122,7 @@ namespace DEETU.IO
             conn_str += path;
             //如果不存在，则新建数据库
             bool is_new = false;
-            if(File.Exists(path)==false)
+            if(true)
             {
                 is_new = true;
                 try
@@ -139,7 +139,7 @@ namespace DEETU.IO
             conn.Open();
             SQLiteCommand cmd = conn.CreateCommand();
             //新建表
-            if (is_new)
+            if (true)
             {
                 //新建表
                 cmd.CommandText = "CREATE TABLE project_metadata (name varchar,crs BLOB, geotype int,renderer BLOB)";
@@ -147,10 +147,10 @@ namespace DEETU.IO
                 for (int i = 0; i < project.Count; i++)
                 {
                     GeoMapLayer sLayer = project.GetItem(i);
-                    string attribute_str = "CREATE TABLE " + sLayer.Name + " (id integer,geometry BLOB,";
+                    string attribute_str = "CREATE TABLE " + sLayer.Name + " (UID integer,geometry BLOB,";
                     for (int j = 0; j < sLayer.AttributeFields.Count; j++)
                     {
-                        attribute_str += sLayer.AttributeFields.GetItem(j).Name;
+                        attribute_str +="'"+ sLayer.AttributeFields.GetItem(j).Name+"'";
                         switch (sLayer.AttributeFields.GetItem(j).ValueType)
                         {
                             case GeoValueTypeConstant.dDouble:
@@ -216,7 +216,7 @@ namespace DEETU.IO
                 for(int ID=0;ID<sLayer.Features.Count; ID++)
                 {
                     GeoFeature sFeature = sLayer.Features.GetItem(ID);
-                    string insert_str = "INSERT INTO " + sLayer.Name + " VALUES(@id,@geometry,";
+                    string insert_str = "INSERT INTO " + sLayer.Name + " VALUES(@UID,@geometry,";
                     for (int j=0;j<sFields.Count;j++)
                     {
                         GeoValueTypeConstant type = sFields.GetItem(j).ValueType;
@@ -227,7 +227,7 @@ namespace DEETU.IO
                     }
                     cmd.Parameters.Clear();
                     cmd.CommandText = insert_str;
-                    cmd.Parameters.Add("@id", System.Data.DbType.Int32).Value = ID;
+                    cmd.Parameters.Add("@UID", System.Data.DbType.Int32).Value = ID;
                     cmd.Parameters.Add("@geometry", System.Data.DbType.Binary).Value = 
                         GeometryToByteArray(sFeature.Geometry);
                     //为每个属性赋值
@@ -252,6 +252,7 @@ namespace DEETU.IO
                                 break;
                         }
                     }
+
                     try { cmd.ExecuteNonQuery(); } catch (Exception e) { MessageBox.Show(e.Message.ToString()); }
                 }
             }
