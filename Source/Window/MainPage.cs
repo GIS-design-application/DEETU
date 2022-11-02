@@ -3060,6 +3060,35 @@ namespace DEETU.Source.Window
             }
         }
 
+        private void layerTreeView_DrawNode(object sender, DrawTreeNodeEventArgs e)
+        {
+            Color selectedColor = Color.FromArgb(48,48,48);
+            if ((e.State & TreeNodeStates.Selected) != 0)
+            {
+                e.Graphics.FillRectangle(new SolidBrush(selectedColor), e.Node.Bounds);
+         
+                Font nodeFont = e.Node.NodeFont;
+                if (nodeFont == null) nodeFont = ((TreeView)sender).Font;
+                e.Graphics.DrawString(e.Node.Text, nodeFont, Brushes.White,e.Bounds);
+            }
+            else
+            {
+                e.DrawDefault = true;
+            }
+         
+            //if ((e.State & TreeNodeStates.Focused) != 0)
+            //{
+            //    using (Pen focusPen = new Pen(Color.Black))
+            //    {
+            //        focusPen.DashStyle = System.Drawing.Drawing2D.DashStyle.Dot;
+            //        Rectangle focusBounds = e.Node.Bounds;
+            //        focusBounds.Size = new Size(focusBounds.Width - 1,
+            //        focusBounds.Height - 1);
+            //        e.Graphics.DrawRectangle(focusPen, focusBounds);
+            //    }
+            //}
+        }
+
         private void 剪切要素_Click(object sender, EventArgs e)
         {
             Cut();
