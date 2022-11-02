@@ -218,7 +218,28 @@ namespace DEETU.IO
                 table.dt.Columns.Add(new DataColumn(name, typeof(string)));
                 GeoField sField = new GeoField(name,GeoValueTypeConstant.dText);
                 table.mColumnsName.Add(name);
-                _ = br.ReadBytes(6);//包含类型信息，暂时没读
+                _ = br.ReadBytes(1);
+                char typeChar =Convert.ToChar(br.ReadByte());
+                //MessageBox.Show(typeChar.ToString());
+                switch(typeChar)
+                {
+                    case ('C'):
+                    case ('Y'):
+                    case ('D'):
+                    case ('T'):
+                        sField.ValueType = GeoValueTypeConstant.dText; break;
+                    case ('F'):
+                        sField.ValueType = GeoValueTypeConstant.dSingle;break;
+                    case ('N'):
+                    case ('B'):
+                        sField.ValueType = GeoValueTypeConstant.dDouble; break;
+                    case ('I'):
+                        sField.ValueType = GeoValueTypeConstant.dInt32; break;
+                    case ('L'):
+                        sField.ValueType = GeoValueTypeConstant.dText; break;
+
+                }
+                _ = br.ReadBytes(4);
                 short length = br.ReadByte();
                 table.mColumnsLength.Add(length);
                 sField.Length = length;
@@ -236,10 +257,33 @@ namespace DEETU.IO
                 sFeature.Attributes = new GeoAttributes();
                 for (int j = 0; j < table.mColumnCount; j++)
                 {
-                    string temp = System.Text.Encoding.Default.GetString(br.ReadBytes(table.mColumnsLength[j]));
+                    byte[] attr = br.ReadBytes(table.mColumnsLength[j]);
+                    
+                    string temp = System.Text.Encoding.Default.GetString(attr);
+                    //MessageBox.Show(table.mColumnsLength[j].ToString()+temp);
                     if (j == 0) table.ID.Add(temp);
                     dr[(string)table.mColumnsName[j]] = temp;
-                    object sValue = temp as object;
+                    object sValue;
+                    switch (sFields.GetItem(j).ValueType)
+                    {
+                        case GeoValueTypeConstant.dInt32:
+                            MessageBox.Show(temp);
+                            sValue = Convert.ToInt32(temp) as object;
+                            break;
+                        case GeoValueTypeConstant.dSingle:
+                            sValue = Convert.ToSingle(temp) as object;
+                            break;
+                        case GeoValueTypeConstant.dDouble:
+                            MessageBox.Show(temp);
+                            sValue = Convert.ToDouble(temp) as object;
+                            break;
+                        case GeoValueTypeConstant.dText:
+                            sValue = Convert.ToString(temp) as object;
+                            break;
+                        default:
+                            sValue = temp as object;break;
+                    }
+
                     sFeature.Attributes.Append(sValue);
                 }
                 table.dt.Rows.Add(dr);
