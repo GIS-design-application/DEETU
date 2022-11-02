@@ -39,6 +39,11 @@ namespace DEETU.Map
 
         #region 方法
 
+        public bool Contain(GeoMapLayer layer)
+        {
+            return _Layers.Contains(layer);
+        }
+
         /// <summary>
         /// 获取指定索引号的图层
         /// </summary>

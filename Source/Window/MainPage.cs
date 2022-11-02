@@ -93,6 +93,8 @@ namespace DEETU.Source.Window
             ShowCrs();
             // 设置编辑状态
             SetEditing();
+            // 设置撤销、重做状态
+            CheckUndo();
         }
 
 
@@ -730,7 +732,7 @@ namespace DEETU.Source.Window
             SetEditing();
 
             startEditToolStripButton.Checked = !startEditToolStripButton.Checked;
-            check_undo_enable();
+            CheckUndo();
         }
         #endregion
 
@@ -2805,11 +2807,14 @@ namespace DEETU.Source.Window
             set
             {
                 _undo_index = value;
-                check_undo_enable();
+#if DEBUG
+                logging = _undo_index.ToString();
+#endif
+                CheckUndo();
             }
         }
 
-        private void check_undo_enable ()
+        private void CheckUndo ()
         {
             if (_undo_index == -1)
             {
@@ -2832,25 +2837,43 @@ namespace DEETU.Source.Window
                 重做ToolStripButton.Enabled = true;
                 重做操作ToolStripMenuItem.Enabled = true;
             }
+
+            if (undo_layers.Count == 0)
+            {
+                重做ToolStripButton.Enabled = false;
+                重做操作ToolStripMenuItem.Enabled = false;
+                撤销ToolStripButton.Enabled = false;
+                撤销操作ToolStripMenuItem.Enabled = false;
+            }
+
+            if (undo_index != -1)
+            {
+                var currentLayer = undo_layers[undo_index].Item2;
+                var anotherCurrentLayer = undo_layers[undo_index].Item1;
+                if (!geoMap.Layers.Contain(currentLayer) && !geoMap.Layers.Contain(anotherCurrentLayer))
+                    // 如果没有这个图层（一般来说是被删掉了），那么直接清空编辑树
+                {
+                    undo_layers.Clear();
+                    undo_index = -1;
+                }
+                }
         }
 
         private void Undo()
         {
-            check_undo_enable();
             if (undo_layers.Count == 0 || undo_index == -1)
             {
                 return;
             }
             geoMap.Layers.Replace(undo_layers[undo_index].Item2, undo_layers[undo_index].Item1);
-            undo_index--;
             
             geoMap.RedrawMap();
+            undo_index--;
             CurrentAcitveLayerUpdated?.Invoke(this, mCurrentLayerNode.Tag as GeoMapLayer);
         }
 
         private void Redo()
         {
-            check_undo_enable();
             if (undo_layers.Count == 0 || undo_index == undo_layers.Count -1)
             {
                 return;
@@ -2858,6 +2881,7 @@ namespace DEETU.Source.Window
             undo_index++;
             geoMap.Layers.Replace(undo_layers[undo_index].Item1, undo_layers[undo_index].Item2);
             geoMap.RedrawMap();
+            
             CurrentAcitveLayerUpdated?.Invoke(this, mCurrentLayerNode.Tag as GeoMapLayer);
         }
 
@@ -2872,7 +2896,7 @@ namespace DEETU.Source.Window
         private GeoMapLayer NewUndo(GeoMapLayer srcLayer)
         {
             ResetUndo();
-            undo_index++;
+            
             
             var desLayer = srcLayer.Clone();
             geoMap.Layers.Replace(srcLayer, desLayer);
@@ -2880,6 +2904,7 @@ namespace DEETU.Source.Window
             
             undo_layers.Add((srcLayer, desLayer));
             UpdateTreeView();
+            undo_index++;
             return desLayer;
         }
         #endregion
@@ -3066,6 +3091,25 @@ namespace DEETU.Source.Window
                 node.Checked = false;
             }
         }
+
+        private void 新建图层ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+            // 弹出一个对话框
+            var newLayerForm = new NewLayerForm();
+
+            newLayerForm.ShowDialog();
+            var newLayer = newLayerForm.Layer;
+
+            if (newLayer != null)
+            {
+                geoMap.Layers.Add(newLayer);
+                UpdateTreeView();
+                geoMap.RedrawMap();
+            }
+        }
+
+        
 
         private void 剪切要素_Click(object sender, EventArgs e)
         {
