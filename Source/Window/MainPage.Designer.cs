@@ -1,3 +1,5 @@
+using System;
+
 namespace DEETU.Source.Window
 {
 	partial class MainPage
@@ -257,6 +259,7 @@ namespace DEETU.Source.Window
             this.图层重命名ToolStripMenuItem.Name = "图层重命名ToolStripMenuItem";
             this.图层重命名ToolStripMenuItem.Size = new System.Drawing.Size(176, 24);
             this.图层重命名ToolStripMenuItem.Text = "图层重命名";
+            this.图层重命名ToolStripMenuItem.Click += new System.EventHandler(this.图层重命名ToolStripMenuItem_Click);
             // 
             // toolStripSeparator6
             // 
@@ -1392,9 +1395,10 @@ namespace DEETU.Source.Window
 
 		}
 
-		#endregion
 
-		private System.Windows.Forms.ToolStripPanel BottomToolStripPanel;
+        #endregion
+
+        private System.Windows.Forms.ToolStripPanel BottomToolStripPanel;
 		private System.Windows.Forms.ToolStripPanel TopToolStripPanel;
 		private System.Windows.Forms.ToolStripPanel RightToolStripPanel;
 		private System.Windows.Forms.ToolStripPanel LeftToolStripPanel;
