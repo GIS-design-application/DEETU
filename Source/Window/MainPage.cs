@@ -2537,6 +2537,8 @@ namespace DEETU.Source.Window
             
             // 获取文件名
             OpenFileDialog sDialog = new OpenFileDialog();
+            sDialog.Filter = "layerfiles(*.lay)|*.lay|All files(*.*)|*.*";
+            sDialog.FilterIndex = 1;
             string sFileName = "";
             if (sDialog.ShowDialog() == DialogResult.OK)
             {
