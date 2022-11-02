@@ -267,14 +267,14 @@ namespace DEETU.IO
                     switch (sFields.GetItem(j).ValueType)
                     {
                         case GeoValueTypeConstant.dInt32:
-                            MessageBox.Show(temp);
+                            //MessageBox.Show(temp);
                             sValue = Convert.ToInt32(temp) as object;
                             break;
                         case GeoValueTypeConstant.dSingle:
                             sValue = Convert.ToSingle(temp) as object;
                             break;
                         case GeoValueTypeConstant.dDouble:
-                            MessageBox.Show(temp);
+                            //MessageBox.Show(temp);
                             sValue = Convert.ToDouble(temp) as object;
                             break;
                         case GeoValueTypeConstant.dText:
