@@ -19,6 +19,7 @@ namespace DEETU.Source.Window
         private GeoMapLayer mTemporaryLayer;
         private InfoPage mInfoPage;
         private FieldPage mFieldPage;
+        private AnnotationPage mAnnotationPage;
         #endregion
 
         public LayerAttributesForm(GeoMapLayer layer)
@@ -46,7 +47,10 @@ namespace DEETU.Source.Window
             mFieldPage = new FieldPage(mLayer);
             mFieldPage.FieldEdited += mInfoPage.FieldPage_FieldEdited;
             AddPage(mFieldPage, 3);
-            AddPage(new AnnotationPage(mTemporaryLayer), 4);
+
+            mAnnotationPage = new AnnotationPage(mTemporaryLayer);
+            AddPage(mAnnotationPage, 4);
+
             
             Aside.CreateNode("信息", 112, 24, 1); 
             Aside.CreateNode("符号化", 61445, 24, 2); 
@@ -71,6 +75,15 @@ namespace DEETU.Source.Window
         private void cancelButton_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void Aside_MenuItemClick(TreeNode node, NavMenuItem item, int pageIndex)
+        {
+            if (pageIndex == 4)
+                // 注记页面
+            {
+                mAnnotationPage.UpdateSampleFontTextBox();
+            }
         }
     }
 }

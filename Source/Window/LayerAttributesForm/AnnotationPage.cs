@@ -10,6 +10,7 @@ using Sunny.UI;
 using DEETU.Map;
 using DEETU.Core;
 using DEETU.Tool;
+using System.Drawing.Drawing2D;
 
 namespace DEETU.Source.Window
 {
@@ -17,6 +18,12 @@ namespace DEETU.Source.Window
     {
         #region 字段
         private GeoMapLayer mLayer;
+        private static string sampleText = "lorem ipsum 样例文本";
+        private static StringFormat sf = new StringFormat()
+        {
+            Alignment = StringAlignment.Center,
+            LineAlignment = StringAlignment.Center,
+        };
         #endregion
 
         public AnnotationPage(GeoMapLayer layer)
@@ -24,6 +31,7 @@ namespace DEETU.Source.Window
             InitializeComponent();
             mLayer = layer;
             InitializeAnnotations();
+            UpdateSampleFontTextBox();
         }
 
         #region 私有函数
@@ -89,6 +97,7 @@ namespace DEETU.Source.Window
                 }
                 mLayer.LabelRenderer.LabelFeatures = true;
                 ShowLabelRendererInfo(mLayer.LabelRenderer);
+                UpdateSampleFontTextBox();
             }
             else
             {
@@ -110,6 +119,8 @@ namespace DEETU.Source.Window
                 mLayer.LabelRenderer.TextSymbol.UseMask = false;
                 tableLayoutPanel1.SetDisabled();
             }
+
+            UpdateSampleFontTextBox();
         }
 
         private void fieldComboBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -123,21 +134,69 @@ namespace DEETU.Source.Window
             fontDialog.ShowDialog();
             mLayer.LabelRenderer.TextSymbol.Font = fontDialog.Font;
             fontTextBox.Text = GetFontString(mLayer.LabelRenderer.TextSymbol.Font);
+            UpdateSampleFontTextBox();
         }
 
+        internal void UpdateSampleFontTextBox()
+        {
+            //SampleFontTextBox.ForeColor = mLayer.LabelRenderer.TextSymbol.FontColor;
+            //SampleFontTextBox.Font = mLayer.LabelRenderer.TextSymbol.Font;
+            //var g = SampleFontTextBox.CreateGraphics();
+            //var maskColor = mLayer.LabelRenderer.TextSymbol.MaskColor;
+            //var maskWidth = mLayer.LabelRenderer.TextSymbol.MaskWidth;
+            //var sMaskPen = new Pen(maskColor, (float)maskWidth);
+
+            //SampleFontTextBox
+
+            if(!enableCheckBox.Checked)
+            {
+                return;
+            }
+
+            var g = SampleTextPanel.CreateGraphics();
+            g.SmoothingMode = SmoothingMode.HighQuality;
+            
+            var textSymbol = mLayer.LabelRenderer.TextSymbol;
+            SolidBrush sTextBrush = new SolidBrush(textSymbol.FontColor);
+            Pen sMaskPen = new Pen(textSymbol.MaskColor, (float)textSymbol.MaskWidth);
+            GraphicsPath sGraphicPath = new GraphicsPath();
+            
+            var textSize  = g.DpiY * textSymbol.Font.Size / 72;
+            if (maskCheckBox.Checked)
+            {
+                sGraphicPath.AddString(sampleText, textSymbol.Font.FontFamily, (Int32)textSymbol.Font.Style, textSize, new Rectangle(0, 0, SampleTextPanel.Width, SampleTextPanel.Height), sf);
+                g.DrawPath(sMaskPen, sGraphicPath);
+                g.FillPath(sTextBrush, sGraphicPath);
+            }
+            else
+            {
+                sGraphicPath.AddString(sampleText, textSymbol.Font.FontFamily, (Int32)textSymbol.Font.Style, textSize, new Rectangle(0, 0, SampleTextPanel.Width, SampleTextPanel.Height), sf);
+                g.FillPath(sTextBrush, sGraphicPath);
+            }
+
+            sGraphicPath.Dispose();
+            sTextBrush.Dispose();
+            sMaskPen.Dispose();
+            g.Dispose();
+
+            return;
+        }
         private void fontColotPicker_ValueChanged(object sender, Color value)
         {
             mLayer.LabelRenderer.TextSymbol.FontColor = value;
+            UpdateSampleFontTextBox();
         }
 
         private void maskColorPicker_ValueChanged(object sender, Color value)
         {
             mLayer.LabelRenderer.TextSymbol.MaskColor = value;
+            UpdateSampleFontTextBox();
         }
 
         private void maskSizeDoubleUpDown_ValueChanged(object sender, double value)
         {
             mLayer.LabelRenderer.TextSymbol.MaskWidth = value;
+            UpdateSampleFontTextBox();
         }
 
         private void xOffsetDoubleUpDown_ValueChanged(object sender, double value)

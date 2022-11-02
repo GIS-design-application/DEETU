@@ -54,6 +54,7 @@ namespace DEETU.Source.Window
             this.Aside.Location = new System.Drawing.Point(2, 35);
             this.Aside.Size = new System.Drawing.Size(133, 784);
             this.Aside.Style = Sunny.UI.UIStyle.Custom;
+            this.Aside.MenuItemClick += new Sunny.UI.UINavMenu.OnMenuItemClick(this.Aside_MenuItemClick);
             // 
             // okButton
             // 
@@ -83,7 +84,7 @@ namespace DEETU.Source.Window
             // 
             // LayerAttributesForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 27F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(19F, 41F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(590, 821);
             this.ExtendBox = true;
