@@ -34,9 +34,7 @@ namespace DEETU.Source.Window
         public LineSymbolPage(GeoMapLayer layer)
         {
             InitializeComponent();
-            // mLayer = layer.Clone();
             mLayer = layer;
-            renderMethodCB.SelectedIndex = (int)layer.Renderer.RendererType;
             renderMethodCB.SelectedIndexChanged += RenderMethodCB_SelectedIndexChanged;
             renderTabControl.SelectedIndexChanged += RenderTabControl_SelectedIndexChanged;
             
@@ -186,17 +184,9 @@ namespace DEETU.Source.Window
             }
             if (mLayer.Renderer != null)
             {
-                UniqueValueComboBoxEx.Items.Clear();
-                uniqueDataGridView.Rows.Clear();
-                mUniqueValueRenderers.Clear();
-
                 initializeUniqueValueRenderer();
-                UniqueValueComboBoxEx.Items.AddRange(mUniqueValueRenderers.ToArray());
-                UniqueValueComboBoxEx.SelectedIndex = 0;
-                uniqueDataGridView.Refresh();
             }
         }
-
         private void classFieldComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (classFieldComboBox.SelectedIndex == -1) return;
@@ -207,17 +197,11 @@ namespace DEETU.Source.Window
             }
             if (mLayer.Renderer != null)
             {
-                ClassBreaksComboBoxEx.Items.Clear();
-                classDataGridView.Rows.Clear();
-                mClassBreaksRenderers.Clear();
-
                 initializeClassBreaksRenderer(uiIntegerUpDown2.Value);
-                ClassBreaksComboBoxEx.Items.AddRange(mClassBreaksRenderers.ToArray());
-                ClassBreaksComboBoxEx.SelectedIndex = 0;
-                classDataGridView.Refresh();
             }
 
         }
+        
         private void RenderTabControl_SelectedIndexChanged(object sender, EventArgs e)
         {
             renderMethodCB.SelectedIndex = renderTabControl.SelectedIndex;
@@ -273,7 +257,6 @@ namespace DEETU.Source.Window
             }
             uniqueDataGridView.Refresh();
         }
-
         private void ClassBreaksComboBoxEx_SelectedIndexChanged(object sender, EventArgs e)
         {
             mLayer.Renderer = mClassBreaksRenderer = mClassBreaksRenderers[ClassBreaksComboBoxEx.SelectedIndex];
@@ -288,6 +271,7 @@ namespace DEETU.Source.Window
             classDataGridView.Refresh();
         }
 
+
         private void uniqueDataGridView_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
         {
             if(e.ColumnIndex == 0)
@@ -298,7 +282,16 @@ namespace DEETU.Source.Window
                 SimpleForm.Show();
             }
         }
-
+        private void classDataGridView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex == 0)
+            {
+                EditSimpleSymbolForm SimpleForm = new EditSimpleSymbolForm((mLayer.Renderer as GeoClassBreaksRenderer).GetSymbol(e.RowIndex));
+                FormClosedEventHandler handle = (obj, eve) => DataGridView_FormClosed(e.RowIndex, GeoRendererTypeConstant.ClassBreaks);
+                SimpleForm.FormClosed += handle;
+                SimpleForm.Show();
+            }
+        }
         private void DataGridView_FormClosed(int index, GeoRendererTypeConstant type)
         {
             if(type == GeoRendererTypeConstant.ClassBreaks)
@@ -317,18 +310,44 @@ namespace DEETU.Source.Window
             }
         }
 
-        private void classDataGridView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+
+        private void uiIntegerUpDown2_ValueChanged(object sender, int value)
         {
-            if (e.ColumnIndex == 0)
+            if (mClassBreaksRenderer == null || mClassBreaksRenderer.BreakCount != value)
             {
-                EditSimpleSymbolForm SimpleForm = new EditSimpleSymbolForm((mLayer.Renderer as GeoClassBreaksRenderer).GetSymbol(e.RowIndex));
-                FormClosedEventHandler handle = (obj, eve) => DataGridView_FormClosed(e.RowIndex, GeoRendererTypeConstant.ClassBreaks);
-                SimpleForm.FormClosed += handle;
-                SimpleForm.Show();
+                mLayer.Renderer = CreateClassBreaksRenderer(classFieldComboBox.SelectedItem.ToString(), value, uiDoubleUpDown1.Value, uiDoubleUpDown2.Value);
+                mClassBreaksRenderer = mLayer.Renderer as GeoClassBreaksRenderer;
             }
+            if (mLayer.Renderer != null)
+            {
+                initializeClassBreaksRenderer(value);
+            }
+
         }
+
+        private void uiDoubleUpDown1_ValueChanged(object sender, double value)
+        {
+            if (mClassBreaksRenderer != null)
+            {
+                UpdateClassBreaksRenderers(mClassBreaksRenderer.BreakCount, uiDoubleUpDown1.Value, uiDoubleUpDown2.Value);
+            }
+
+        }
+
+        private void uiDoubleUpDown2_ValueChanged(object sender, double value)
+        {
+            if (mClassBreaksRenderer != null)
+            {
+                UpdateClassBreaksRenderers(mClassBreaksRenderer.BreakCount, uiDoubleUpDown1.Value, uiDoubleUpDown2.Value);
+            }
+
+        }
+
+
         #endregion
 
+        #region renderer建立与修改
+        // 初始化渲染
         private void initializeSimpleRenderer()
         {
             GeoSimpleRenderer simpleRenderer = (GeoSimpleRenderer)mLayer.Renderer;
@@ -339,45 +358,66 @@ namespace DEETU.Source.Window
             styleComboBox.SelectedIndex = (int)lineSymbol.Style;
         }
 
+        // 初始化渲染
         private void initializeUniqueValueRenderer()
         {
+            // 先清空
+            UniqueValueComboBoxEx.Items.Clear();
+            uniqueDataGridView.Rows.Clear();
+            mUniqueValueRenderers.Clear();
+            // 建立当前的
             GeoUniqueValueRenderer uniqueValueRenderer = (GeoUniqueValueRenderer)mLayer.Renderer;
             mUniqueValueRenderer = uniqueValueRenderer;
             mUniqueValueRenderers.Add(mUniqueValueRenderer);
-
+            // 建立默认按钮
             if (mUniqueDefaultButton != null) uniqueTableLayoutPanel.Controls.Remove(mUniqueDefaultButton);
             Button defaultSymbolButton = GetLineSymbolButton((GeoSimpleLineSymbol)uniqueValueRenderer.DefaultSymbol);
             mUniqueDefaultButton = defaultSymbolButton;
             uniqueTableLayoutPanel.Controls.Add(defaultSymbolButton, 1, 2);
-
+            // 建立当前的符号列表展示
             for (int i = 0; i < uniqueValueRenderer.ValueCount; i++)
             {
                 GeoSimpleLineSymbol lineSymbol = (GeoSimpleLineSymbol)uniqueValueRenderer.GetSymbol(i);
                 Bitmap symbolImage = CreateLineBitmapFromSymbol(lineSymbol);
                 uniqueDataGridView.AddRow(symbolImage, uniqueValueRenderer.GetValue(i));
             }
+            uniqueDataGridView.Refresh();
+
+            // 建立其他渲染
             CreateUniqueValueRenderers((mLayer.Renderer as GeoUniqueValueRenderer).Field);
+            UniqueValueComboBoxEx.Items.AddRange(mUniqueValueRenderers.ToArray());
+            UniqueValueComboBoxEx.SelectedIndex = 0;
         }
 
+        // 初始化渲染
         private void initializeClassBreaksRenderer(int value)
         {
+            // 先清空
+            ClassBreaksComboBoxEx.Items.Clear();
+            classDataGridView.Rows.Clear();
+            mClassBreaksRenderers.Clear();
+            // 建立当前渲染
             GeoClassBreaksRenderer classBreaksRenderer = (GeoClassBreaksRenderer)mLayer.Renderer;
             mClassBreaksRenderer = classBreaksRenderer;
             mClassBreaksRenderers.Add(mClassBreaksRenderer);
-
+            // 建立默认按钮
             if (mClassDefaultButton != null) classTableLayoutPanel.Controls.Remove(mClassDefaultButton);
             
             Button defaultSymbolButton = GetLineSymbolButton((GeoSimpleLineSymbol)classBreaksRenderer.DefaultSymbol);
             mClassDefaultButton = defaultSymbolButton;
             classTableLayoutPanel.Controls.Add(defaultSymbolButton, 1, 2);
-
+            // 建立每个图片展示
             for (int i = 0; i < classBreaksRenderer.BreakCount; i++)
             {
                 GeoSimpleLineSymbol lineSymbol = (GeoSimpleLineSymbol)classBreaksRenderer.GetSymbol(i);
                 Bitmap symbolImage = CreateLineBitmapFromSymbol(lineSymbol);
                 classDataGridView.AddRow(symbolImage, classBreaksRenderer.GetBreakValue(i).ToString("F2"));
             }
+            classDataGridView.Refresh();
+            // 建立其他备选渲染
             CreateClassBreaksRenderers((mLayer.Renderer as GeoClassBreaksRenderer).Field, value);
+            ClassBreaksComboBoxEx.Items.AddRange(mClassBreaksRenderers.ToArray());
+            ClassBreaksComboBoxEx.SelectedIndex = 0;
         }
         private GeoClassBreaksRenderer CreateClassBreaksRenderer(string field, int n, double startWidth = 3.5, double endWidth = 3.5)
         {
@@ -511,46 +551,6 @@ namespace DEETU.Source.Window
             sRenderer.Symbol = sSymbol;
             return sRenderer;
         }
-
-        private void uiIntegerUpDown2_ValueChanged(object sender, int value)
-        {
-            if (mClassBreaksRenderer == null || mClassBreaksRenderer.BreakCount != value)
-            {
-                mLayer.Renderer = CreateClassBreaksRenderer(classFieldComboBox.SelectedItem.ToString(), value, uiDoubleUpDown1.Value, uiDoubleUpDown2.Value);
-                mClassBreaksRenderer = mLayer.Renderer as GeoClassBreaksRenderer;
-            }
-            if (mLayer.Renderer != null)
-            {
-                ClassBreaksComboBoxEx.Items.Clear();
-                classDataGridView.Rows.Clear();
-                mClassBreaksRenderers.Clear();
-
-                initializeClassBreaksRenderer(value);
-                ClassBreaksComboBoxEx.Items.AddRange(mClassBreaksRenderers.ToArray());
-                ClassBreaksComboBoxEx.SelectedIndex = 0;
-                classDataGridView.Refresh();
-            }
-
-        }
-
-        private void uiDoubleUpDown1_ValueChanged(object sender, double value)
-        {
-            if (mClassBreaksRenderer != null)
-            {
-                UpdateClassBreaksRenderers(mClassBreaksRenderer.BreakCount, uiDoubleUpDown1.Value, uiDoubleUpDown2.Value);
-            }
-
-        }
-
-        private void uiDoubleUpDown2_ValueChanged(object sender, double value)
-        {
-            if (mClassBreaksRenderer != null)
-            {
-                UpdateClassBreaksRenderers(mClassBreaksRenderer.BreakCount, uiDoubleUpDown1.Value, uiDoubleUpDown2.Value);
-            }
-
-        }
-
         private void UpdateClassBreaksRenderers(int value, double startWidth, double endWidth)
         {
             classDataGridView.Rows.Clear();
@@ -570,5 +570,7 @@ namespace DEETU.Source.Window
             }
             classDataGridView.Refresh();
         }
+        #endregion
+
     }
 }
