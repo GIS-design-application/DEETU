@@ -111,7 +111,7 @@ namespace DEETU.Source.Window
                 size = (int)(20 * symbol.Size / uiDoubleUpDown1.Value);
             else
                 size = (int)(20 * symbol.Size / uiDoubleUpDown2.Value);
-            Rectangle sRect = new Rectangle(0, 0, size, size);
+            Rectangle sRect = new Rectangle((20 - size) / 2, (20 - size) / 2, size, size);
             GeoMapDrawingTools.DrawSimpleMarker(g, sRect, 0, symbol); // dpm is useless in this 
             g.Dispose();
             return styleImage;
@@ -425,7 +425,7 @@ namespace DEETU.Source.Window
                     sRenderer.AddBreakValue(sValue, sSymbol);
                 }
                 Color sStartColor = new GeoSimpleMarkerSymbol().Color;
-                Color sEndColor = Color.FromArgb(sStartColor.R - 128, sStartColor.G - 128, sStartColor.B - 128);
+                Color sEndColor = Color.FromArgb(sStartColor.R / 3, sStartColor.G / 3, sStartColor.B / 3);
                 sRenderer.RampColor(sStartColor, sEndColor);
                 sRenderer.DefaultSymbol = new GeoSimpleMarkerSymbol();
                 return sRenderer;
