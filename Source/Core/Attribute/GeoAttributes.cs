@@ -51,6 +51,15 @@ namespace DEETU.Core
             return _Attributes[index];
         }
         /// <summary>
+        /// 设置指定索引号的元素
+        /// </summary>
+        /// <param name="index"></param>
+        /// <param name="value"></param>
+        public void SetItem(int index, object value)
+        {
+            _Attributes[index] = value;
+        }
+        /// <summary>
         /// 添加一个点到末尾
         /// </summary>
         /// <param name="value">拟添加的值</param>

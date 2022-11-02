@@ -1930,7 +1930,10 @@ namespace DEETU.Source.Window
             // 在更新树的同时更新选中的节点
             if (mCurrentLayerNode != null)
             {
-                mCurrentLayerNode = layerTreeView.Nodes[mCurrentLayerNode.Index];
+                if (mCurrentLayerNode.Index >= layerTreeView.Nodes.Count) // 这个补丁是为了避免Remove最后一个出问题
+                    mCurrentLayerNode = null;
+                else
+                    mCurrentLayerNode = layerTreeView.Nodes[mCurrentLayerNode.Index];
                 //CurrentAcitveLayerUpdated?.Invoke(this, mCurrentLayerNode.Tag as GeoMapLayer);
             }
         }
@@ -2095,12 +2098,12 @@ namespace DEETU.Source.Window
             {
                 mMapOpStyle = GeoMapOpStyleEnum.Select;
                 this.Cursor = new Cursor("./icons/EditSelect.ico");
-                startEditToolStripButton.Image = new Bitmap("../../icons/edit_off.png");
+                startEditToolStripButton.Image = new Bitmap("./icons/edit_off.png");
                 startEditToolStripButton.ToolTipText = "结束编辑";
             }
             else
             {
-                startEditToolStripButton.Image = new Bitmap("../../icons/edit.png");
+                startEditToolStripButton.Image = new Bitmap("./icons/edit.png");
                 startEditToolStripButton.ToolTipText = "开始编辑";
             }
 
@@ -2222,6 +2225,8 @@ namespace DEETU.Source.Window
             CurrentAcitveLayerUpdated += attributeForm.MainPage_CurrentActiveLayerChanged;
             EditStatusChanged += attributeForm.MainPage_EditStatusChanged;
             attributeForm.Show();
+
+            attributeForm.FormClosed += AttributeForm_FormClosed;
         }
 
 
@@ -2254,6 +2259,13 @@ namespace DEETU.Source.Window
             InsertTreeNode(mCurrentLayerNode.Tag as GeoMapLayer, mCurrentLayerNode.Index);
             mCurrentLayerNode.Remove();
             geoMap.RedrawMap();
+        }
+
+        private void AttributeForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            AttributeTableForm attributeTableForm = sender as AttributeTableForm;
+            CurrentAcitveLayerUpdated -= attributeTableForm.MainPage_CurrentActiveLayerChanged;
+            EditStatusChanged -= attributeTableForm.MainPage_EditStatusChanged;
         }
 
         private void AttributeForm_MapRedraw(object sender)

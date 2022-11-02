@@ -17,6 +17,8 @@ namespace DEETU.Source.Window
         #region 字段
         private GeoMapLayer mLayer;
         private GeoMapLayer mTemporaryLayer;
+        private InfoPage mInfoPage;
+        private FieldPage mFieldPage;
         #endregion
 
         public LayerAttributesForm(GeoMapLayer layer)
@@ -25,7 +27,8 @@ namespace DEETU.Source.Window
             mLayer = layer;
             mTemporaryLayer = layer.Clone();
 
-            AddPage(new InfoPage(mLayer), 1);// 需要和下面的实时同步
+            mInfoPage = new InfoPage(mLayer);
+            AddPage(mInfoPage, 1);// 需要和下面的实时同步
             switch (mTemporaryLayer.ShapeType)
             {
                 case GeoGeometryTypeConstant.Point:
@@ -40,7 +43,9 @@ namespace DEETU.Source.Window
                 default:
                     break;
             }
-            AddPage(new FieldPage(mLayer), 3);
+            mFieldPage = new FieldPage(mLayer);
+            mFieldPage.FieldEdited += mInfoPage.FieldPage_FieldEdited;
+            AddPage(mFieldPage, 3);
             AddPage(new AnnotationPage(mTemporaryLayer), 4);
             
             Aside.CreateNode("信息", 112, 24, 1); 
