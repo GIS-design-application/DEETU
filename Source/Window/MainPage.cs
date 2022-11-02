@@ -1930,7 +1930,10 @@ namespace DEETU.Source.Window
             // 加一个补丁代码显示坐标系
             if (geoMap.Layers.Count > 0)
             {
-                mCrs = geoMap.Layers.GetItem(0).Crs;
+                if (layerTreeView.SelectedNode != null)
+                    mCrs = (layerTreeView.SelectedNode.Tag as GeoMapLayer).Crs;
+                else
+                { mCrs = geoMap.Layers.GetItem(0).Crs; }
                 ShowCrs();
             }
             layerTreeView.Nodes.Clear();
@@ -2369,7 +2372,11 @@ namespace DEETU.Source.Window
             int layerIndex = mCurrentLayerNode.Index;
             geoMap.Layers.Deselect();
             GeoMapLayer layer = geoMap.Layers.GetItem(layerIndex);
+
+            mCrs = layer.Crs;
+            
             layer.Selectable = true;
+            ShowCrs();
         }
 
         #region 事件
