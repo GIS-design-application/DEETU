@@ -193,6 +193,7 @@ namespace DEETU.Source.Window
             // recover selectedChanged
             featureList.SelectedIndexChanged += featureList_SelectedIndexChanged;
             featureList.Items[0].Selected = false;
+            featureList_SelectedIndexChanged(sender, e);
             MapRedraw?.Invoke(this);
             InitializeGridPage();
         }

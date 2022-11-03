@@ -2324,6 +2324,7 @@ namespace DEETU.Source.Window
                     {
                         sNode.Checked = false;
                     }
+                    sLayer.SelectedFeatures.Clear();
                 }
             }
             geoMap.RedrawMap();
