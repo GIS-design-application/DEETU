@@ -2420,6 +2420,7 @@ namespace DEETU.Source.Window
         /// <param name="e"></param>
         private void layerTreeView_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
         {
+            if (e.Node == mCurrentLayerNode) return;
             if (e.Node.Nodes.Count != 0)
                 mCurrentLayerNode = e.Node;
 

@@ -133,11 +133,11 @@ namespace DEETU.Source.Window
             this.selectByExtentToolStripDropDownButton = new System.Windows.Forms.ToolStripDropDownButton();
             this.交叉选择 = new System.Windows.Forms.ToolStripMenuItem();
             this.全包含选择 = new System.Windows.Forms.ToolStripMenuItem();
-            this.cancelSelectionToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.selectionModeToolStripButton = new System.Windows.Forms.ToolStripDropDownButton();
             this.newSelectionToolStripItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addSelectionToolStripItem = new System.Windows.Forms.ToolStripMenuItem();
             this.removeSelectionToolStripItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.cancelSelectionToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
@@ -242,69 +242,70 @@ namespace DEETU.Source.Window
             this.toolStripSeparator10,
             this.特性ToolStripMenuItem});
             this.layerContextMenuStrip.Name = "layerContextMenuStrip";
-            this.layerContextMenuStrip.Size = new System.Drawing.Size(177, 298);
+            this.layerContextMenuStrip.Size = new System.Drawing.Size(181, 296);
             // 
             // 缩放到图层范围ToolStripMenuItem
             // 
             this.缩放到图层范围ToolStripMenuItem.Name = "缩放到图层范围ToolStripMenuItem";
-            this.缩放到图层范围ToolStripMenuItem.Size = new System.Drawing.Size(176, 24);
+            this.缩放到图层范围ToolStripMenuItem.Size = new System.Drawing.Size(180, 24);
             this.缩放到图层范围ToolStripMenuItem.Text = "缩放到图层范围";
             this.缩放到图层范围ToolStripMenuItem.Click += new System.EventHandler(this.btnLayerExtent_Click);
             // 
             // 缩放到选中区域ToolStripMenuItem
             // 
             this.缩放到选中区域ToolStripMenuItem.Name = "缩放到选中区域ToolStripMenuItem";
-            this.缩放到选中区域ToolStripMenuItem.Size = new System.Drawing.Size(176, 24);
+            this.缩放到选中区域ToolStripMenuItem.Size = new System.Drawing.Size(180, 24);
             this.缩放到选中区域ToolStripMenuItem.Text = "缩放到选中区域";
             this.缩放到选中区域ToolStripMenuItem.Click += new System.EventHandler(this.btnSelectedAreaExtent_Click);
+            // 
             // 图层重命名ToolStripMenuItem
             // 
             this.图层重命名ToolStripMenuItem.Name = "图层重命名ToolStripMenuItem";
-            this.图层重命名ToolStripMenuItem.Size = new System.Drawing.Size(176, 24);
+            this.图层重命名ToolStripMenuItem.Size = new System.Drawing.Size(180, 24);
             this.图层重命名ToolStripMenuItem.Text = "图层重命名";
             this.图层重命名ToolStripMenuItem.Click += new System.EventHandler(this.图层重命名ToolStripMenuItem_Click);
             // 
             // toolStripSeparator6
             // 
             this.toolStripSeparator6.Name = "toolStripSeparator6";
-            this.toolStripSeparator6.Size = new System.Drawing.Size(173, 6);
+            this.toolStripSeparator6.Size = new System.Drawing.Size(177, 6);
             // 
             // 移除图层ToolStripMenuItem
             // 
             this.移除图层ToolStripMenuItem.Name = "移除图层ToolStripMenuItem";
-            this.移除图层ToolStripMenuItem.Size = new System.Drawing.Size(176, 24);
+            this.移除图层ToolStripMenuItem.Size = new System.Drawing.Size(180, 24);
             this.移除图层ToolStripMenuItem.Text = "移除图层";
             this.移除图层ToolStripMenuItem.Click += new System.EventHandler(this.移除图层ToolStripMenuItem_Click);
             // 
             // 移到顶层ToolStripMenuItem
             // 
             this.移到顶层ToolStripMenuItem.Name = "移到顶层ToolStripMenuItem";
-            this.移到顶层ToolStripMenuItem.Size = new System.Drawing.Size(176, 24);
+            this.移到顶层ToolStripMenuItem.Size = new System.Drawing.Size(180, 24);
             this.移到顶层ToolStripMenuItem.Text = "移到顶层";
             this.移到顶层ToolStripMenuItem.Click += new System.EventHandler(this.移到顶层ToolStripMenuItem_Click);
             // 
             // toolStripSeparator7
             // 
             this.toolStripSeparator7.Name = "toolStripSeparator7";
-            this.toolStripSeparator7.Size = new System.Drawing.Size(173, 6);
+            this.toolStripSeparator7.Size = new System.Drawing.Size(177, 6);
             // 
             // 打开属性表ToolStripMenuItem
             // 
             this.打开属性表ToolStripMenuItem.Name = "打开属性表ToolStripMenuItem";
-            this.打开属性表ToolStripMenuItem.Size = new System.Drawing.Size(176, 24);
+            this.打开属性表ToolStripMenuItem.Size = new System.Drawing.Size(180, 24);
             this.打开属性表ToolStripMenuItem.Text = "打开属性表";
             this.打开属性表ToolStripMenuItem.Click += new System.EventHandler(this.打开属性表ToolStripMenuItem_Click);
             // 
             // 切换编辑状态ToolStripMenuItem
             // 
             this.切换编辑状态ToolStripMenuItem.Name = "切换编辑状态ToolStripMenuItem";
-            this.切换编辑状态ToolStripMenuItem.Size = new System.Drawing.Size(176, 24);
+            this.切换编辑状态ToolStripMenuItem.Size = new System.Drawing.Size(180, 24);
             this.切换编辑状态ToolStripMenuItem.Text = "切换编辑状态";
             // 
             // toolStripSeparator8
             // 
             this.toolStripSeparator8.Name = "toolStripSeparator8";
-            this.toolStripSeparator8.Size = new System.Drawing.Size(173, 6);
+            this.toolStripSeparator8.Size = new System.Drawing.Size(177, 6);
             // 
             // 坐标参照系ToolStripMenuItem
             // 
@@ -312,7 +313,7 @@ namespace DEETU.Source.Window
             this.定义坐标参照系ToolStripMenuItem,
             this.坐标参照系转换ToolStripMenuItem});
             this.坐标参照系ToolStripMenuItem.Name = "坐标参照系ToolStripMenuItem";
-            this.坐标参照系ToolStripMenuItem.Size = new System.Drawing.Size(176, 24);
+            this.坐标参照系ToolStripMenuItem.Size = new System.Drawing.Size(180, 24);
             this.坐标参照系ToolStripMenuItem.Text = "坐标参照系";
             // 
             // 定义坐标参照系ToolStripMenuItem
@@ -332,7 +333,7 @@ namespace DEETU.Source.Window
             // toolStripSeparator9
             // 
             this.toolStripSeparator9.Name = "toolStripSeparator9";
-            this.toolStripSeparator9.Size = new System.Drawing.Size(173, 6);
+            this.toolStripSeparator9.Size = new System.Drawing.Size(177, 6);
             // 
             // 导出ToolStripMenuItem
             // 
@@ -340,7 +341,7 @@ namespace DEETU.Source.Window
             this.导出为SqliteToolStripMenuItem,
             this.导出为shapefileToolStripMenuItem});
             this.导出ToolStripMenuItem.Name = "导出ToolStripMenuItem";
-            this.导出ToolStripMenuItem.Size = new System.Drawing.Size(176, 24);
+            this.导出ToolStripMenuItem.Size = new System.Drawing.Size(180, 24);
             this.导出ToolStripMenuItem.Text = "导出";
             // 
             // 导出为SqliteToolStripMenuItem
@@ -360,12 +361,12 @@ namespace DEETU.Source.Window
             // toolStripSeparator10
             // 
             this.toolStripSeparator10.Name = "toolStripSeparator10";
-            this.toolStripSeparator10.Size = new System.Drawing.Size(173, 6);
+            this.toolStripSeparator10.Size = new System.Drawing.Size(177, 6);
             // 
             // 特性ToolStripMenuItem
             // 
             this.特性ToolStripMenuItem.Name = "特性ToolStripMenuItem";
-            this.特性ToolStripMenuItem.Size = new System.Drawing.Size(176, 24);
+            this.特性ToolStripMenuItem.Size = new System.Drawing.Size(180, 24);
             this.特性ToolStripMenuItem.Text = "特性";
             this.特性ToolStripMenuItem.Click += new System.EventHandler(this.特性ToolStripMenuItem_Click);
             // 
@@ -424,7 +425,7 @@ namespace DEETU.Source.Window
             // 
             this.新建ToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("新建ToolStripMenuItem.Image")));
             this.新建ToolStripMenuItem.Name = "新建ToolStripMenuItem";
-            this.新建ToolStripMenuItem.Size = new System.Drawing.Size(184, 26);
+            this.新建ToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
             this.新建ToolStripMenuItem.Text = "新建工程";
             this.新建ToolStripMenuItem.Click += new System.EventHandler(this.CreateToolStripMenuItem_Click);
             // 
@@ -432,7 +433,7 @@ namespace DEETU.Source.Window
             // 
             this.打开ToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("打开ToolStripMenuItem.Image")));
             this.打开ToolStripMenuItem.Name = "打开ToolStripMenuItem";
-            this.打开ToolStripMenuItem.Size = new System.Drawing.Size(184, 26);
+            this.打开ToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
             this.打开ToolStripMenuItem.Text = "打开工程";
             this.打开ToolStripMenuItem.Click += new System.EventHandler(this.打开ToolStripMenuItem_Click);
             // 
@@ -440,7 +441,7 @@ namespace DEETU.Source.Window
             // 
             this.保存ToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("保存ToolStripMenuItem.Image")));
             this.保存ToolStripMenuItem.Name = "保存ToolStripMenuItem";
-            this.保存ToolStripMenuItem.Size = new System.Drawing.Size(184, 26);
+            this.保存ToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
             this.保存ToolStripMenuItem.Text = "保存工程";
             this.保存ToolStripMenuItem.Click += new System.EventHandler(this.SaveProjectToolStripMenuItem_Click);
             // 
@@ -448,33 +449,33 @@ namespace DEETU.Source.Window
             // 
             this.另存为ToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("另存为ToolStripMenuItem.Image")));
             this.另存为ToolStripMenuItem.Name = "另存为ToolStripMenuItem";
-            this.另存为ToolStripMenuItem.Size = new System.Drawing.Size(184, 26);
+            this.另存为ToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
             this.另存为ToolStripMenuItem.Text = "工程另存为";
             this.另存为ToolStripMenuItem.Click += new System.EventHandler(this.SaveNewProjectToolStripMenuItem_Click);
             // 
             // 导出图片ToolStripMenuItem
             // 
             this.导出图片ToolStripMenuItem.Name = "导出图片ToolStripMenuItem";
-            this.导出图片ToolStripMenuItem.Size = new System.Drawing.Size(184, 26);
+            this.导出图片ToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
             this.导出图片ToolStripMenuItem.Text = "导出图片";
             this.导出图片ToolStripMenuItem.Click += new System.EventHandler(this.导出图片ToolStripMenuItem_Click);
             // 
             // 关闭ToolStripMenuItem
             // 
             this.关闭ToolStripMenuItem.Name = "关闭ToolStripMenuItem";
-            this.关闭ToolStripMenuItem.Size = new System.Drawing.Size(184, 26);
+            this.关闭ToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
             this.关闭ToolStripMenuItem.Text = "关闭工程";
             this.关闭ToolStripMenuItem.Click += new System.EventHandler(this.CloseProjectToolStripMenuItem_Click);
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(181, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(136, 6);
             // 
             // 退出DEETUToolStripMenuItem
             // 
             this.退出DEETUToolStripMenuItem.Name = "退出DEETUToolStripMenuItem";
-            this.退出DEETUToolStripMenuItem.Size = new System.Drawing.Size(184, 26);
+            this.退出DEETUToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
             this.退出DEETUToolStripMenuItem.Text = "退出DEETU";
             this.退出DEETUToolStripMenuItem.Click += new System.EventHandler(this.退出DEETUToolStripMenuItem_Click);
             // 
@@ -497,7 +498,7 @@ namespace DEETU.Source.Window
             // 
             this.撤销操作ToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("撤销操作ToolStripMenuItem.Image")));
             this.撤销操作ToolStripMenuItem.Name = "撤销操作ToolStripMenuItem";
-            this.撤销操作ToolStripMenuItem.Size = new System.Drawing.Size(184, 26);
+            this.撤销操作ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.撤销操作ToolStripMenuItem.Text = "撤销操作";
             this.撤销操作ToolStripMenuItem.Click += new System.EventHandler(this.撤销_Click);
             // 
@@ -505,20 +506,20 @@ namespace DEETU.Source.Window
             // 
             this.重做操作ToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("重做操作ToolStripMenuItem.Image")));
             this.重做操作ToolStripMenuItem.Name = "重做操作ToolStripMenuItem";
-            this.重做操作ToolStripMenuItem.Size = new System.Drawing.Size(184, 26);
+            this.重做操作ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.重做操作ToolStripMenuItem.Text = "重做操作";
             this.重做操作ToolStripMenuItem.Click += new System.EventHandler(this.重做_Click);
             // 
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(181, 6);
+            this.toolStripSeparator4.Size = new System.Drawing.Size(121, 6);
             // 
             // 剪切要素ToolStripMenuItem
             // 
             this.剪切要素ToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("剪切要素ToolStripMenuItem.Image")));
             this.剪切要素ToolStripMenuItem.Name = "剪切要素ToolStripMenuItem";
-            this.剪切要素ToolStripMenuItem.Size = new System.Drawing.Size(184, 26);
+            this.剪切要素ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.剪切要素ToolStripMenuItem.Text = "剪切要素";
             this.剪切要素ToolStripMenuItem.Click += new System.EventHandler(this.剪切要素_Click);
             // 
@@ -526,7 +527,7 @@ namespace DEETU.Source.Window
             // 
             this.复制要素ToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("复制要素ToolStripMenuItem.Image")));
             this.复制要素ToolStripMenuItem.Name = "复制要素ToolStripMenuItem";
-            this.复制要素ToolStripMenuItem.Size = new System.Drawing.Size(184, 26);
+            this.复制要素ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.复制要素ToolStripMenuItem.Text = "复制要素";
             this.复制要素ToolStripMenuItem.Click += new System.EventHandler(this.复制要素_Click);
             // 
@@ -534,14 +535,14 @@ namespace DEETU.Source.Window
             // 
             this.粘贴要素ToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("粘贴要素ToolStripMenuItem.Image")));
             this.粘贴要素ToolStripMenuItem.Name = "粘贴要素ToolStripMenuItem";
-            this.粘贴要素ToolStripMenuItem.Size = new System.Drawing.Size(184, 26);
+            this.粘贴要素ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.粘贴要素ToolStripMenuItem.Text = "粘贴要素";
             this.粘贴要素ToolStripMenuItem.Click += new System.EventHandler(this.粘贴要素_Click);
             // 
             // toolStripSeparator5
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(181, 6);
+            this.toolStripSeparator5.Size = new System.Drawing.Size(121, 6);
             // 
             // 选择ToolStripMenuItem
             // 
@@ -553,7 +554,7 @@ namespace DEETU.Source.Window
             this.反向选择ToolStripMenuItem1,
             this.取消选择ToolStripMenuItem});
             this.选择ToolStripMenuItem.Name = "选择ToolStripMenuItem";
-            this.选择ToolStripMenuItem.Size = new System.Drawing.Size(184, 26);
+            this.选择ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.选择ToolStripMenuItem.Text = "选择";
             // 
             // 按表达式选择ToolStripMenuItem1
@@ -663,7 +664,7 @@ namespace DEETU.Source.Window
             // 
             this.平移ToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("平移ToolStripMenuItem.Image")));
             this.平移ToolStripMenuItem.Name = "平移ToolStripMenuItem";
-            this.平移ToolStripMenuItem.Size = new System.Drawing.Size(184, 26);
+            this.平移ToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
             this.平移ToolStripMenuItem.Text = "平移";
             this.平移ToolStripMenuItem.Click += new System.EventHandler(this.btnPan_Click);
             // 
@@ -671,7 +672,7 @@ namespace DEETU.Source.Window
             // 
             this.放大ToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("放大ToolStripMenuItem.Image")));
             this.放大ToolStripMenuItem.Name = "放大ToolStripMenuItem";
-            this.放大ToolStripMenuItem.Size = new System.Drawing.Size(184, 26);
+            this.放大ToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
             this.放大ToolStripMenuItem.Text = "放大";
             this.放大ToolStripMenuItem.Click += new System.EventHandler(this.btnZoomIn_Click);
             // 
@@ -679,7 +680,7 @@ namespace DEETU.Source.Window
             // 
             this.缩小ToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("缩小ToolStripMenuItem.Image")));
             this.缩小ToolStripMenuItem.Name = "缩小ToolStripMenuItem";
-            this.缩小ToolStripMenuItem.Size = new System.Drawing.Size(184, 26);
+            this.缩小ToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
             this.缩小ToolStripMenuItem.Text = "缩小";
             this.缩小ToolStripMenuItem.Click += new System.EventHandler(this.btnZoomOut_Click);
             // 
@@ -687,39 +688,39 @@ namespace DEETU.Source.Window
             // 
             this.全图显示ToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("全图显示ToolStripMenuItem.Image")));
             this.全图显示ToolStripMenuItem.Name = "全图显示ToolStripMenuItem";
-            this.全图显示ToolStripMenuItem.Size = new System.Drawing.Size(184, 26);
+            this.全图显示ToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
             this.全图显示ToolStripMenuItem.Text = "全图显示";
             this.全图显示ToolStripMenuItem.Click += new System.EventHandler(this.btnFullExtent_Click);
             // 
             // toolStripSeparator12
             // 
             this.toolStripSeparator12.Name = "toolStripSeparator12";
-            this.toolStripSeparator12.Size = new System.Drawing.Size(181, 6);
+            this.toolStripSeparator12.Size = new System.Drawing.Size(157, 6);
             // 
             // 缩放至图层ToolStripMenuItem
             // 
             this.缩放至图层ToolStripMenuItem.Name = "缩放至图层ToolStripMenuItem";
-            this.缩放至图层ToolStripMenuItem.Size = new System.Drawing.Size(184, 26);
+            this.缩放至图层ToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
             this.缩放至图层ToolStripMenuItem.Text = "缩放至图层";
             this.缩放至图层ToolStripMenuItem.Click += new System.EventHandler(this.btnLayerExtent_Click);
             // 
             // 缩放至选中区域ToolStripMenuItem
             // 
             this.缩放至选中区域ToolStripMenuItem.Name = "缩放至选中区域ToolStripMenuItem";
-            this.缩放至选中区域ToolStripMenuItem.Size = new System.Drawing.Size(184, 26);
+            this.缩放至选中区域ToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
             this.缩放至选中区域ToolStripMenuItem.Text = "缩放至选中区域";
             this.缩放至选中区域ToolStripMenuItem.Click += new System.EventHandler(this.btnSelectedAreaExtent_Click);
             // 
             // toolStripSeparator11
             // 
             this.toolStripSeparator11.Name = "toolStripSeparator11";
-            this.toolStripSeparator11.Size = new System.Drawing.Size(181, 6);
+            this.toolStripSeparator11.Size = new System.Drawing.Size(157, 6);
             // 
             // 显示所有图层ToolStripMenuItem
             // 
             this.显示所有图层ToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("显示所有图层ToolStripMenuItem.Image")));
             this.显示所有图层ToolStripMenuItem.Name = "显示所有图层ToolStripMenuItem";
-            this.显示所有图层ToolStripMenuItem.Size = new System.Drawing.Size(184, 26);
+            this.显示所有图层ToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
             this.显示所有图层ToolStripMenuItem.Text = "显示所有图层";
             this.显示所有图层ToolStripMenuItem.Click += new System.EventHandler(this.显示所有图层ToolStripMenuItem_Click);
             // 
@@ -727,7 +728,7 @@ namespace DEETU.Source.Window
             // 
             this.隐藏所有图层ToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("隐藏所有图层ToolStripMenuItem.Image")));
             this.隐藏所有图层ToolStripMenuItem.Name = "隐藏所有图层ToolStripMenuItem";
-            this.隐藏所有图层ToolStripMenuItem.Size = new System.Drawing.Size(184, 26);
+            this.隐藏所有图层ToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
             this.隐藏所有图层ToolStripMenuItem.Text = "隐藏所有图层";
             this.隐藏所有图层ToolStripMenuItem.Click += new System.EventHandler(this.隐藏所有图层ToolStripMenuItem_Click);
             // 
@@ -761,7 +762,7 @@ namespace DEETU.Source.Window
             this.添加shp图层文件ToolStripMenuItem,
             this.添加数据库文件ToolStripMenuItem});
             this.添加ToolStripMenuItem.Name = "添加ToolStripMenuItem";
-            this.添加ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.添加ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.添加ToolStripMenuItem.Text = "添加图层";
             // 
             // 添加lay图层文件ToolStripMenuItem
@@ -788,7 +789,7 @@ namespace DEETU.Source.Window
             // 新建图层ToolStripMenuItem
             // 
             this.新建图层ToolStripMenuItem.Name = "新建图层ToolStripMenuItem";
-            this.新建图层ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.新建图层ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.新建图层ToolStripMenuItem.Text = "新建图层";
             this.新建图层ToolStripMenuItem.Click += new System.EventHandler(this.新建图层ToolStripMenuItem_Click);
             // 
@@ -819,7 +820,7 @@ namespace DEETU.Source.Window
             this.toolStrip1.Location = new System.Drawing.Point(3, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.toolStrip1.Size = new System.Drawing.Size(472, 27);
+            this.toolStrip1.Size = new System.Drawing.Size(441, 27);
             this.toolStrip1.TabIndex = 49;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -1012,26 +1013,16 @@ namespace DEETU.Source.Window
             this.交叉选择.Checked = true;
             this.交叉选择.CheckState = System.Windows.Forms.CheckState.Checked;
             this.交叉选择.Name = "交叉选择";
-            this.交叉选择.Size = new System.Drawing.Size(180, 22);
+            this.交叉选择.Size = new System.Drawing.Size(136, 22);
             this.交叉选择.Text = "交叉选中";
             this.交叉选择.Click += new System.EventHandler(this.矩形选择模式更改_Click);
             // 
             // 全包含选择
             // 
             this.全包含选择.Name = "全包含选择";
-            this.全包含选择.Size = new System.Drawing.Size(180, 22);
+            this.全包含选择.Size = new System.Drawing.Size(136, 22);
             this.全包含选择.Text = "全包含选中";
             this.全包含选择.Click += new System.EventHandler(this.矩形选择模式更改_Click);
-            // 
-            // cancelSelectionToolStripButton
-            // 
-            this.cancelSelectionToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.cancelSelectionToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("cancelSelectionToolStripButton.Image")));
-            this.cancelSelectionToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.cancelSelectionToolStripButton.Name = "cancelSelectionToolStripButton";
-            this.cancelSelectionToolStripButton.Size = new System.Drawing.Size(24, 24);
-            this.cancelSelectionToolStripButton.Text = "取消选择";
-            this.cancelSelectionToolStripButton.Click += new System.EventHandler(this.取消选择ToolStripMenuItem_Click);
             // 
             // selectionModeToolStripButton
             // 
@@ -1069,6 +1060,16 @@ namespace DEETU.Source.Window
             this.removeSelectionToolStripItem.Size = new System.Drawing.Size(208, 22);
             this.removeSelectionToolStripItem.Text = "删除选择内容";
             this.removeSelectionToolStripItem.Click += new System.EventHandler(this.SelectionModeChange_Click);
+            // 
+            // cancelSelectionToolStripButton
+            // 
+            this.cancelSelectionToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.cancelSelectionToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("cancelSelectionToolStripButton.Image")));
+            this.cancelSelectionToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.cancelSelectionToolStripButton.Name = "cancelSelectionToolStripButton";
+            this.cancelSelectionToolStripButton.Size = new System.Drawing.Size(24, 24);
+            this.cancelSelectionToolStripButton.Text = "取消选择";
+            this.cancelSelectionToolStripButton.Click += new System.EventHandler(this.取消选择ToolStripMenuItem_Click);
             // 
             // toolStripContainer1
             // 
