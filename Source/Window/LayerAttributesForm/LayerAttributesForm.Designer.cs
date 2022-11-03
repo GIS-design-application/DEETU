@@ -38,8 +38,8 @@ namespace DEETU.Source.Window
             // 
             this.Footer.Controls.Add(this.cancelButton);
             this.Footer.Controls.Add(this.okButton);
-            this.Footer.Location = new System.Drawing.Point(135, 779);
-            this.Footer.Size = new System.Drawing.Size(453, 40);
+            this.Footer.Location = new System.Drawing.Point(135, 788);
+            this.Footer.Size = new System.Drawing.Size(493, 40);
             this.Footer.StyleCustomMode = true;
             // 
             // Header
@@ -52,7 +52,7 @@ namespace DEETU.Source.Window
             // Aside
             // 
             this.Aside.Location = new System.Drawing.Point(2, 35);
-            this.Aside.Size = new System.Drawing.Size(133, 784);
+            this.Aside.Size = new System.Drawing.Size(133, 793);
             this.Aside.Style = Sunny.UI.UIStyle.Custom;
             this.Aside.MenuItemClick += new Sunny.UI.UINavMenu.OnMenuItemClick(this.Aside_MenuItemClick);
             // 
@@ -60,11 +60,24 @@ namespace DEETU.Source.Window
             // 
             this.okButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.okButton.Cursor = System.Windows.Forms.Cursors.Default;
+            this.okButton.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(211)))), ((int)(((byte)(211)))), ((int)(((byte)(211)))));
+            this.okButton.FillHoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(226)))), ((int)(((byte)(137)))));
+            this.okButton.FillPressColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(228)))), ((int)(((byte)(137)))));
+            this.okButton.FillSelectedColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(228)))), ((int)(((byte)(137)))));
             this.okButton.Font = new System.Drawing.Font("微软雅黑", 12F);
-            this.okButton.Location = new System.Drawing.Point(268, 3);
+            this.okButton.ForeColor = System.Drawing.Color.Black;
+            this.okButton.ForeHoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
+            this.okButton.ForePressColor = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
+            this.okButton.ForeSelectedColor = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
+            this.okButton.Location = new System.Drawing.Point(308, 3);
             this.okButton.MinimumSize = new System.Drawing.Size(1, 1);
             this.okButton.Name = "okButton";
+            this.okButton.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
+            this.okButton.RectHoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(238)))), ((int)(((byte)(201)))), ((int)(((byte)(88)))));
+            this.okButton.RectPressColor = System.Drawing.Color.FromArgb(((int)(((byte)(194)))), ((int)(((byte)(118)))), ((int)(((byte)(43)))));
+            this.okButton.RectSelectedColor = System.Drawing.Color.FromArgb(((int)(((byte)(194)))), ((int)(((byte)(118)))), ((int)(((byte)(43)))));
             this.okButton.Size = new System.Drawing.Size(76, 35);
+            this.okButton.Style = Sunny.UI.UIStyle.Office2010Black;
             this.okButton.TabIndex = 0;
             this.okButton.Text = "确认";
             this.okButton.Click += new System.EventHandler(this.okButton_Click);
@@ -73,20 +86,33 @@ namespace DEETU.Source.Window
             // 
             this.cancelButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.cancelButton.Cursor = System.Windows.Forms.Cursors.Default;
+            this.cancelButton.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(211)))), ((int)(((byte)(211)))), ((int)(((byte)(211)))));
+            this.cancelButton.FillHoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(226)))), ((int)(((byte)(137)))));
+            this.cancelButton.FillPressColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(228)))), ((int)(((byte)(137)))));
+            this.cancelButton.FillSelectedColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(228)))), ((int)(((byte)(137)))));
             this.cancelButton.Font = new System.Drawing.Font("微软雅黑", 12F);
-            this.cancelButton.Location = new System.Drawing.Point(374, 3);
+            this.cancelButton.ForeColor = System.Drawing.Color.Black;
+            this.cancelButton.ForeHoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
+            this.cancelButton.ForePressColor = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
+            this.cancelButton.ForeSelectedColor = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
+            this.cancelButton.Location = new System.Drawing.Point(414, 3);
             this.cancelButton.MinimumSize = new System.Drawing.Size(1, 1);
             this.cancelButton.Name = "cancelButton";
+            this.cancelButton.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
+            this.cancelButton.RectHoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(238)))), ((int)(((byte)(201)))), ((int)(((byte)(88)))));
+            this.cancelButton.RectPressColor = System.Drawing.Color.FromArgb(((int)(((byte)(194)))), ((int)(((byte)(118)))), ((int)(((byte)(43)))));
+            this.cancelButton.RectSelectedColor = System.Drawing.Color.FromArgb(((int)(((byte)(194)))), ((int)(((byte)(118)))), ((int)(((byte)(43)))));
             this.cancelButton.Size = new System.Drawing.Size(76, 35);
+            this.cancelButton.Style = Sunny.UI.UIStyle.Office2010Black;
             this.cancelButton.TabIndex = 1;
             this.cancelButton.Text = "取消";
             this.cancelButton.Click += new System.EventHandler(this.cancelButton_Click);
             // 
             // LayerAttributesForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(19F, 41F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(590, 821);
+            this.ClientSize = new System.Drawing.Size(630, 830);
             this.ExtendBox = true;
             this.IsMdiContainer = true;
             this.MaximumSize = new System.Drawing.Size(10000, 10000);

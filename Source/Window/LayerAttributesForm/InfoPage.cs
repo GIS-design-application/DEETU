@@ -64,7 +64,7 @@ namespace DEETU.Source.Window
             double MinX = mLayer.Extent.MinX;
             double MinY = mLayer.Extent.MinY;
             if (!(MaxX == 0 && MaxY == 0 && MinX == 0 && MinY == 0)) 
-                extentRichTextBox.Text = String.Format("{0},{1};\n{2},{3}", MinX, MaxX, MinY, MaxY);
+                extentRichTextBox.Text = String.Format("X: {0},{1};\nY: {2},{3}", MinX, MaxX, MinY, MaxY);
             unitRichTextBox.Text = mLayer.Crs.Unit;
 
             GeoFields fields = mLayer.AttributeFields;

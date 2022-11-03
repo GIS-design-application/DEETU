@@ -1537,7 +1537,9 @@ namespace DEETU.Source.Window
                     }
                     info += "\n";
                 }
-                UIMessageBox.ShowInfo(info);
+                //UIMessageBox.ShowInfo(info);
+                ShowInfoDialog(info);
+                //MessageBox.Show(info, "属性信息", MessageBoxButtons.OK);
 
                 // geoMap.FlashShapes(sGeometryies, 3, 800);
             }
