@@ -2244,12 +2244,43 @@ namespace DEETU.Source.Window
                 if (node.Tag != null)
                 {
                     GeoSymbol sSymbol = node.Tag as GeoSymbol;
-                    if (sSymbol.SymbolType == GeoSymbolTypeConstant.SimpleFillSymbol)
+                    if(node.Checked)
                     {
-                        if (node.Checked)
+                        if (node.Parent.Checked == false)
+                            node.Parent.Checked = true;
+                        if (sSymbol.SymbolType == GeoSymbolTypeConstant.SimpleFillSymbol)
+                        {
+                            if ((sSymbol as GeoSimpleFillSymbol).Visible == true) return;
                             (sSymbol as GeoSimpleFillSymbol).Visible = true;
-                        else
+                        }
+                        else if (sSymbol.SymbolType == GeoSymbolTypeConstant.SimpleLineSymbol)
+                        {
+                            if ((sSymbol as GeoSimpleLineSymbol).Visible == true) return;
+                            (sSymbol as GeoSimpleLineSymbol).Visible = true;
+                        }
+                        else if (sSymbol.SymbolType == GeoSymbolTypeConstant.SimpleMarkerSymbol)
+                        {
+                            if ((sSymbol as GeoSimpleMarkerSymbol).Visible == true) return;
+                            (sSymbol as GeoSimpleMarkerSymbol).Visible = true;
+                        }
+                    }
+                    else
+                    {
+                        if (sSymbol.SymbolType == GeoSymbolTypeConstant.SimpleFillSymbol)
+                        {
+                            if ((sSymbol as GeoSimpleFillSymbol).Visible == false) return;
                             (sSymbol as GeoSimpleFillSymbol).Visible = false;
+                        }
+                        else if (sSymbol.SymbolType == GeoSymbolTypeConstant.SimpleLineSymbol)
+                        {
+                            if ((sSymbol as GeoSimpleLineSymbol).Visible == false) return;
+                            (sSymbol as GeoSimpleLineSymbol).Visible = false;
+                        }
+                        else if (sSymbol.SymbolType == GeoSymbolTypeConstant.SimpleMarkerSymbol)
+                        {
+                            if ((sSymbol as GeoSimpleMarkerSymbol).Visible == false) return;
+                            (sSymbol as GeoSimpleMarkerSymbol).Visible = false;
+                        }
                     }
                 }
             }
@@ -2257,9 +2288,30 @@ namespace DEETU.Source.Window
             {
                 GeoMapLayer sLayer = node.Tag as GeoMapLayer;
                 if (node.Checked)
+                {
                     sLayer.Visible = true;
+                    foreach(TreeNode sNode in node.Nodes)
+                    {
+                        if(sNode.Checked == true)
+                        {
+                            sLayer.Visible = true;
+                            geoMap.RedrawMap();
+                            return;
+                        }
+                    }
+                    foreach (TreeNode sNode in node.Nodes)
+                    {
+                        sNode.Checked = true;
+                    }
+                }
                 else
+                {
                     sLayer.Visible = false;
+                    foreach (TreeNode sNode in node.Nodes)
+                    {
+                        sNode.Checked = false;
+                    }
+                }
             }
             geoMap.RedrawMap();
         }
@@ -2396,10 +2448,12 @@ namespace DEETU.Source.Window
 
         private void 移到顶层ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            layerTreeView.Nodes.Insert(0, (TreeNode)mCurrentLayerNode.Clone());
+            TreeNode sNode = (TreeNode)mCurrentLayerNode.Clone();
+            layerTreeView.Nodes.Insert(0, sNode);
             geoMap.Layers.Insert(0, mCurrentLayerNode.Tag as GeoMapLayer);
             geoMap.Layers.RemoveAt(mCurrentLayerNode.Index);
             mCurrentLayerNode.Remove();
+            layerTreeView.SelectedNode = sNode;
             geoMap.RedrawMap();
         }
 
