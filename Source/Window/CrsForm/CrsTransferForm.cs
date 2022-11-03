@@ -49,12 +49,19 @@ namespace DEETU.Source.Window
         {
             List<GeoMapLayer> layers = new List<GeoMapLayer>();
             layers.Add(mLayer);
-            CoordinateTransform transform = new CoordinateTransform(_SourceCrs, _TargetCrs, layers);
-            transform.Transform();
-            ShowSuccessNotifier("坐标系转换完成");
-            this.btnOK_Click(sender, e);
-            
-            this.Close();
+            try
+            {
+                CoordinateTransform transform = new CoordinateTransform(_SourceCrs, _TargetCrs, layers);
+                transform.Transform();
+                ShowSuccessNotifier("坐标系转换完成");
+                this.btnOK_Click(sender, e);
+                this.Close();
+            }
+            catch(Exception error)
+            {
+                Sunny.UI.UIMessageBox.Show(error.Message);
+            }
+
         }
 
         private void cancelButton_Click(object sender, EventArgs e)

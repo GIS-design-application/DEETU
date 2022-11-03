@@ -327,6 +327,42 @@ namespace DEETU.Map
             return false;
         }
 
+        public static bool IsPointOnPolygon(GeoPoint point, GeoPoints points, double tolerance)
+        {
+            GeoRectangle sBox = new GeoRectangle(points.MinX - tolerance, points.MaxX + tolerance, points.MinY - tolerance, points.MaxY + tolerance);
+            if (IsPointWithinBox(point, sBox) == false)
+                return false;
+            Int32 sPointCount = points.Count;
+            for (Int32 i = 0; i <= sPointCount - 2; i++)
+            {
+                if (GetDistanceFromPointToSegment(point.X, point.Y, points.GetItem(i).X, points.GetItem(i).Y,
+                    points.GetItem(i + 1).X, points.GetItem(i + 1).Y) <= tolerance)
+                    return true;
+            }
+            if (GetDistanceFromPointToSegment(point.X, point.Y, points.GetItem(sPointCount-1).X, points.GetItem(sPointCount - 1).Y,
+                    points.GetItem(0).X, points.GetItem(0).Y) <= tolerance)
+                return true;
+            return false;
+        }
+
+        public static int PointOnWhichLine(GeoPoint point, GeoPoints points, double tolerance)
+        {
+            GeoRectangle sBox = new GeoRectangle(points.MinX - tolerance, points.MaxX + tolerance, points.MinY - tolerance, points.MaxY + tolerance);
+            if (IsPointWithinBox(point, sBox) == false)
+                return -1;
+            Int32 sPointCount = points.Count;
+            for (Int32 i = 0; i <= sPointCount - 2; i++)
+            {
+                if (GetDistanceFromPointToSegment(point.X, point.Y, points.GetItem(i).X, points.GetItem(i).Y,
+                    points.GetItem(i + 1).X, points.GetItem(i + 1).Y) <= tolerance)
+                    return i;
+            }
+            if (GetDistanceFromPointToSegment(point.X, point.Y, points.GetItem(sPointCount - 1).X, points.GetItem(sPointCount - 1).Y,
+                    points.GetItem(0).X, points.GetItem(0).Y) <= tolerance)
+                return sPointCount - 1;
+            return -1;
+        }
+
         /// <summary>
         /// 指示在指定容限下，指定点是否位于指定复合折线上
         /// </summary>
