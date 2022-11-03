@@ -1487,7 +1487,8 @@ namespace DEETU.Source.Window
             DrawIdentifyFlash(sFeatures);
             //ShowIdentifyMessage(sFeatures, sLayer);
             IdentifyForm identifyForm = new IdentifyForm(sLayer);
-            identifyForm.ShowDialog();
+            if (sLayer.SelectedFeatures.Count > 0)
+                identifyForm.ShowDialog();  
             
         }
 
