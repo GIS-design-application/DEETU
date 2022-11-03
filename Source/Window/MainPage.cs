@@ -3134,6 +3134,10 @@ namespace DEETU.Source.Window
             {
                 LoadLayerFile(path);
             }
+            else
+            {
+                MessageBox.Show("该文件已被移动或删除，请确认文件位置后打开");
+            }
         }
 
         private void 撤销_Click(object sender, EventArgs e)
