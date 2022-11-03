@@ -96,6 +96,8 @@ namespace DEETU.Source.Window
             SetEditing();
             // 设置撤销、重做状态
             CheckUndo();
+            // 默认进入选择模式
+            SelectModeButton.Checked = true;
         }
 
 
@@ -753,8 +755,9 @@ namespace DEETU.Source.Window
                 //btnEndEdit_Click(sender, e);
                 this.Cursor = Cursors.Default;
                 mMapOpStyle = GeoMapOpStyleEnum.Select;
+                UncheckModeToolStrip();
                 UncheckToolStrip();
-                
+                SelectModeButton.Checked = true;
             }
 
             SetEditing();
@@ -767,7 +770,13 @@ namespace DEETU.Source.Window
         #region 地图控件事件处理
         private void geoMap_MouseDown(object sender, MouseEventArgs e)
         {
-            if (mMapOpStyle == GeoMapOpStyleEnum.ZoomIn)
+            if (e.Button == MouseButtons.Middle)
+            {
+                // 强制进入漫游模式
+                tempCursorForPan = this.Cursor;
+                OnPan_MouseDown(e);
+            }
+            else if (mMapOpStyle == GeoMapOpStyleEnum.ZoomIn)
             {
                 OnZoomIn_MouseDown(e);
             }
@@ -777,7 +786,6 @@ namespace DEETU.Source.Window
             }
             else if (mMapOpStyle == GeoMapOpStyleEnum.Pan)
             {
-                this.Cursor = new Cursor("./icons/PanDown.ico");
                 OnPan_MouseDown(e);
             }
             else if (mMapOpStyle == GeoMapOpStyleEnum.Select)
@@ -1005,11 +1013,13 @@ namespace DEETU.Source.Window
                 mIsInSelect = true;
             }
         }
-
+        // 用于临时记录一下拖拽前的鼠标样式
+        private Cursor tempCursorForPan = null;
         private void OnPan_MouseDown(MouseEventArgs e)
         {
-            if (e.Button == MouseButtons.Left)
+            if (e.Button == MouseButtons.Left || e.Button == MouseButtons.Middle)
             {
+                this.Cursor = new Cursor("./icons/PanDown.ico");
                 mStartMouseLocation = e.Location;
                 mIsInPan = true;
             }
@@ -1037,7 +1047,11 @@ namespace DEETU.Source.Window
         {
             // 显示屏幕坐标
             ShowCoordinates(e.Location);
-            if (mMapOpStyle == GeoMapOpStyleEnum.ZoomIn)
+            if (e.Button == MouseButtons.Middle)
+            {
+                OnPan_MouseMove(e);
+            }
+            else if (mMapOpStyle == GeoMapOpStyleEnum.ZoomIn)
             {
                 OnZoomIn_MouseMove(e);
             }
@@ -1235,7 +1249,12 @@ namespace DEETU.Source.Window
         }
         private void geoMap_MouseUp(object sender, MouseEventArgs e)
         {
-            if (mMapOpStyle == GeoMapOpStyleEnum.ZoomIn)
+            if (e.Button == MouseButtons.Middle)
+            {
+                OnPan_MouseUp(e);
+                this.Cursor = tempCursorForPan;
+            }
+            else if (mMapOpStyle == GeoMapOpStyleEnum.ZoomIn)
             {
                 OnZoomIn_MouseUp(e);
             }
