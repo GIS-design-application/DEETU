@@ -660,6 +660,12 @@ namespace DEETU.Source.Window
         }
         private void CreateToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (IsProjectDirty)
+            {
+                DialogResult dr = MessageBox.Show("存在未保存的编辑，确定要关闭工程吗？", "提示", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+                if (dr != DialogResult.OK)
+                    return;
+            }
             geoMap.Layers = new GeoLayers();
             ProjectName = "Untitled";
             IsProjectDirty = true;
@@ -696,24 +702,22 @@ namespace DEETU.Source.Window
             if (IsProjectDirty)
             {
                 DialogResult dr = MessageBox.Show("存在未保存的编辑，确定要关闭工程吗？", "提示", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
-                if (dr == DialogResult.OK)
-                {
-                    geoMap.Layers = new GeoLayers();
-                    UpdateTreeView();
-                    ProjectName = "";
-                    IsProjectDirty = false;
-                }
+                if (dr != DialogResult.OK)
+                    return;
             }
-            else
-            {
-                geoMap.Layers = new GeoLayers();
-                UpdateTreeView();
-                ProjectName = "";
-                IsProjectDirty = false;
-            }
+            geoMap.Layers = new GeoLayers();
+            UpdateTreeView();
+            ProjectName = "";
+            IsProjectDirty = false;
         }
         private void 打开ToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (IsProjectDirty)
+            {
+                DialogResult dr = MessageBox.Show("存在未保存的编辑，确定要关闭工程吗？", "提示", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+                if (dr != DialogResult.OK)
+                    return;
+            }
             // 获取文件名
             OpenFileDialog sDialog = new OpenFileDialog();
             string sFileName = "";
