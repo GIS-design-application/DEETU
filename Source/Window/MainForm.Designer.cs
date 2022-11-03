@@ -39,7 +39,7 @@ namespace DEETU
             // 
             // MainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(19F, 41F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(886, 656);
@@ -47,10 +47,13 @@ namespace DEETU
             this.MaximumSize = new System.Drawing.Size(10000, 10000);
             this.Name = "MainForm";
             this.Padding = new System.Windows.Forms.Padding(2, 35, 2, 2);
+            this.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
             this.ShowDragStretch = true;
             this.ShowRadius = false;
             this.Style = Sunny.UI.UIStyle.Custom;
-            this.Text = "MainForm";
+            this.Text = "DEETU";
+            this.TitleColor = System.Drawing.Color.FromArgb(((int)(((byte)(118)))), ((int)(((byte)(118)))), ((int)(((byte)(118)))));
+            this.TitleForeColor = System.Drawing.Color.Black;
             this.ResumeLayout(false);
 
         }
