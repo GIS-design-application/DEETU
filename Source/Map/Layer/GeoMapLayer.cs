@@ -767,15 +767,15 @@ namespace DEETU.Map
                     {
                         double sValue = 0;
                         if (sValueType == GeoValueTypeConstant.dInt16)
-                            sValue = (Int16)_Features.GetItem(i).Attributes.GetItem(sFieldIndex);
+                            sValue = Convert.ToInt16(_Features.GetItem(i).Attributes.GetItem(sFieldIndex));
                         else if (sValueType == GeoValueTypeConstant.dInt32)
-                            sValue = (Int32)_Features.GetItem(i).Attributes.GetItem(sFieldIndex);
+                            sValue = Convert.ToInt32(_Features.GetItem(i).Attributes.GetItem(sFieldIndex));
                         else if (sValueType == GeoValueTypeConstant.dInt64)
-                            sValue = (Int64)_Features.GetItem(i).Attributes.GetItem(sFieldIndex);
+                            sValue = Convert.ToInt64(_Features.GetItem(i).Attributes.GetItem(sFieldIndex));
                         else if (sValueType == GeoValueTypeConstant.dSingle)
-                            sValue = (float)_Features.GetItem(i).Attributes.GetItem(sFieldIndex);
+                            sValue = Convert.ToSingle(_Features.GetItem(i).Attributes.GetItem(sFieldIndex));
                         else if (sValueType == GeoValueTypeConstant.dDouble)
-                            sValue = (double)_Features.GetItem(i).Attributes.GetItem(sFieldIndex);
+                            sValue = Convert.ToDouble(_Features.GetItem(i).Attributes.GetItem(sFieldIndex));
                         else
                             throw new Exception("Invalid value type of field " + sFieldName);
 

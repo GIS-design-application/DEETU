@@ -53,7 +53,6 @@ namespace DEETU.Source.Window
             this.startEditToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.reloadToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.saveEditToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.cutToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.copyStripButton = new System.Windows.Forms.ToolStripButton();
             this.pasteToolStripButton = new System.Windows.Forms.ToolStripButton();
@@ -85,8 +84,9 @@ namespace DEETU.Source.Window
             this.uiTabControl1.Controls.Add(this.formPage);
             this.uiTabControl1.Controls.Add(this.gridPage);
             this.uiTabControl1.DrawMode = System.Windows.Forms.TabDrawMode.OwnerDrawFixed;
+            this.uiTabControl1.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(211)))), ((int)(((byte)(211)))), ((int)(((byte)(211)))));
             this.uiTabControl1.Font = new System.Drawing.Font("微软雅黑", 12F);
-            this.uiTabControl1.ItemSize = new System.Drawing.Size(150, 40);
+            this.uiTabControl1.ItemSize = new System.Drawing.Size(0, 1);
             this.uiTabControl1.Location = new System.Drawing.Point(2, 63);
             this.uiTabControl1.MainPage = "";
             this.uiTabControl1.Name = "uiTabControl1";
@@ -94,16 +94,18 @@ namespace DEETU.Source.Window
             this.uiTabControl1.SelectedIndex = 0;
             this.uiTabControl1.Size = new System.Drawing.Size(796, 352);
             this.uiTabControl1.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
+            this.uiTabControl1.Style = Sunny.UI.UIStyle.Office2010Black;
             this.uiTabControl1.TabIndex = 0;
+            this.uiTabControl1.TabVisible = false;
             this.uiTabControl1.SelectedIndexChanged += new System.EventHandler(this.uiTabControl1_SelectedIndexChanged);
             // 
             // formPage
             // 
             this.formPage.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(211)))), ((int)(((byte)(211)))), ((int)(((byte)(211)))));
             this.formPage.Controls.Add(this.splitContainer1);
-            this.formPage.Location = new System.Drawing.Point(0, 40);
+            this.formPage.Location = new System.Drawing.Point(0, 0);
             this.formPage.Name = "formPage";
-            this.formPage.Size = new System.Drawing.Size(796, 312);
+            this.formPage.Size = new System.Drawing.Size(796, 352);
             this.formPage.TabIndex = 0;
             this.formPage.Text = "formPage";
             // 
@@ -122,7 +124,7 @@ namespace DEETU.Source.Window
             // 
             this.splitContainer1.Panel2.Controls.Add(this.detailTable);
             this.splitContainer1.Panel2.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.splitContainer1.Size = new System.Drawing.Size(796, 312);
+            this.splitContainer1.Size = new System.Drawing.Size(796, 352);
             this.splitContainer1.SplitterDistance = 224;
             this.splitContainer1.TabIndex = 0;
             // 
@@ -132,7 +134,7 @@ namespace DEETU.Source.Window
             this.featureList.HideSelection = false;
             this.featureList.Location = new System.Drawing.Point(0, 0);
             this.featureList.Name = "featureList";
-            this.featureList.Size = new System.Drawing.Size(224, 312);
+            this.featureList.Size = new System.Drawing.Size(224, 352);
             this.featureList.SmallImageList = this.smallImageList;
             this.featureList.TabIndex = 0;
             this.featureList.UseCompatibleStateImageBehavior = false;
@@ -159,7 +161,7 @@ namespace DEETU.Source.Window
             this.detailTable.RowCount = 2;
             this.detailTable.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.detailTable.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.detailTable.Size = new System.Drawing.Size(568, 312);
+            this.detailTable.Size = new System.Drawing.Size(568, 352);
             this.detailTable.TabIndex = 0;
             // 
             // gridPage
@@ -248,6 +250,7 @@ namespace DEETU.Source.Window
             treeNode2});
             this.Header.NodeSize = new System.Drawing.Size(50, 35);
             this.Header.Size = new System.Drawing.Size(796, 35);
+            this.Header.Style = Sunny.UI.UIStyle.Office2010Black;
             this.Header.TabControl = this.uiTabControl1;
             this.Header.TabIndex = 1;
             this.Header.Text = "uiNavBar1";
@@ -266,7 +269,6 @@ namespace DEETU.Source.Window
             this.startEditToolStripButton,
             this.reloadToolStripButton,
             this.toolStripSeparator1,
-            this.saveEditToolStripButton,
             this.cutToolStripButton,
             this.copyStripButton,
             this.pasteToolStripButton,
@@ -310,17 +312,6 @@ namespace DEETU.Source.Window
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(6, 27);
-            // 
-            // saveEditToolStripButton
-            // 
-            this.saveEditToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.saveEditToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("saveEditToolStripButton.Image")));
-            this.saveEditToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.saveEditToolStripButton.Name = "saveEditToolStripButton";
-            this.saveEditToolStripButton.Size = new System.Drawing.Size(24, 24);
-            this.saveEditToolStripButton.Text = "保存编辑";
-            this.saveEditToolStripButton.ToolTipText = "保存编辑";
-            this.saveEditToolStripButton.Click += new System.EventHandler(this.saveEditToolStripButton_Click);
             // 
             // cutToolStripButton
             // 
@@ -473,7 +464,6 @@ namespace DEETU.Source.Window
         private System.Windows.Forms.ListView featureList;
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripButton startEditToolStripButton;
-        private System.Windows.Forms.ToolStripButton saveEditToolStripButton;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripButton cutToolStripButton;
         private System.Windows.Forms.ToolStripButton copyStripButton;
