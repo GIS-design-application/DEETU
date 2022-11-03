@@ -558,10 +558,12 @@ namespace DEETU.Source.Window
                 SaveNewProject();
             else
             {
+                this.ShowWaitForm("保存中，请稍后...");
                 GC.Collect();
                 GC.WaitForPendingFinalizers();
                 File.Delete(geoMap.Layers.FilePath);
                 GeoDatabaseIOTools.SaveGeoProject(geoMap.Layers, geoMap.Layers.FilePath);
+                this.HideWaitForm();
             }
         }
         private void CreateToolStripMenuItem_Click(object sender, EventArgs e)
@@ -571,6 +573,7 @@ namespace DEETU.Source.Window
         }
         private void SaveNewProject()
         {
+
             SaveFileDialog saveFileDialog1 = new SaveFileDialog();
 
             saveFileDialog1.Filter = "SQLite Database (*.db)|*.db";
@@ -579,12 +582,15 @@ namespace DEETU.Source.Window
 
             if (saveFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                MessageBox.Show(saveFileDialog1.FileName);
+                this.ShowWaitForm("保存中，请稍后...");
+                //MessageBox.Show(saveFileDialog1.FileName);
                 GeoDatabaseIOTools.SaveGeoProject(geoMap.Layers, saveFileDialog1.FileName);
                 geoMap.Layers.FilePath = saveFileDialog1.FileName;
                 saveFileDialog1.Dispose();
+                this.HideWaitForm();
 
             }
+
         }
         private void SaveNewProjectToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -2477,6 +2483,7 @@ namespace DEETU.Source.Window
 #if DEBUG
             Logging = suffix;
 #endif
+            bool success = true;
             switch (suffix)
             {
                 case "lay":
@@ -2493,6 +2500,12 @@ namespace DEETU.Source.Window
                                 sLayer.Crs = (GeoCoordinateReferenceSystem)formatter.Deserialize(fileStream);
                             }
                             sLayer.Name = sFileName.Split('\\').Last().Split('.').First();
+                            //检查是否已经添加同名图层
+                            for (int j = 0; j < geoMap.Layers.Count; j++)
+                            {
+                                if (geoMap.Layers.GetItem(j).Name == sLayer.Name)
+                                    sLayer.Name = sLayer.Name + "1";
+                            }
                             geoMap.Layers.Add(sLayer);
                             if (geoMap.Layers.Count == 1)
                             {
@@ -2524,6 +2537,7 @@ namespace DEETU.Source.Window
                         catch (Exception error)
                         {
                             MessageBox.Show(error.ToString());
+                            success = false;
                         }
                         break;
                     }
@@ -2535,6 +2549,12 @@ namespace DEETU.Source.Window
                             GeoDatabaseIOTools.LoadGeoProject(sLayers, sFileName);
                             GeoMapLayer sLayer = sLayers.GetItem(0);
                             sLayer.Name = sFileName.Split('\\').Last().Split('.').First();
+                            //检查是否已经添加同名图层
+                            for (int j = 0; j < geoMap.Layers.Count; j++)
+                            {
+                                if (geoMap.Layers.GetItem(j).Name == sLayer.Name)
+                                    sLayer.Name = sLayer.Name + "1";
+                            }
                             geoMap.Layers.Add(sLayer);
                             if (geoMap.Layers.Count == 1)
                             {
@@ -2563,6 +2583,7 @@ namespace DEETU.Source.Window
                         catch (Exception error)
                         {
                             MessageBox.Show(error.ToString());
+                            success = false;
                         }
                         break;
                     }
@@ -2586,6 +2607,12 @@ namespace DEETU.Source.Window
                                 GeoShpIOTools.ReadPrjFile(new string(path), sLayer);
 
                             }
+                            //检查是否已经添加同名图层
+                            for (int j = 0; j < geoMap.Layers.Count; j++)
+                            {
+                                if (geoMap.Layers.GetItem(j).Name == sLayer.Name)
+                                    sLayer.Name = sLayer.Name + "1";
+                            }
                             geoMap.Layers.Add(sLayer);
                             if (geoMap.Layers.Count == 1)
                             {
@@ -2614,15 +2641,20 @@ namespace DEETU.Source.Window
                         catch (Exception error)
                         {
                             MessageBox.Show(error.ToString());
+                            success = false;
                         }
                         break;
                     }
                 default:
-                    MessageBox.Show("不支持的文件类型:" + suffix);
+                    {
+                        MessageBox.Show("不支持的文件类型:" + suffix);
+                        success = false;
+                        //Debug.Assert(false);
+                        break;
+                    }
 
-                    //Debug.Assert(false);
-                    break;
             }
+
 
             using (System.IO.StreamWriter file = new System.IO.StreamWriter("./recent_used_files.txt"))
             {
