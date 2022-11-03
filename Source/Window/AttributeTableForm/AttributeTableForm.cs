@@ -32,10 +32,8 @@ namespace DEETU.Source.Window
             InitializeGridPage();
 
             SetEdit();
-            for (int i = 0; i < 2; i++)
-            {
-                editToolStripButton_Click(this, new EventArgs());
-            }
+
+            Header.SelectedIndex = 0;
         }
 
         #region 事件处理函数
