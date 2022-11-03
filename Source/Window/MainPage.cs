@@ -2311,27 +2311,56 @@ namespace DEETU.Source.Window
                 if (node.Checked)
                 {
                     sLayer.Visible = true;
-                    foreach(TreeNode sNode in node.Nodes)
-                    {
-                        if(sNode.Checked == true)
-                        {
-                            sLayer.Visible = true;
-                            geoMap.RedrawMap();
-                            return;
-                        }
-                    }
+                    layerTreeView.AfterCheck -= layerTreeView_AfterCheck;
                     foreach (TreeNode sNode in node.Nodes)
                     {
                         sNode.Checked = true;
+                        if(sNode.Tag != null)
+                        {
+                            GeoSymbol sSymbol = sNode.Tag as GeoSymbol;
+                            if (sSymbol.SymbolType == GeoSymbolTypeConstant.SimpleFillSymbol)
+                            {
+                                (sSymbol as GeoSimpleFillSymbol).Visible = true;
+                            }
+                            else if (sSymbol.SymbolType == GeoSymbolTypeConstant.SimpleLineSymbol)
+                            {
+                                (sSymbol as GeoSimpleLineSymbol).Visible = true;
+                            }
+                            else if (sSymbol.SymbolType == GeoSymbolTypeConstant.SimpleMarkerSymbol)
+                            {
+                                (sSymbol as GeoSimpleMarkerSymbol).Visible = true;
+                            }
+                        }
                     }
+                    layerTreeView.AfterCheck += layerTreeView_AfterCheck;
+
                 }
                 else
                 {
                     sLayer.Visible = false;
+                    layerTreeView.AfterCheck -= layerTreeView_AfterCheck;
                     foreach (TreeNode sNode in node.Nodes)
-                    {
+                    {   
                         sNode.Checked = false;
+                        if(sNode.Tag != null)
+                        {
+                            GeoSymbol sSymbol = sNode.Tag as GeoSymbol;
+                            if (sSymbol.SymbolType == GeoSymbolTypeConstant.SimpleFillSymbol)
+                            {
+                                (sSymbol as GeoSimpleFillSymbol).Visible = false;
+                            }
+                            else if (sSymbol.SymbolType == GeoSymbolTypeConstant.SimpleLineSymbol)
+                            {
+                                (sSymbol as GeoSimpleLineSymbol).Visible = false;
+                            }
+                            else if (sSymbol.SymbolType == GeoSymbolTypeConstant.SimpleMarkerSymbol)
+                            {
+                                (sSymbol as GeoSimpleMarkerSymbol).Visible = false;
+                            }
+                        }
                     }
+                    layerTreeView.AfterCheck += layerTreeView_AfterCheck;
+
                     sLayer.SelectedFeatures.Clear();
                 }
             }
