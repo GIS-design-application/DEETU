@@ -32,13 +32,13 @@ namespace DEETU.Source.Window
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AttributeTableForm));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("表单模式");
-            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("表格模式");
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("表单模式");
+            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("表格模式");
             this.uiTabControl1 = new Sunny.UI.UITabControl();
             this.formPage = new System.Windows.Forms.TabPage();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
@@ -51,9 +51,9 @@ namespace DEETU.Source.Window
             this.navBarImageList = new System.Windows.Forms.ImageList(this.components);
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.startEditToolStripButton = new System.Windows.Forms.ToolStripButton();
-            this.saveEditToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.reloadToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.saveEditToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.cutToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.copyStripButton = new System.Windows.Forms.ToolStripButton();
             this.pasteToolStripButton = new System.Windows.Forms.ToolStripButton();
@@ -176,27 +176,27 @@ namespace DEETU.Source.Window
             // 
             this.featureDataGridView.AllowUserToAddRows = false;
             this.featureDataGridView.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(211)))), ((int)(((byte)(211)))), ((int)(((byte)(211)))));
-            this.featureDataGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(211)))), ((int)(((byte)(211)))), ((int)(((byte)(211)))));
+            this.featureDataGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.featureDataGridView.BackgroundColor = System.Drawing.Color.White;
             this.featureDataGridView.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(118)))), ((int)(((byte)(118)))), ((int)(((byte)(118)))));
-            dataGridViewCellStyle7.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle7.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(118)))), ((int)(((byte)(118)))), ((int)(((byte)(118)))));
-            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.featureDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(118)))), ((int)(((byte)(118)))), ((int)(((byte)(118)))));
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(118)))), ((int)(((byte)(118)))), ((int)(((byte)(118)))));
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.featureDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.featureDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle8.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle8.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
-            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(155)))), ((int)(((byte)(200)))), ((int)(((byte)(255)))));
-            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
-            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.featureDataGridView.DefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(155)))), ((int)(((byte)(200)))), ((int)(((byte)(255)))));
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.featureDataGridView.DefaultCellStyle = dataGridViewCellStyle3;
             this.featureDataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.featureDataGridView.EnableHeadersVisualStyles = false;
             this.featureDataGridView.Font = new System.Drawing.Font("微软雅黑", 12F);
@@ -204,17 +204,17 @@ namespace DEETU.Source.Window
             this.featureDataGridView.Location = new System.Drawing.Point(0, 0);
             this.featureDataGridView.Name = "featureDataGridView";
             this.featureDataGridView.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
-            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle9.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(211)))), ((int)(((byte)(211)))), ((int)(((byte)(211)))));
-            dataGridViewCellStyle9.Font = new System.Drawing.Font("微软雅黑", 12F);
-            dataGridViewCellStyle9.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
-            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
-            dataGridViewCellStyle9.SelectionForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.featureDataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(211)))), ((int)(((byte)(211)))), ((int)(((byte)(211)))));
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("微软雅黑", 12F);
+            dataGridViewCellStyle4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.featureDataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
             this.featureDataGridView.RowHeadersWidth = 51;
-            dataGridViewCellStyle10.BackColor = System.Drawing.Color.White;
-            this.featureDataGridView.RowsDefaultCellStyle = dataGridViewCellStyle10;
+            dataGridViewCellStyle5.BackColor = System.Drawing.Color.White;
+            this.featureDataGridView.RowsDefaultCellStyle = dataGridViewCellStyle5;
             this.featureDataGridView.RowTemplate.Height = 29;
             this.featureDataGridView.SelectedIndex = -1;
             this.featureDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
@@ -224,6 +224,7 @@ namespace DEETU.Source.Window
             this.featureDataGridView.Style = Sunny.UI.UIStyle.Office2010Black;
             this.featureDataGridView.TabIndex = 0;
             this.featureDataGridView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.featureDataGridView_CellEndEdit);
+            this.featureDataGridView.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.featureDataGridView_CellValueChanged);
             this.featureDataGridView.SelectionChanged += new System.EventHandler(this.featureDataGridView_SelectionChanged);
             // 
             // Header
@@ -234,15 +235,15 @@ namespace DEETU.Source.Window
             this.Header.Location = new System.Drawing.Point(2, 413);
             this.Header.Name = "Header";
             this.Header.NodeInterval = 20;
-            treeNode3.ImageIndex = 0;
-            treeNode3.Name = "formNode";
-            treeNode3.Text = "表单模式";
-            treeNode4.ImageIndex = 1;
-            treeNode4.Name = "gridNode";
-            treeNode4.Text = "表格模式";
+            treeNode1.ImageIndex = 0;
+            treeNode1.Name = "formNode";
+            treeNode1.Text = "表单模式";
+            treeNode2.ImageIndex = 1;
+            treeNode2.Name = "gridNode";
+            treeNode2.Text = "表格模式";
             this.Header.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode3,
-            treeNode4});
+            treeNode1,
+            treeNode2});
             this.Header.NodeSize = new System.Drawing.Size(80, 35);
             this.Header.Size = new System.Drawing.Size(796, 35);
             this.Header.TabControl = this.uiTabControl1;
@@ -292,17 +293,6 @@ namespace DEETU.Source.Window
             this.startEditToolStripButton.Text = "开始编辑";
             this.startEditToolStripButton.Click += new System.EventHandler(this.editToolStripButton_Click);
             // 
-            // saveEditToolStripButton
-            // 
-            this.saveEditToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.saveEditToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("saveEditToolStripButton.Image")));
-            this.saveEditToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.saveEditToolStripButton.Name = "saveEditToolStripButton";
-            this.saveEditToolStripButton.Size = new System.Drawing.Size(24, 24);
-            this.saveEditToolStripButton.Text = "保存编辑";
-            this.saveEditToolStripButton.ToolTipText = "保存编辑";
-            this.saveEditToolStripButton.Click += new System.EventHandler(this.saveEditToolStripButton_Click);
-            // 
             // reloadToolStripButton
             // 
             this.reloadToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -318,6 +308,17 @@ namespace DEETU.Source.Window
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(6, 27);
+            // 
+            // saveEditToolStripButton
+            // 
+            this.saveEditToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.saveEditToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("saveEditToolStripButton.Image")));
+            this.saveEditToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.saveEditToolStripButton.Name = "saveEditToolStripButton";
+            this.saveEditToolStripButton.Size = new System.Drawing.Size(24, 24);
+            this.saveEditToolStripButton.Text = "保存编辑";
+            this.saveEditToolStripButton.ToolTipText = "保存编辑";
+            this.saveEditToolStripButton.Click += new System.EventHandler(this.saveEditToolStripButton_Click);
             // 
             // cutToolStripButton
             // 
