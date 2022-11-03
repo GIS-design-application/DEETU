@@ -2241,8 +2241,8 @@ namespace DEETU.Source.Window
         {
             GeoMapLayer layer = mCurrentLayerNode.Tag as GeoMapLayer;
 #if DEBUG
-            if (layer.Crs.Type == CrsType.None)
-                layer.Crs = new GeoCoordinateReferenceSystem(GeographicCrsType.Beijing1954, ProjectedCrsType.Lambert2SP);
+            //if (layer.Crs.Type == CrsType.None)
+            //    layer.Crs = new GeoCoordinateReferenceSystem(GeographicCrsType.Beijing1954, ProjectedCrsType.Lambert2SP);
 #endif
             CrsDefineForm crsDefine = new CrsDefineForm(layer);
             crsDefine.ShowDialog();
