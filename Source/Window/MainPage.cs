@@ -1609,7 +1609,13 @@ namespace DEETU.Source.Window
                             geoMap.Layers.Insert(newIndex, treeNode.Tag as GeoMapLayer);
                             geoMap.Layers.RemoveAt(treeNode.Index);
                         }
-                        layerTreeView.Nodes.Insert(newIndex, (TreeNode)treeNode.Clone());
+                        TreeNode sNode = (TreeNode)treeNode.Clone();
+                        layerTreeView.Nodes.Insert(newIndex, sNode);
+                        if(mCurrentLayerNode == treeNode)
+                        {
+                            layerTreeView.SelectedNode = sNode;
+                            mCurrentLayerNode = sNode;
+                        }
                         // 将被拖动的节点移除
                         treeNode.Remove();
                         geoMap.RedrawMap();
