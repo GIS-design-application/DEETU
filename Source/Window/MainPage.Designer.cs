@@ -41,7 +41,6 @@ namespace DEETU.Source.Window
             this.layerContextMenuStrip = new Sunny.UI.UIContextMenuStrip();
             this.缩放到图层范围ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.缩放到选中区域ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.显示要素数目ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.图层重命名ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.移除图层ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -229,7 +228,6 @@ namespace DEETU.Source.Window
             this.layerContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.缩放到图层范围ToolStripMenuItem,
             this.缩放到选中区域ToolStripMenuItem,
-            this.显示要素数目ToolStripMenuItem,
             this.图层重命名ToolStripMenuItem,
             this.toolStripSeparator6,
             this.移除图层ToolStripMenuItem,
@@ -251,19 +249,14 @@ namespace DEETU.Source.Window
             this.缩放到图层范围ToolStripMenuItem.Name = "缩放到图层范围ToolStripMenuItem";
             this.缩放到图层范围ToolStripMenuItem.Size = new System.Drawing.Size(176, 24);
             this.缩放到图层范围ToolStripMenuItem.Text = "缩放到图层范围";
+            this.缩放到图层范围ToolStripMenuItem.Click += new System.EventHandler(this.btnLayerExtent_Click);
             // 
             // 缩放到选中区域ToolStripMenuItem
             // 
             this.缩放到选中区域ToolStripMenuItem.Name = "缩放到选中区域ToolStripMenuItem";
             this.缩放到选中区域ToolStripMenuItem.Size = new System.Drawing.Size(176, 24);
             this.缩放到选中区域ToolStripMenuItem.Text = "缩放到选中区域";
-            // 
-            // 显示要素数目ToolStripMenuItem
-            // 
-            this.显示要素数目ToolStripMenuItem.Name = "显示要素数目ToolStripMenuItem";
-            this.显示要素数目ToolStripMenuItem.Size = new System.Drawing.Size(176, 24);
-            this.显示要素数目ToolStripMenuItem.Text = "显示要素数目";
-            // 
+            this.缩放到选中区域ToolStripMenuItem.Click += new System.EventHandler(this.btnSelectedAreaExtent_Click);
             // 图层重命名ToolStripMenuItem
             // 
             this.图层重命名ToolStripMenuItem.Name = "图层重命名ToolStripMenuItem";
@@ -1566,7 +1559,6 @@ namespace DEETU.Source.Window
 		private Sunny.UI.UIContextMenuStrip layerContextMenuStrip;
 		private System.Windows.Forms.ToolStripMenuItem 缩放到图层范围ToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem 缩放到选中区域ToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem 显示要素数目ToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem 图层重命名ToolStripMenuItem;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
 		private System.Windows.Forms.ToolStripMenuItem 移除图层ToolStripMenuItem;
