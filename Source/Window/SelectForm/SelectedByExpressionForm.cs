@@ -17,6 +17,7 @@ namespace DEETU.Source.Window
     {
         #region 字段
         GeoMapLayer mLayer;
+        int mUniqueValueFieldIdx;
         #endregion
         public SelectedByExpressionForm(GeoMapLayer layer)
         {
@@ -81,7 +82,7 @@ namespace DEETU.Source.Window
                         valueList.Add((double)value);
                         break;
                     case GeoValueTypeConstant.dText:
-                        valueList.Add((string)value);
+                        valueList.Add(value.ToString());
                         break;
                     default:
                         valueList.Add(value.ToString());
@@ -94,6 +95,7 @@ namespace DEETU.Source.Window
             {
                 valueListBox.Items.Add(valueList[i].ToString());
             }
+            mUniqueValueFieldIdx = fieldIdx;
         }
 
         /// <summary>
@@ -112,7 +114,7 @@ namespace DEETU.Source.Window
 
         private void searchValueButton_Click(object sender, EventArgs e)
         {
-            int fieldIdx = fieldsListBox.SelectedIndex;
+            int fieldIdx = mUniqueValueFieldIdx;
             if (fieldIdx == -1)
             {
                 UIMessageBox.ShowError("请选择字段", false);

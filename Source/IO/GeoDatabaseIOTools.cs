@@ -382,7 +382,7 @@ namespace DEETU.IO
                                         sField.ValueType = GeoValueTypeConstant.dText;
                                         break;
                                     case ("integer"):
-                                        sField.ValueType = GeoValueTypeConstant.dText;
+                                        sField.ValueType = GeoValueTypeConstant.dInt32;
                                         break;
                                     case ("BLOB"):
                                         break;

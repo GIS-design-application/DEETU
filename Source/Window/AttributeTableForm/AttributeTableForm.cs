@@ -193,6 +193,7 @@ namespace DEETU.Source.Window
             // recover selectedChanged
             featureList.SelectedIndexChanged += featureList_SelectedIndexChanged;
             featureList.Items[0].Selected = false;
+            featureList_SelectedIndexChanged(sender, e);
             MapRedraw?.Invoke(this);
             InitializeGridPage();
         }
@@ -495,7 +496,6 @@ namespace DEETU.Source.Window
                 featureDataGridView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             }
 
-            saveEditToolStripButton.Enabled = mIsEditing;
             cutToolStripButton.Enabled = mIsEditing;
             pasteToolStripButton.Enabled = mIsEditing;
             copyStripButton.Enabled = mIsEditing;

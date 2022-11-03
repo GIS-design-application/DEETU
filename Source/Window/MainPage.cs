@@ -162,7 +162,7 @@ namespace DEETU.Source.Window
             {
                 UncheckModeToolStrip();
                 UncheckToolStrip();
-                this.Cursor = new Cursor("./icons/ZoomIn.ico");
+                this.Cursor = new Cursor("./icons/ZoomOut.ico");
                 mMapOpStyle = GeoMapOpStyleEnum.ZoomIn;
                 ZoomInModeButton.Checked = true;
             }
@@ -180,7 +180,7 @@ namespace DEETU.Source.Window
             {
                 UncheckModeToolStrip();
                 UncheckToolStrip();
-                this.Cursor = new Cursor("./icons/ZoomOut.ico");
+                this.Cursor = new Cursor("./icons/ZoomIn.ico");
                 mMapOpStyle = GeoMapOpStyleEnum.ZoomOut;
                 ZoomoutModeButton.Checked = true;
             }
@@ -391,6 +391,7 @@ namespace DEETU.Source.Window
                 MoveItemToolStripButton.Enabled = true;
                 EditFeatureToolStripButton.Enabled = true;
                 startEditToolStripButton.Enabled = true;
+                selectionModeStripMenuItem.Enabled = true;
             }
 
         }
@@ -587,6 +588,12 @@ namespace DEETU.Source.Window
                 mEditingGeometry = null;
                 geoMap.RedrawMap();
                 UncheckToolStrip();
+
+                RemoveItemToolStripButton.Enabled = true;
+                MoveItemToolStripButton.Enabled = true;
+                AddFeatureToolStripButton.Enabled = true;
+                startEditToolStripButton.Enabled = true;
+                selectionModeStripMenuItem.Enabled = true;
             }
             else
             {
@@ -612,6 +619,12 @@ namespace DEETU.Source.Window
                 geoMap.RedrawTrackingShapes();
 
                 CheckToolStrip(mMapOpStyle);
+
+                RemoveItemToolStripButton.Enabled = false;
+                MoveItemToolStripButton.Enabled = false;
+                AddFeatureToolStripButton.Enabled = false;
+                startEditToolStripButton.Enabled = false;
+                selectionModeStripMenuItem.Enabled = false;
             }
         }
 
@@ -718,6 +731,7 @@ namespace DEETU.Source.Window
             try
             {
                 geoMap.Layers.Clear();
+                this.ShowWaitForm("读取中，请稍后...");
                 GeoDatabaseIOTools.LoadGeoProject(geoMap.Layers, sFileName);
                 geoMap.Layers.FilePath = sFileName;
                 ProjectName = System.IO.Path.GetFileNameWithoutExtension(sFileName);
@@ -727,8 +741,10 @@ namespace DEETU.Source.Window
                 }
                 else
                 {
+                    geoMap.FullExtent();
                     geoMap.RedrawMap();
                 }
+                this.HideWaitForm();
                 UpdateTreeView();
                 ProjectName = System.IO.Path.GetFileNameWithoutExtension(sFileName);
                 IsProjectDirty = false;
@@ -1663,7 +1679,13 @@ namespace DEETU.Source.Window
                             geoMap.Layers.Insert(newIndex, treeNode.Tag as GeoMapLayer);
                             geoMap.Layers.RemoveAt(treeNode.Index);
                         }
-                        layerTreeView.Nodes.Insert(newIndex, (TreeNode)treeNode.Clone());
+                        TreeNode sNode = (TreeNode)treeNode.Clone();
+                        layerTreeView.Nodes.Insert(newIndex, sNode);
+                        if(mCurrentLayerNode == treeNode)
+                        {
+                            layerTreeView.SelectedNode = sNode;
+                            mCurrentLayerNode = sNode;
+                        }
                         // 将被拖动的节点移除
                         treeNode.Remove();
                         geoMap.RedrawMap();
@@ -2117,7 +2139,7 @@ namespace DEETU.Source.Window
 
         // 这个函数是为了显示图层渲染方式
         // 在加入图层和修改渲染方式时调用
-        private void InsertTreeNode(GeoMapLayer layer, int index)
+        private TreeNode InsertTreeNode(GeoMapLayer layer, int index)
         {
             // 按照renderer Type进行处理
             GeoRenderer sRenderer = layer.Renderer;
@@ -2137,6 +2159,7 @@ namespace DEETU.Source.Window
                 //layerTreeView.Nodes.Insert(0,layerNode);
                 layerNode.Tag = layer;
                 layerTreeView.Nodes.Insert(index, layerNode);
+                return layerNode;
             }
             else if (sRenderer.RendererType == GeoRendererTypeConstant.ClassBreaks)
             {
@@ -2169,6 +2192,7 @@ namespace DEETU.Source.Window
                 //layerTreeView.Nodes.Insert(0,layerNode);
                 layerNode.Tag = layer;
                 layerTreeView.Nodes.Insert(index, layerNode);
+                return layerNode;
             }
             else if (sRenderer.RendererType == GeoRendererTypeConstant.UniqueValue)
             {
@@ -2199,10 +2223,13 @@ namespace DEETU.Source.Window
                 //layerTreeView.Nodes.Insert(0,layerNode);
                 layerNode.Tag = layer;
                 layerTreeView.Nodes.Insert(index, layerNode);
+                return layerNode;
+
             }
             else
             {
                 throw new Exception("Renderer Type Error!");
+                return null;
             }
         }
 
@@ -2293,12 +2320,43 @@ namespace DEETU.Source.Window
                 if (node.Tag != null)
                 {
                     GeoSymbol sSymbol = node.Tag as GeoSymbol;
-                    if (sSymbol.SymbolType == GeoSymbolTypeConstant.SimpleFillSymbol)
+                    if(node.Checked)
                     {
-                        if (node.Checked)
+                        if (node.Parent.Checked == false)
+                            node.Parent.Checked = true;
+                        if (sSymbol.SymbolType == GeoSymbolTypeConstant.SimpleFillSymbol)
+                        {
+                            if ((sSymbol as GeoSimpleFillSymbol).Visible == true) return;
                             (sSymbol as GeoSimpleFillSymbol).Visible = true;
-                        else
+                        }
+                        else if (sSymbol.SymbolType == GeoSymbolTypeConstant.SimpleLineSymbol)
+                        {
+                            if ((sSymbol as GeoSimpleLineSymbol).Visible == true) return;
+                            (sSymbol as GeoSimpleLineSymbol).Visible = true;
+                        }
+                        else if (sSymbol.SymbolType == GeoSymbolTypeConstant.SimpleMarkerSymbol)
+                        {
+                            if ((sSymbol as GeoSimpleMarkerSymbol).Visible == true) return;
+                            (sSymbol as GeoSimpleMarkerSymbol).Visible = true;
+                        }
+                    }
+                    else
+                    {
+                        if (sSymbol.SymbolType == GeoSymbolTypeConstant.SimpleFillSymbol)
+                        {
+                            if ((sSymbol as GeoSimpleFillSymbol).Visible == false) return;
                             (sSymbol as GeoSimpleFillSymbol).Visible = false;
+                        }
+                        else if (sSymbol.SymbolType == GeoSymbolTypeConstant.SimpleLineSymbol)
+                        {
+                            if ((sSymbol as GeoSimpleLineSymbol).Visible == false) return;
+                            (sSymbol as GeoSimpleLineSymbol).Visible = false;
+                        }
+                        else if (sSymbol.SymbolType == GeoSymbolTypeConstant.SimpleMarkerSymbol)
+                        {
+                            if ((sSymbol as GeoSimpleMarkerSymbol).Visible == false) return;
+                            (sSymbol as GeoSimpleMarkerSymbol).Visible = false;
+                        }
                     }
                 }
             }
@@ -2306,9 +2364,60 @@ namespace DEETU.Source.Window
             {
                 GeoMapLayer sLayer = node.Tag as GeoMapLayer;
                 if (node.Checked)
+                {
                     sLayer.Visible = true;
+                    layerTreeView.AfterCheck -= layerTreeView_AfterCheck;
+                    foreach (TreeNode sNode in node.Nodes)
+                    {
+                        sNode.Checked = true;
+                        if(sNode.Tag != null)
+                        {
+                            GeoSymbol sSymbol = sNode.Tag as GeoSymbol;
+                            if (sSymbol.SymbolType == GeoSymbolTypeConstant.SimpleFillSymbol)
+                            {
+                                (sSymbol as GeoSimpleFillSymbol).Visible = true;
+                            }
+                            else if (sSymbol.SymbolType == GeoSymbolTypeConstant.SimpleLineSymbol)
+                            {
+                                (sSymbol as GeoSimpleLineSymbol).Visible = true;
+                            }
+                            else if (sSymbol.SymbolType == GeoSymbolTypeConstant.SimpleMarkerSymbol)
+                            {
+                                (sSymbol as GeoSimpleMarkerSymbol).Visible = true;
+                            }
+                        }
+                    }
+                    layerTreeView.AfterCheck += layerTreeView_AfterCheck;
+
+                }
                 else
+                {
                     sLayer.Visible = false;
+                    layerTreeView.AfterCheck -= layerTreeView_AfterCheck;
+                    foreach (TreeNode sNode in node.Nodes)
+                    {   
+                        sNode.Checked = false;
+                        if(sNode.Tag != null)
+                        {
+                            GeoSymbol sSymbol = sNode.Tag as GeoSymbol;
+                            if (sSymbol.SymbolType == GeoSymbolTypeConstant.SimpleFillSymbol)
+                            {
+                                (sSymbol as GeoSimpleFillSymbol).Visible = false;
+                            }
+                            else if (sSymbol.SymbolType == GeoSymbolTypeConstant.SimpleLineSymbol)
+                            {
+                                (sSymbol as GeoSimpleLineSymbol).Visible = false;
+                            }
+                            else if (sSymbol.SymbolType == GeoSymbolTypeConstant.SimpleMarkerSymbol)
+                            {
+                                (sSymbol as GeoSimpleMarkerSymbol).Visible = false;
+                            }
+                        }
+                    }
+                    layerTreeView.AfterCheck += layerTreeView_AfterCheck;
+
+                    sLayer.SelectedFeatures.Clear();
+                }
             }
             geoMap.RedrawMap();
         }
@@ -2446,10 +2555,12 @@ namespace DEETU.Source.Window
 
         private void 移到顶层ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            layerTreeView.Nodes.Insert(0, (TreeNode)mCurrentLayerNode.Clone());
+            TreeNode sNode = (TreeNode)mCurrentLayerNode.Clone();
+            layerTreeView.Nodes.Insert(0, sNode);
             geoMap.Layers.Insert(0, mCurrentLayerNode.Tag as GeoMapLayer);
             geoMap.Layers.RemoveAt(mCurrentLayerNode.Index);
             mCurrentLayerNode.Remove();
+            layerTreeView.SelectedNode = sNode;
             geoMap.RedrawMap();
         }
 
@@ -2475,8 +2586,12 @@ namespace DEETU.Source.Window
         #region 子窗口事件处理
         private void layerAttributes_FormClosed(object sender, FormClosedEventArgs e)
         {
-            InsertTreeNode(mCurrentLayerNode.Tag as GeoMapLayer, mCurrentLayerNode.Index);
+            TreeNode sNode = InsertTreeNode(mCurrentLayerNode.Tag as GeoMapLayer, mCurrentLayerNode.Index);
             mCurrentLayerNode.Remove();
+
+            layerTreeView.SelectedNode = sNode;
+            mCurrentLayerNode = sNode;
+
             geoMap.RedrawMap();
         }
 
@@ -2901,7 +3016,7 @@ namespace DEETU.Source.Window
 
         }
 
-        private void geoMap_DoubleClick(object sender, EventArgs e)
+        private void geoMap_DoubleClick(object sender, MouseEventArgs e)
         {
 #if DEBUG
             Logging = "鼠标双击";
@@ -2913,6 +3028,174 @@ namespace DEETU.Source.Window
             else if (mMapOpStyle == GeoMapOpStyleEnum.Select)
             {
 
+            }
+            else if (mMapOpStyle == GeoMapOpStyleEnum.Edit)
+            {
+#if DEBUG
+                Logging = "编辑模式双击";
+#endif
+                
+                // 找到鼠标点击后对应的点
+                GeoPoint mousePoint = geoMap.ToMapPoint(e.Location.X, e.Location.Y);
+                double tolerance = geoMap.ToMapDistance(mSelectingTolerance);
+
+                string mode = null; // "add", "delete"
+                if (mEditingGeometry.GetType() == typeof(GeoMultiPolygon))
+                {
+                    GeoMultiPolygon editingMultiPolygon = mEditingGeometry as GeoMultiPolygon; // 目前只考虑选择一个多边形
+                                                                                          // 如果鼠标的点并不在多边形附近, 直接放弃
+                    if (!editingMultiPolygon.GetEnvelope().IsInside(mousePoint, tolerance))
+                    {
+                        return;
+                    }
+
+                    // 遍历所有点集, 查找是否点击了某一个点
+                    for (int i = 0; i < editingMultiPolygon.Parts.Count; i++)
+                    {
+                        // 对每一个点集判断是否包含鼠标的范围
+                        GeoPoints points = editingMultiPolygon.Parts.GetItem(i);
+                        if (GeoMapTools.IsPointOnPolygon(mousePoint, points, tolerance))
+                        {
+#if DEBUG
+                            Logging = "在线上";
+#endif
+                            foreach(var point in points.ToArray())
+                            {
+                                if (GeoMapTools.IsPointOnPoint(mousePoint, point, tolerance))
+                                    // 双击，点到了一个点，说明需要删掉这个点
+                                {
+#if DEBUG
+                                    Logging = "且在点上";
+#endif
+                                    if (points.Count > 3)
+                                        // 如果点数量超过三个，那么需要删除这个点，更新extent，重新绘图
+                                    {
+#if DEBUG
+                                        Logging = "删除点";
+#endif
+                                        points.Remove(point);
+                                    }
+                                    else
+                                        // 否则直接删掉这个多边形即可
+                                    {
+#if DEBUG
+                                        Logging = "删除多边形";
+#endif
+                                        editingMultiPolygon.Parts.Remove(points);
+                                    }
+                                    editingMultiPolygon.UpdateExtent();
+                                    return;
+                                }
+                            }
+
+#if DEBUG
+                            Logging = "但不在点上";
+#endif
+                            // 此时需要新建一个点
+                            int index = GeoMapTools.PointOnWhichLine(mousePoint, points, tolerance);
+                            if (index == -1)
+                            {
+#if DEBUG
+                                Logging = "这里一定有问题";
+                                Debug.Assert(true);
+#endif
+                            }
+                            else
+                            {
+                                points.Insert(index + 1, mousePoint);
+                                points.UpdateExtent();
+                            }
+                            editingMultiPolygon.UpdateExtent();
+                            geoMap.RedrawTrackingShapes();
+                            return;
+                        }
+                    }
+                }
+                else if (mEditingGeometry.GetType() == typeof(GeoMultiPolyline))
+                {
+                    GeoMultiPolyline editingMultiPolyline = mEditingGeometry as GeoMultiPolyline; // 目前只考虑选择一个多边形
+                                                                                               // 如果鼠标的点并不在多边形附近, 直接放弃
+                    if (!editingMultiPolyline.GetEnvelope().IsInside(mousePoint, tolerance))
+                    {
+                        return;
+                    }
+
+                    // 遍历所有点集, 查找是否点击了某一个点
+                    for (int i = 0; i < editingMultiPolyline.Parts.Count; i++)
+                    {
+                        // 对每一个点集判断是否包含鼠标的范围
+                        GeoPoints points = editingMultiPolyline.Parts.GetItem(i);
+                        if (GeoMapTools.IsPointOnPolyline(mousePoint, points, tolerance))
+                        {
+#if DEBUG
+                            Logging = "在线上";
+#endif
+                            foreach (var point in points.ToArray())
+                            {
+                                if (GeoMapTools.IsPointOnPoint(mousePoint, point, tolerance))
+                                // 双击，点到了一个点，说明需要删掉这个点
+                                {
+#if DEBUG
+                                    Logging = "且在点上";
+#endif
+                                    if (points.Count > 2)
+                                    // 如果点数量超过两个，那么需要删除这个点，更新extent，重新绘图
+                                    {
+#if DEBUG
+                                        Logging = "删除点";
+#endif
+                                        points.Remove(point);
+                                    }
+                                    else
+                                    // 否则直接删掉这个多边形即可
+                                    {
+#if DEBUG
+                                        Logging = "删除多边形";
+#endif
+                                        editingMultiPolyline.Parts.Remove(points);
+                                    }
+                                    editingMultiPolyline.UpdateExtent();
+                                    return;
+                                }
+                            }
+
+#if DEBUG
+                            Logging = "但不在点上";
+#endif
+                            // 此时需要新建一个点
+                            int index = GeoMapTools.PointOnWhichLine(mousePoint, points, tolerance);
+                            if (index == -1)
+                            {
+#if DEBUG
+                                Logging = "这里一定有问题";
+                                Debug.Assert(true);
+#endif
+                            }
+                            else
+                            {
+                                points.Insert(index + 1, mousePoint);
+                                points.UpdateExtent();
+                            }
+                            editingMultiPolyline.UpdateExtent();
+                            geoMap.RedrawTrackingShapes();
+                            return;
+                        }
+                    }
+                }
+                else
+                {
+                    // 不需要对点进行加减操作
+
+                }
+
+
+
+
+
+
+
+                // 没有找到好奇怪, 应该是多边形在附近但是和点离得也不近, 有点蠢
+                return;
             }
         }
 
@@ -3136,6 +3419,8 @@ namespace DEETU.Source.Window
             }
         }
 
+        static int MAX_UNDO = 50;
+
         private GeoMapLayer NewUndo(GeoMapLayer srcLayer)
         {
             ResetUndo();
@@ -3147,13 +3432,14 @@ namespace DEETU.Source.Window
 
             undo_layers.Add((srcLayer, desLayer));
 
-            if (undo_layers.Count > 20)
-            {
-                undo_layers.RemoveRange(0, undo_layers.Count - 20);
-            }
-
             UpdateTreeView();
             undo_index++;
+
+            if (undo_layers.Count > MAX_UNDO)
+            {
+                undo_layers.RemoveRange(0, undo_layers.Count - MAX_UNDO);
+                undo_index -= undo_layers.Count - MAX_UNDO;
+            }
             return desLayer;
         }
         #endregion
@@ -3192,6 +3478,10 @@ namespace DEETU.Source.Window
             if (File.Exists(path))
             {
                 LoadLayerFile(path);
+            }
+            else
+            {
+                MessageBox.Show("该文件已被移动或删除，请确认文件位置后打开");
             }
         }
 

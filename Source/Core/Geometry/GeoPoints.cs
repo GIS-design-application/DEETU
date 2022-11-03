@@ -123,6 +123,15 @@ namespace DEETU.Geometry
         {
             _Points.RemoveAt(index);
         }
+
+        /// <summary>
+        /// 删除指定元素
+        /// </summary>
+        /// <param name="point"></param>
+        public void Remove(GeoPoint point)
+        {
+            _Points.Remove(point);
+        }
         /// <summary>
         /// 将所有元素复制到一个数组中，并返回
         /// </summary>
