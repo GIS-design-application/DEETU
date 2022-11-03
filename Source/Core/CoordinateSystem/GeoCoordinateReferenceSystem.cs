@@ -43,7 +43,7 @@ namespace DEETU.Core
         #region 运算符重载
         public static bool operator == (GeoCoordinateReferenceSystem crs1,GeoCoordinateReferenceSystem crs2)
         {
-            if ((object)crs2 == null || (object)crs1 == null) return true;
+            if ((object)crs2 == null || (object)crs1 == null) return false;
             if (crs1.GeographicCrs == crs2.GeographicCrs && crs1.ProjectedCrs == crs2.ProjectedCrs)
                 return true;
             return false;
