@@ -388,7 +388,12 @@ namespace DEETU.Source.Window
         }
         private void uiIntegerUpDown2_ValueChanged(object sender, int value)
         {
-            if (mClassBreaksRenderer == null || mClassBreaksRenderer.BreakCount != value)
+            if (mClassBreaksRenderer == null)
+            {
+                MessageBox.Show("当前没有可以调整分级数的渲染！");
+                return;
+            }
+            if (mClassBreaksRenderer.BreakCount != value)
             {
                 Color sStartColor = (mClassBreaksRenderer.GetSymbol(0) as GeoSimpleFillSymbol).Color;
                 Color sEndColor = (mClassBreaksRenderer.GetSymbol(mClassBreaksRenderer.BreakCount - 1) as GeoSimpleFillSymbol).Color;

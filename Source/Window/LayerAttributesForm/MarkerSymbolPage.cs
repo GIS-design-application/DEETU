@@ -313,10 +313,15 @@ namespace DEETU.Source.Window
         }
         private void uiIntegerUpDown2_ValueChanged(object sender, int value)
         {
-            if (mClassBreaksRenderer == null || mClassBreaksRenderer.BreakCount != value)
+            if(mClassBreaksRenderer == null)
             {
-                Color sStartColor = (mClassBreaksRenderer.GetSymbol(0) as GeoSimpleFillSymbol).Color;
-                Color sEndColor = (mClassBreaksRenderer.GetSymbol(mClassBreaksRenderer.BreakCount - 1) as GeoSimpleFillSymbol).Color;
+                MessageBox.Show("当前没有可以调整分级数的渲染！");
+                return;
+            }
+            if (mClassBreaksRenderer.BreakCount != value)
+            {
+                Color sStartColor = (mClassBreaksRenderer.GetSymbol(0) as GeoSimpleMarkerSymbol).Color;
+                Color sEndColor = (mClassBreaksRenderer.GetSymbol(mClassBreaksRenderer.BreakCount - 1) as GeoSimpleMarkerSymbol).Color;
                 mLayer.Renderer = CreateClassBreaksRenderer(classFieldComboBox.SelectedItem.ToString(), uiIntegerUpDown2.Value, uiDoubleUpDown1.Value, uiDoubleUpDown2.Value, sStartColor, sEndColor);
                 mClassBreaksRenderer = mLayer.Renderer as GeoClassBreaksRenderer;
             }
