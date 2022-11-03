@@ -557,10 +557,12 @@ namespace DEETU.Source.Window
                 SaveNewProject();
             else
             {
+                this.ShowWaitForm("保存中，请稍后...");
                 GC.Collect();
                 GC.WaitForPendingFinalizers();
                 File.Delete(geoMap.Layers.FilePath);
                 GeoDatabaseIOTools.SaveGeoProject(geoMap.Layers, geoMap.Layers.FilePath);
+                this.HideWaitForm();
             }
         }
         private void CreateToolStripMenuItem_Click(object sender, EventArgs e)
@@ -570,6 +572,7 @@ namespace DEETU.Source.Window
         }
         private void SaveNewProject()
         {
+
             SaveFileDialog saveFileDialog1 = new SaveFileDialog();
 
             saveFileDialog1.Filter = "SQLite Database (*.db)|*.db";
@@ -578,12 +581,15 @@ namespace DEETU.Source.Window
 
             if (saveFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                MessageBox.Show(saveFileDialog1.FileName);
+                this.ShowWaitForm("保存中，请稍后...");
+                //MessageBox.Show(saveFileDialog1.FileName);
                 GeoDatabaseIOTools.SaveGeoProject(geoMap.Layers, saveFileDialog1.FileName);
                 geoMap.Layers.FilePath = saveFileDialog1.FileName;
                 saveFileDialog1.Dispose();
+                this.HideWaitForm();
 
             }
+
         }
         private void SaveNewProjectToolStripMenuItem_Click(object sender, EventArgs e)
         {
