@@ -450,6 +450,7 @@ namespace DEETU.Map
                     sLayer.SelectedFeatures.Clear();
                 }
             }
+
         }
 
         #endregion

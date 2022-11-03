@@ -2421,14 +2421,15 @@ namespace DEETU.Source.Window
         private void layerTreeView_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
         {
             if (e.Node == mCurrentLayerNode) return;
-            if (e.Node.Nodes.Count != 0)
-                mCurrentLayerNode = e.Node;
 
             if (mCurrentLayerNode != null)
             {
                 var oldlayer = (GeoMapLayer)mCurrentLayerNode.Tag;
                 oldlayer.SelectedFeatures.Clear();
+                geoMap.RedrawMap();
             }
+            if (e.Node.Nodes.Count != 0)
+                mCurrentLayerNode = e.Node;
 
 #if DEBUG
             Logging = mCurrentLayerNode.Text;
