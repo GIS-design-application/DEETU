@@ -235,10 +235,10 @@ namespace DEETU.Map
         /// </summary>
         /// <param name="features"></param>
         /// <param name="selsctMethod">选择方法</param>
-        public void ExecuteSelect(GeoFeatures features, int selectMethod = 0)
+        public void ExecuteSelect(GeoFeatures features, GeoSelectionModeConstant selectMethod = 0)
         {
             // 说明，此处仅考虑新建集合
-            if (selectMethod == 0)
+            if (selectMethod == GeoSelectionModeConstant.NewSelection)
             {
                 _SelectedFeatures.Clear();
                 int sFeatureCount = features.Count;
@@ -246,9 +246,25 @@ namespace DEETU.Map
                     _SelectedFeatures.Add(features.GetItem(i));
                 
             }
+            else if (selectMethod == GeoSelectionModeConstant.AddSelection)
+            {
+                int sFeatureCount = features.Count;
+                for (int i = 0; i < sFeatureCount; ++i)
+                    _SelectedFeatures.Add(features.GetItem(i));
+            }
             else
             {
-                throw new NotImplementedException();
+                try
+                {
+                    foreach (GeoFeature feature in features.ToArray())
+                    {
+                        _SelectedFeatures.Remove(feature);
+                    }
+                }
+                catch (Exception e)
+                {
+                    throw new Exception("图层删除错误");
+                }
             }
         }
         /// <summary>

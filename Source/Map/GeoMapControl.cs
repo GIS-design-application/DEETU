@@ -434,7 +434,7 @@ namespace DEETU.Map
         /// <param name="selectingBox"></param>
         /// <param name="talerance"></param>
         /// <param name="selectMethod"></param>
-        public void SelectByBox(GeoRectangle selectingBox, double tolerance, bool containSelect)
+        public void SelectByBox(GeoRectangle selectingBox, double tolerance, bool containSelect, GeoSelectionModeConstant selectionMode)
         {
             Int32 sLayerCount = _Layers.Count;
             for (Int32 i = 0; i < sLayerCount; i++)
@@ -443,7 +443,7 @@ namespace DEETU.Map
                 if (sLayer.Visible && sLayer.Selectable)
                 {
                     GeoFeatures sFeatures = sLayer.SearchByBox(selectingBox, tolerance, containSelect);
-                    sLayer.ExecuteSelect(sFeatures);
+                    sLayer.ExecuteSelect(sFeatures,selectionMode);
                 }
                 else
                 {
