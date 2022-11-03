@@ -132,7 +132,7 @@ namespace DEETU.Source.Window
             {
                 UncheckModeToolStrip();
                 UncheckToolStrip();
-                this.Cursor = new Cursor("./icons/ZoomIn.ico");
+                this.Cursor = new Cursor("./icons/ZoomOut.ico");
                 mMapOpStyle = GeoMapOpStyleEnum.ZoomIn;
                 ZoomInModeButton.Checked = true;
             }
@@ -150,7 +150,7 @@ namespace DEETU.Source.Window
             {
                 UncheckModeToolStrip();
                 UncheckToolStrip();
-                this.Cursor = new Cursor("./icons/ZoomOut.ico");
+                this.Cursor = new Cursor("./icons/ZoomIn.ico");
                 mMapOpStyle = GeoMapOpStyleEnum.ZoomOut;
                 ZoomoutModeButton.Checked = true;
             }
