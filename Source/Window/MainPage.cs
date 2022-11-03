@@ -2379,6 +2379,7 @@ namespace DEETU.Source.Window
         {
             GeoMapLayer sLayer = NewUndo(layer);
             sLayer.Features.RemoveRange(sLayer.SelectedFeatures.ToArray());
+            sLayer.SelectedFeatures.Clear();
             geoMap.RedrawMap();
             CurrentAcitveLayerUpdated?.Invoke(this, sLayer);
         }

@@ -165,6 +165,8 @@ namespace DEETU.Source.Window
 
         private void selectAllToolStripButton_Click(object sender, EventArgs e)
         {
+            if (mLayer.Features.Count == 0)
+                return;
             // ban selectedChanged
             featureList.SelectedIndexChanged -= featureList_SelectedIndexChanged;
             for (int i = 1; i < featureList.Items.Count; i++)
@@ -180,6 +182,8 @@ namespace DEETU.Source.Window
 
         private void removeSelectToolStripButton_Click(object sender, EventArgs e)
         {
+            if (mLayer.Features.Count == 0)
+                return;
             // ban selectedChanged
             featureList.SelectedIndexChanged -= featureList_SelectedIndexChanged;
             for (int i = 1; i < featureList.Items.Count; i++)
