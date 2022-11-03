@@ -1958,7 +1958,10 @@ namespace DEETU.Source.Window
                 if (mCurrentLayerNode.Index >= layerTreeView.Nodes.Count) // 这个补丁是为了避免Remove最后一个出问题
                     mCurrentLayerNode = null;
                 else
+                {
                     mCurrentLayerNode = layerTreeView.Nodes[mCurrentLayerNode.Index];
+                    layerTreeView.SelectedNode = mCurrentLayerNode; ;
+                }
                 //CurrentAcitveLayerUpdated?.Invoke(this, mCurrentLayerNode.Tag as GeoMapLayer);
             }
         }
