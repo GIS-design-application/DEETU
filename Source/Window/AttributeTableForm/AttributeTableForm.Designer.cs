@@ -37,8 +37,8 @@ namespace DEETU.Source.Window
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("表单模式");
-            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("表格模式");
+            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode(" ");
+            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode(" ");
             this.uiTabControl1 = new Sunny.UI.UITabControl();
             this.formPage = new System.Windows.Forms.TabPage();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
@@ -230,21 +230,23 @@ namespace DEETU.Source.Window
             // Header
             // 
             this.Header.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.Header.Font = new System.Drawing.Font("微软雅黑", 12F);
+            this.Header.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.Header.ImageList = this.navBarImageList;
             this.Header.Location = new System.Drawing.Point(2, 413);
             this.Header.Name = "Header";
             this.Header.NodeInterval = 20;
             treeNode1.ImageIndex = 0;
             treeNode1.Name = "formNode";
-            treeNode1.Text = "表单模式";
+            treeNode1.Text = " ";
+            treeNode1.ToolTipText = "表单模式";
             treeNode2.ImageIndex = 1;
             treeNode2.Name = "gridNode";
-            treeNode2.Text = "表格模式";
+            treeNode2.Text = " ";
+            treeNode2.ToolTipText = "表格模式";
             this.Header.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
             treeNode1,
             treeNode2});
-            this.Header.NodeSize = new System.Drawing.Size(80, 35);
+            this.Header.NodeSize = new System.Drawing.Size(50, 35);
             this.Header.Size = new System.Drawing.Size(796, 35);
             this.Header.TabControl = this.uiTabControl1;
             this.Header.TabIndex = 1;

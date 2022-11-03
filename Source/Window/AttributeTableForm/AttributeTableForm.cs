@@ -34,6 +34,8 @@ namespace DEETU.Source.Window
             SetEdit();
 
             Header.SelectedIndex = 0;
+            Header.SetNodeSymbol(Header.Nodes[0], 61451);
+            Header.SetNodeSymbol(Header.Nodes[1], 61450);
         }
 
         #region 事件处理函数
@@ -384,7 +386,7 @@ namespace DEETU.Source.Window
                 ListViewItem item = new ListViewItem(features.GetItem(i).Attributes.GetItem(0).ToString());
                 if (item.Text.IsNullOrEmpty())
                 {
-                    item.Text = "Untitled";
+                    item.Text = "Untitled" + item.Index.ToString();
                 }
                 item.Tag = features.GetItem(i);
                 item.ImageIndex = 0;
