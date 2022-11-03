@@ -175,6 +175,7 @@ namespace DEETU.Source.Window
             featureList.SelectedIndexChanged += featureList_SelectedIndexChanged;
             featureList.Items[0].Selected = true;
             MapRedraw?.Invoke(this);
+            InitializeGridPage();
         }
 
         private void removeSelectToolStripButton_Click(object sender, EventArgs e)
@@ -188,8 +189,8 @@ namespace DEETU.Source.Window
             // recover selectedChanged
             featureList.SelectedIndexChanged += featureList_SelectedIndexChanged;
             featureList.Items[0].Selected = false;
-            featureList_SelectedIndexChanged(sender, e);
-            
+            MapRedraw?.Invoke(this);
+            InitializeGridPage();
         }
 
         private void cutToolStripButton_Click(object sender, EventArgs e)
@@ -281,7 +282,7 @@ namespace DEETU.Source.Window
 
         private void InitializeGridPage()
         {
-            // 复用DataGridViewChanged
+            // 禁用DataGridViewChanged
             featureDataGridView.SelectionChanged -= featureDataGridView_SelectionChanged;
 
             featureDataGridView.ClearAll();
@@ -291,7 +292,6 @@ namespace DEETU.Source.Window
             {
                 featureDataGridView.AddColumn(fields.GetItem(i).AliaName, null);
                 featureDataGridView.Columns[i].DefaultCellStyle.Font = (new Font("微软雅黑", 10f));
-                featureDataGridView.Columns[i].ReadOnly = !mIsEditing;
                 featureDataGridView.Columns[i].SortMode = DataGridViewColumnSortMode.Automatic;
             }
 
@@ -307,6 +307,7 @@ namespace DEETU.Source.Window
                 }
                 featureDataGridView.AddRow(rowValue);
                 featureDataGridView.Rows[i].Tag = feature;
+                
 
                 for (int j = 0; j < selectedFeatures.Count; j++)
                 {
@@ -318,9 +319,12 @@ namespace DEETU.Source.Window
                 }
             }
 
-            featureDataGridView.ReadOnly = !mIsEditing;
             // 复用DataGridViewChanged
             featureDataGridView.SelectionChanged += featureDataGridView_SelectionChanged;
+
+            // !解决第一次点edit之后featureDataGridView无法编辑的问题，可能是控件本身的bug，用了一个非常sb的解决方式
+            featureDataGridView.ReadOnly = !featureDataGridView.ReadOnly;
+            featureDataGridView.ReadOnly = !featureDataGridView.ReadOnly;
 
         }
 
