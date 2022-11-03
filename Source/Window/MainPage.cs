@@ -96,6 +96,8 @@ namespace DEETU.Source.Window
             SetEditing();
             // 设置撤销、重做状态
             CheckUndo();
+            // 默认进入选择模式
+            SelectModeButton.Checked = true;
         }
 
 
