@@ -93,6 +93,7 @@ namespace DEETU.Geometry
         public void Add(GeoPoints part)
         {
             _Parts.Add(part);
+            CalExtent();
         }
         /// <summary>
         /// 添加一组点到末尾
@@ -101,6 +102,7 @@ namespace DEETU.Geometry
         public void AddRange(GeoPoints[] parts)
         {
             _Parts.AddRange(parts);
+            CalExtent();
         }
         /// <summary>
         /// 将制定数组中的元素插入到指定位置

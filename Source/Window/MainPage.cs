@@ -344,6 +344,11 @@ namespace DEETU.Source.Window
                 mMapOpStyle = GeoMapOpStyleEnum.Sketch;
                 mSketchingGeometryType = GetSelectableLayer().ShapeType; // 可以编辑的图层是什么类别就用添加什么类别的多边形
                 CheckToolStrip(mMapOpStyle);
+
+                RemoveItemToolStripButton.Enabled = false;
+                MoveItemToolStripButton.Enabled = false;
+                EditFeatureToolStripButton.Enabled = false;
+                startEditToolStripButton.Enabled = false;
             }
             else
             // 停止描绘地理要素
@@ -352,6 +357,11 @@ namespace DEETU.Source.Window
                 CurrentAcitveLayerUpdated?.Invoke(this, mCurrentLayerNode.Tag as GeoMapLayer);
                 mMapOpStyle = GeoMapOpStyleEnum.Select;
                 UncheckToolStrip();
+
+                RemoveItemToolStripButton.Enabled = true;
+                MoveItemToolStripButton.Enabled = true;
+                EditFeatureToolStripButton.Enabled = true;
+                startEditToolStripButton.Enabled = true;
             }
 
         }
@@ -376,12 +386,34 @@ namespace DEETU.Source.Window
             }
             else if (e.Button == MouseButtons.Right)
             {
-                if (mSketchingShape.Count < 2)
-                    // 此时还没有编辑任何一个多边形
+                if(mSketchingGeometryType == GeoGeometryTypeConstant.Point)
                 {
-                    return;
+                    if (mSketchingShape.Count < 2)
+                    {
+                        return;
+                    }
+                    mSketchingShape.RemoveAt(mSketchingShape.Count - 2);
+
                 }
-                mSketchingShape.RemoveAt(mSketchingShape.Count - 2);
+                else
+                {
+                    if (mSketchingShape.Last().Count != 0)
+                    // 此时正在编辑一个新的多边形
+                    {
+                        mSketchingShape.Last().RemoveAt(mSketchingShape.Last().Count - 1);
+                    }
+                    else if (mSketchingShape.Count < 2)
+                        // 不仅没有正在编辑多边形，也没有已经编辑好的多边形
+                    {
+                        return;
+                    }
+                    else
+                    {
+                        mSketchingShape.RemoveAt(mSketchingShape.Count - 2);
+                    }
+                }
+
+
                 geoMap.RedrawTrackingShapes();
             }
 
@@ -1896,7 +1928,11 @@ namespace DEETU.Source.Window
             EditFeatureToolStripButton.Checked = false;
             AddFeatureToolStripButton.Checked = false;
 
-            mSketchingShape.RemoveRange(0, mSketchingShape.Count - 1);
+            if (mSketchingShape.Count > 1)
+            {
+                mSketchingShape.RemoveRange(0, mSketchingShape.Count - 1);
+                geoMap.RedrawTrackingShapes();
+            }
 
 
         }
@@ -2942,6 +2978,7 @@ namespace DEETU.Source.Window
                 }
 
                 sLayer.Features.RemoveRange(features.ToArray());
+                sLayer.SelectedFeatures.Clear();
                 geoMap.RedrawMap();
                 CurrentAcitveLayerUpdated?.Invoke(this, mCurrentLayerNode.Tag as GeoMapLayer);
             }
