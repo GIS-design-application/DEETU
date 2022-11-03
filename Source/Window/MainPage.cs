@@ -29,6 +29,7 @@ namespace DEETU.Source.Window
         {
             InitializeComponent();
             geoMap.MouseWheel += geoMap_MouseWheel;
+            ProjectName = "Untitled";
             LoadRecentUsedFiles();
         }
         #endregion
@@ -77,6 +78,35 @@ namespace DEETU.Source.Window
         // 与界面交互有关的变量
         private TreeNode mCurrentLayerNode;
         private GeoCoordinateReferenceSystem mCrs = new GeoCoordinateReferenceSystem();
+
+        // 与项目相关的变量
+        private string mProjectName;
+        private bool mIsProjectDirty = false;
+        #endregion
+
+        #region 属性
+        public string ProjectName
+        {
+            get { return mProjectName; }
+            set 
+            {
+                if (value != mProjectName)
+                    ProjectNameChanged?.Invoke(this, value);
+                mProjectName = value;
+            }
+        }
+
+        public bool IsProjectDirty
+        {
+            get { return mIsProjectDirty; }
+            set
+            {
+                if (value != mIsProjectDirty)
+                    ProjectDirtyChanged?.Invoke(this, value);
+                mIsProjectDirty = value;
+            }
+        }
+
         #endregion
 
         #region 窗体和按钮事件处理
@@ -611,12 +641,15 @@ namespace DEETU.Source.Window
                 GC.WaitForPendingFinalizers();
                 File.Delete(geoMap.Layers.FilePath);
                 GeoDatabaseIOTools.SaveGeoProject(geoMap.Layers, geoMap.Layers.FilePath);
+                IsProjectDirty = false;
                 this.HideWaitForm();
             }
         }
         private void CreateToolStripMenuItem_Click(object sender, EventArgs e)
         {
             geoMap.Layers = new GeoLayers();
+            ProjectName = "Untitled";
+            IsProjectDirty = true;
             UpdateTreeView();
         }
         private void SaveNewProject()
@@ -636,7 +669,8 @@ namespace DEETU.Source.Window
                 geoMap.Layers.FilePath = saveFileDialog1.FileName;
                 saveFileDialog1.Dispose();
                 this.HideWaitForm();
-
+                ProjectName = System.IO.Path.GetFileNameWithoutExtension(saveFileDialog1.FileName);
+                IsProjectDirty = false;
             }
 
         }
@@ -646,9 +680,24 @@ namespace DEETU.Source.Window
         }
         private void CloseProjectToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            geoMap.Layers = new GeoLayers();
-            UpdateTreeView();
-
+            if (IsProjectDirty)
+            {
+                DialogResult dr = MessageBox.Show("存在未保存的编辑，确定要关闭工程吗？", "提示", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+                if (dr == DialogResult.OK)
+                {
+                    geoMap.Layers = new GeoLayers();
+                    UpdateTreeView();
+                    ProjectName = "";
+                    IsProjectDirty = false;
+                }
+            }
+            else
+            {
+                geoMap.Layers = new GeoLayers();
+                UpdateTreeView();
+                ProjectName = "";
+                IsProjectDirty = false;
+            }
         }
         private void 打开ToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -671,6 +720,7 @@ namespace DEETU.Source.Window
                 geoMap.Layers.Clear();
                 GeoDatabaseIOTools.LoadGeoProject(geoMap.Layers, sFileName);
                 geoMap.Layers.FilePath = sFileName;
+                ProjectName = System.IO.Path.GetFileNameWithoutExtension(sFileName);
                 if (geoMap.Layers.Count == 1)
                 {
                     geoMap.FullExtent();
@@ -680,6 +730,8 @@ namespace DEETU.Source.Window
                     geoMap.RedrawMap();
                 }
                 UpdateTreeView();
+                ProjectName = System.IO.Path.GetFileNameWithoutExtension(sFileName);
+                IsProjectDirty = false;
             }
             catch (Exception error)
             {
@@ -782,6 +834,8 @@ namespace DEETU.Source.Window
                 UncheckToolStrip();
                 this.Cursor = new Cursor("./icons/EditSelect.ico");
                 CheckToolStrip(mMapOpStyle);
+
+                IsProjectDirty = true;
             }
             else
             {
@@ -1613,6 +1667,7 @@ namespace DEETU.Source.Window
                         // 将被拖动的节点移除
                         treeNode.Remove();
                         geoMap.RedrawMap();
+                        IsProjectDirty = true;
                     }
                 }
             }
@@ -2385,6 +2440,7 @@ namespace DEETU.Source.Window
                 mCurrentLayerNode.Remove();
                 UpdateTreeView();
                 geoMap.RedrawMap();
+                IsProjectDirty = true;
             }
         }
 
@@ -2531,6 +2587,11 @@ namespace DEETU.Source.Window
 
         public delegate void EditStatusChangedHandle(object sender, bool status);
         public event EditStatusChangedHandle EditStatusChanged;
+        public event EditStatusChangedHandle ProjectDirtyChanged;
+
+        public delegate void ProjectNameChangedHandle(object sender, string name);
+        public event ProjectNameChangedHandle ProjectNameChanged;
+        
         //public event CurrentActiveLayerUpdatedHandle CurrentAcitveLayerSelected;
         //public event CurrentActiveLayerUpdatedHandle CurrentAcitveLayerMoved;
         //public event CurrentActiveLayerUpdatedHandle CurrentAcitveLayerDeleted;
@@ -2561,6 +2622,9 @@ namespace DEETU.Source.Window
         {
             string suffix = sFileName.Split('.').Last();
             //string suffix = sFileName.Split('.')[1];
+            IsProjectDirty = true;
+            if (ProjectName.IsNullOrEmpty())
+                ProjectName = "Untitled";
 
 #if DEBUG
             Logging = suffix;
@@ -3115,6 +3179,7 @@ namespace DEETU.Source.Window
             Logging = "Node AfterCheck triggered, Current Node Check Status:" + e.Node.Checked.ToString();
 #endif
             LayerTreeViewUpdateCheck(e.Node);
+            IsProjectDirty = true;
         }
 
         private void FileTreeView_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
