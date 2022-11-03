@@ -130,6 +130,16 @@ namespace DEETU.Geometry
         {
             _Parts.RemoveAt(index);
         }
+
+        /// <summary>
+        /// 删除指定的元素
+        /// </summary>
+        /// <param name="points"></param>
+        public void Remove(GeoPoints points)
+        {
+            _Parts.Remove(points);
+        }
+
         /// <summary>
         /// 将所有元素复制到一个数组中，并返回
         /// </summary>

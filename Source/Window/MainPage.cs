@@ -361,6 +361,7 @@ namespace DEETU.Source.Window
                 MoveItemToolStripButton.Enabled = true;
                 EditFeatureToolStripButton.Enabled = true;
                 startEditToolStripButton.Enabled = true;
+                selectionModeStripMenuItem.Enabled = true;
             }
 
         }
@@ -557,6 +558,12 @@ namespace DEETU.Source.Window
                 mEditingGeometry = null;
                 geoMap.RedrawMap();
                 UncheckToolStrip();
+
+                RemoveItemToolStripButton.Enabled = true;
+                MoveItemToolStripButton.Enabled = true;
+                AddFeatureToolStripButton.Enabled = true;
+                startEditToolStripButton.Enabled = true;
+                selectionModeStripMenuItem.Enabled = true;
             }
             else
             {
@@ -582,6 +589,12 @@ namespace DEETU.Source.Window
                 geoMap.RedrawTrackingShapes();
 
                 CheckToolStrip(mMapOpStyle);
+
+                RemoveItemToolStripButton.Enabled = false;
+                MoveItemToolStripButton.Enabled = false;
+                AddFeatureToolStripButton.Enabled = false;
+                startEditToolStripButton.Enabled = false;
+                selectionModeStripMenuItem.Enabled = false;
             }
         }
 
@@ -2843,7 +2856,7 @@ namespace DEETU.Source.Window
 
         }
 
-        private void geoMap_DoubleClick(object sender, EventArgs e)
+        private void geoMap_DoubleClick(object sender, MouseEventArgs e)
         {
 #if DEBUG
             Logging = "鼠标双击";
@@ -2855,6 +2868,174 @@ namespace DEETU.Source.Window
             else if (mMapOpStyle == GeoMapOpStyleEnum.Select)
             {
 
+            }
+            else if (mMapOpStyle == GeoMapOpStyleEnum.Edit)
+            {
+#if DEBUG
+                Logging = "编辑模式双击";
+#endif
+                
+                // 找到鼠标点击后对应的点
+                GeoPoint mousePoint = geoMap.ToMapPoint(e.Location.X, e.Location.Y);
+                double tolerance = geoMap.ToMapDistance(mSelectingTolerance);
+
+                string mode = null; // "add", "delete"
+                if (mEditingGeometry.GetType() == typeof(GeoMultiPolygon))
+                {
+                    GeoMultiPolygon editingMultiPolygon = mEditingGeometry as GeoMultiPolygon; // 目前只考虑选择一个多边形
+                                                                                          // 如果鼠标的点并不在多边形附近, 直接放弃
+                    if (!editingMultiPolygon.GetEnvelope().IsInside(mousePoint, tolerance))
+                    {
+                        return;
+                    }
+
+                    // 遍历所有点集, 查找是否点击了某一个点
+                    for (int i = 0; i < editingMultiPolygon.Parts.Count; i++)
+                    {
+                        // 对每一个点集判断是否包含鼠标的范围
+                        GeoPoints points = editingMultiPolygon.Parts.GetItem(i);
+                        if (GeoMapTools.IsPointOnPolygon(mousePoint, points, tolerance))
+                        {
+#if DEBUG
+                            Logging = "在线上";
+#endif
+                            foreach(var point in points.ToArray())
+                            {
+                                if (GeoMapTools.IsPointOnPoint(mousePoint, point, tolerance))
+                                    // 双击，点到了一个点，说明需要删掉这个点
+                                {
+#if DEBUG
+                                    Logging = "且在点上";
+#endif
+                                    if (points.Count > 3)
+                                        // 如果点数量超过三个，那么需要删除这个点，更新extent，重新绘图
+                                    {
+#if DEBUG
+                                        Logging = "删除点";
+#endif
+                                        points.Remove(point);
+                                    }
+                                    else
+                                        // 否则直接删掉这个多边形即可
+                                    {
+#if DEBUG
+                                        Logging = "删除多边形";
+#endif
+                                        editingMultiPolygon.Parts.Remove(points);
+                                    }
+                                    editingMultiPolygon.UpdateExtent();
+                                    return;
+                                }
+                            }
+
+#if DEBUG
+                            Logging = "但不在点上";
+#endif
+                            // 此时需要新建一个点
+                            int index = GeoMapTools.PointOnWhichLine(mousePoint, points, tolerance);
+                            if (index == -1)
+                            {
+#if DEBUG
+                                Logging = "这里一定有问题";
+                                Debug.Assert(true);
+#endif
+                            }
+                            else
+                            {
+                                points.Insert(index + 1, mousePoint);
+                                points.UpdateExtent();
+                            }
+                            editingMultiPolygon.UpdateExtent();
+                            geoMap.RedrawTrackingShapes();
+                            return;
+                        }
+                    }
+                }
+                else if (mEditingGeometry.GetType() == typeof(GeoMultiPolyline))
+                {
+                    GeoMultiPolyline editingMultiPolyline = mEditingGeometry as GeoMultiPolyline; // 目前只考虑选择一个多边形
+                                                                                               // 如果鼠标的点并不在多边形附近, 直接放弃
+                    if (!editingMultiPolyline.GetEnvelope().IsInside(mousePoint, tolerance))
+                    {
+                        return;
+                    }
+
+                    // 遍历所有点集, 查找是否点击了某一个点
+                    for (int i = 0; i < editingMultiPolyline.Parts.Count; i++)
+                    {
+                        // 对每一个点集判断是否包含鼠标的范围
+                        GeoPoints points = editingMultiPolyline.Parts.GetItem(i);
+                        if (GeoMapTools.IsPointOnPolyline(mousePoint, points, tolerance))
+                        {
+#if DEBUG
+                            Logging = "在线上";
+#endif
+                            foreach (var point in points.ToArray())
+                            {
+                                if (GeoMapTools.IsPointOnPoint(mousePoint, point, tolerance))
+                                // 双击，点到了一个点，说明需要删掉这个点
+                                {
+#if DEBUG
+                                    Logging = "且在点上";
+#endif
+                                    if (points.Count > 2)
+                                    // 如果点数量超过两个，那么需要删除这个点，更新extent，重新绘图
+                                    {
+#if DEBUG
+                                        Logging = "删除点";
+#endif
+                                        points.Remove(point);
+                                    }
+                                    else
+                                    // 否则直接删掉这个多边形即可
+                                    {
+#if DEBUG
+                                        Logging = "删除多边形";
+#endif
+                                        editingMultiPolyline.Parts.Remove(points);
+                                    }
+                                    editingMultiPolyline.UpdateExtent();
+                                    return;
+                                }
+                            }
+
+#if DEBUG
+                            Logging = "但不在点上";
+#endif
+                            // 此时需要新建一个点
+                            int index = GeoMapTools.PointOnWhichLine(mousePoint, points, tolerance);
+                            if (index == -1)
+                            {
+#if DEBUG
+                                Logging = "这里一定有问题";
+                                Debug.Assert(true);
+#endif
+                            }
+                            else
+                            {
+                                points.Insert(index + 1, mousePoint);
+                                points.UpdateExtent();
+                            }
+                            editingMultiPolyline.UpdateExtent();
+                            geoMap.RedrawTrackingShapes();
+                            return;
+                        }
+                    }
+                }
+                else
+                {
+                    // 不需要对点进行加减操作
+
+                }
+
+
+
+
+
+
+
+                // 没有找到好奇怪, 应该是多边形在附近但是和点离得也不近, 有点蠢
+                return;
             }
         }
 
@@ -3078,6 +3259,8 @@ namespace DEETU.Source.Window
             }
         }
 
+        static int MAX_UNDO = 50;
+
         private GeoMapLayer NewUndo(GeoMapLayer srcLayer)
         {
             ResetUndo();
@@ -3089,13 +3272,14 @@ namespace DEETU.Source.Window
 
             undo_layers.Add((srcLayer, desLayer));
 
-            if (undo_layers.Count > 20)
-            {
-                undo_layers.RemoveRange(0, undo_layers.Count - 20);
-            }
-
             UpdateTreeView();
             undo_index++;
+
+            if (undo_layers.Count > MAX_UNDO)
+            {
+                undo_layers.RemoveRange(0, undo_layers.Count - MAX_UNDO);
+                undo_index -= undo_layers.Count - MAX_UNDO;
+            }
             return desLayer;
         }
         #endregion

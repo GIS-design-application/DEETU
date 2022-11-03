@@ -1253,7 +1253,7 @@ namespace DEETU.Source.Window
             this.geoMap.TabIndex = 0;
             this.geoMap.MapScaleChanged += new DEETU.Map.GeoMapControl.MapScaleChangedHandle(this.geoMap_MapScaleChanged);
             this.geoMap.AfterTrackingLayerDraw += new DEETU.Map.GeoMapControl.AfterTrackingLayerDrawHandle(this.geoMap_AfterTrackingLayerDraw);
-            this.geoMap.DoubleClick += new System.EventHandler(this.geoMap_DoubleClick);
+            this.geoMap.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.geoMap_DoubleClick);
             this.geoMap.MouseClick += new System.Windows.Forms.MouseEventHandler(this.geoMap_MouseClick);
             this.geoMap.MouseDown += new System.Windows.Forms.MouseEventHandler(this.geoMap_MouseDown);
             this.geoMap.MouseMove += new System.Windows.Forms.MouseEventHandler(this.geoMap_MouseMove);
