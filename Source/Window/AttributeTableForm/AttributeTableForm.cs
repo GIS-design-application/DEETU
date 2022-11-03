@@ -32,6 +32,10 @@ namespace DEETU.Source.Window
             InitializeGridPage();
 
             SetEdit();
+            for (int i = 0; i < 2; i++)
+            {
+                editToolStripButton_Click(this, new EventArgs());
+            }
         }
 
         #region 事件处理函数
@@ -287,7 +291,7 @@ namespace DEETU.Source.Window
             {
                 featureDataGridView.AddColumn(fields.GetItem(i).AliaName, null);
                 featureDataGridView.Columns[i].DefaultCellStyle.Font = (new Font("微软雅黑", 10f));
-                //featureDataGridView.Columns[i].ReadOnly = true;
+                featureDataGridView.Columns[i].ReadOnly = !mIsEditing;
                 featureDataGridView.Columns[i].SortMode = DataGridViewColumnSortMode.Automatic;
             }
 
@@ -314,6 +318,7 @@ namespace DEETU.Source.Window
                 }
             }
 
+            featureDataGridView.ReadOnly = !mIsEditing;
             // 复用DataGridViewChanged
             featureDataGridView.SelectionChanged += featureDataGridView_SelectionChanged;
 
@@ -407,6 +412,8 @@ namespace DEETU.Source.Window
 
         private void featureDataGridView_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
+            if (featureDataGridView.SelectedCells.IsNullOrEmpty())
+                return;
             DataGridViewCell cell = featureDataGridView.SelectedCells[0];
             GeoFeature feature = mLayer.Features.GetItem(cell.RowIndex);
             GeoField field = mLayer.AttributeFields.GetItem(cell.ColumnIndex);
