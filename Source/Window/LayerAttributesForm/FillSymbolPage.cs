@@ -262,40 +262,40 @@ namespace DEETU.Source.Window
                 int sFeatureCount = mLayer.Features.Count;
                 int sFieldIndex = mLayer.AttributeFields.FindField(sRenderer.Field);
                 GeoValueTypeConstant sFieldValueType = mLayer.AttributeFields.GetItem(sFieldIndex).ValueType;
-                switch(sFieldValueType)
+                switch (sFieldValueType)
                 {
                     case GeoValueTypeConstant.dDouble:
                         for (int i = 0; i < sFeatureCount; i++)
                         {
-                            double sValue = (double)mLayer.Features.GetItem(i).Attributes.GetItem(sFieldIndex);
+                            double sValue = Convert.ToDouble(mLayer.Features.GetItem(i).Attributes.GetItem(sFieldIndex));
                             sValues.Add(sValue);
                         }
                         break;
                     case GeoValueTypeConstant.dSingle:
                         for (int i = 0; i < sFeatureCount; i++)
                         {
-                            double sValue = (float)mLayer.Features.GetItem(i).Attributes.GetItem(sFieldIndex);
+                            double sValue = Convert.ToSingle(mLayer.Features.GetItem(i).Attributes.GetItem(sFieldIndex));
                             sValues.Add(sValue);
                         }
                         break;
                     case GeoValueTypeConstant.dInt16:
                         for (int i = 0; i < sFeatureCount; i++)
                         {
-                            double sValue = (Int16)mLayer.Features.GetItem(i).Attributes.GetItem(sFieldIndex);
+                            double sValue = Convert.ToInt16(mLayer.Features.GetItem(i).Attributes.GetItem(sFieldIndex));
                             sValues.Add(sValue);
                         }
                         break;
                     case GeoValueTypeConstant.dInt32:
                         for (int i = 0; i < sFeatureCount; i++)
                         {
-                            double sValue = (Int32)mLayer.Features.GetItem(i).Attributes.GetItem(sFieldIndex);
+                            double sValue = Convert.ToInt32(mLayer.Features.GetItem(i).Attributes.GetItem(sFieldIndex));
                             sValues.Add(sValue);
                         }
                         break;
                     case GeoValueTypeConstant.dInt64:
                         for (int i = 0; i < sFeatureCount; i++)
                         {
-                            double sValue = (Int64)mLayer.Features.GetItem(i).Attributes.GetItem(sFieldIndex);
+                            double sValue = Convert.ToInt64(mLayer.Features.GetItem(i).Attributes.GetItem(sFieldIndex));
                             sValues.Add(sValue);
                         }
                         break;

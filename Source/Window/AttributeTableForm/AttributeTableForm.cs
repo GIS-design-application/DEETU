@@ -496,7 +496,6 @@ namespace DEETU.Source.Window
                 featureDataGridView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             }
 
-            saveEditToolStripButton.Enabled = mIsEditing;
             cutToolStripButton.Enabled = mIsEditing;
             pasteToolStripButton.Enabled = mIsEditing;
             copyStripButton.Enabled = mIsEditing;

@@ -2084,7 +2084,7 @@ namespace DEETU.Source.Window
 
         // 这个函数是为了显示图层渲染方式
         // 在加入图层和修改渲染方式时调用
-        private void InsertTreeNode(GeoMapLayer layer, int index)
+        private TreeNode InsertTreeNode(GeoMapLayer layer, int index)
         {
             // 按照renderer Type进行处理
             GeoRenderer sRenderer = layer.Renderer;
@@ -2104,6 +2104,7 @@ namespace DEETU.Source.Window
                 //layerTreeView.Nodes.Insert(0,layerNode);
                 layerNode.Tag = layer;
                 layerTreeView.Nodes.Insert(index, layerNode);
+                return layerNode;
             }
             else if (sRenderer.RendererType == GeoRendererTypeConstant.ClassBreaks)
             {
@@ -2136,6 +2137,7 @@ namespace DEETU.Source.Window
                 //layerTreeView.Nodes.Insert(0,layerNode);
                 layerNode.Tag = layer;
                 layerTreeView.Nodes.Insert(index, layerNode);
+                return layerNode;
             }
             else if (sRenderer.RendererType == GeoRendererTypeConstant.UniqueValue)
             {
@@ -2166,10 +2168,13 @@ namespace DEETU.Source.Window
                 //layerTreeView.Nodes.Insert(0,layerNode);
                 layerNode.Tag = layer;
                 layerTreeView.Nodes.Insert(index, layerNode);
+                return layerNode;
+
             }
             else
             {
                 throw new Exception("Renderer Type Error!");
+                return null;
             }
         }
 
@@ -2496,8 +2501,12 @@ namespace DEETU.Source.Window
         #region 子窗口事件处理
         private void layerAttributes_FormClosed(object sender, FormClosedEventArgs e)
         {
-            InsertTreeNode(mCurrentLayerNode.Tag as GeoMapLayer, mCurrentLayerNode.Index);
+            TreeNode sNode = InsertTreeNode(mCurrentLayerNode.Tag as GeoMapLayer, mCurrentLayerNode.Index);
             mCurrentLayerNode.Remove();
+
+            layerTreeView.SelectedNode = sNode;
+            mCurrentLayerNode = sNode;
+
             geoMap.RedrawMap();
         }
 
