@@ -3457,12 +3457,17 @@ namespace DEETU.Source.Window
             saveFileDialog1.RestoreDirectory = true;
             if (saveFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                Point screenPoint = geoMap.PointToScreen(new Point());
-                Rectangle rect = new Rectangle(screenPoint, geoMap.Size);
-                Image img = new Bitmap(rect.Width, rect.Height);
-                Graphics g = Graphics.FromImage(img);
-                g.CopyFromScreen(rect.X - 1, rect.Y - 1, 0, 0, rect.Size);
-                img.Save(saveFileDialog1.FileName, System.Drawing.Imaging.ImageFormat.Png);
+                geoMap.SaveImg(saveFileDialog1.FileName);
+                //Timer timer1 = new Timer();
+                //timer1.Enabled = true;
+                //timer1.Enabled = false;
+                //Point screenPoint = geoMap.PointToScreen(new Point());
+                //Rectangle rect = new Rectangle(screenPoint, geoMap.Size);
+                
+                //Image img = new Bitmap(rect.Width, rect.Height);
+                //Graphics g = Graphics.FromImage(img);
+                //g.CopyFromScreen(Convert.ToInt32(rect.X*g.DpiX / 0.0254) - 1, Convert.ToInt32(rect.Y*g.DpiY / 0.0254) - 1,0, 0, rect.Size);
+                //img.Save(saveFileDialog1.FileName, System.Drawing.Imaging.ImageFormat.Png);
                 
                 
                 //Timer timer1 = new Timer();

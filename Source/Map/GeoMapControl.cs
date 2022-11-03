@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
@@ -127,6 +128,22 @@ namespace DEETU.Map
 
         #region 方法
 
+
+        public void SaveImg(string path)
+        {
+            double beta = 2.5;
+            Timer timer1 = new Timer();
+            timer1.Enabled = true;
+            timer1.Enabled = false;
+            System.Threading.Thread.Sleep(1000);
+            Bitmap bit = new Bitmap(Convert.ToInt32(this.Width * beta), Convert.ToInt32(this.Height * beta));//实例化一个和窗体一样大的bitmap
+            Graphics g = Graphics.FromImage(bit);
+            g.CompositingQuality = CompositingQuality.HighQuality;//质量设为最高
+            Point p = this.PointToScreen(new Point(0, 0));
+            Graphics g1 = Graphics.FromHwnd(this.Handle);
+            g.CopyFromScreen(Convert.ToInt32(p.X* beta), Convert.ToInt32(p.Y* beta), 0, 0, new Size(Convert.ToInt32(this.Width* beta), Convert.ToInt32(this.Height* beta)));//保存整个窗体为图片                                                                      //g.CopyFromScreen(panel游戏区 .PointToScreen(Point.Empty), Point.Empty, panel游戏区.Size);//只保存某个控件（这里是panel游戏区）
+            bit.Save(path);//默认保存格式为PNG，保存成jpg格式质量不是很好
+        }
         /// <summary>
         /// 获取地图窗口对应的地图范围(地图坐标)
         /// </summary>
