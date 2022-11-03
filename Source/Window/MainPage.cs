@@ -737,10 +737,24 @@ namespace DEETU.Source.Window
             }
             else
             {
+                // 保证结束绘制
+                if (mMapOpStyle == GeoMapOpStyleEnum.Sketch)
+                {
+                    btnEndSketch_Click(sender, e);
+                    CurrentAcitveLayerUpdated?.Invoke(this, mCurrentLayerNode.Tag as GeoMapLayer);
+                }
+                // 保证结束编辑
+                if (mMapOpStyle == GeoMapOpStyleEnum.Edit)
+                {
+                    mEditingGeometry = null;
+                    geoMap.RedrawMap();
+                }    
+
                 //btnEndEdit_Click(sender, e);
                 this.Cursor = Cursors.Default;
                 mMapOpStyle = GeoMapOpStyleEnum.Select;
                 UncheckToolStrip();
+                
             }
 
             SetEditing();
