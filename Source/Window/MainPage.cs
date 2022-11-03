@@ -362,14 +362,29 @@ namespace DEETU.Source.Window
         /// <param name="e"></param>
         private void OnSketch_MouseClick(MouseEventArgs e)
         {
-            // 将屏幕坐标转化为地图坐标并加入描绘图形
-            GeoPoint sPoint = geoMap.ToMapPoint(e.Location.X, e.Location.Y);
+            if (e.Button == MouseButtons.Left)
+                // 添加一个点
+            {
+                // 将屏幕坐标转化为地图坐标并加入描绘图形
+                GeoPoint sPoint = geoMap.ToMapPoint(e.Location.X, e.Location.Y);
 
-            // 在描绘要素的最后一项加一个点
-            mSketchingShape.Last().Add(sPoint);
+                // 在描绘要素的最后一项加一个点
+                mSketchingShape.Last().Add(sPoint);
 
-            geoMap.RedrawTrackingShapes();
-            // 实现持久图形的绘制
+                geoMap.RedrawTrackingShapes();
+                // 实现持久图形的绘制
+            }
+            else if (e.Button == MouseButtons.Right)
+            {
+                if (mSketchingShape.Count < 2)
+                    // 此时还没有编辑任何一个多边形
+                {
+                    return;
+                }
+                mSketchingShape.RemoveAt(mSketchingShape.Count - 2);
+                geoMap.RedrawTrackingShapes();
+            }
+
         }
 
         // 结束part
@@ -1880,6 +1895,10 @@ namespace DEETU.Source.Window
             MoveItemToolStripButton.Checked = false;
             EditFeatureToolStripButton.Checked = false;
             AddFeatureToolStripButton.Checked = false;
+
+            mSketchingShape.RemoveRange(0, mSketchingShape.Count - 1);
+
+
         }
 
         /// <summary>
