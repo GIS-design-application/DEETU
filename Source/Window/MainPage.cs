@@ -1485,7 +1485,10 @@ namespace DEETU.Source.Window
             sLayer.SelectedFeatures.AddRange(sFeatures.ToArray());
 
             DrawIdentifyFlash(sFeatures);
-            ShowIdentifyMessage(sFeatures, sLayer);
+            //ShowIdentifyMessage(sFeatures, sLayer);
+            IdentifyForm identifyForm = new IdentifyForm(sLayer);
+            identifyForm.ShowDialog();
+            
         }
 
         private void DrawIdentifyFlash(GeoFeatures sFeatures)

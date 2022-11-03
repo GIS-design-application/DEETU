@@ -140,6 +140,12 @@
     <Compile Include="Source\Window\CrsForm\CrsTransferForm.Designer.cs">
       <DependentUpon>CrsTransferForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Source\Window\IdentifyForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Source\Window\IdentifyForm.Designer.cs">
+      <DependentUpon>IdentifyForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Source\Window\NewLayerForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -277,6 +283,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Source\Window\CrsForm\CrsTransferForm.resx">
       <DependentUpon>CrsTransferForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Source\Window\IdentifyForm.resx">
+      <DependentUpon>IdentifyForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Source\Window\NewLayerForm.resx">
       <DependentUpon>NewLayerForm.cs</DependentUpon>
