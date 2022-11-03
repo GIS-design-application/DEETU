@@ -690,6 +690,7 @@ namespace DEETU.Source.Window
                 }
                 else
                 {
+                    geoMap.FullExtent();
                     geoMap.RedrawMap();
                 }
                 UpdateTreeView();
