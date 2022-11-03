@@ -96,8 +96,6 @@ namespace DEETU.Source.Window
             SetEditing();
             // 设置撤销、重做状态
             CheckUndo();
-            // 默认进入选择模式
-            SelectModeButton.Checked = true;
         }
 
 
@@ -349,6 +347,7 @@ namespace DEETU.Source.Window
                 MoveItemToolStripButton.Enabled = false;
                 EditFeatureToolStripButton.Enabled = false;
                 startEditToolStripButton.Enabled = false;
+                selectionModeStripMenuItem.Enabled = false;
             }
             else
             // 停止描绘地理要素
@@ -1927,14 +1926,6 @@ namespace DEETU.Source.Window
             MoveItemToolStripButton.Checked = false;
             EditFeatureToolStripButton.Checked = false;
             AddFeatureToolStripButton.Checked = false;
-
-            if (mSketchingShape.Count > 1)
-            {
-                mSketchingShape.RemoveRange(0, mSketchingShape.Count - 1);
-                geoMap.RedrawTrackingShapes();
-            }
-
-
         }
 
         /// <summary>
@@ -3091,6 +3082,12 @@ namespace DEETU.Source.Window
             desLayer.Selectable = true;
 
             undo_layers.Add((srcLayer, desLayer));
+
+            if (undo_layers.Count > 20)
+            {
+                undo_layers.RemoveRange(0, undo_layers.Count - 20);
+            }
+
             UpdateTreeView();
             undo_index++;
             return desLayer;
