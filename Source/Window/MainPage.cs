@@ -682,6 +682,7 @@ namespace DEETU.Source.Window
             try
             {
                 geoMap.Layers.Clear();
+                this.ShowWaitForm("读取中，请稍后...");
                 GeoDatabaseIOTools.LoadGeoProject(geoMap.Layers, sFileName);
                 geoMap.Layers.FilePath = sFileName;
                 if (geoMap.Layers.Count == 1)
@@ -693,6 +694,7 @@ namespace DEETU.Source.Window
                     geoMap.FullExtent();
                     geoMap.RedrawMap();
                 }
+                this.HideWaitForm();
                 UpdateTreeView();
             }
             catch (Exception error)
