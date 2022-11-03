@@ -30,7 +30,6 @@ namespace DEETU.Source.Window
         private void InitializeField()
         {
             GeoFields fields = mLayer.AttributeFields;
-            fieldType.Items.AddRange(Enum.GetNames(typeof(GeoValueTypeConstant)));
             if (fields.Count == 0)
                 fieldDataGridView.Visible = false;
             for (int i = 0; i < fields.Count; i++)
@@ -96,6 +95,8 @@ namespace DEETU.Source.Window
             {
                 mLayer.IsDirty = true;
                 fieldDataGridView.ReadOnly = false;
+                fieldName.ReadOnly = true;
+                fieldType.ReadOnly = true;
                 addFieldButton.SetEnabled();
                 removeFieldButton.SetEnabled();
                 //editButton.Symbol = 57572;

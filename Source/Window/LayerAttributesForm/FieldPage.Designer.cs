@@ -35,13 +35,13 @@ namespace DEETU.Source.Window
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             this.fieldDataGridView = new Sunny.UI.UIDataGridView();
-            this.fieldName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.fieldAlias = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.fieldType = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.addFieldButton = new Sunny.UI.UISymbolButton();
             this.removeFieldButton = new Sunny.UI.UISymbolButton();
             this.editButton = new Sunny.UI.UISymbolButton();
             this.uiPanel1 = new Sunny.UI.UIPanel();
+            this.fieldName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.fieldAlias = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.fieldType = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.PagePanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.fieldDataGridView)).BeginInit();
             this.uiPanel1.SuspendLayout();
@@ -51,10 +51,7 @@ namespace DEETU.Source.Window
             // 
             this.PagePanel.Controls.Add(this.uiPanel1);
             this.PagePanel.Controls.Add(this.fieldDataGridView);
-            this.PagePanel.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(211)))), ((int)(((byte)(211)))), ((int)(((byte)(211)))));
-            this.PagePanel.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
             this.PagePanel.Size = new System.Drawing.Size(480, 565);
-            this.PagePanel.Style = Sunny.UI.UIStyle.Office2010Black;
             // 
             // fieldDataGridView
             // 
@@ -117,26 +114,6 @@ namespace DEETU.Source.Window
             this.fieldDataGridView.Style = Sunny.UI.UIStyle.Custom;
             this.fieldDataGridView.StyleCustomMode = true;
             this.fieldDataGridView.TabIndex = 6;
-            // 
-            // fieldName
-            // 
-            this.fieldName.HeaderText = "字段名";
-            this.fieldName.Name = "fieldName";
-            this.fieldName.ReadOnly = true;
-            // 
-            // fieldAlias
-            // 
-            this.fieldAlias.HeaderText = "别名";
-            this.fieldAlias.Name = "fieldAlias";
-            this.fieldAlias.ReadOnly = true;
-            // 
-            // fieldType
-            // 
-            this.fieldType.HeaderText = "类型";
-            this.fieldType.Name = "fieldType";
-            this.fieldType.ReadOnly = true;
-            this.fieldType.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.fieldType.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             // 
             // addFieldButton
             // 
@@ -243,14 +220,31 @@ namespace DEETU.Source.Window
             this.uiPanel1.Text = null;
             this.uiPanel1.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // fieldName
+            // 
+            this.fieldName.HeaderText = "字段名";
+            this.fieldName.Name = "fieldName";
+            this.fieldName.ReadOnly = true;
+            // 
+            // fieldAlias
+            // 
+            this.fieldAlias.HeaderText = "别名";
+            this.fieldAlias.Name = "fieldAlias";
+            this.fieldAlias.ReadOnly = true;
+            // 
+            // fieldType
+            // 
+            this.fieldType.HeaderText = "类型";
+            this.fieldType.Name = "fieldType";
+            this.fieldType.ReadOnly = true;
+            this.fieldType.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            // 
             // FieldPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(480, 600);
             this.Name = "FieldPage";
-            this.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
-            this.Style = Sunny.UI.UIStyle.Office2010Black;
             this.Text = "字段";
             this.PagePanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.fieldDataGridView)).EndInit();
@@ -268,6 +262,6 @@ namespace DEETU.Source.Window
         private Sunny.UI.UISymbolButton editButton;
         private System.Windows.Forms.DataGridViewTextBoxColumn fieldName;
         private System.Windows.Forms.DataGridViewTextBoxColumn fieldAlias;
-        private System.Windows.Forms.DataGridViewComboBoxColumn fieldType;
+        private System.Windows.Forms.DataGridViewTextBoxColumn fieldType;
     }
 }
