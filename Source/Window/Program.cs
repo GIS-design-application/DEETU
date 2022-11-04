@@ -16,8 +16,14 @@ namespace DEETU
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-
-            Application.Run(new MultiFormApplictionStart());
+            try
+            {
+                Application.Run(new MultiFormApplictionStart());
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("未知错误!请联系管理员\ndhd_520@163.com\n" + e.Message, "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
 
 
         }
