@@ -52,6 +52,7 @@ namespace DEETU
             this.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
             this.ShowDragStretch = true;
             this.ShowIcon = true;
+            this.ShowTitleIcon = true;
             this.Style = Sunny.UI.UIStyle.Custom;
             this.Text = "DEETU";
             this.TitleColor = System.Drawing.Color.FromArgb(((int)(((byte)(118)))), ((int)(((byte)(118)))), ((int)(((byte)(118)))));

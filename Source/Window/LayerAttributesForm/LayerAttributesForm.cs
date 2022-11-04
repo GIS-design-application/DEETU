@@ -20,10 +20,12 @@ namespace DEETU.Source.Window
         private InfoPage mInfoPage;
         private FieldPage mFieldPage;
         private AnnotationPage mAnnotationPage;
+        private GeoMapControl geoMap;
         #endregion
 
-        public LayerAttributesForm(GeoMapLayer layer)
+        public LayerAttributesForm(GeoMapLayer layer, GeoMapControl geoMap)
         {
+            this.geoMap = geoMap;
             InitializeComponent();
             mLayer = layer;
             mTemporaryLayer = layer.Clone();
@@ -83,6 +85,20 @@ namespace DEETU.Source.Window
                 // 注记页面
             {
                 mAnnotationPage.UpdateSampleFontTextBox();
+            }
+        }
+
+        private void uiButton1_Click(object sender, EventArgs e)
+        {
+            if (mTemporaryLayer.Renderer != null)
+            {
+                mLayer.Renderer = mTemporaryLayer.Renderer;
+                mLayer.LabelRenderer = mTemporaryLayer.LabelRenderer;
+                geoMap.RedrawMap();
+            }
+            else
+            {
+                MessageBox.Show("渲染失败！");
             }
         }
     }

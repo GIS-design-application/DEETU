@@ -2449,7 +2449,7 @@ namespace DEETU.Source.Window
             }
 
             //GeoMapLayer layer = new GeoMapLayer(mCurrentLayerNode.Text, GeoGeometryTypeConstant.Point);
-            LayerAttributesForm layerAttributes = new LayerAttributesForm(layer);
+            LayerAttributesForm layerAttributes = new LayerAttributesForm(layer, geoMap);
             layerAttributes.FormClosed += layerAttributes_FormClosed;
             layerAttributes.Show();
         }
@@ -3716,7 +3716,7 @@ namespace DEETU.Source.Window
                 }
 
                 //GeoMapLayer layer = new GeoMapLayer(mCurrentLayerNode.Text, GeoGeometryTypeConstant.Point);
-                LayerAttributesForm layerAttributes = new LayerAttributesForm(layer);
+                LayerAttributesForm layerAttributes = new LayerAttributesForm(layer, geoMap);
                 layerAttributes.FormClosed += layerAttributes_FormClosed;
                 layerAttributes.Show();
             }
