@@ -85,7 +85,6 @@ namespace DEETU.Source.Window
             this.fieldComboBox.Padding = new System.Windows.Forms.Padding(0, 0, 30, 2);
             this.fieldComboBox.Size = new System.Drawing.Size(364, 29);
             this.fieldComboBox.TabIndex = 2;
-            this.fieldComboBox.Text = "uiComboBox1";
             this.fieldComboBox.TextAlignment = System.Drawing.ContentAlignment.MiddleLeft;
             this.fieldComboBox.SelectedIndexChanged += new System.EventHandler(this.fieldComboBox_SelectedIndexChanged);
             // 
@@ -97,7 +96,7 @@ namespace DEETU.Source.Window
             this.uiLabel1.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.uiLabel1.Location = new System.Drawing.Point(5, 57);
             this.uiLabel1.Name = "uiLabel1";
-            this.uiLabel1.Size = new System.Drawing.Size(100, 29);
+            this.uiLabel1.Size = new System.Drawing.Size(73, 29);
             this.uiLabel1.TabIndex = 3;
             this.uiLabel1.Text = "注记字段";
             this.uiLabel1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
