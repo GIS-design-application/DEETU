@@ -30,6 +30,7 @@ namespace DEETU
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.uiStyleManager1 = new Sunny.UI.UIStyleManager(this.components);
             this.SuspendLayout();
             // 
@@ -43,13 +44,14 @@ namespace DEETU
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(886, 656);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(2);
             this.MaximumSize = new System.Drawing.Size(10000, 10000);
             this.Name = "MainForm";
             this.Padding = new System.Windows.Forms.Padding(2, 35, 2, 2);
             this.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(145)))), ((int)(((byte)(145)))));
             this.ShowDragStretch = true;
-            this.ShowRadius = false;
+            this.ShowIcon = true;
             this.Style = Sunny.UI.UIStyle.Custom;
             this.Text = "DEETU";
             this.TitleColor = System.Drawing.Color.FromArgb(((int)(((byte)(118)))), ((int)(((byte)(118)))), ((int)(((byte)(118)))));
