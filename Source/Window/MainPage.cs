@@ -2465,7 +2465,7 @@ namespace DEETU.Source.Window
 
             if (saveFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                MessageBox.Show(saveFileDialog1.FileName);
+                //MessageBox.Show(saveFileDialog1.FileName);
                 GeoDataIOTools.SaveMapLayer(layer, saveFileDialog1.FileName);
                 saveFileDialog1.Dispose();
             }
@@ -2484,7 +2484,7 @@ namespace DEETU.Source.Window
 
             if (saveFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                MessageBox.Show(saveFileDialog1.FileName);
+                //MessageBox.Show(saveFileDialog1.FileName);
                 GeoDatabaseIOTools.SaveGeoProject(sLayers, saveFileDialog1.FileName);
                 saveFileDialog1.Dispose();
             }
