@@ -246,6 +246,7 @@ namespace DEETU.Source.Window
                         throw new Exception();
                         break;
                 }
+                InitializeGridPage();
             }
             catch (Exception error)
             {
@@ -338,6 +339,7 @@ namespace DEETU.Source.Window
                         throw new Exception();
                         break;
                 }
+                InitializeGridPage();
             }
             catch (Exception error)
             {
