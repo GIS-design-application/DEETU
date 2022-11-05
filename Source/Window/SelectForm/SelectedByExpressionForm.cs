@@ -163,6 +163,9 @@ namespace DEETU.Source.Window
         #endregion
 
         #region 私有函数
+        /// <summary>
+        /// 初始化界面
+        /// </summary>
         private void Initialize()
         {
             layerNameText.Text = mLayer.Name;
@@ -178,6 +181,9 @@ namespace DEETU.Source.Window
 
         #region 事件
         public delegate void LayerQueryHandler(object sender, GeoMapLayer layer, string expression, GeoSelectionModeConstant selectionMode);
+        /// <summary>
+        /// 按表达式搜索
+        /// </summary>
         public event LayerQueryHandler LayerQuery;
 
         #endregion

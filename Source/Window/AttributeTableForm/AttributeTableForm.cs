@@ -15,6 +15,9 @@ using DEETU.Geometry;
 
 namespace DEETU.Source.Window
 {
+    /// <summary>
+    /// 属性表界面
+    /// </summary>
     public partial class AttributeTableForm : UIForm
     {
         #region 字段
@@ -25,14 +28,18 @@ namespace DEETU.Source.Window
         public AttributeTableForm(GeoMapLayer layer, bool isEditing)
         {
             InitializeComponent();
+            // 同步图层和和编辑状态
             mLayer = layer;
             mIsEditing = isEditing;
-
+            
+            // 两个Page的初始化
             InitializeFormPage();
             InitializeGridPage();
 
+            // 设置和编辑状态相关的工具条显示
             SetEdit();
 
+            // 设置切换tab的UI
             Header.SelectedIndex = 0;
             Header.SetNodeSymbol(Header.Nodes[0], 61451);
             Header.SetNodeSymbol(Header.Nodes[1], 61450);
@@ -92,16 +99,8 @@ namespace DEETU.Source.Window
             SetEdit();
         }
 
-        private void saveEditToolStripButton_Click(object sender, EventArgs e)
-        {
-            
-        }
-
         private void addFeatureToolStripButton_Click(object sender, EventArgs e)
         {
-            //GeoFeature newFeature = mLayer.GetNewFeature();
-            //mLayer.Features.Add(newFeature);
-            //ReloadPages();
             FeatureAdded?.Invoke(this, mLayer);
         }
 
@@ -114,12 +113,6 @@ namespace DEETU.Source.Window
             }
             FeatureRemoved?.Invoke(this, mLayer);
 
-            //for (int i = 0; i < mLayer.SelectedFeatures.Count; i++)
-            //{
-            //    mLayer.Features.Remove(mLayer.SelectedFeatures.GetItem(i));
-            //}
-            //ReloadPages();
-            //MapRedraw?.Invoke(this);
         }
 
         private void addFieldStripButton_Click(object sender, EventArgs e)
@@ -153,13 +146,13 @@ namespace DEETU.Source.Window
         {
 
             SelectedByExpressionForm expressionForm = new SelectedByExpressionForm(mLayer);
-            expressionForm.LayerQuery += ExpressionForm_LayerQuery;
+            expressionForm.LayerQuery += ExpressionForm_LayerQuery; // 处理按表达式选择的事件
             expressionForm.ShowDialog();
         }
 
         private void ExpressionForm_LayerQuery(object sender, GeoMapLayer layer, string expression, GeoSelectionModeConstant selectionMode)
         {
-            LayerQuery?.Invoke(this, mLayer, expression, selectionMode);
+            LayerQuery?.Invoke(this, mLayer, expression, selectionMode); // 把这个按表达式查询的时间传递给主窗口
             ReloadPages();           
         }
 
@@ -175,6 +168,7 @@ namespace DEETU.Source.Window
             }
             // recover selectedChanged
             featureList.SelectedIndexChanged += featureList_SelectedIndexChanged;
+            // 以上这些操作是为了防止界面反复刷新出现卡顿
             featureList.Items[0].Selected = true;
             MapRedraw?.Invoke(this);
             InitializeGridPage();
@@ -192,6 +186,7 @@ namespace DEETU.Source.Window
             }
             // recover selectedChanged
             featureList.SelectedIndexChanged += featureList_SelectedIndexChanged;
+            // 以上这些操作是为了防止界面反复刷新出现卡顿
             featureList.Items[0].Selected = false;
             featureList_SelectedIndexChanged(sender, e);
             MapRedraw?.Invoke(this);
@@ -213,6 +208,11 @@ namespace DEETU.Source.Window
             FeaturePasted?.Invoke(this, mLayer);
         }
 
+        /// <summary>
+        /// 在编辑结束后保存编辑到图层
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void featureDataGridView_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
             if (featureDataGridView.SelectedCells.IsNullOrEmpty())
@@ -254,6 +254,11 @@ namespace DEETU.Source.Window
             }
         }
 
+        /// <summary>
+        /// 在编辑结束后保存编辑到图层
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void TextBox_TextChanged(object sender, EventArgs e)
         {
             UITextBox textBox = sender as UITextBox;
@@ -296,6 +301,11 @@ namespace DEETU.Source.Window
             }
         }
 
+        /// <summary>
+        /// 在切换界面的时候重新读取一次, 避免出现不一致
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void uiTabControl1_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (uiTabControl1.SelectedIndex == 0)
@@ -304,6 +314,11 @@ namespace DEETU.Source.Window
                 InitializeGridPage();
         }
 
+        /// <summary>
+        /// 在编辑结束后保存编辑到图层
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void featureDataGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
             if (featureDataGridView.SelectedCells.IsNullOrEmpty())
@@ -350,6 +365,9 @@ namespace DEETU.Source.Window
         #endregion
 
         #region 私有函数
+        /// <summary>
+        /// FormPage 初始化
+        /// </summary>
         private void InitializeFormPage()
         {
             // 先禁用选择改变事件 
@@ -418,7 +436,9 @@ namespace DEETU.Source.Window
 
         }
 
-
+        /// <summary>
+        /// GridPage 初始化
+        /// </summary>
         private void InitializeGridPage()
         {
             // 禁用DataGridViewChanged
@@ -467,12 +487,19 @@ namespace DEETU.Source.Window
 
         }
 
+        /// <summary>
+        /// 刷新界面
+        /// </summary>
         private void ReloadPages()
         {
             InitializeFormPage();
             InitializeGridPage();
         }
 
+        /// <summary>
+        /// 动态显示当前选择的Feature
+        /// </summary>
+        /// <param name="feature"> 在FormPage上选中的Feature</param>
         private void ShowFeatureOnDetailTable(GeoFeature feature)
         {
             for (int i = 0; i < feature.Attributes.Count; i++)
@@ -482,6 +509,9 @@ namespace DEETU.Source.Window
             }
         }
 
+        /// <summary>
+        /// 设置与编辑状态相关的可见性
+        /// </summary>
         private void SetEdit()
         {
             startEditToolStripButton.Checked = mIsEditing;
@@ -530,8 +560,16 @@ namespace DEETU.Source.Window
         public event MapEditStatusChangedHandle MapEditStatusChanged;
 
         public delegate void LayerQueryHandler(object sender, GeoMapLayer layer, string expression, GeoSelectionModeConstant selectionMode);
+        /// <summary>
+        /// 传递按表达式查询的时间
+        /// </summary>
         public event LayerQueryHandler LayerQuery;
 
+        /// <summary>
+        /// 传递一系列编辑操作到主窗口
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="layer"></param>
         public delegate void FeatureEditHandle(object sender, GeoMapLayer layer);
         public event FeatureEditHandle FeatureCopied;
         public event FeatureEditHandle FeatureCut;
@@ -540,12 +578,22 @@ namespace DEETU.Source.Window
         public event FeatureEditHandle FeatureRemoved;
         #endregion
 
+        /// <summary>
+        /// 接受主窗口的活动图层变更事件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="layer"></param>
         public void MainPage_CurrentActiveLayerChanged(object sender, GeoMapLayer layer)
         {
             mLayer = layer;
             ReloadPages();
         }
 
+        /// <summary>
+        /// 接受主窗口的编辑状态变更，主要是为了同步
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="status"></param>
         public void MainPage_EditStatusChanged(object sender, bool status)
         {
             mIsEditing = status;
