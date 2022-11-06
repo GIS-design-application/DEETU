@@ -128,7 +128,6 @@ namespace DEETU.Source.Window
             CheckUndo();
         }
 
-
         private void btnFullExtent_Click(object sender, EventArgs e)
         {
             geoMap.FullExtent();
@@ -210,7 +209,6 @@ namespace DEETU.Source.Window
             }
         }
 
-
         private void btnIdentify_Click(object sender, EventArgs e)
         {
             if (!IdentifyModeButton.Checked)
@@ -229,109 +227,175 @@ namespace DEETU.Source.Window
             }
         }
 
-        #region 渲染部分代码(弃用)
-
-        // 简单渲染
-        private void btnSimpleRender_Click(object sender, EventArgs e)
+        private void btnExitDEETU_Click(object sender, EventArgs e)
         {
-            // 查找多边形图层
-            GeoMapLayer sLayer = GetSelectableLayer();
-            if (sLayer == null)
-                return;
-            GeoSimpleRenderer sRenderer = new GeoSimpleRenderer();
-            GeoSimpleFillSymbol sSymbol = new GeoSimpleFillSymbol();
-            sRenderer.Symbol = sSymbol;
-            sLayer.Renderer = sRenderer;
-            geoMap.RedrawMap();
+            this.Close();
+
         }
 
-        // 唯一值渲染
-        private void btnUniqueValue_Click(object sender, EventArgs e)
+        private void FileTreeView_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
         {
-            // 查找多边形图层
-            GeoMapLayer sLayer = GetSelectableLayer();
-            if (sLayer == null)
-                return;
-            // 假定第一个字段名称为"名称"且为字符型
-
-            GeoUniqueValueRenderer sRenderer = new GeoUniqueValueRenderer();
-            sRenderer.Field = "名称";
-            List<string> sValues = new List<string>();
-            int sFeatureCount = sLayer.Features.Count;
-            for (int i = 0; i < sFeatureCount; i++)
+            if (e.Node.Level == 0) return;//双击父节点返回
+            string path = e.Node.Tag.ToString();
+#if DEBUG
+            Logging = path;
+#endif
+            if (File.Exists(path))
             {
-                string svalue = (string)sLayer.Features.GetItem(i).Attributes.GetItem(0); // 这里使用0 假定第一个就是字符串的名称
-                sValues.Add(svalue);
+                LoadLayerFile(path);
             }
-            // 去除重复
-            sValues = sValues.Distinct().ToList();
-            // 生成符号
-            int sValueCount = sValues.Count;
-            for (int i = 0; i < sValueCount; i++)
+            else
             {
-                GeoSimpleFillSymbol sSymbol = new GeoSimpleFillSymbol();
-                sRenderer.AddUniqueValue(sValues[i], sSymbol);
-
+                MessageBox.Show("该文件已被移动或删除，请确认文件位置后打开");
             }
-            sRenderer.DefaultSymbol = new GeoSimpleFillSymbol();
-            sLayer.Renderer = sRenderer;
-            geoMap.RedrawMap();
         }
 
-        private void btnClassBreaks_Click(object sender, EventArgs e)
+        private void btnChangeSelectMode_Click(object sender, EventArgs e)
         {
-            GeoMapLayer sLayer = GetSelectableLayer();
-            if (sLayer == null)
+            if (sender == 交叉选择 || sender == 交叉选择菜单)
             {
+                全包含选择菜单.Checked = false;
+                全包含选择.Checked = false;
+                交叉选择.Checked = true;
+                交叉选择菜单.Checked = true;
                 return;
             }
-            // 假设存在"f5"的字段且为单精度浮点型
-            GeoClassBreaksRenderer sRenderer = new GeoClassBreaksRenderer();
-            sRenderer.Field = "F5";
-            List<double> sValues = new List<double>();
-            int sFeatureCount = sLayer.Features.Count;
-            int sFieldIndex = sLayer.AttributeFields.FindField(sRenderer.Field);
-            for (int i = 0; i < sFeatureCount; i++)
+            else if (sender == 全包含选择 || sender == 全包含选择菜单)
             {
-                double sValue = (float)sLayer.Features.GetItem(i).Attributes.GetItem(sFieldIndex);
-                sValues.Add(sValue);
-            }
-            // 获取最小, 最大值, 并分为5级
-            double sMinValue = sValues.Min();
-            double sMaxValue = sValues.Max();
-            for (int i = 0; i < 5; i++)
-            {
-                double sValue = sMinValue + (sMaxValue - sMinValue) * (i + 1) / 5;
-                GeoSimpleFillSymbol sSymbol = new GeoSimpleFillSymbol();
-                sRenderer.AddBreakValue(sValue, sSymbol);
-            }
-            Color sStartColor = Color.FromArgb(255, 255, 192, 192);
-            Color sEndColor = Color.Maroon;
-            sRenderer.RampColor(sStartColor, sEndColor);
-            sRenderer.DefaultSymbol = new GeoSimpleFillSymbol();
-            sLayer.Renderer = sRenderer;
-            geoMap.RedrawMap();
-        }
-
-        private void btnShowLabel_Click(object sender, EventArgs e)
-        {
-            if (geoMap.Layers.Count == 0)
+                全包含选择菜单.Checked = true;
+                全包含选择.Checked = true;
+                交叉选择.Checked = false;
+                交叉选择菜单.Checked = false;
                 return;
-            // 获取第一个图层
-            GeoMapLayer sLayer = geoMap.Layers.GetItem(0);
-            GeoLabelRenderer sLabelRenderer = new GeoLabelRenderer();
-            sLabelRenderer.Field = sLayer.AttributeFields.GetItem(0).Name;
-            Font sOldFont = sLabelRenderer.TextSymbol.Font;
-            sLabelRenderer.TextSymbol.Font = new Font(sOldFont.Name, 12);
-            sLabelRenderer.TextSymbol.UseMask = true;
-            sLabelRenderer.LabelFeatures = true;
-            sLayer.LabelRenderer = sLabelRenderer;
-            geoMap.RedrawMap();
+            }
         }
-        #endregion
 
-        // 移动多边形
-        private void btnMovePolygon_Click(object sender, EventArgs e)
+        private void SelectionModeChange_Click(object sender, EventArgs e)
+        {
+            if (sender == newSelectionMenuItem || sender == newSelectionToolStripItem)
+            {
+                mSelectionMode = GeoSelectionModeConstant.NewSelection;
+                newSelectionToolStripItem.Checked = true;
+                newSelectionMenuItem.Checked = true;
+                addSelectionToolStripItem.Checked = false;
+                addSelectionMenuItem.Checked = false;
+                removeSelectionToolStripItem.Checked = false;
+                removeSelectionMenuItem.Checked = false;
+
+            }
+            if (sender == addSelectionMenuItem || sender == addSelectionToolStripItem)
+            {
+                mSelectionMode = GeoSelectionModeConstant.AddSelection;
+                newSelectionToolStripItem.Checked = false;
+                newSelectionMenuItem.Checked = false;
+                addSelectionToolStripItem.Checked = true;
+                addSelectionMenuItem.Checked = true;
+                removeSelectionToolStripItem.Checked = false;
+                removeSelectionMenuItem.Checked = false;
+
+            }
+            if (sender == removeSelectionMenuItem || sender == removeSelectionToolStripItem)
+            {
+                mSelectionMode = GeoSelectionModeConstant.RemoveSelection;
+                newSelectionToolStripItem.Checked = false;
+                newSelectionMenuItem.Checked = false;
+                addSelectionToolStripItem.Checked = false;
+                addSelectionMenuItem.Checked = false;
+                removeSelectionToolStripItem.Checked = true;
+                removeSelectionMenuItem.Checked = true;
+
+            }
+        }
+
+        private void btnExportImage_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog saveFileDialog1 = new SaveFileDialog();
+            saveFileDialog1.Title = "保存";
+            saveFileDialog1.Filter = "*.png|*.png";
+            saveFileDialog1.RestoreDirectory = true;
+            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                geoMap.SaveImg(saveFileDialog1.FileName);
+                //Timer timer1 = new Timer();
+                //timer1.Enabled = true;
+                //timer1.Enabled = false;
+                //Point screenPoint = geoMap.PointToScreen(new Point());
+                //Rectangle rect = new Rectangle(screenPoint, geoMap.Size);
+
+                //Image img = new Bitmap(rect.Width, rect.Height);
+                //Graphics g = Graphics.FromImage(img);
+                //g.CopyFromScreen(Convert.ToInt32(rect.X*g.DpiX / 0.0254) - 1, Convert.ToInt32(rect.Y*g.DpiY / 0.0254) - 1,0, 0, rect.Size);
+                //img.Save(saveFileDialog1.FileName, System.Drawing.Imaging.ImageFormat.Png);
+
+
+                //Timer timer1 = new Timer();
+                //timer1.Enabled = true;
+                //timer1.Enabled = false;
+                //Bitmap bit = new Bitmap(this.Width, this.Height);//实例化一个和窗体一样大的bitmap
+                //Graphics g = Graphics.FromImage(bit);
+                //g.CompositingQuality = CompositingQuality.HighQuality;//质量设为最高
+                //                                                      //g.CopyFromScreen(this.Left, this.Top, 0, 0, new Size(this.Width, this.Height));//保存整个窗体为图片
+                //g.CopyFromScreen(geoMap.PointToScreen(Point.Empty), Point.Empty, geoMap.Size);//只保存某个控件
+                //bit.Save(saveFileDialog1.FileName);//默认保存格式为PNG，保存成jpg格式质量不是很好
+                //if (File.Exists(saveFileDialog1.FileName.ToString()))
+                //{
+                //    MessageBox.Show("截图成功！");
+                //    return;
+                //}
+            }
+        }
+
+        private void btnSelectMode_Click(object sender, EventArgs e)
+        {
+            if (SelectModeButton.Checked)
+            {
+                UncheckModeToolStrip();
+
+                mMapOpStyle = GeoMapOpStyleEnum.None;
+            }
+            else
+            {
+                UncheckModeToolStrip();
+                SelectModeButton.Checked = true;
+                this.Cursor = Cursors.Default;
+                mMapOpStyle = GeoMapOpStyleEnum.Select;
+            }
+        }
+
+        private void btnShowAllLayers_Click(object sender, EventArgs e)
+        {
+            foreach (TreeNode node in layerTreeView.Nodes)
+            {
+                node.Checked = true;
+            }
+        }
+
+        private void btnHideAllLayers_Click(object sender, EventArgs e)
+        {
+            foreach (TreeNode node in layerTreeView.Nodes)
+            {
+                node.Checked = false;
+            }
+        }
+
+        private void btnCreateNewLayer_Click(object sender, EventArgs e)
+        {
+
+            // 弹出一个对话框
+            var newLayerForm = new NewLayerForm();
+
+            newLayerForm.ShowDialog();
+            var newLayer = newLayerForm.Layer;
+
+            if (newLayer != null)
+            {
+                geoMap.Layers.Add(newLayer);
+                UpdateTreeView();
+                geoMap.RedrawMap();
+            }
+        }
+
+        private void btnMoveItem_Click(object sender, EventArgs e)
         {
             if (mMapOpStyle != GeoMapOpStyleEnum.Move)
             {
@@ -349,20 +413,12 @@ namespace DEETU.Source.Window
 
         }
 
-        // 描绘多边形, 使用additem替代
-        // depreciated
-        private void btnSketchPolygon_Click(object sender, EventArgs e)
-        {
-            this.Cursor = new Cursor("./icons/Cross.ico");
-            mMapOpStyle = GeoMapOpStyleEnum.Sketch;
-        }
-
         /// <summary>
         /// 在选择的图层处添加元素
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void AddItemToolStripButton_Click(object sender, EventArgs e)
+        private void btnAddItem_Click(object sender, EventArgs e)
         {
             if (mMapOpStyle != GeoMapOpStyleEnum.Sketch && GetSelectableLayer() != null)
             // 开始描绘地理要素
@@ -396,57 +452,23 @@ namespace DEETU.Source.Window
 
         }
 
-        /// <summary>
-        /// 添加元素下点击鼠标
-        /// </summary>
-        /// <param name="e"></param>
-        private void OnSketch_MouseClick(MouseEventArgs e)
+        private void RemoveItemToolStripButton_Click(object sender, EventArgs e)
         {
-            if (e.Button == MouseButtons.Left)
-                // 添加一个点
+            if (mIsEditing == false)
             {
-                // 将屏幕坐标转化为地图坐标并加入描绘图形
-                GeoPoint sPoint = geoMap.ToMapPoint(e.Location.X, e.Location.Y);
-
-                // 在描绘要素的最后一项加一个点
-                mSketchingShape.Last().Add(sPoint);
-
-                geoMap.RedrawTrackingShapes();
-                // 实现持久图形的绘制
+                return;
             }
-            else if (e.Button == MouseButtons.Right)
-            {
-                if(mSketchingGeometryType == GeoGeometryTypeConstant.Point)
-                {
-                    if (mSketchingShape.Count < 2)
-                    {
-                        return;
-                    }
-                    mSketchingShape.RemoveAt(mSketchingShape.Count - 2);
-
-                }
-                else
-                {
-                    if (mSketchingShape.Last().Count != 0)
-                    // 此时正在编辑一个新的多边形
-                    {
-                        mSketchingShape.Last().RemoveAt(mSketchingShape.Last().Count - 1);
-                    }
-                    else if (mSketchingShape.Count < 2)
-                        // 不仅没有正在编辑多边形，也没有已经编辑好的多边形
-                    {
-                        return;
-                    }
-                    else
-                    {
-                        mSketchingShape.RemoveAt(mSketchingShape.Count - 2);
-                    }
-                }
+            var layer = GetSelectableLayer();
+            if (layer.SelectedFeatures.Count != 0)
+                layer = NewUndo(layer);
 
 
-                geoMap.RedrawTrackingShapes();
-            }
-
+            var selectedFeatures = layer.SelectedFeatures;
+            layer.Features.RemoveRange(selectedFeatures.ToArray());
+            selectedFeatures.Clear();
+            geoMap.RedrawMap();
+            UpdateTreeView();
+            CurrentAcitveLayerUpdated?.Invoke(this, mCurrentLayerNode.Tag as GeoMapLayer);
         }
 
         // 结束part
@@ -693,11 +715,11 @@ namespace DEETU.Source.Window
             }
 
         }
-        private void SaveNewProjectToolStripMenuItem_Click(object sender, EventArgs e)
+        private void btnSaveNewProject_Click(object sender, EventArgs e)
         {
             SaveNewProject();
         }
-        private void CloseProjectToolStripMenuItem_Click(object sender, EventArgs e)
+        private void btnCloseProject_Click(object sender, EventArgs e)
         {
             if (IsProjectDirty)
             {
@@ -710,7 +732,7 @@ namespace DEETU.Source.Window
             ProjectName = "";
             IsProjectDirty = false;
         }
-        private void 打开ToolStripMenuItem_Click(object sender, EventArgs e)
+        private void btnOpenProject_Click(object sender, EventArgs e)
         {
             if (IsProjectDirty)
             {
@@ -775,7 +797,7 @@ namespace DEETU.Source.Window
             //QueryExpression(expression);
         }
 
-        private void 全部选择ToolStripMenuItem_Click(object sender, EventArgs e)
+        private void btnSelectAll_Click(object sender, EventArgs e)
         {
             if (mCurrentLayerNode == null)
             {
@@ -791,7 +813,7 @@ namespace DEETU.Source.Window
             geoMap.RedrawMap();
         }
 
-        private void 取消选择ToolStripMenuItem_Click(object sender, EventArgs e)
+        private void btnCancelSelect_Click(object sender, EventArgs e)
         {
             if (mCurrentLayerNode == null)
             {
@@ -803,7 +825,7 @@ namespace DEETU.Source.Window
             geoMap.RedrawMap();
         }
 
-        private void 反向选择ToolStripMenuItem_Click(object sender, EventArgs e)
+        private void btnReverseSelect_Click(object sender, EventArgs e)
         {
             if (mCurrentLayerNode == null)
             {
@@ -827,12 +849,12 @@ namespace DEETU.Source.Window
 
         }
 
-        private void refreshToolStripButton_Click(object sender, EventArgs e)
+        private void btnRedrawMap_Click(object sender, EventArgs e)
         {
             geoMap.RedrawMap();
         }
 
-        private void 开始编辑_Click(object sender, EventArgs e)
+        private void btnStartEditing_Click(object sender, EventArgs e)
         {
 
             if (mCurrentLayerNode == null)
@@ -1460,7 +1482,7 @@ namespace DEETU.Source.Window
             mMovingGeometries.Clear();
         }
 
-        private async void OnIdentify_MouseUp(MouseEventArgs e)
+        private void OnIdentify_MouseUp(MouseEventArgs e)
         {
             if (mIsInIdentify == false)
                 return;
@@ -1617,6 +1639,59 @@ namespace DEETU.Source.Window
             }
         }
 
+        /// <summary>
+        /// 添加元素下点击鼠标
+        /// </summary>
+        /// <param name="e"></param>
+        private void OnSketch_MouseClick(MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            // 添加一个点
+            {
+                // 将屏幕坐标转化为地图坐标并加入描绘图形
+                GeoPoint sPoint = geoMap.ToMapPoint(e.Location.X, e.Location.Y);
+
+                // 在描绘要素的最后一项加一个点
+                mSketchingShape.Last().Add(sPoint);
+
+                geoMap.RedrawTrackingShapes();
+                // 实现持久图形的绘制
+            }
+            else if (e.Button == MouseButtons.Right)
+            {
+                if (mSketchingGeometryType == GeoGeometryTypeConstant.Point)
+                {
+                    if (mSketchingShape.Count < 2)
+                    {
+                        return;
+                    }
+                    mSketchingShape.RemoveAt(mSketchingShape.Count - 2);
+
+                }
+                else
+                {
+                    if (mSketchingShape.Last().Count != 0)
+                    // 此时正在编辑一个新的多边形
+                    {
+                        mSketchingShape.Last().RemoveAt(mSketchingShape.Last().Count - 1);
+                    }
+                    else if (mSketchingShape.Count < 2)
+                    // 不仅没有正在编辑多边形，也没有已经编辑好的多边形
+                    {
+                        return;
+                    }
+                    else
+                    {
+                        mSketchingShape.RemoveAt(mSketchingShape.Count - 2);
+                    }
+                }
+
+
+                geoMap.RedrawTrackingShapes();
+            }
+
+        }
+
         private void geoMap_MouseWheel(object sender, MouseEventArgs e)
         {
             double sX = geoMap.ClientRectangle.Width / 2;
@@ -1644,71 +1719,181 @@ namespace DEETU.Source.Window
             DrawEditingShapes(drawTool);
         }
 
-        // 实现TreeView拖拽
-        private void layerTreeView_ItemDrag(object sender, ItemDragEventArgs e)
+        private void geoMap_DoubleClick(object sender, MouseEventArgs e)
         {
-            if ((e.Item as TreeNode).Nodes.Count != 0)
+#if DEBUG
+            Logging = "鼠标双击";
+#endif
+            if (mMapOpStyle == GeoMapOpStyleEnum.Sketch)
             {
-                // 开始进行拖放操作，并将拖放的效果设置成移动。
-                this.DoDragDrop(e.Item, DragDropEffects.Move);
+                btnEndPart_Click(sender, e);
             }
-        }
-
-        private void layerTreeView_DragDrop(object sender, DragEventArgs e)
-        {
-            // 定义一个中间变量
-            TreeNode treeNode;
-            //判断拖动的是否为TreeNode类型，不是的话不予处理
-            if (e.Data.GetDataPresent("System.Windows.Forms.TreeNode", false) && (e.Data.GetData("System.Windows.Forms.TreeNode") as TreeNode).Nodes.Count != 0)
+            else if (mMapOpStyle == GeoMapOpStyleEnum.Select)
             {
-                // 拖放的目标节点
-                TreeNode targetTreeNode;
-                // 获取当前光标所处的坐标
-                // 定义一个位置点的变量，保存当前光标所处的坐标点
-                Point point = ((TreeView)sender).PointToClient(new Point(e.X, e.Y));
-                if (((TreeView)sender).Bounds.Contains(point))
+
+            }
+            else if (mMapOpStyle == GeoMapOpStyleEnum.Edit)
+            {
+#if DEBUG
+                Logging = "编辑模式双击";
+#endif
+
+                // 找到鼠标点击后对应的点
+                GeoPoint mousePoint = geoMap.ToMapPoint(e.Location.X, e.Location.Y);
+                double tolerance = geoMap.ToMapDistance(mSelectingTolerance);
+
+                string mode = null; // "add", "delete"
+                if (mEditingGeometry.GetType() == typeof(GeoMultiPolygon))
                 {
-                    // 根据坐标点取得处于坐标点位置的节点
-                    targetTreeNode = ((TreeView)sender).GetNodeAt(point);
-                    // 获取被拖动的节点
-                    treeNode = (TreeNode)e.Data.GetData("System.Windows.Forms.TreeNode");
-                    // 判断拖动的节点与目标节点是否是同一个,同一个不予处理
-                    if (treeNode != targetTreeNode)
+                    GeoMultiPolygon editingMultiPolygon = mEditingGeometry as GeoMultiPolygon; // 目前只考虑选择一个多边形
+                                                                                               // 如果鼠标的点并不在多边形附近, 直接放弃
+                    if (!editingMultiPolygon.GetEnvelope().IsInside(mousePoint, tolerance))
                     {
-                        // 获取目标位置的索引号
-                        int newIndex = layerTreeView.Nodes.IndexOf(targetTreeNode);
-                        if (newIndex == -1) newIndex = layerTreeView.Nodes.Count;
-                        // 修改顺序
-                        if (treeNode.Index > newIndex)
+                        return;
+                    }
+
+                    // 遍历所有点集, 查找是否点击了某一个点
+                    for (int i = 0; i < editingMultiPolygon.Parts.Count; i++)
+                    {
+                        // 对每一个点集判断是否包含鼠标的范围
+                        GeoPoints points = editingMultiPolygon.Parts.GetItem(i);
+                        if (GeoMapTools.IsPointOnPolygon(mousePoint, points, tolerance))
                         {
-                            geoMap.Layers.Insert(newIndex, treeNode.Tag as GeoMapLayer);
-                            geoMap.Layers.RemoveAt(treeNode.Index + 1);
+#if DEBUG
+                            Logging = "在线上";
+#endif
+                            foreach (var point in points.ToArray())
+                            {
+                                if (GeoMapTools.IsPointOnPoint(mousePoint, point, tolerance))
+                                // 双击，点到了一个点，说明需要删掉这个点
+                                {
+#if DEBUG
+                                    Logging = "且在点上";
+#endif
+                                    if (points.Count > 3)
+                                    // 如果点数量超过三个，那么需要删除这个点，更新extent，重新绘图
+                                    {
+#if DEBUG
+                                        Logging = "删除点";
+#endif
+                                        points.Remove(point);
+                                    }
+                                    else
+                                    // 否则直接删掉这个多边形即可
+                                    {
+#if DEBUG
+                                        Logging = "删除多边形";
+#endif
+                                        editingMultiPolygon.Parts.Remove(points);
+                                    }
+                                    editingMultiPolygon.UpdateExtent();
+                                    return;
+                                }
+                            }
+
+#if DEBUG
+                            Logging = "但不在点上";
+#endif
+                            // 此时需要新建一个点
+                            int index = GeoMapTools.PointOnWhichLine(mousePoint, points, tolerance);
+                            if (index == -1)
+                            {
+#if DEBUG
+                                Logging = "这里一定有问题";
+                                Debug.Assert(true);
+#endif
+                            }
+                            else
+                            {
+                                points.Insert(index + 1, mousePoint);
+                                points.UpdateExtent();
+                            }
+                            editingMultiPolygon.UpdateExtent();
+                            geoMap.RedrawTrackingShapes();
+                            return;
                         }
-                        else
-                        {
-                            geoMap.Layers.Insert(newIndex, treeNode.Tag as GeoMapLayer);
-                            geoMap.Layers.RemoveAt(treeNode.Index);
-                        }
-                        TreeNode sNode = (TreeNode)treeNode.Clone();
-                        layerTreeView.Nodes.Insert(newIndex, sNode);
-                        if(mCurrentLayerNode == treeNode)
-                        {
-                            layerTreeView.SelectedNode = sNode;
-                            mCurrentLayerNode = sNode;
-                        }
-                        // 将被拖动的节点移除
-                        treeNode.Remove();
-                        geoMap.RedrawMap();
-                        IsProjectDirty = true;
                     }
                 }
-            }
-        }
+                else if (mEditingGeometry.GetType() == typeof(GeoMultiPolyline))
+                {
+                    GeoMultiPolyline editingMultiPolyline = mEditingGeometry as GeoMultiPolyline; // 目前只考虑选择一个多边形
+                                                                                                  // 如果鼠标的点并不在多边形附近, 直接放弃
+                    if (!editingMultiPolyline.GetEnvelope().IsInside(mousePoint, tolerance))
+                    {
+                        return;
+                    }
 
-        private void layerTreeView_DragEnter(object sender, DragEventArgs e)
-        {
-            // 拖动效果设成移动
-            e.Effect = DragDropEffects.Move;
+                    // 遍历所有点集, 查找是否点击了某一个点
+                    for (int i = 0; i < editingMultiPolyline.Parts.Count; i++)
+                    {
+                        // 对每一个点集判断是否包含鼠标的范围
+                        GeoPoints points = editingMultiPolyline.Parts.GetItem(i);
+                        if (GeoMapTools.IsPointOnPolyline(mousePoint, points, tolerance))
+                        {
+#if DEBUG
+                            Logging = "在线上";
+#endif
+                            foreach (var point in points.ToArray())
+                            {
+                                if (GeoMapTools.IsPointOnPoint(mousePoint, point, tolerance))
+                                // 双击，点到了一个点，说明需要删掉这个点
+                                {
+#if DEBUG
+                                    Logging = "且在点上";
+#endif
+                                    if (points.Count > 2)
+                                    // 如果点数量超过两个，那么需要删除这个点，更新extent，重新绘图
+                                    {
+#if DEBUG
+                                        Logging = "删除点";
+#endif
+                                        points.Remove(point);
+                                    }
+                                    else
+                                    // 否则直接删掉这个多边形即可
+                                    {
+#if DEBUG
+                                        Logging = "删除多边形";
+#endif
+                                        editingMultiPolyline.Parts.Remove(points);
+                                    }
+                                    editingMultiPolyline.UpdateExtent();
+                                    return;
+                                }
+                            }
+
+#if DEBUG
+                            Logging = "但不在点上";
+#endif
+                            // 此时需要新建一个点
+                            int index = GeoMapTools.PointOnWhichLine(mousePoint, points, tolerance);
+                            if (index == -1)
+                            {
+#if DEBUG
+                                Logging = "这里一定有问题";
+                                Debug.Assert(true);
+#endif
+                            }
+                            else
+                            {
+                                points.Insert(index + 1, mousePoint);
+                                points.UpdateExtent();
+                            }
+                            editingMultiPolyline.UpdateExtent();
+                            geoMap.RedrawTrackingShapes();
+                            return;
+                        }
+                    }
+                }
+                else
+                {
+                    // 不需要对点进行加减操作
+
+                }
+
+                // 没有找到好奇怪, 应该是多边形在附近但是和点离得也不近, 有点蠢
+                return;
+            }
         }
 
         #endregion
@@ -2630,7 +2815,7 @@ namespace DEETU.Source.Window
 
         private void AttributeForm_MapEditStatusChanged(object sender, bool status)
         {
-            开始编辑_Click(sender, new EventArgs());
+            btnStartEditing_Click(sender, new EventArgs());
             //btnSelect_Click(sender, new EventArgs());
             //mIsEditing = status;
             //SetEditing();
@@ -2680,38 +2865,6 @@ namespace DEETU.Source.Window
 
         #endregion
 
-        /// <summary>
-        /// 每当一个图层被选择时, 自动选择该图层作为编辑的对象
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void layerTreeView_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
-        {
-            if (e.Node == mCurrentLayerNode) return;
-
-            if (mCurrentLayerNode != null)
-            {
-                var oldlayer = (GeoMapLayer)mCurrentLayerNode.Tag;
-                oldlayer.SelectedFeatures.Clear();
-                geoMap.RedrawMap();
-            }
-            if (e.Node.Nodes.Count != 0)
-                mCurrentLayerNode = e.Node;
-
-#if DEBUG
-            Logging = mCurrentLayerNode.Text;
-#endif
-
-            int layerIndex = mCurrentLayerNode.Index;
-            geoMap.Layers.Deselect();
-            GeoMapLayer layer = geoMap.Layers.GetItem(layerIndex);
-
-            mCrs = layer.Crs;
-
-            layer.Selectable = true;
-            ShowCrs();
-        }
-
         #region 事件
         public delegate void CurrentActiveLayerUpdatedHandle(object sender, GeoMapLayer layer);
         public event CurrentActiveLayerUpdatedHandle CurrentAcitveLayerUpdated;
@@ -2722,7 +2875,7 @@ namespace DEETU.Source.Window
 
         public delegate void ProjectNameChangedHandle(object sender, string name);
         public event ProjectNameChangedHandle ProjectNameChanged;
-        
+
         //public event CurrentActiveLayerUpdatedHandle CurrentAcitveLayerSelected;
         //public event CurrentActiveLayerUpdatedHandle CurrentAcitveLayerMoved;
         //public event CurrentActiveLayerUpdatedHandle CurrentAcitveLayerDeleted;
@@ -2730,25 +2883,8 @@ namespace DEETU.Source.Window
         //public event CurrentActiveLayerUpdatedHandle CurrentAcitveLayerAdded;
 
         #endregion
-#if DEBUG
-        private string Logging
-        {
-            get
-            {
-                return _Logging.Text;
-            }
-            set
-            {
-                _Logging.AppendText("\r\n" + System.DateTime.Now.ToString("HH:mm:ss") + "  " + value);
-                _Logging.ScrollToCaret();
-            }
-        }
-        private TextBox _Logging = null;
-        public void SetDebugForm(DebugForm form)
-        {
-            _Logging = form.logging;
-        }
-#endif
+
+        #region IO
         private void LoadLayerFile(string sFileName)
         {
             string suffix = sFileName.Split('.').Last();
@@ -3008,257 +3144,15 @@ namespace DEETU.Source.Window
             }
         }
 
-        private void RemoveItemToolStripButton_Click(object sender, EventArgs e)
-        {
-            if (mIsEditing == false)
-            {
-                return;
-            }
-            var layer = GetSelectableLayer();
-            if (layer.SelectedFeatures.Count != 0)
-                layer = NewUndo(layer);
+        #endregion
 
-
-            var selectedFeatures = layer.SelectedFeatures;
-            layer.Features.RemoveRange(selectedFeatures.ToArray());
-            selectedFeatures.Clear();
-            geoMap.RedrawMap();
-            UpdateTreeView();
-            CurrentAcitveLayerUpdated?.Invoke(this, mCurrentLayerNode.Tag as GeoMapLayer);
-        }
-
-        private void uiPanel3_DoubleClick(object sender, EventArgs e)
-        {
-
-        }
-
-        private void geoMap_DoubleClick(object sender, MouseEventArgs e)
-        {
-#if DEBUG
-            Logging = "鼠标双击";
-#endif
-            if (mMapOpStyle == GeoMapOpStyleEnum.Sketch)
-            {
-                btnEndPart_Click(sender, e);
-            }
-            else if (mMapOpStyle == GeoMapOpStyleEnum.Select)
-            {
-
-            }
-            else if (mMapOpStyle == GeoMapOpStyleEnum.Edit)
-            {
-#if DEBUG
-                Logging = "编辑模式双击";
-#endif
-                
-                // 找到鼠标点击后对应的点
-                GeoPoint mousePoint = geoMap.ToMapPoint(e.Location.X, e.Location.Y);
-                double tolerance = geoMap.ToMapDistance(mSelectingTolerance);
-
-                string mode = null; // "add", "delete"
-                if (mEditingGeometry.GetType() == typeof(GeoMultiPolygon))
-                {
-                    GeoMultiPolygon editingMultiPolygon = mEditingGeometry as GeoMultiPolygon; // 目前只考虑选择一个多边形
-                                                                                          // 如果鼠标的点并不在多边形附近, 直接放弃
-                    if (!editingMultiPolygon.GetEnvelope().IsInside(mousePoint, tolerance))
-                    {
-                        return;
-                    }
-
-                    // 遍历所有点集, 查找是否点击了某一个点
-                    for (int i = 0; i < editingMultiPolygon.Parts.Count; i++)
-                    {
-                        // 对每一个点集判断是否包含鼠标的范围
-                        GeoPoints points = editingMultiPolygon.Parts.GetItem(i);
-                        if (GeoMapTools.IsPointOnPolygon(mousePoint, points, tolerance))
-                        {
-#if DEBUG
-                            Logging = "在线上";
-#endif
-                            foreach(var point in points.ToArray())
-                            {
-                                if (GeoMapTools.IsPointOnPoint(mousePoint, point, tolerance))
-                                    // 双击，点到了一个点，说明需要删掉这个点
-                                {
-#if DEBUG
-                                    Logging = "且在点上";
-#endif
-                                    if (points.Count > 3)
-                                        // 如果点数量超过三个，那么需要删除这个点，更新extent，重新绘图
-                                    {
-#if DEBUG
-                                        Logging = "删除点";
-#endif
-                                        points.Remove(point);
-                                    }
-                                    else
-                                        // 否则直接删掉这个多边形即可
-                                    {
-#if DEBUG
-                                        Logging = "删除多边形";
-#endif
-                                        editingMultiPolygon.Parts.Remove(points);
-                                    }
-                                    editingMultiPolygon.UpdateExtent();
-                                    return;
-                                }
-                            }
-
-#if DEBUG
-                            Logging = "但不在点上";
-#endif
-                            // 此时需要新建一个点
-                            int index = GeoMapTools.PointOnWhichLine(mousePoint, points, tolerance);
-                            if (index == -1)
-                            {
-#if DEBUG
-                                Logging = "这里一定有问题";
-                                Debug.Assert(true);
-#endif
-                            }
-                            else
-                            {
-                                points.Insert(index + 1, mousePoint);
-                                points.UpdateExtent();
-                            }
-                            editingMultiPolygon.UpdateExtent();
-                            geoMap.RedrawTrackingShapes();
-                            return;
-                        }
-                    }
-                }
-                else if (mEditingGeometry.GetType() == typeof(GeoMultiPolyline))
-                {
-                    GeoMultiPolyline editingMultiPolyline = mEditingGeometry as GeoMultiPolyline; // 目前只考虑选择一个多边形
-                                                                                               // 如果鼠标的点并不在多边形附近, 直接放弃
-                    if (!editingMultiPolyline.GetEnvelope().IsInside(mousePoint, tolerance))
-                    {
-                        return;
-                    }
-
-                    // 遍历所有点集, 查找是否点击了某一个点
-                    for (int i = 0; i < editingMultiPolyline.Parts.Count; i++)
-                    {
-                        // 对每一个点集判断是否包含鼠标的范围
-                        GeoPoints points = editingMultiPolyline.Parts.GetItem(i);
-                        if (GeoMapTools.IsPointOnPolyline(mousePoint, points, tolerance))
-                        {
-#if DEBUG
-                            Logging = "在线上";
-#endif
-                            foreach (var point in points.ToArray())
-                            {
-                                if (GeoMapTools.IsPointOnPoint(mousePoint, point, tolerance))
-                                // 双击，点到了一个点，说明需要删掉这个点
-                                {
-#if DEBUG
-                                    Logging = "且在点上";
-#endif
-                                    if (points.Count > 2)
-                                    // 如果点数量超过两个，那么需要删除这个点，更新extent，重新绘图
-                                    {
-#if DEBUG
-                                        Logging = "删除点";
-#endif
-                                        points.Remove(point);
-                                    }
-                                    else
-                                    // 否则直接删掉这个多边形即可
-                                    {
-#if DEBUG
-                                        Logging = "删除多边形";
-#endif
-                                        editingMultiPolyline.Parts.Remove(points);
-                                    }
-                                    editingMultiPolyline.UpdateExtent();
-                                    return;
-                                }
-                            }
-
-#if DEBUG
-                            Logging = "但不在点上";
-#endif
-                            // 此时需要新建一个点
-                            int index = GeoMapTools.PointOnWhichLine(mousePoint, points, tolerance);
-                            if (index == -1)
-                            {
-#if DEBUG
-                                Logging = "这里一定有问题";
-                                Debug.Assert(true);
-#endif
-                            }
-                            else
-                            {
-                                points.Insert(index + 1, mousePoint);
-                                points.UpdateExtent();
-                            }
-                            editingMultiPolyline.UpdateExtent();
-                            geoMap.RedrawTrackingShapes();
-                            return;
-                        }
-                    }
-                }
-                else
-                {
-                    // 不需要对点进行加减操作
-
-                }
-
-
-
-
-
-
-
-                // 没有找到好奇怪, 应该是多边形在附近但是和点离得也不近, 有点蠢
-                return;
-            }
-        }
-
-        #region CopyPaste
-        private void MainPage_KeyDown(object sender, KeyEventArgs e)
-        {
-
-            if ((Control.ModifierKeys & Keys.Control) == Keys.Control)
-            // Control被按下
-            {
-#if DEBUG
-                Logging = "Control 按下";
-#endif
-                if (e.KeyCode == Keys.C)
-                // Control-C, Copy
-                {
-#if DEBUG
-                    Logging = "Control-C 按下";
-#endif
-                    Copy();
-                }
-                else if (e.KeyCode == Keys.X)
-                {
-                    Cut();
-                }
-                else if (e.KeyCode == Keys.V)
-                // Control-V, Paste
-                {
-                    Paste();
-                }
-                else if (e.KeyCode == Keys.Z)
-                // Control-Z, Undo
-                {
-                    Undo();
-                }
-                else if (e.KeyCode == Keys.Y)
-                // Control-Y, Redo
-                {
-                    Redo();
-                }
-            }
-#if DEBUG
-            Logging = e.KeyValue.ToString() + " key down";
-#endif
-        }
+        #region 复制, 粘贴, 拷贝
 
         private List<GeoGeometry> mItemsForCopy = new List<GeoGeometry>();
+
+        /// <summary>
+        /// 复制事件处理
+        /// </summary>
         private void Copy()
         {
 #if DEBUG
@@ -3282,6 +3176,9 @@ namespace DEETU.Source.Window
             }
         }
 
+        /// <summary>
+        /// 粘贴事件处理
+        /// </summary>
         private void Paste()
         {
 #if DEBUG
@@ -3316,6 +3213,9 @@ namespace DEETU.Source.Window
 
         }
 
+        /// <summary>
+        /// 剪切事件处理
+        /// </summary>
         private void Cut()
         {
 #if DEBUG
@@ -3337,12 +3237,46 @@ namespace DEETU.Source.Window
                 CurrentAcitveLayerUpdated?.Invoke(this, mCurrentLayerNode.Tag as GeoMapLayer);
             }
         }
+
+        /// <summary>
+        /// 剪切要素按钮监听
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void 剪切要素_Click(object sender, EventArgs e)
+        {
+            Cut();
+        }
+
+        /// <summary>
+        /// 复制要素按钮监听
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void 复制要素_Click(object sender, EventArgs e)
+        {
+            Copy();
+        }
+
+        /// <summary>
+        /// 粘贴要素按钮监听
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void 粘贴要素_Click(object sender, EventArgs e)
+        {
+            Paste();
+        }
         #endregion
 
         #region 撤销和重做
         private List<(GeoMapLayer, GeoMapLayer)> undo_layers = new List<(GeoMapLayer, GeoMapLayer)>();
         private int _undo_index = -1;
+        static int MAX_UNDO = 50; // 规定了撤销最大次数
 
+        /// <summary>
+        /// 用于指向目前图层的位置
+        /// </summary>
         private int undo_index
         {
             get { return _undo_index; }
@@ -3356,6 +3290,9 @@ namespace DEETU.Source.Window
             }
         }
 
+        /// <summary>
+        /// 检查目前撤销链表状态
+        /// </summary>
         private void CheckUndo()
         {
             if (_undo_index == -1)
@@ -3401,6 +3338,9 @@ namespace DEETU.Source.Window
             }
         }
 
+        /// <summary>
+        /// 撤销操作
+        /// </summary>
         private void Undo()
         {
             if (undo_layers.Count == 0 || undo_index == -1)
@@ -3408,12 +3348,14 @@ namespace DEETU.Source.Window
                 return;
             }
             geoMap.Layers.Replace(undo_layers[undo_index].Item2, undo_layers[undo_index].Item1);
-
             geoMap.RedrawMap();
             undo_index--;
             CurrentAcitveLayerUpdated?.Invoke(this, mCurrentLayerNode.Tag as GeoMapLayer);
         }
 
+        /// <summary>
+        /// 重做操作
+        /// </summary>
         private void Redo()
         {
             if (undo_layers.Count == 0 || undo_index == undo_layers.Count - 1)
@@ -3427,6 +3369,9 @@ namespace DEETU.Source.Window
             CurrentAcitveLayerUpdated?.Invoke(this, mCurrentLayerNode.Tag as GeoMapLayer);
         }
 
+        /// <summary>
+        /// 将所有重做节点删除
+        /// </summary>
         private void ResetUndo()
         {
             while (undo_index + 1 != undo_layers.Count)
@@ -3435,8 +3380,12 @@ namespace DEETU.Source.Window
             }
         }
 
-        static int MAX_UNDO = 50;
 
+        /// <summary>
+        /// 当图层进行修改前调用，记录修改前的图层
+        /// </summary>
+        /// <param name="srcLayer"></param>
+        /// <returns></returns>
         private GeoMapLayer NewUndo(GeoMapLayer srcLayer)
         {
             ResetUndo();
@@ -3456,49 +3405,9 @@ namespace DEETU.Source.Window
                 undo_layers.RemoveRange(0, undo_layers.Count - MAX_UNDO);
                 undo_index -= undo_layers.Count - MAX_UNDO;
             }
+
+            CurrentAcitveLayerUpdated?.Invoke(this, mCurrentLayerNode.Tag as GeoMapLayer);
             return desLayer;
-        }
-        #endregion
-
-        private void 复制要素_Click(object sender, EventArgs e)
-        {
-            Copy();
-        }
-
-        private void 粘贴要素_Click(object sender, EventArgs e)
-        {
-            Paste();
-        }
-
-        private void 退出DEETUToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            this.Close();
-
-        }
-        private void layerTreeView_AfterCheck(object sender, TreeViewEventArgs e)
-        {
-#if DEBUG
-            Logging = "Node AfterCheck triggered, Current Node Check Status:" + e.Node.Checked.ToString();
-#endif
-            LayerTreeViewUpdateCheck(e.Node);
-            IsProjectDirty = true;
-        }
-
-        private void FileTreeView_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
-        {
-            if (e.Node.Level == 0) return;//双击父节点返回
-            string path = e.Node.Tag.ToString();
-#if DEBUG
-            Logging = path;
-#endif
-            if (File.Exists(path))
-            {
-                LoadLayerFile(path);
-            }
-            else
-            {
-                MessageBox.Show("该文件已被移动或删除，请确认文件位置后打开");
-            }
         }
 
         private void 撤销_Click(object sender, EventArgs e)
@@ -3511,151 +3420,113 @@ namespace DEETU.Source.Window
             Redo();
         }
 
-        private void 矩形选择模式更改_Click(object sender, EventArgs e)
+        #endregion
+
+        #region 图层树处理代码
+        private void layerTreeView_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
         {
-            if (sender == 交叉选择 || sender == 交叉选择菜单)
-            {
-                全包含选择菜单.Checked = false;
-                全包含选择.Checked = false;
-                交叉选择.Checked = true;
-                交叉选择菜单.Checked = true;
-                return;
-            }
-            else if (sender == 全包含选择 || sender == 全包含选择菜单)
-            {
-                全包含选择菜单.Checked = true;
-                全包含选择.Checked = true;
-                交叉选择.Checked = false;
-                交叉选择菜单.Checked = false;
-                return;
-            }
-        }
+            if (e.Node == mCurrentLayerNode) return;
 
-        private void SelectionModeChange_Click(object sender, EventArgs e)
-        {
-            if (sender == newSelectionMenuItem || sender == newSelectionToolStripItem)
+            if (mCurrentLayerNode != null)
             {
-                mSelectionMode = GeoSelectionModeConstant.NewSelection;
-                newSelectionToolStripItem.Checked = true;
-                newSelectionMenuItem.Checked = true;
-                addSelectionToolStripItem.Checked = false;
-                addSelectionMenuItem.Checked = false;
-                removeSelectionToolStripItem.Checked = false;
-                removeSelectionMenuItem.Checked = false;
-                
-            }
-            if (sender == addSelectionMenuItem || sender == addSelectionToolStripItem)
-            {
-                mSelectionMode = GeoSelectionModeConstant.AddSelection;
-                newSelectionToolStripItem.Checked = false;
-                newSelectionMenuItem.Checked = false;
-                addSelectionToolStripItem.Checked = true ;
-                addSelectionMenuItem.Checked = true ;
-                removeSelectionToolStripItem.Checked = false;
-                removeSelectionMenuItem.Checked = false;
-                
-            }
-            if (sender == removeSelectionMenuItem || sender == removeSelectionToolStripItem)
-            {
-                mSelectionMode = GeoSelectionModeConstant.RemoveSelection;
-                newSelectionToolStripItem.Checked = false;
-                newSelectionMenuItem.Checked = false;
-                addSelectionToolStripItem.Checked = false;
-                addSelectionMenuItem.Checked = false;
-                removeSelectionToolStripItem.Checked = true;
-                removeSelectionMenuItem.Checked = true;
-                
-            }
-        }
-
-        private void 导出图片ToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            SaveFileDialog saveFileDialog1 = new SaveFileDialog();
-            saveFileDialog1.Title = "保存";
-            saveFileDialog1.Filter = "*.png|*.png";
-            saveFileDialog1.RestoreDirectory = true;
-            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
-            {
-                geoMap.SaveImg(saveFileDialog1.FileName);
-                //Timer timer1 = new Timer();
-                //timer1.Enabled = true;
-                //timer1.Enabled = false;
-                //Point screenPoint = geoMap.PointToScreen(new Point());
-                //Rectangle rect = new Rectangle(screenPoint, geoMap.Size);
-                
-                //Image img = new Bitmap(rect.Width, rect.Height);
-                //Graphics g = Graphics.FromImage(img);
-                //g.CopyFromScreen(Convert.ToInt32(rect.X*g.DpiX / 0.0254) - 1, Convert.ToInt32(rect.Y*g.DpiY / 0.0254) - 1,0, 0, rect.Size);
-                //img.Save(saveFileDialog1.FileName, System.Drawing.Imaging.ImageFormat.Png);
-                
-                
-                //Timer timer1 = new Timer();
-                //timer1.Enabled = true;
-                //timer1.Enabled = false;
-                //Bitmap bit = new Bitmap(this.Width, this.Height);//实例化一个和窗体一样大的bitmap
-                //Graphics g = Graphics.FromImage(bit);
-                //g.CompositingQuality = CompositingQuality.HighQuality;//质量设为最高
-                //                                                      //g.CopyFromScreen(this.Left, this.Top, 0, 0, new Size(this.Width, this.Height));//保存整个窗体为图片
-                //g.CopyFromScreen(geoMap.PointToScreen(Point.Empty), Point.Empty, geoMap.Size);//只保存某个控件
-                //bit.Save(saveFileDialog1.FileName);//默认保存格式为PNG，保存成jpg格式质量不是很好
-                //if (File.Exists(saveFileDialog1.FileName.ToString()))
-                //{
-                //    MessageBox.Show("截图成功！");
-                //    return;
-                //}
-            }
-        }
-
-        private void RectSelectModeButton_Click(object sender, EventArgs e)
-        {
-            if (SelectModeButton.Checked)
-            {
-                UncheckModeToolStrip();
-                
-                mMapOpStyle = GeoMapOpStyleEnum.None;
-            } else
-            {
-                UncheckModeToolStrip();
-                SelectModeButton.Checked = true;
-                this.Cursor = Cursors.Default;
-                mMapOpStyle = GeoMapOpStyleEnum.Select;
-            }
-        }
-
-        private void 显示所有图层ToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            foreach(TreeNode node in layerTreeView.Nodes)
-            {
-                node.Checked = true;
-            }
-        }
-
-        private void 隐藏所有图层ToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            foreach(TreeNode node in layerTreeView.Nodes)
-            {
-                node.Checked = false;
-            }
-        }
-
-        private void 新建图层ToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-            // 弹出一个对话框
-            var newLayerForm = new NewLayerForm();
-
-            newLayerForm.ShowDialog();
-            var newLayer = newLayerForm.Layer;
-
-            if (newLayer != null)
-            {
-                geoMap.Layers.Add(newLayer);
-                UpdateTreeView();
+                var oldlayer = (GeoMapLayer)mCurrentLayerNode.Tag;
+                oldlayer.SelectedFeatures.Clear();
                 geoMap.RedrawMap();
             }
+            if (e.Node.Nodes.Count != 0)
+                mCurrentLayerNode = e.Node;
+
+#if DEBUG
+            Logging = mCurrentLayerNode.Text;
+#endif
+
+            int layerIndex = mCurrentLayerNode.Index;
+            geoMap.Layers.Deselect();
+            GeoMapLayer layer = geoMap.Layers.GetItem(layerIndex);
+
+            mCrs = layer.Crs;
+
+            layer.Selectable = true;
+            ShowCrs();
         }
 
-        
+        private void layerTreeView_AfterCheck(object sender, TreeViewEventArgs e)
+        {
+#if DEBUG
+            Logging = "Node AfterCheck triggered, Current Node Check Status:" + e.Node.Checked.ToString();
+#endif
+            LayerTreeViewUpdateCheck(e.Node);
+            IsProjectDirty = true;
+        }
+
+
+        // 实现TreeView拖拽
+        private void layerTreeView_ItemDrag(object sender, ItemDragEventArgs e)
+        {
+            if ((e.Item as TreeNode).Nodes.Count != 0)
+            {
+                // 开始进行拖放操作，并将拖放的效果设置成移动。
+                this.DoDragDrop(e.Item, DragDropEffects.Move);
+            }
+        }
+
+        private void layerTreeView_DragDrop(object sender, DragEventArgs e)
+        {
+            // 定义一个中间变量
+            TreeNode treeNode;
+            //判断拖动的是否为TreeNode类型，不是的话不予处理
+            if (e.Data.GetDataPresent("System.Windows.Forms.TreeNode", false) && (e.Data.GetData("System.Windows.Forms.TreeNode") as TreeNode).Nodes.Count != 0)
+            {
+                // 拖放的目标节点
+                TreeNode targetTreeNode;
+                // 获取当前光标所处的坐标
+                // 定义一个位置点的变量，保存当前光标所处的坐标点
+                Point point = ((TreeView)sender).PointToClient(new Point(e.X, e.Y));
+                if (((TreeView)sender).Bounds.Contains(point))
+                {
+                    // 根据坐标点取得处于坐标点位置的节点
+                    targetTreeNode = ((TreeView)sender).GetNodeAt(point);
+                    // 获取被拖动的节点
+                    treeNode = (TreeNode)e.Data.GetData("System.Windows.Forms.TreeNode");
+                    // 判断拖动的节点与目标节点是否是同一个,同一个不予处理
+                    if (treeNode != targetTreeNode)
+                    {
+                        // 获取目标位置的索引号
+                        int newIndex = layerTreeView.Nodes.IndexOf(targetTreeNode);
+                        if (newIndex == -1) newIndex = layerTreeView.Nodes.Count;
+                        // 修改顺序
+                        if (treeNode.Index > newIndex)
+                        {
+                            geoMap.Layers.Insert(newIndex, treeNode.Tag as GeoMapLayer);
+                            geoMap.Layers.RemoveAt(treeNode.Index + 1);
+                        }
+                        else
+                        {
+                            geoMap.Layers.Insert(newIndex, treeNode.Tag as GeoMapLayer);
+                            geoMap.Layers.RemoveAt(treeNode.Index);
+                        }
+                        TreeNode sNode = (TreeNode)treeNode.Clone();
+                        layerTreeView.Nodes.Insert(newIndex, sNode);
+                        if (mCurrentLayerNode == treeNode)
+                        {
+                            layerTreeView.SelectedNode = sNode;
+                            mCurrentLayerNode = sNode;
+                        }
+                        // 将被拖动的节点移除
+                        treeNode.Remove();
+                        geoMap.RedrawMap();
+                        IsProjectDirty = true;
+                    }
+                }
+            }
+        }
+
+        private void layerTreeView_DragEnter(object sender, DragEventArgs e)
+        {
+            // 拖动效果设成移动
+            e.Effect = DragDropEffects.Move;
+        }
+
         private void layerTreeView_DrawNode(object sender, DrawTreeNodeEventArgs e)
         {
             Color selectedColor = Color.FromArgb(48,48,48);
@@ -3684,7 +3555,6 @@ namespace DEETU.Source.Window
             //    }
             //}
         }
-
         private void layerTreeView_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
         {
             if (!e.Node.Bounds.Contains(e.Location)) // 保证点其余部分不会出问题
@@ -3729,18 +3599,91 @@ namespace DEETU.Source.Window
 
     
         }
+        #endregion
 
-        private void 剪切要素_Click(object sender, EventArgs e)
+        #region 键盘事件监听
+
+        /// <summary>
+        /// 按键按下
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void MainPage_KeyDown(object sender, KeyEventArgs e)
         {
-            Cut();
+
+            if ((Control.ModifierKeys & Keys.Control) == Keys.Control)
+            // Control被按下
+            {
+#if DEBUG
+                Logging = "Control 按下";
+#endif
+                if (e.KeyCode == Keys.C)
+                // Control-C, Copy
+                {
+#if DEBUG
+                    Logging = "Control-C 按下";
+#endif
+                    Copy();
+                }
+                else if (e.KeyCode == Keys.X)
+                {
+                    Cut();
+                }
+                else if (e.KeyCode == Keys.V)
+                // Control-V, Paste
+                {
+                    Paste();
+                }
+                else if (e.KeyCode == Keys.Z)
+                // Control-Z, Undo
+                {
+                    Undo();
+                }
+                else if (e.KeyCode == Keys.Y)
+                // Control-Y, Redo
+                {
+                    Redo();
+                }
+            }
+#if DEBUG
+            Logging = e.KeyValue.ToString() + " key down";
+#endif
         }
 
-     
+
+        /// <summary>
+        /// 键盘按键抬起
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void MainPage_KeyUp(object sender, KeyEventArgs e)
         {
 #if DEBUG
             Logging = e.KeyValue.ToString() + " key up";
 #endif
         }
+        #endregion
+
+#if DEBUG
+        #region 调试窗口相关
+        private string Logging
+        {
+            get
+            {
+                return _Logging.Text;
+            }
+            set
+            {
+                _Logging.AppendText("\r\n" + System.DateTime.Now.ToString("HH:mm:ss") + "  " + value);
+                _Logging.ScrollToCaret();
+            }
+        }
+        private TextBox _Logging = null;
+        public void SetDebugForm(DebugForm form)
+        {
+            _Logging = form.logging;
+        }
+        #endregion
+#endif
     }
 }
