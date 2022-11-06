@@ -111,7 +111,7 @@
     <Compile Include="Source\Core\Geometry\GeoShape.cs" />
     <Compile Include="Source\IO\GeoDatabaseIOTools.cs" />
     <Compile Include="Source\IO\GeoShpIOTools.cs" />
-    <Compile Include="Source\Testing\MultiFormApplictionStart.cs" />
+    <Compile Include="Source\Window\MultiFormApplictionStart.cs" />
     <Compile Include="Source\IO\GeoDatabase.cs" />
     <Compile Include="Source\IO\GeoDataIOTools.cs" />
     <Compile Include="Source\IO\GeoDataTable.cs" />
@@ -140,16 +140,16 @@
     <Compile Include="Source\Window\CrsForm\CrsTransferForm.Designer.cs">
       <DependentUpon>CrsTransferForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Source\Window\IdentifyForm.cs">
+    <Compile Include="Source\Window\IdentifyForm\IdentifyForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Source\Window\IdentifyForm.Designer.cs">
+    <Compile Include="Source\Window\IdentifyForm\IdentifyForm.Designer.cs">
       <DependentUpon>IdentifyForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Source\Window\NewLayerForm.cs">
+    <Compile Include="Source\Window\NewLayerForm\NewLayerForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Source\Window\NewLayerForm.Designer.cs">
+    <Compile Include="Source\Window\NewLayerForm\NewLayerForm.Designer.cs">
       <DependentUpon>NewLayerForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Source\Window\SelectForm\SelectedByExpressionForm.cs">
@@ -231,10 +231,10 @@
     <Compile Include="Source\Window\MainPage.Designer.cs">
       <DependentUpon>MainPage.cs</DependentUpon>
     </Compile>
-    <Compile Include="Source\Testing\DebugForm.cs">
+    <Compile Include="Source\Window\DebugForm\DebugForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Source\Testing\DebugForm.Designer.cs">
+    <Compile Include="Source\Window\DebugForm\DebugForm.Designer.cs">
       <DependentUpon>DebugForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Source\Window\MainForm.cs">
@@ -284,10 +284,10 @@
     <EmbeddedResource Include="Source\Window\CrsForm\CrsTransferForm.resx">
       <DependentUpon>CrsTransferForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Source\Window\IdentifyForm.resx">
+    <EmbeddedResource Include="Source\Window\IdentifyForm\IdentifyForm.resx">
       <DependentUpon>IdentifyForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Source\Window\NewLayerForm.resx">
+    <EmbeddedResource Include="Source\Window\NewLayerForm\NewLayerForm.resx">
       <DependentUpon>NewLayerForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Source\Window\SelectForm\SelectedByExpressionForm.resx">
@@ -326,7 +326,7 @@
     <EmbeddedResource Include="Source\Window\LayerAttributesForm\FillSymbolPage.resx">
       <DependentUpon>FillSymbolPage.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Source\Testing\DebugForm.resx">
+    <EmbeddedResource Include="Source\Window\DebugForm\DebugForm.resx">
       <DependentUpon>DebugForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Source\Window\MainForm.resx">
