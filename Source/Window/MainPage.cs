@@ -2181,7 +2181,7 @@ namespace DEETU.Source.Window
                 TreeImages.Images.Add(CreateBitmapFromSymbol(sSymbol));
                 FieldName.SelectedImageIndex = FieldName.ImageIndex = TreeImages.Images.Count - 1;
                 FieldName.Checked = layer.Visible;
-
+                // 添加所有简单符号的节点
                 List<TreeNode> styles = new List<TreeNode>() { FieldName };
                 int BreakCount = sClassBreaksRenderer.BreakCount;
                 for (int i = 0; i < BreakCount; ++i)
@@ -2214,7 +2214,7 @@ namespace DEETU.Source.Window
                 TreeImages.Images.Add(CreateBitmapFromSymbol(sSymbol));
                 FieldName.SelectedImageIndex = FieldName.ImageIndex = TreeImages.Images.Count - 1;
                 FieldName.Checked = layer.Visible;
-
+                // 添加所有简单符号的节点
                 List<TreeNode> styles = new List<TreeNode>() { FieldName };
                 int ValueCount = sUniqueValueRenderer.ValueCount;
                 for (int i = 0; i < ValueCount; ++i)
@@ -2243,6 +2243,7 @@ namespace DEETU.Source.Window
             }
         }
 
+        // 由简单符号创建树节点
         private TreeNode CreateSimpleStyleTreeNode(GeoSymbol symbol, string label = "    ")
         {
             TreeNode style = new TreeNode(label);
@@ -2257,7 +2258,7 @@ namespace DEETU.Source.Window
                 style.Checked = (symbol as GeoSimpleMarkerSymbol).Visible;
             return style;
         }
-
+        // 由符号创建bitmap
         private Bitmap CreateBitmapFromSymbol(GeoSymbol symbol)
         {
             Bitmap styleImage = new Bitmap(50, 50);
@@ -2323,6 +2324,7 @@ namespace DEETU.Source.Window
             EditStatusChanged?.Invoke(this, mIsEditing);
         }
 
+        // 处理节点checkbox点击时他们是否可视
         private void LayerTreeViewUpdateCheck(TreeNode node)
         {
             if (node.Nodes.Count == 0) // 子节点
@@ -2332,8 +2334,10 @@ namespace DEETU.Source.Window
                     GeoSymbol sSymbol = node.Tag as GeoSymbol;
                     if(node.Checked)
                     {
+                        // 如果父节点是不可视的，把所有都改为可视
                         if (node.Parent.Checked == false)
                             node.Parent.Checked = true;
+                        // 分类变化，提前return可以不刷新地图，快一点
                         if (sSymbol.SymbolType == GeoSymbolTypeConstant.SimpleFillSymbol)
                         {
                             if ((sSymbol as GeoSimpleFillSymbol).Visible == true) return;
@@ -2376,12 +2380,14 @@ namespace DEETU.Source.Window
                 if (node.Checked)
                 {
                     sLayer.Visible = true;
+                    // 屏蔽事件，否则不断刷新太慢了
                     layerTreeView.AfterCheck -= layerTreeView_AfterCheck;
                     foreach (TreeNode sNode in node.Nodes)
                     {
                         sNode.Checked = true;
                         if(sNode.Tag != null)
                         {
+                            // 根据不同情况处理
                             GeoSymbol sSymbol = sNode.Tag as GeoSymbol;
                             if (sSymbol.SymbolType == GeoSymbolTypeConstant.SimpleFillSymbol)
                             {

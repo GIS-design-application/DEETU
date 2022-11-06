@@ -12,6 +12,7 @@ using DEETU.Tool;
 
 namespace DEETU.Source.Window.LayerAttributes
 {
+    // 修改线符号的简单属性
     public partial class EditLineSymbolPage : UIPage
     {
         private GeoSimpleLineSymbol mLineSymbol;

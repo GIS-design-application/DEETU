@@ -19,14 +19,14 @@ namespace DEETU.Source.Window
     public partial class FillSymbolPage : UITitlePage
     {
         #region 字段
-        private GeoMapLayer mLayer;
-        private GeoSimpleRenderer mSimpleRenderer = null;
-        private GeoClassBreaksRenderer mClassBreaksRenderer = null;
-        private GeoUniqueValueRenderer mUniqueValueRenderer = null;
-        private List<GeoUniqueValueRenderer> mUniqueValueRenderers = new List<GeoUniqueValueRenderer>();
+        private GeoMapLayer mLayer;  // 渲染的图层
+        private GeoSimpleRenderer mSimpleRenderer = null; // 记录生成的简单渲染
+        private GeoClassBreaksRenderer mClassBreaksRenderer = null; // 记录生成的分级渲染
+        private GeoUniqueValueRenderer mUniqueValueRenderer = null; // 记录生成的唯一值渲染
+        private List<GeoUniqueValueRenderer> mUniqueValueRenderers = new List<GeoUniqueValueRenderer>(); // 为了渐变色选择框的方便，生成渲染并存储在这里
         private List<GeoClassBreaksRenderer> mClassBreaksRenderers = new List<GeoClassBreaksRenderer>();
-        private Color[][] mColors = GeoMapDrawingTools.GetColors();
-        private Button mClassDefaultButton = null;
+        private Color[][] mColors = GeoMapDrawingTools.GetColors(); // 提前生成一点好看的颜色
+        private Button mClassDefaultButton = null; // 给两个渲染添加默认值
         private Button mUniqueDefaultButton = null;
 
         #endregion
@@ -56,6 +56,7 @@ namespace DEETU.Source.Window
                 if(mLayer.AttributeFields.GetItem(i).ValueType != GeoValueTypeConstant.dText)
                     classFieldComboBox.Items.Add(mLayer.AttributeFields.GetItem(i).Name);
             // 对于不同的渲染模式进行配置
+            // 通过出触发时间来进行处理
             if (mLayer.Renderer.RendererType == GeoRendererTypeConstant.Simple)
             {
                 mSimpleRenderer = mLayer.Renderer as GeoSimpleRenderer;
@@ -82,6 +83,7 @@ namespace DEETU.Source.Window
             
         }
 
+        // 建立简单渲染的图片
         private Bitmap CreateSimpleFillSymbolImage(GeoSimpleFillSymbol symbol)
         {
             Bitmap styleImage = new Bitmap(50, 25);
@@ -93,7 +95,7 @@ namespace DEETU.Source.Window
             return styleImage;
         }
 
-
+        // 建立默认按钮
         private Button GetFillSymbolButton(GeoSimpleFillSymbol symbol, string name)
         {
             Button sButton = new Button();
@@ -110,6 +112,7 @@ namespace DEETU.Source.Window
         }
 
         #region event
+        // 处理默认按钮弹出的事件
         private void SymbolGridButton_MouseClick(Button button, GeoSimpleFillSymbol symbol)
         {
             EditSimpleSymbolForm SimpleForm = new EditSimpleSymbolForm(symbol);
@@ -118,6 +121,7 @@ namespace DEETU.Source.Window
             SimpleForm.Show();
         }
 
+        // 在默认按钮修改完成以后，进行刷新
         private void SimpleForm_FormClosed(Button button, GeoSimpleFillSymbol symbol)
         {
             button.BackColor = symbol.Color;
@@ -130,29 +134,31 @@ namespace DEETU.Source.Window
                 UpdateUniqueValueRenderersOutLine();
         }
 
+        // 选择颜色
         private void fillColorPicker_ValueChanged(object sender, Color value)
         {
             ((mLayer.Renderer as GeoSimpleRenderer).Symbol as GeoSimpleFillSymbol).Color = value;
         }
-
+        // 选择边框颜色
         private void edgeColorPicker_ValueChanged(object sender, Color value)
         {
             ((mLayer.Renderer as GeoSimpleRenderer).Symbol as GeoSimpleFillSymbol).Outline.Color = value;
         }
-
+        // 选择宽度
         private void edgeWidthDoubleUpDown_ValueChanged(object sender, double value)
         {
             ((mLayer.Renderer as GeoSimpleRenderer).Symbol as GeoSimpleFillSymbol).Outline.Size = value;
         }
-
+        // 选择边框样式
         private void edgeStyleComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             ((mLayer.Renderer as GeoSimpleRenderer).Symbol as GeoSimpleFillSymbol).Outline.Style = (GeoSimpleLineSymbolStyleConstant)edgeStyleComboBox.SelectedIndex;
         }
-
+        // 唯一值渲染字段修改
         private void uniqueFieldComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (uniqueFieldComboBox.SelectedIndex == -1) return;
+            // 如果没有新建唯一值渲染，或者是新的字段
             if (mUniqueValueRenderer == null || mUniqueValueRenderer.Field != uniqueFieldComboBox.SelectedItem.ToString())
             {
                 mLayer.Renderer = CreateUniqueValueRenderer(uniqueFieldComboBox.SelectedItem.ToString());
@@ -163,12 +169,14 @@ namespace DEETU.Source.Window
                 initializeUniqueValueRenderer();
             }
         }
-
+        // 分级渲染字段修改
         private void classFieldComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (classFieldComboBox.SelectedIndex == -1) return;
+            // 如果没有新建分级渲染，或者是新的字段
             if (mClassBreaksRenderer == null || mClassBreaksRenderer.Field != classFieldComboBox.SelectedItem.ToString())
             {
+                // 新建一个渐变色
                 Color sStartColor = new GeoSimpleFillSymbol().Color;
                 Color sEndColor = Color.FromArgb(sStartColor.R / 2, sStartColor.G / 2, sStartColor.B / 2);
                 mLayer.Renderer = CreateClassBreaksRenderer(classFieldComboBox.SelectedItem.ToString(), uiIntegerUpDown2.Value, sStartColor, sEndColor);
@@ -179,7 +187,7 @@ namespace DEETU.Source.Window
                 initializeClassBreaksRenderer(uiIntegerUpDown2.Value);
             }
         }
-
+        // 绘制渐变色的combobox
         private void ClassColorgradComboBox_DrawItem(object sender, DrawItemEventArgs e)
         {
             if (e.Index == -1) return;
@@ -193,6 +201,7 @@ namespace DEETU.Source.Window
             e.DrawFocusRectangle();
         }
 
+        // 绘制唯一值渲染的颜色选择盒
         private void UniqueColorgradComboBox_DrawItem(object sender, DrawItemEventArgs e)
         {
             if(e.Index == -1) return;
@@ -209,6 +218,8 @@ namespace DEETU.Source.Window
             e.DrawFocusRectangle();
         }
 
+        // 选择渲染方式变化时的函数
+        // 大体上就是判断一下是否点击过，点击过之后不会生成新的，不会因为用户选择别的方式而删除前面编辑的结果
         private void RenderTabControl_SelectedIndexChanged(object sender, EventArgs e)
         {
             renderMethodCB.SelectedIndex = renderTabControl.SelectedIndex;
@@ -252,6 +263,8 @@ namespace DEETU.Source.Window
             renderTabControl.SelectedIndex = renderMethodCB.SelectedIndex;
         }
 
+        // 创建一个分级渲染
+        // 用字段，分级数，起始颜色，终止颜色来进行处理
         private GeoClassBreaksRenderer CreateClassBreaksRenderer(string field, int n, Color startColor, Color endColor)
         {
             try
@@ -322,6 +335,7 @@ namespace DEETU.Source.Window
             }
         }
         
+        // 当唯一值颜色选择过后修改DataGridView
         private void uniqueColorgradComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             mLayer.Renderer = mUniqueValueRenderer = mUniqueValueRenderers[uniqueColorgradComboBox.SelectedIndex];
@@ -335,7 +349,7 @@ namespace DEETU.Source.Window
             }
             uniqueDataGridView.Refresh();
         }
-
+        // 分级渲染修改后刷新DataGridView
         private void classColorgradComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             mLayer.Renderer = mClassBreaksRenderer = mClassBreaksRenderers[classColorgradComboBox.SelectedIndex];
@@ -349,7 +363,7 @@ namespace DEETU.Source.Window
             }
             classDataGridView.Refresh();
         }
-
+        // 可以单独修改唯一值单个符号
         private void uniqueDataGridView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.ColumnIndex == 0)
@@ -360,7 +374,7 @@ namespace DEETU.Source.Window
                 SimpleForm.Show();
             }
         }
-
+        // 可以单独修改分级的单个符号
         private void classDataGridView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.ColumnIndex == 0)
@@ -370,7 +384,7 @@ namespace DEETU.Source.Window
                 SimpleForm.FormClosed += handle;
                 SimpleForm.Show();
             }
-        }
+        }// 在datagridview的符号修改之后，要对那个修改的符号进行刷新
         private void DataGridView_FormClosed(int index, GeoRendererTypeConstant type)
         {
             if (type == GeoRendererTypeConstant.ClassBreaks)
@@ -386,6 +400,7 @@ namespace DEETU.Source.Window
                 uniqueDataGridView.Refresh();
             }
         }
+        // 修改了分级数
         private void uiIntegerUpDown2_ValueChanged(object sender, int value)
         {
             if (mClassBreaksRenderer == null)
@@ -406,6 +421,8 @@ namespace DEETU.Source.Window
             }
         }
         #endregion
+
+        // 创建简单渲染
         private void initializeSimpleRenderer()
         {
             GeoSimpleRenderer simpleRenderer = (GeoSimpleRenderer)mLayer.Renderer;
@@ -416,7 +433,7 @@ namespace DEETU.Source.Window
             edgeWidthDoubleUpDown.Value = fillSymbol.Outline.Size;
             edgeStyleComboBox.SelectedIndex = (int)fillSymbol.Outline.Style;
         }
-
+        // 初始化唯一值渲染界面
         private void initializeUniqueValueRenderer()
         {
             uniqueColorgradComboBox.Items.Clear();
@@ -445,6 +462,7 @@ namespace DEETU.Source.Window
             uniqueDataGridView.Refresh();
         }
 
+        // 初始化分级渲染界面
         private void initializeClassBreaksRenderer(int value)
         {
             classColorgradComboBox.Items.Clear();
@@ -474,6 +492,7 @@ namespace DEETU.Source.Window
             classDataGridView.Refresh();
 
         }
+        // 创建多个分级渲染
         private void CreateClassBreaksRenderers(string field, int value)
         {
             for (int i = 0; i < mColors.Length; ++i)
@@ -481,6 +500,7 @@ namespace DEETU.Source.Window
                 mClassBreaksRenderers.Add(CreateClassBreaksRenderer(field, value, mColors[i][0], mColors[i][1]));
             }
         }
+        // 创建唯一值渲染
         private GeoUniqueValueRenderer CreateUniqueValueRenderer(string field)
         {
             try
@@ -515,6 +535,7 @@ namespace DEETU.Source.Window
             }
 
         }
+        // 创建多个唯一值渲染供选择
         private void CreateUniqueValueRenderers(string field)
         {
             for (int i = 0; i < 5; ++i)
@@ -522,6 +543,7 @@ namespace DEETU.Source.Window
                 mUniqueValueRenderers.Add(CreateUniqueValueRenderer(field));
             }
         }
+        // 建立简单渲染
         private GeoSimpleRenderer CreateSimpleRenderer()
         {
             GeoSimpleRenderer sRenderer = new GeoSimpleRenderer();
@@ -529,7 +551,7 @@ namespace DEETU.Source.Window
             sRenderer.Symbol = sSymbol;
             return sRenderer;
         }
-
+        // 更新所有分级渲染的宽度
         private void UpdateClassBreaksRenderersOutLine()
         {
             for (int i = 0; i < mClassBreaksRenderers.Count; ++i)
@@ -545,6 +567,7 @@ namespace DEETU.Source.Window
                 }
             }
         }
+        // 更新所有唯一值渲染宽度
         private void UpdateUniqueValueRenderersOutLine()
         {
             for (int i = 0; i < mUniqueValueRenderers.Count; ++i)

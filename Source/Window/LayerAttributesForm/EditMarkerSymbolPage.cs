@@ -12,6 +12,7 @@ using System.Windows.Forms;
 
 namespace DEETU.Source.Window.LayerAttributes
 {
+    // 修改点符号的简单属性
     public partial class EditMarkerSymbolPage : UIPage
     {
         private GeoSimpleMarkerSymbol mMarkerSymbol;

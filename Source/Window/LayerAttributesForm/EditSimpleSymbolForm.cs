@@ -7,6 +7,8 @@ namespace DEETU.Source.Window.LayerAttributes
 {
     public partial class EditSimpleSymbolForm : UIMainFrame
     {
+        // 修改单个简单符号的界面
+        // 根据情况打开三种不同的page
         public EditSimpleSymbolForm(GeoSymbol symbol)
         {
             InitializeComponent();
