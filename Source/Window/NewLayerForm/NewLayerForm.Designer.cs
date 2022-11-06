@@ -439,7 +439,7 @@
             this.删除Button.Size = new System.Drawing.Size(50, 30);
             this.删除Button.TabIndex = 5;
             this.删除Button.Text = "删除";
-            this.删除Button.Click += new System.EventHandler(this.删除Button_Click);
+            this.删除Button.Click += new System.EventHandler(this.RemoveButton_Click);
             // 
             // NewLayerForm
             // 

@@ -71,7 +71,7 @@ namespace DEETU.Source.Window
 
         }
 
-        private void 删除Button_Click(object sender, EventArgs e)
+        private void RemoveButton_Click(object sender, EventArgs e)
         {
             foreach (DataGridViewRow row in FieldListDataGrid.SelectedRows)
             {

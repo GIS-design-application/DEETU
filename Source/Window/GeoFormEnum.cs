@@ -17,5 +17,4 @@ namespace DEETU.Source.Window
         Sketch = 7, 
         Edit = 8
     }
-
 }
