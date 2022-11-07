@@ -2767,13 +2767,18 @@ namespace DEETU.Source.Window
 
         private void 图层重命名ToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            // 获取当前图层
             GeoMapLayer layer = mCurrentLayerNode.Tag as GeoMapLayer;
+
+            // 弹出让用户输入图层新名字的窗口
             UIEditOption option = new UIEditOption();
             option.AutoLabelWidth = true;
             option.Text = "图层重命名";
             option.AddText("Name", "图层名称", mCurrentLayerNode.Text, true);
             UIEditForm editForm = new UIEditForm(option);
             editForm.ShowDialog();
+
+            // 修改图层名称，并重新显示
             if (editForm.IsOK)
             {
                 layer.Name = (string)editForm["Name"];
