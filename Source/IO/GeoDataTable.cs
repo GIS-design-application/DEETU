@@ -81,6 +81,7 @@ namespace DEETU.IO
         /// <param name="layer"></param>
         private void GenerateGeoData(GeoMapLayer layer)
         {
+            // （1）获取每个字段的名称和类型
             _GeoData = new DataTable();
             GeoFields sFields = layer.AttributeFields;
             int sFieldCount = sFields.Count;
@@ -107,18 +108,17 @@ namespace DEETU.IO
                 DataColumn sAttributeColumn = new DataColumn(sFieldName, sType);
                 _GeoData.Columns.Add(sAttributeColumn);
             }
+            // 将要素本身也以二进制的形式存储在DataTable中
             _GeoData.Columns.Add(new DataColumn("_GeoFeature", typeof(GeoFeature)));
 
-
+            // 读取每个几何要素各个字段的值，并加入DataTable中
             GeoFeatures sFeatures = layer.Features;
             int sSelFeatureCount = sFeatures.Count;
             if (sSelFeatureCount > 0)
             {
-                //GeoGeometry[] sGeometryies = new GeoGeometry[sSelFeatureCount];
                 GeoAttributes[] sGeoAttributes = new GeoAttributes[sSelFeatureCount];
                 for (int i = 0; i < sSelFeatureCount; i++)
                 {
-                    //sGeometryies[i] = sFeatures.GetItem(i).Geometry;
                     sGeoAttributes[i] = sFeatures.GetItem(i).Attributes;
                 }
 

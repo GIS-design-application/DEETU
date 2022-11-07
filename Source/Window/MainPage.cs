@@ -800,6 +800,7 @@ namespace DEETU.Source.Window
 
         private void btnSelectByExpression_Click(object sender, EventArgs e)
         {
+            // 检查是否选中图层
             if (mCurrentLayerNode == null)
             {
                 UIMessageBox.ShowError("请先选择图层！");
@@ -809,9 +810,6 @@ namespace DEETU.Source.Window
             SelectedByExpressionForm expressionForm = new SelectedByExpressionForm(layer);
             expressionForm.LayerQuery += ExpressionForm_LayerQuery;
             expressionForm.ShowDialog();
-
-            //string expression = "F2 >= 100"; //"名称 = '青海省'"
-            //QueryExpression(expression);
         }
 
         private void btnSelectAll_Click(object sender, EventArgs e)
@@ -2256,6 +2254,10 @@ namespace DEETU.Source.Window
             UncheckModeToolStrip();
         }
 
+        /// <summary>
+        /// 已弃用
+        /// </summary>
+        /// <param name="expression"></param>
         private void QueryExpression(string expression)
         {
             GeoMapLayer sLayer = geoMap.Layers.GetItem(0);
@@ -2273,6 +2275,12 @@ namespace DEETU.Source.Window
             geoMap.RedrawMap();
         }
 
+        /// <summary>
+        /// 在某个图层的DataTable中查询表达式
+        /// </summary>
+        /// <param name="layer"></param>
+        /// <param name="expression"></param>
+        /// <param name="selectionMode"></param>
         private void QueryExpressionLayer(GeoMapLayer layer, string expression, GeoSelectionModeConstant selectionMode)
         {
             GeoMapLayer sLayer = layer;
@@ -2280,6 +2288,7 @@ namespace DEETU.Source.Window
             DataRow[] sDataRows;
             try
             {
+                // 获取查询结果
                 sDataRows = sDataTable.GeoData.Select(expression);
                 int sDataRowCount = sDataRows.Length;
                 GeoFeature[] sSelGeoFeatures = new GeoFeature[sDataRowCount];
@@ -2287,15 +2296,19 @@ namespace DEETU.Source.Window
                 {
                     sSelGeoFeatures[i] = (GeoFeature)sDataRows[i]["_GeoFeature"];
                 }
+
+                // 创建新选择内容
                 if (selectionMode == GeoSelectionModeConstant.NewSelection)
                 {
                     sLayer.SelectedFeatures.Clear();
                     sLayer.SelectedFeatures.AddRange(sSelGeoFeatures);
                 }
+                // 添加选择内容到当前选择
                 else if (selectionMode == GeoSelectionModeConstant.AddSelection)
                 {
                     sLayer.SelectedFeatures.AddRange(sSelGeoFeatures);
                 }
+                // 删除选择内容
                 else
                 {
                     try
