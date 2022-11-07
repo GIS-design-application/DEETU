@@ -15,12 +15,13 @@ namespace DEETU.Core
     [Serializable]
     public class GeoCoordinateReferenceSystem
     {
-
+        #region 字段
         GeographicCrsType? _GeographicCrs;//可空枚举
         ProjectedCrsType? _ProjectedCrs;
         Dictionary<string, string> _GeographicParameters;
         Dictionary<string, string> _ProjectedParameters;
         string _Unit;//单位
+        #endregion
 
         #region 构造函数
         public GeoCoordinateReferenceSystem()
@@ -157,6 +158,38 @@ namespace DEETU.Core
             }
         }
         /// <summary>
+        /// 设置对应投影类型的默认参数
+        /// </summary>
+        /// <param name="geographicCrs"></param>
+        /// <param name="projectedCrs"></param>
+        private void SetParameters(GeographicCrsType? geographicCrs, ProjectedCrsType? projectedCrs)
+        {
+            switch (geographicCrs)
+            {
+                case GeographicCrsType.Beijing1954:
+                    _GeographicParameters = GeoCoordinateFactory.DefaultBeijing1954Param;
+                    break;
+                case GeographicCrsType.WGS84:
+                    _GeographicParameters = GeoCoordinateFactory.DefaultWGS84Param;
+                    break;
+                default:
+                    Debug.Assert(false);
+                    break;
+            }
+
+            switch (projectedCrs)
+            {
+                case ProjectedCrsType.Lambert2SP:
+                    _ProjectedParameters = GeoCoordinateFactory.DefaultLambert2SPParam;
+                    break;
+                case ProjectedCrsType.WebMercator:
+                    _ProjectedParameters = GeoCoordinateFactory.DefaultWebMercatorParam;
+                    break;
+                default:
+                    break;
+            }
+        }
+        /// <summary>
         /// 更改投影类型，但不更改数据。
         /// 使用前提示用户确认
         /// </summary>
@@ -198,32 +231,6 @@ namespace DEETU.Core
         }
         #endregion
 
-        private void SetParameters(GeographicCrsType? geographicCrs, ProjectedCrsType? projectedCrs)
-        {
-            switch (geographicCrs)
-            {
-                case GeographicCrsType.Beijing1954:
-                    _GeographicParameters = GeoCoordinateFactory.DefaultBeijing1954Param;
-                    break;
-                case GeographicCrsType.WGS84:
-                    _GeographicParameters = GeoCoordinateFactory.DefaultWGS84Param;
-                    break;
-                default:
-                    Debug.Assert(false);
-                    break;
-            }
 
-            switch (projectedCrs)
-            {
-                case ProjectedCrsType.Lambert2SP:
-                    _ProjectedParameters = GeoCoordinateFactory.DefaultLambert2SPParam;
-                    break;
-                case ProjectedCrsType.WebMercator:
-                    _ProjectedParameters = GeoCoordinateFactory.DefaultWebMercatorParam;
-                    break;
-                default:
-                    break;
-            }
-        }
     }
 }

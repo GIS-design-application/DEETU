@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,6 +10,9 @@ using DEETU.Tool;
 
 namespace DEETU.Core
 {
+    /// <summary>
+    /// 坐标系转换类，构造参数为两个坐标系以及图层列表，转换直接更改图层geometry信息。
+    /// </summary>
     public class CoordinateTransform
     {
         #region 字段

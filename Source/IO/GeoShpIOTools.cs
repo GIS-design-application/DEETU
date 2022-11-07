@@ -30,6 +30,9 @@ namespace DEETU.IO
             ID = new List<string>();
         }
     }
+    /// <summary>
+    /// 读取shapefile文件
+    /// </summary>
     public static class GeoShpIOTools
     {
         #region 程序集方法

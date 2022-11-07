@@ -38,12 +38,15 @@ namespace DEETU.Core
     /// </summary>
     public class GeoCoordinateFactory
     {
+        #region 字段
         //存储四种坐标系的默认参数
         private static Dictionary<string,string> _DefaultWGS84Param;
         private static Dictionary<string, string> _DefaultBeijing1954Param;
         private static Dictionary<string, string> _DefaultWebMercatorParam;
         private static Dictionary<string, string> _DefaultLambert2SPParam;
+        #endregion
 
+        #region 构造函数
         static GeoCoordinateFactory()
         {
             _DefaultWGS84Param = new Dictionary<string, string>();
@@ -74,6 +77,7 @@ namespace DEETU.Core
             _DefaultWebMercatorParam.Add("False Easting", "0");
             _DefaultWebMercatorParam.Add("Origin longitude", "0");
         }
+        #endregion
 
         #region 属性
         public static Dictionary<string, string> DefaultWGS84Param
@@ -93,9 +97,8 @@ namespace DEETU.Core
             get { return _DefaultLambert2SPParam; }
         }
         #endregion
-        
 
-
+        #region 静态方法
         public static void LambertToGeographic(
             List<GeoPoints> points,
             Dictionary<string,string> lambertParam,
@@ -233,6 +236,6 @@ namespace DEETU.Core
         {
             return;
         }
-
+        #endregion
     }
 }

@@ -13,6 +13,9 @@ using System.Runtime.Serialization;
 
 namespace DEETU.IO
 {
+    /// <summary>
+    /// lyr文件的读取和保存
+    /// </summary>
     internal static class GeoDataIOTools
     {
         #region 程序集方法
