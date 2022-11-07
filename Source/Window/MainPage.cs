@@ -128,13 +128,24 @@ namespace DEETU.Source.Window
             CheckUndo();
         }
 
+        /// <summary>
+        /// 缩放到全部图层范围
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnFullExtent_Click(object sender, EventArgs e)
         {
             geoMap.FullExtent();
         }
 
+        /// <summary>
+        /// 缩放到当前图层范围
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnLayerExtent_Click(object sender, EventArgs e)
         {
+            // 检查是否已选中图层
             if (mCurrentLayerNode == null)
             {
                 UIMessageBox.ShowError("请先选择图层！");
@@ -144,8 +155,14 @@ namespace DEETU.Source.Window
             geoMap.LayerExtent(layer);
         }
 
+        /// <summary>
+        /// 缩放到当前图层选中区域范围
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnSelectedAreaExtent_Click(object sender, EventArgs e)
         {
+            // 检查是否已选中图层
             if (mCurrentLayerNode == null)
             {
                 UIMessageBox.ShowError("请先选择图层！");
