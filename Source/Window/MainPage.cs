@@ -1496,18 +1496,20 @@ namespace DEETU.Source.Window
 
             GeoRectangle sBox = GetMapRectByTwoPoints(mStartMouseLocation, e.Location);
             double tolerance = geoMap.ToMapDistance(mSelectingTolerance);
+            // 获取选中的图层
             GeoMapLayer sLayer = GetSelectableLayer();
             if (sLayer == null)
             {
                 return;
             }
 
+            // 添加到图层选中的特征中
             GeoFeatures sFeatures = sLayer.SearchByBox(sBox, tolerance, 全包含选择.Checked);
             sLayer.SelectedFeatures.Clear();
             sLayer.SelectedFeatures.AddRange(sFeatures.ToArray());
 
+            // 闪烁显示选中的图层，并弹出识别信息窗口
             DrawIdentifyFlash(sFeatures);
-            //ShowIdentifyMessage(sFeatures, sLayer);
             IdentifyForm identifyForm = new IdentifyForm(sLayer);
             if (sLayer.SelectedFeatures.Count > 0)
                 identifyForm.ShowDialog();  
@@ -1516,6 +1518,7 @@ namespace DEETU.Source.Window
 
         private void DrawIdentifyFlash(GeoFeatures sFeatures)
         {
+            // 闪烁显示几何要素
             int sSelFeatureCount = sFeatures.Count;
             if (sSelFeatureCount > 0)
             {
@@ -1534,6 +1537,7 @@ namespace DEETU.Source.Window
         /// <param name="sFeatures"></param>
         private void ShowIdentifyMessage(GeoFeatures sFeatures, GeoMapLayer sLayer)
         {
+            // 获取所有字段名称
             GeoFields sFields = sLayer.AttributeFields;
             int sFieldCount = sFields.Count;
             string[] sFieldString = new string[sFieldCount];
@@ -1541,18 +1545,18 @@ namespace DEETU.Source.Window
             {
                 sFieldString[i] = sFields.GetItem(i).Name;
             }
-            // 弹出窗体
+
             int sSelFeatureCount = sFeatures.Count;
             if (sSelFeatureCount > 0)
             {
-                GeoGeometry[] sGeometryies = new GeoGeometry[sSelFeatureCount];
+                // 获取属性信息
                 GeoAttributes[] sGeoAttributes = new GeoAttributes[sSelFeatureCount];
                 for (int i = 0; i < sSelFeatureCount; i++)
                 {
-                    sGeometryies[i] = sFeatures.GetItem(i).Geometry;
                     sGeoAttributes[i] = sFeatures.GetItem(i).Attributes;
                 }
 
+                // 将字段和属性信息拼接成字符串
                 string info = "";
                 for (int i = 0; i < sSelFeatureCount; i++)
                 {
@@ -1563,11 +1567,7 @@ namespace DEETU.Source.Window
                     }
                     info += "\n";
                 }
-                //UIMessageBox.ShowInfo(info);
                 ShowInfoDialog(info);
-                //MessageBox.Show(info, "属性信息", MessageBoxButtons.OK);
-
-                // geoMap.FlashShapes(sGeometryies, 3, 800);
             }
         }
 
